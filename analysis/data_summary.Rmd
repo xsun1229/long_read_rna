@@ -1,0 +1,326 @@
+---
+title: "Data Summary"
+author: "XSun"
+date: "2026-09-08"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Overview
+
+This page characterizes the single long-read RNA-seq dataset we currently have
+for the stimulated-neuron project. Every number below was derived directly from
+the BAM (analysis run 2026-09-04); nothing is taken from upstream metadata,
+because **no upstream metadata accompanied the file**.
+
+The two planned analyses are:
+
+1. **Splicing changes during the neuronal response** — differential splicing
+   across stimulation conditions.
+2. **Genetic variants associated with splicing** — sQTL / allele-specific
+   splicing discovery.
+
+Both are currently blocked on missing annotation, described in
+[Blockers](#blockers). The data itself is high quality and well suited to the
+science.
+
+# The file
+
+```
+/project/xinhe/xsun/long_read_RNA/data/NP184_NP187_NP188_combined_DUAN_21-0/
+  merged.curated.minimap2.bam       27.5 GB
+  merged.curated.minimap2.bam.bai   (older than the BAM — should be regenerated)
+```
+
+Source: Duan lab (`DUAN_21-0`). Three libraries — **NP184, NP187, NP188** —
+merged into one BAM.
+
+# Platform and chemistry
+
+**Oxford Nanopore + 10x Chromium 3' v3, aligned with minimap2 splice, to hg38.**
+
+Evidence:
+
+- Read names are basecaller UUIDs
+  (`b372076b-9fdd-414a-8c49-8c7dbef0f3fb_TTCTACTTTCTC`) — ONT/dorado style,
+  not PacBio `movie/zmw/ccs`.
+- Barcode layout is 16 bp + 12 bp = 10x 3' v3. The **cell barcode is stored in
+  the `RG:Z:` tag**, and the **12 bp UMI is appended to the read name** after
+  an underscore. There are no `CB`/`UB` tags.
+- minimap2 spliced-alignment tags present: `ts`, `de`, `ms`, `nn`, `tp`.
+- Error profile is ONT-like: median `de` = 1.1%, but p95 = 12%. PacBio HiFi
+  would be uniformly tighter.
+- The header records `IsoQuant_res/` as the pipeline working directory, so
+  IsoQuant was the intended isoform caller upstream.
+- Reference is GRCh38, `chr`-prefixed, 194 contigs (primary + alts),
+  3,099,750,718 bp.
+
+# Read-level summary
+
+| Metric | Value |
+|---|---|
+| Total alignments | 85,465,939 |
+| Primary | 61,189,011 |
+| Secondary (multimappers, **retained**) | 23,879,762 |
+| Supplementary | 397,166 |
+| Mapped | 99.99% |
+| Marked duplicates | 0 |
+
+Two practical consequences:
+
+- **Always filter with `-F 0x900`.** Secondary alignments are 28% of records
+  and will inflate any naive count.
+- The BAM is already **UMI-deduplicated** (the "curated" in the filename):
+  1.01 reads per (cell barcode, UMI) pair. So primary reads ≈ UMIs.
+
+# Cell-level QC
+
+**8,612 cell barcodes** (= `@RG` count; 8,605 observed in a genome-wide sample).
+
+| Per-cell metric | median | mean | p10 | p90 |
+|---|---|---|---|---|
+| UMIs (reads) | 4,967 | 7,105 | 1,536 | 14,477 |
+| % chrM | 4.2% | 6.2% | 0.5% | 14.5% |
+| % spliced reads | 16.9% | 20.3% | 10.5% | 39.5% |
+| mean read length | 612 | 611 | 562 | 662 |
+
+The minimum is 508 reads/cell, so **empty droplets were already filtered
+upstream**. 408 cells exceed 20% chrM; 5 exceed 50%.
+
+# Read length and splicing
+
+This is the single most consequential property for the isoform plan.
+
+From a genome-wide sample of 450k primary reads across 12 windows:
+
+- Query length: median **506 bp**, mean 624, p90 1,115, p99 2,038, max 5,963.
+- Only **27.3% of reads are spliced** (contain a CIGAR `N`); among those,
+  median 2 junctions, p90 6.
+
+These are largely **3' fragments, not full-length transcripts** — expected for
+a 10x 3' library, but it does undercut full-length isoform quantification.
+Junction-level methods (LeafCutter-style intron clustering) are likely the more
+robust route than isoform-level quantification, despite the header showing
+IsoQuant was run upstream.
+
+# Contamination and background
+
+- **rRNA carryover is substantial.** 677k of 1.31M chr21 primary reads fall in
+  the chr21:8.2–8.6 Mb rDNA array. The rDNA-bearing scaffolds `GL000220.1`
+  (2.44M) and `KI270733.1` (2.52M) are also heavily loaded (those counts
+  include secondary alignments).
+- chrM is 3.97M mapped reads (~4.6% overall; median 4.2% per cell).
+- Filter rDNA regions and chrM before quantification.
+
+# Cell identity
+
+**hiPSC-derived induced glutamatergic neurons, immature — an NGN2 signature.**
+
+Fraction of the 8,612 cells with ≥ 1 read:
+
+| Marker | % cells | Marker | % cells |
+|---|---|---|---|
+| STMN2 | 87.7 | SLC17A6 (VGLUT2) | 37.9 |
+| SYT1 | 86.3 | GAD1 / GAD2 | 18.0 / 14.0 |
+| MAP2 | 83.9 | SLC32A1 | 9.0 |
+| MYT1L | 74.0 | GRIN1 / GRIN2B | 14.2 / 14.4 |
+| DCX | 66.5 | DLG4 | 10.2 |
+| RBFOX1 | 62.3 | SLC17A7 (VGLUT1) | 3.1 |
+| NEFL | 62.0 | GFAP / AQP4 / S100B | 0.8 / 0.1 / 0.4 |
+| VIM | 59.5 | OLIG2 / PDGFRA | 0.2 / 0.6 |
+| MAPT | 59.0 | POU5F1 / LIN28A | 0.1 / 0.4 |
+| TUBB3 | 58.1 | MKI67 | 0.2 |
+
+VGLUT2 ≫ VGLUT1, together with DCX+/VIM+ and low synaptic maturity, is the
+classic NGN2 2–4 week signature. There are no astrocytes, no oligodendrocyte
+lineage, no residual iPSC, and no proliferating cells. A minor GABAergic
+component is present.
+
+Two flags for the clustering step:
+
+- **COL1A1 is in 22.6% of cells (48k reads)** — a fibroblast-like /
+  non-neuronal population that should be resolved explicitly.
+- CHAT at 14.8% is most likely low-level spurious signal, not a cholinergic
+  identity.
+
+# Stimulation state
+
+Immediate-early genes are present but modest, consistent with a mixture of
+stimulated and unstimulated cells:
+
+| IEG | % cells | IEG | % cells |
+|---|---|---|---|
+| BDNF | 16.1 | NR4A1 | 2.8 |
+| EGR1 | 12.6 | FOSB | 1.2 |
+| FOS | 9.6 | ARC | 0.9 |
+| JUNB | 9.6 | NPAS4 | 0.3 |
+
+ARC and NPAS4 — the strongest activity markers in mature neurons — are very
+low, which is consistent with the immature phenotype rather than with absence
+of stimulation.
+
+# Donor structure
+
+The BAM carries **no donor, sample, or condition annotation**. `@RG` lines
+contain only `ID:<barcode>` — no `SM:`, `LB:`, or `DS:` fields.
+
+Nevertheless, the cells are demonstrably multiplexed. Per-cell chrY
+(male-specific genes, PAR-excluded) versus XIST, at a ≥ 2 read threshold:
+
+| Class | Cells |
+|---|---|
+| chrY+ / XIST− (male) | 2,950 |
+| chrY− / XIST+ (female) | 1,560 |
+| chrY+ / XIST+ (ambiguous / doublet) | 564 (6.5%) |
+| neither (low depth) | 838 |
+
+So this is a **pooled / cell-village design with ≥ 2 donors spanning both
+sexes**. The 6.5% ambiguous fraction is a plausible 10x doublet rate at this
+cell load, though some of it is ambient RNA.
+
+## An attempt to count donors that failed
+
+Recorded so it is not repeated.
+
+The idea: with N equally-represented donors, pseudobulk minor-allele fractions
+should concentrate near multiples of 1/(2N). We ran `samtools mpileup` over
+367 kb of exons from ~48 high-expression genes, yielding 135,351 covered
+positions and 2,014 clean biallelic sites at depth ≥ 4,000.
+
+The MAF spectrum is **effectively continuous**. Fitting the 1/(2N) grid for
+N = 1..24 and normalizing by what uniform-random MAFs would give (mean distance
+to the nearest grid point = 1/(8N)) produced ratios of **0.88–1.00 for every
+N** — no N fits better than chance. An apparent peak pattern in the raw
+histogram did *not* survive this test.
+
+The cause is ONT error (~1% median, systematic at some sites) compounded by
+allelic expression imbalance, RNA editing, and unequal donor proportions, all
+of which smear the grid away.
+
+The one weak signal: **N = 1 is the worst fit** (ratio 1.22), since a single
+donor would pile all heterozygous sites at MAF 0.5, which is plainly not
+observed. That agrees with the sex-mixing result but adds nothing beyond it.
+
+**Conclusion: N ≥ 2 is the only defensible statement from the data alone.**
+The real count needs genotype demultiplexing (vireo or souporcell), which works
+without a VCF up front. 61M deduplicated reads over 8,612 cells is ample depth.
+
+# Blockers {#blockers}
+
+Both analysis aims are currently gated on information that must come from the
+Duan group.
+
+**1. Condition labels are unrecoverable from this BAM.** If NP184/187/188 are
+the stimulation conditions, we cannot tell which cell came from which library:
+barcodes carry no `-1`/`-2`/`-3` suffix, and the three barcode spaces were
+collapsed on merge. This blocks differential splicing.
+
+> Needed: **per-library cell barcode lists** (or the unmerged BAMs), plus what
+> each library actually is.
+
+**2. No donor identities and no genotypes.** Nothing donor-matched to these
+cells exists on disk. What is under `/project/xinhe/xsun/data/` is all
+reference panels (1000G, GTEx, dbSNP GRCh37) from other projects, plus
+`/project/xinhe/shared/YRI_genotypes/`. This blocks sQTL mapping.
+
+> Needed: **donor list and genotypes** (array or WGS VCF, hg38).
+
+# Planned method: isoLASER
+
+[Quinones-Valdez, Amoah & Xiao, *Nat Commun* 16:9603
+(2025)](https://www.nature.com/articles/s41467-025-64605-6). Downloaded
+2026-09-04 to:
+
+```
+/project/xinhe/xsun/long_read_RNA/software/isoLASER/        @ 7656083, tag v0.0.3
+/project/xinhe/xsun/long_read_RNA/software/isoLASER_paper/  (Snakemake s1-s4)
+```
+
+`software/isoLASER/test_pipeline/` ships real test data (3 DLPFC BAMs, expected
+outputs, `isolaser_test.smk`), so an install can be validated end-to-end before
+touching our data.
+
+## What it does
+
+Per-sample de novo variant calling (scAllele-based de Bruijn reassembly + MLP
+filter) → gene-level phasing (weighted k-means, **K = 2, assuming one diploid
+genome**) → linkage test between haplotype and exonic-part inclusion, scored by
+adjusted mutual information (AMI) with a delta-PSI ≥ 5% effect filter. Events
+are split into **cis-directed** (AMI above the 99th percentile of a simulated
+null) versus **trans-directed** (below the 95th). `isolaser_joint` merges ≥ 2
+samples to call splicing-associated variants (SAVs), and can reach rare
+variants.
+
+The attraction for aim 2: it needs neither a pre-phased genome nor a VCF, and
+it works at small sample sizes — the paper explicitly frames it as an
+alternative to sQTL mapping. Their SAVs replicated against GTEx sQTLs
+(delta PSI vs sQTL beta, R = −0.37).
+
+## Compatibility with our data
+
+**isoLASER expects bulk, single-donor long-read RNA-seq; our BAM is pooled
+single-cell.** The phasing step fixes K = 2 on the assumption of one diploid
+genome, so running it directly on 8,612 cells from ≥ 2 donors would be
+meaningless. The correct order is:
+
+> demultiplex donors → pseudobulk per donor → `isolaser` per donor →
+> `isolaser_joint` across donors
+
+Donor demultiplexing is therefore a **prerequisite, not an optional extra**.
+
+Two further concerns:
+
+- isoLASER needs a heterozygous SNP **and** the splicing event on the *same
+  read*, and its pipeline discards reads lacking splice junctions. With our
+  506 bp median and 27% spliced fraction, testable events per donor will be
+  well below what the full-length PacBio data the method was built on gives.
+  Worth estimating before committing.
+- The paper's own ONT caveat: for Nanopore they "recommend focusing analyses on
+  SNPs by excluding indels and validating detected variants against external
+  datasets prior to phasing" (they required gnomAD presence). Our median error
+  (~1.1%) is better than the R9.4.1 data they used, but this still applies.
+
+# Compute environment
+
+Notes for anyone picking this up on midway3.
+
+| Tool | Status |
+|---|---|
+| samtools | OK — `/software/samtools-1.22.1-el8-x86_64/bin` (module load fails non-interactively; use the path) |
+| GATK | module `gatk/4.5.0` |
+| tabix / bgzip | module `htslib/1.16` |
+| snakemake | OK — `/home/sxt1229/.local/bin/snakemake` |
+| conda | OK — `/home/sxt1229/miniconda3/bin/conda` (26.1.1) |
+| **bcftools** | **not installed anywhere found** |
+| **minimap2** | **missing** — needed early, for the transcriptome re-alignment that adds isoLASER's `ZG`/`ZT` tags |
+| **hg38 FASTA + `.fai` + `.dict`** | **missing** — hard requirement for isoLASER |
+| **long-read GTF** (TALON/Bambu/ESPRESSO) | **missing** — Ensembl v112 could substitute initially |
+
+Annotation available:
+`/project/xinhe/xsun/data/genome_reference/Reference/Human/ensembl.v112/gtf/Homo_sapiens.GRCh38.112.gtf`
+(1.5 GB). Note Ensembl names contigs `1`, `MT` — these need `chr` prefixing to
+match this BAM.
+
+isoLASER's Python dependencies are tightly pinned (numpy 1.24.4, scipy 1.10.1,
+pandas 2.0.3, pysam 0.16.0.1, …) and need a `python=3.8` env; system python3 is
+3.6.8. Module `python/3.8.0` also exists.
+
+Network access from the compute node works (tested against ftp.ebi.ac.uk).
+
+The `pumseq` project is a close methodological precedent for aim 2: molecular
+QTL mapping across 51 cell lines with tensorQTL, phenotype matrix prep, and
+quantile normalization.
+
+# Next steps
+
+1. Request per-library barcode lists and donor genotypes from the Duan group
+   (both blockers above).
+2. Run souporcell or vireo to establish the donor count and per-cell donor
+   assignments — this does not require a VCF and unblocks aim 2's pseudobulk
+   structure.
+3. Install isoLASER in a `python=3.8` env and validate against its bundled
+   `test_pipeline` before using our data.
+4. Obtain an hg38 FASTA (indexed) and minimap2.
+5. Estimate testable-event counts per donor given the 506 bp median read
+   length, to decide between isoLASER and junction-level intron clustering.

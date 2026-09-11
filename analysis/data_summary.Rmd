@@ -1,5 +1,5 @@
 ---
-title: "Data Summary"
+title: "Data Summary — all three timepoints"
 author: "XSun"
 date: "2026-09-11"
 output:
@@ -12,115 +12,180 @@ editor_options:
 
 # The dataset
 
-```
-data/NP184_NP187_NP188_combined_DUAN_21-0/
-  merged.curated.minimap2.bam       27.5 GB
-  merged.curated.minimap2.bam.bai
-```
-
-Long-read single-nucleus RNA-seq of hiPSC-derived neurons from the Duan lab.
-The same cells and donors as
-[Liang et al., *Science* 392:eadw3949 (2026)](https://www.science.org/doi/10.1126/science.adw3949) —
-this is a Nanopore assay on one of that study's libraries, and is not itself
+Long-read (Oxford Nanopore) single-nucleus RNA-seq of hiPSC-derived neurons
+from the Duan lab — the same cells and donors as
+[Liang et al., *Science* 392:eadw3949 (2026)](https://www.science.org/doi/10.1126/science.adw3949),
+assayed on Nanopore rather than the published 10x Multiome. Not itself
 published.
 
-Numbers below are **measured from the BAM** unless tagged
-*[metadata]* (from Table S1 of the paper, or `cell_barcodes_w_meta.txt.gz`)
-or *[slides]* (the scNanoGPS statistics we were sent).
+```
+data/NP184_NP187_NP188_combined_DUAN_21-0/   0 hr   27.5 GB
+data/NP189_NP190_NP193_combined_DUAN_21-1/   1 hr   34.2 GB
+data/NP191_NP192_NP194_combined_DUAN_21-6/   6 hr   36.4 GB
+```
+
+**Coculture batch 21, four donors, three KCl-stimulation timepoints
+(0 / 1 / 6 h).** The three `NP` identifiers in each name are sequencing runs
+(flow cells) of that one library — three per library, all distinct across the
+three files.
+
+Numbers below are **measured from the BAMs** unless tagged *[metadata]* (Table
+S1 of the paper, or `cell_barcodes_w_meta.txt.gz`) or *[slides]* (the scNanoGPS
+statistics we were sent).
 
 # Headline numbers
 
-| | |
-|---|---|
-| Cell barcodes | **8,612** |
-| Primary reads (= molecules) | **61,189,011** |
-| Donors | **4** (2 male / 2 female, 2 SCZ case / 2 control) |
-| Stimulation state | **0 hr only — unstimulated** |
-| Cells with a donor assignment | 4,866 (56.5%) |
+| | 0 hr | 1 hr | 6 hr | total |
+|---|---|---|---|---|
+| Cell barcodes | 8,612 | 12,023 | 10,051 | **30,686** |
+| Primary reads | 61.19 M | 75.62 M | 80.65 M | **217.46 M** |
+| Cells with donor assignment | 4,866 | 7,891 | 6,625 | **19,382** |
+| Reads in assigned cells | 31.76 M | 46.73 M | 50.57 M | **129.06 M** |
+
+Four donors present at every timepoint, so the design is **paired within
+donor across stimulation**.
+
+# Library identity
+
+Each BAM's barcodes were cross-matched against all three library barcode lists
+*[metadata]*. Each matches its own and essentially nothing else:
+
+| BAM | vs 21-0 | vs 21-1 | vs 21-6 |
+|---|---|---|---|
+| `DUAN_21-0` | **87.0%** | 0.4% | 0.6% |
+| `DUAN_21-1` | 1.9% | **80.8%** | 0.4% |
+| `DUAN_21-6` | 1.4% | 1.5% | **83.9%** |
+
+Off-diagonal values are at or below what random 16-mer collisions between
+independent 10x libraries would give. Cell counts also match the scNanoGPS
+"Cell number" exactly for all three *[slides]*: 8,612 / 12,023 / 10,051.
+
+# Per-library statistics
+
+Full pass over every primary read in each library.
+
+| | 0 hr | 1 hr | 6 hr |
+|---|---|---|---|
+| Cells | 8,612 | 12,023 | 10,051 |
+| Primary reads | 61,189,011 | 75,617,929 | 80,650,873 |
+| Total alignment records | 85,465,939 | 102,144,372 | 108,264,439 |
+| Median UMIs / cell | 4,967 | 4,622 | 6,028 |
+| Mean UMIs / cell | 7,105 | 6,289 | 8,024 |
+| Mean read length | 617 bp | 610 bp | 627 bp |
+| Median read length | 578 bp | 512 bp | 541 bp |
+| **% spliced** | 19.45% | 20.17% | 19.87% |
+| **% no base quality** | 20.81% | 16.16% | 19.15% |
+| **% chrM** | 6.27% | 7.48% | 6.53% |
+
+The three libraries are **remarkably consistent** — % spliced within 0.7
+points, read length within 17 bp. So QC thresholds and pipeline settings
+established on one apply to all three.
+
+Read-length percentiles (100 k sample):
+
+| | p10 | p25 | median | p75 | p90 | p99 |
+|---|---|---|---|---|---|---|
+| 0 hr | 306 | 412 | 578 | 776 | 1,005 | 2,044 |
+| 1 hr | 276 | 353 | 512 | 753 | 1,049 | 2,110 |
+| 6 hr | 273 | 367 | 541 | 773 | 1,054 | 2,128 |
+
+**Always filter with `-F 0x900`.** Secondary alignments are 26–28% of records.
+
+The BAMs are already **UMI-deduplicated** (1.01 reads per barcode-UMI pair at
+0 hr), so primary reads ≈ unique molecules.
+
+# Donor assignment
+
+*[metadata]* Four donors, balanced 2 cases / 2 controls and 2 male / 2 female,
+all European ancestry, coculture batch 21, sequencing batch 25.
+
+| Donor | Sex | Diagnosis | Age | dbGaP |
+|---|---|---|---|---|
+| CD_21 | M | case | 29 | phs000167.v1.p1 |
+| CD_31 | F | control | 29 | phs000021.v3.p2 |
+| CD_36 | M | case | 57 | phs000021.v3.p2 |
+| CD_48 | F | control | 72 | phs000167.v1.p1 |
+
+## Cells per donor
+
+| Timepoint | CD_21 | CD_31 | CD_36 | CD_48 | total |
+|---|---|---|---|---|---|
+| 0 hr | 1,463 | 1,237 | 823 | 1,343 | 4,866 |
+| 1 hr | 2,122 | 2,146 | 1,267 | 2,356 | 7,891 |
+| 6 hr | 1,936 | 1,746 | 1,056 | 1,887 | 6,625 |
+| **total** | **5,521** | **5,129** | **3,146** | **5,586** | **19,382** |
+
+## Reads per donor (millions)
+
+| Timepoint | CD_21 | CD_31 | CD_36 | CD_48 | assigned | unassigned |
+|---|---|---|---|---|---|---|
+| 0 hr | 9.30 | 7.47 | 6.25 | 8.75 | 31.76 | 29.42 |
+| 1 hr | 12.66 | 12.35 | 7.85 | 13.87 | 46.73 | 28.89 |
+| 6 hr | 14.97 | 13.22 | 8.44 | 13.93 | 50.57 | 30.08 |
+
+CD_36 is consistently the smallest donor (~6–8 M reads); the others are
+7–15 M. Every donor × timepoint cell has at least 6.2 M reads, which is ample
+for per-sample isoLASER.
+
+## Coverage of the assignment
+
+| Timepoint | BAM cells | Cell-line *[slides]* | % | Both line + type *[metadata]* | % |
+|---|---|---|---|---|---|
+| 0 hr | 8,612 | 5,035 | 58.46% | 4,866 | 56.50% |
+| 1 hr | 12,023 | 8,097 | 67.35% | 7,891 | 65.63% |
+| 6 hr | 10,051 | 6,911 | 68.76% | 6,625 | 65.91% |
+
+The small gap (169 / 206 / 286 cells) is the cell-type filter: the mapping file
+contains only `GABA`/`nmglut`/`npglut`, so it is the *intersection* of the
+cell-line and cell-type calls. For allele-specific splicing only the donor
+matters, so the unfiltered cell-line list would be slightly preferable.
+
+Note 0 hr has a lower assignment rate (56.5%) than 1 hr and 6 hr (~66%) — the
+unstimulated library had proportionally more cells failing QC.
+
+## Unassigned cells are modestly worse
+
+| Timepoint | group | median UMIs | % chrM | % spliced |
+|---|---|---|---|---|
+| 0 hr | assigned | 4,867 | 5.85% | 17.94% |
+| 0 hr | unassigned | 5,072 | 6.71% | 21.08% |
+| 1 hr | assigned | 4,598 | 6.82% | 19.29% |
+| 1 hr | unassigned | 4,734 | 8.55% | 21.60% |
+| 6 hr | assigned | 6,067 | 5.96% | 18.88% |
+| 6 hr | unassigned | 5,937 | 7.49% | 21.53% |
+
+Consistently higher mitochondrial content but comparable depth — so they are
+cells that failed the published QC rather than empty droplets. Dropping them
+costs ~30 M reads per timepoint (~48%, ~38%, ~37%).
 
 # Platform and processing
 
 | | |
 |---|---|
 | Sequencing | Oxford Nanopore |
-| Chemistry | 10x Genomics Multiome / scARC — 16 bp cell barcode + 12 bp UMI |
+| Chemistry | 10x Multiome / scARC — 16 bp cell barcode + 12 bp UMI |
 | Pre-processing | **scNanoGPS** *[slides]* |
-| Aligner | minimap2, spliced mode |
+| Aligner | minimap2, spliced |
 | Reference | GRCh38, 10x `refdata-gex-GRCh38-2024-A` |
 | Strandedness | `--strand reverse` |
 | Annotation | IsoQuant v3.3.0 (`OUT.extended_annotation.gtf`) |
 
-Two conventions inherited from scNanoGPS are worth knowing, because most
-single-cell tooling assumes otherwise:
+Two scNanoGPS conventions differ from what single-cell tooling expects:
 
-* the **cell barcode lives in the `RG` tag**, not `CB`
-* the **UMI is appended to the read name** (`<ONT-UUID>_<12bp UMI>`), not in `UB`
-
-Example read:
+* the **cell barcode is in the `RG` tag**, not `CB`
+* the **UMI is appended to the read name**, not in `UB`
 
 ```
 QNAME  281b9c59-a0da-477b-84b9-d9895f6ec585_TTCAAGATATAT
 RG:Z:  TTCGTTAGTACCAGGT
 ```
 
-# Cells
+This is convenient for one thing: `samtools view -R <barcode_list>` splits a
+BAM by donor directly, with no re-tagging.
 
-| | |
-|---|---|
-| Cell barcodes | **8,612** |
-| — all exactly 16 bp, all carrying reads | |
-| Median UMIs / cell | 4,967 |
-| Mean UMIs / cell | 7,105 |
-| Minimum | 508 reads / cell |
+# The constraint that matters most: intronic dominance
 
-The 8,612 barcodes account for all 61,189,011 primary reads, so there are no
-empty or orphaned read groups. The 508-read floor means empty droplets were
-already filtered upstream.
-
-This matches the scNanoGPS "Cell number" for group 21 / 0 hr exactly *[slides]*,
-which is one of the strongest pieces of evidence for which library this is.
-
-# Reads
-
-| | |
-|---|---|
-| Alignment records | 85,465,939 |
-| **Primary** | **61,189,011** |
-| Secondary (multimappers, retained) | 23,879,762 |
-| Supplementary | 397,166 |
-| Mapped | 99.99% |
-| Marked duplicates | 0 |
-
-**Always filter with `-F 0x900`.** Secondary alignments are 28% of records and
-inflate any naive count — unevenly, since they concentrate in repeats.
-
-The BAM is already **UMI-deduplicated**: 1.01 reads per (barcode, UMI) pair,
-so reads ≈ unique molecules.
-
-# Read characteristics
-
-| | |
-|---|---|
-| Median read length | **506 bp** (mean 617, p90 1,115, max ~6 kb) |
-| Reads containing a splice junction | **27.3%** |
-| Median per-read error rate | ~1.1% |
-| Soft-clipped reads | 97.8% |
-| **Reads with no base-quality string** | **20.5%** (`QUAL` = `*`) |
-
-The near-universal soft clipping is untrimmed polyA/adapter. It turns out to be
-harmless for isoLASER (its `large_soft_clip` filter removed only 225 of 585,767
-reads).
-
-The missing base qualities are more consequential than they look. Besides
-mattering for variant calling, **mixed QUAL/no-QUAL reads silently break
-`samtools fastq`**: it reported `processed 629035 reads` while writing only
-14,255 — a 97.7% loss with no error. Splitting the input by QUAL presence
-converts both halves correctly, so it is the interleaving that breaks it.
-Convert with an explicit parser instead.
-
-# Genomic context — mostly intronic
-
-Read midpoints against the IsoQuant annotation, chr21:
+Read midpoints against the IsoQuant annotation, chr21 (0 hr):
 
 | | Ours (chr21) | scNanoGPS, genome-wide *[slides]* |
 |---|---|---|
@@ -128,131 +193,83 @@ Read midpoints against the IsoQuant annotation, chr21:
 | **Intronic** | **74.2%** | **68.4%** |
 | Intergenic | 6.3% | 20.0% |
 
-**This is the single most important property for the splicing aims.** It is
-single-*nucleus* RNA, so the library is dominated by unspliced nuclear
-pre-mRNA. Reads sitting in introns cannot be assigned to a mature transcript,
-which is exactly what exon-centric isoform methods require.
+This is single-*nucleus* RNA, so the libraries are dominated by unspliced
+nuclear pre-mRNA. Reads inside introns cannot be assigned to a mature
+transcript, which is what exon-centric isoform methods require.
 
 It directly explains the largest loss in the isoLASER pilot
-(`unassigned_tx_id` = 53.8% of reads). That is inherent to the assay, not a
-tunable parameter.
+(`unassigned_tx_id` = 53.8% of reads, overall retention 14.8%). That is
+inherent to the assay, not a tunable parameter. It is consistent across
+timepoints (% spliced 19.5–20.2%).
 
 # Background to filter
 
 * **rRNA carryover** — 677 k of chr21's 1.31 M primary reads lie in the
-  chr21:8.2–8.6 Mb rDNA array. The rDNA scaffolds `GL000220.1` and
-  `KI270733.1` are also heavily loaded.
-* **Mitochondrial** — ~4.6% of reads overall, median 4.2% per cell.
+  chr21:8.2–8.6 Mb rDNA array; scaffolds `GL000220.1` and `KI270733.1` are
+  also heavily loaded.
+* **Mitochondrial** — 6.3–7.5% of primary reads.
 * **Rat astrocytes** were in the coculture *[metadata]*. They are filtered out
-  of the metadata file, but rat-derived reads may still be in the BAM.
+  of the metadata file, but rat-derived reads may still be in the BAMs.
 
-# Donors — four individuals
+# Stimulation worked
 
-*[metadata]* Coculture batch 21, sequencing batch 25, all European ancestry.
+Immediate-early genes at 0 hr are low, with no activated population — the
+expected baseline:
 
-| Donor | Sex | Diagnosis | Age | Cells | Reads | dbGaP |
-|---|---|---|---|---|---|---|
-| CD_21 | M | case | 29 | 1,463 | 9.30 M | phs000167.v1.p1 |
-| CD_31 | F | control | 29 | 1,237 | 7.47 M | phs000021.v3.p2 |
-| CD_36 | M | case | 57 | 823 | 6.25 M | phs000021.v3.p2 |
-| CD_48 | F | control | 72 | 1,343 | 8.75 M | phs000167.v1.p1 |
-
-Balanced 2 cases / 2 controls, 2 male / 2 female.
-
-By neuronal subtype:
-
-| Donor | GABA | nmglut (NEFM−) | npglut (NEFM+) |
-|---|---|---|---|
-| CD_21 | 596 | 389 | 478 |
-| CD_31 | 476 | 386 | 375 |
-| CD_36 | 234 | 187 | 402 |
-| CD_48 | 482 | 339 | 522 |
-
-## Assignment coverage
-
-| | Cells |
-|---|---|
-| Barcodes in the BAM | 8,612 |
-| With both a cell-line and a cell-type assignment | **4,866 (56.5%)** |
-| Without an assignment in the mapping file | 3,746 |
-
-The unassigned cells look lower quality — mean 8.2% mitochondrial versus 4.7%
-for assigned cells — so they are largely cells that failed QC in the published
-analysis.
-
-The slides report **5,035** cells with a confident *cell line* *[slides]*. Ours
-is lower because the mapping file we hold is restricted to cells also assigned
-to GABA/nmglut/npglut, i.e. it is the intersection of the cell-line and
-cell-type calls. For allele-specific splicing only the donor matters, so the
-unfiltered cell-line list would be preferable.
-
-## Sex verified independently
-
-Scoring each cell on chrY-specific genes (PAR excluded) versus XIST gives
-**47% male** among assigned cells, consistent with the 2M/2F design.
-
-Worth recording as a cautionary note: before the donor labels arrived, the same
-test on *all* 8,612 cells gave 65% male. The calls it made were 98% accurate,
-but coverage was badly asymmetric — female cells went unassigned 55% of the
-time versus 14% for male, because one XIST locus is a weaker detector than nine
-pooled chrY genes. The method was sound; the marginal totals were not.
-
-# Stimulation state — 0 hr only
-
-The published design has three timepoints per batch (0 / 1 / 6 h after 53 mM
-KCl), so batch 21 has libraries `21-0`, `21-1`, `21-6`. Matching our 8,612
-barcodes against each:
-
-| Library | Timepoint | Barcodes | Overlap with our BAM |
-|---|---|---|---|
-| **21-0** | **0 hr, unstimulated** | 5,592 | **4,866 — 87.0%** |
-| 21-1 | 1 hr | 9,760 | 43 — 0.4% |
-| 21-6 | 6 hr | 7,895 | 48 — 0.6% |
-
-The 0.4–0.6% is what random 16-mer collisions between independent 10x libraries
-would give. So **this BAM is the unstimulated library only**, and
-`NP184`/`NP187`/`NP188` are most likely three sequencing runs of it rather than
-three timepoints.
-
-Corroborating evidence — immediate-early genes are low, with no activated
-population:
-
-| IEG | % of cells | IEG | % of cells |
+| IEG | % of cells (0 hr) | IEG | % of cells (0 hr) |
 |---|---|---|---|
 | BDNF | 16.1 | NR4A1 | 2.8 |
 | EGR1 | 12.6 | FOSB | 1.2 |
 | FOS | 9.6 | ARC | 0.9 |
 | JUNB | 9.6 | NPAS4 | 0.3 |
 
-**The 1 hr and 6 hr Nanopore libraries do exist** *[slides]* — 12,023 and
-10,051 cells respectively. We simply do not have them.
+The published design has ERGs (FOS, NPAS4) peaking at 1 h and LRGs (BDNF, VGF)
+at 6 h, so these should rise sharply in the 1 hr and 6 hr libraries. **Not yet
+measured on the new files** — worth doing as a positive control that the
+timepoints are what they claim.
 
-# What this means for the analysis
+# What is now possible
 
-**Splicing changes during the neuronal response** cannot be done with this file:
-there is no stimulated condition in it. It needs the `21-1` and `21-6` BAMs.
+**Differential splicing across stimulation** — 0 / 1 / 6 h for the same four
+donors, paired within donor, so donor genetics is controlled by construction.
+Given the intronic dominance, junction-level intron clustering
+(LeafCutter-style) is likely better powered here than isoform-level methods.
 
-**Allele-specific splicing** is feasible now. We have four donors with direct
-barcode-level assignment, so no genotype demultiplexing is required. The route
-is: split the BAM per donor → run isoLASER per donor → `isolaser_joint` across
-the four. See the [isoLASER page](isolaser.html).
+**Allele-specific splicing** — four donors with barcode-level assignment, so no
+genotype demultiplexing is needed. `isolaser_joint` can run over **12 samples
+(4 donors × 3 timepoints)**, or the timepoints can be pooled per donor for
+maximum depth since haplotypes do not change with stimulation. The chr21 test
+run is [here](isolaser_per_donor.html).
 
-Two caveats to size expectations:
+Caveat on scale: four donors is small for anything genetic — the paper used 100
+lines for its QTL mapping. What is realistically deliverable is allele-specific
+splicing within donors plus cross-donor consistency.
 
-* Four donors is a small cohort for anything genetic — the paper used 100 lines
-  for its QTL mapping. What is realistically deliverable is allele-specific
-  splicing within donors plus cross-donor consistency.
-* Read retention through isoLASER is **14.8%** (measured on chr21), dominated by
-  the intronic fraction above. And 97% of tested events were untestable for
-  linkage, because a heterozygous SNP and the splicing event must fall on the
-  same ~506 bp read.
+# Practical traps
+
+**`cell_barcodes_w_meta.txt.gz` is not line-parseable.** The
+`cell.type.counts` column is a plot label containing a literal newline, so
+every record spans two lines and the barcode sits on the *second*. `wc -l`
+reports 46,495 lines for 23,247 records, and `grep 21-1` returns rows without
+barcodes. Parse by re-pairing:
+
+```bash
+zcat cell_barcodes_w_meta.txt.gz | awk -F'\t' '
+  NF==15 { lib=$1; time=$4; line=$6; type=$13; next }
+  NF==2  { print $2"\t"lib"\t"time"\t"line"\t"type }'
+```
+
+**Do not use `samtools fastq` on these BAMs.** With ~20% of reads carrying
+`QUAL='*'`, mixed input makes it truncate silently — 629,035 reads in, 14,255
+out, no error. Each half converts correctly in isolation, so it is the
+interleaving. Convert explicitly and assert the read count.
 
 # Open questions
 
-1. Can we get the **1 hr and 6 hr** Nanopore BAMs?
-2. Is there documentation for this BAM? It carries no sample-level annotation —
-   `@RG` holds only a bare 16 bp barcode, with no `SM`/`LB`/`DS`.
-3. Can we get the **cell-line assignment before the cell-type filter** (5,035
-   rather than 4,866 cells)?
-4. At what stage were the **base qualities lost** for 20% of reads?
-5. Are there long-read data for **other coculture batches** beyond batch 21?
+1. Can we get the **cell-line assignment before the cell-type filter**
+   (5,035 / 8,097 / 6,911 rather than 4,866 / 7,891 / 6,625)?
+2. At what stage were the **base qualities lost** for 16–21% of reads?
+3. Is there documentation for these BAMs? They carry no sample-level
+   annotation — `@RG` holds only a bare 16 bp barcode, no `SM`/`LB`/`DS`.
+4. Are there long-read data for **other coculture batches** beyond batch 21?
+   Four donors limits the genetic analyses.

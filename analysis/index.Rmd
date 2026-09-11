@@ -11,10 +11,16 @@ editor_options:
 
 # Data
 
-* [Data summary](data_summary.html) — 8,612 cells, 61.2 M reads, 4 donors,
-  0 hr unstimulated; read properties, intronic dominance, and open questions
+* [Data summary — all three timepoints](data_summary.html) — 30,686 cells,
+  217 M reads, 4 donors x 0/1/6 h; per-library stats, donor assignment,
+  intronic dominance, and practical traps
 
 # Methods
 
 * [isoLASER — setup and running notes](isolaser.html) — installation, versions,
   how it is run, and the chr21 pilot
+
+# Results
+
+* [isoLASER per donor + joint — chr21 test run](isolaser_per_donor.html) —
+  splitting by donor, per-donor yields, and the joint analysis across 4 donors

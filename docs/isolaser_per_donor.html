@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="XSun" />
 
+<meta name="date" content="2026-09-11" />
 
-<title>Long-read RNA-seq in stimulated neurons</title>
+<title>isoLASER per donor + joint — chr21 test run</title>
 
 <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -231,6 +236,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -238,6 +306,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -281,8 +359,10 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Long-read RNA-seq in stimulated
-neurons</h1>
+<h1 class="title toc-ignore">isoLASER per donor + joint — chr21 test
+run</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-09-11</h4>
 
 </div>
 
@@ -349,10 +429,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -397,7 +477,6 @@ Untracked files:
     Untracked:  analysis/isolaser_per_donor.Rmd
 
 Unstaged changes:
-    Modified:   analysis/data_summary.Rmd
     Modified:   analysis/index.Rmd
 
 </code></pre>
@@ -413,166 +492,394 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML
-(<code>docs/index.html</code>) files. If you’ve configured a remote Git
-repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
-in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/long_read_rna/blob/70c6cc44d27c535ebd1f681a78d6774f08124d9c/analysis/index.Rmd" target="_blank">70c6cc4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-11
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/70c6cc44d27c535ebd1f681a78d6774f08124d9c/docs/index.html" target="_blank">70c6cc4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-11
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/long_read_rna/blob/a393d027eaecc42ab58bb695d3d9bc29c2ef617f/analysis/index.Rmd" target="_blank">a393d02</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-08
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/a393d027eaecc42ab58bb695d3d9bc29c2ef617f/docs/index.html" target="_blank">a393d02</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-08
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/f43fc4e96e73f6ae67ea11daecae88c545455e3f/docs/index.html" target="_blank">f43fc4e</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-08
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/long_read_rna/blob/fee7965471a170437cab7ad790008abf63276c98/analysis/index.Rmd" target="_blank">fee7965</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-08
-</td>
-<td>
-Start workflowr project.
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="data" class="section level1">
-<h1>Data</h1>
+<div id="what-this-run-is" class="section level1">
+<h1>What this run is</h1>
+<p>A <strong>test of the full per-donor → joint isoLASER
+pipeline</strong> on chr21, using the 0 hr library. The point was to
+establish that the chain runs correctly and to measure the event yield
+at per-donor depth before committing to a genome-wide run — not to
+produce biological results.</p>
+<p>Why per donor at all: isoLASER’s phasing assumes <strong>one diploid
+genome</strong> (weighted k-means, K = 2). Run on the pooled BAM it
+splits <em>donors</em> rather than haplotypes — we <a
+href="data_summary.html">demonstrated that directly</a>, so the pooled
+cis/trans calls were uninterpretable. Splitting first makes each donor’s
+haplotype table valid; <code>isolaser_joint</code> then pools those
+tables across donors.</p>
+<p>Scripts: <code>3.isolaser_per_donor/</code> —
+<code>1.split_bam_by_donor.sbatch</code>,
+<code>2.run_isolaser_per_donor.sbatch</code> (SLURM array),
+<code>3.run_isolaser_joint.sbatch</code>. All three completed.</p>
+</div>
+<div id="splitting-the-bam" class="section level1">
+<h1>Splitting the BAM</h1>
+<p>The cell barcode is in the <code>RG</code> tag, so
+<code>samtools view -R &lt;barcode_list&gt;</code> subsets by donor with
+no re-tagging:</p>
+<pre class="bash"><code>samtools view -b -R rg_CD_21.txt chr21.bam &gt; CD_21.chr21.bam</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Donor</th>
+<th>Sex</th>
+<th>Dx</th>
+<th>chr21 reads</th>
+<th>barcodes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CD_21</td>
+<td>M</td>
+<td>case</td>
+<td>101,115</td>
+<td>1,462</td>
+</tr>
+<tr class="even">
+<td>CD_31</td>
+<td>F</td>
+<td>control</td>
+<td>77,160</td>
+<td>1,236</td>
+</tr>
+<tr class="odd">
+<td>CD_36</td>
+<td>M</td>
+<td>case</td>
+<td>66,202</td>
+<td>823</td>
+</tr>
+<tr class="even">
+<td>CD_48</td>
+<td>F</td>
+<td>control</td>
+<td>95,383</td>
+<td>1,343</td>
+</tr>
+<tr class="odd">
+<td><strong>total</strong></td>
+<td></td>
+<td></td>
+<td><strong>339,860</strong></td>
+<td>4,864</td>
+</tr>
+</tbody>
+</table>
+<p>339,860 of chr21’s 629,035 reads (54%) — the remainder belong to the
+3,746 barcodes with no donor assignment, which are dropped.</p>
+</div>
+<div id="per-donor-results" class="section level1">
+<h1>Per-donor results</h1>
+<table style="width:100%;">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Donor</th>
+<th>reads in</th>
+<th>events tested</th>
+<th>cis</th>
+<th>trans</th>
+<th>untestable (<code>nan</code>)</th>
+<th>passing <code>isolaser_filter</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CD_21</td>
+<td>95,349</td>
+<td>169,060</td>
+<td>25</td>
+<td>2,423</td>
+<td>166,434</td>
+<td><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td>CD_31</td>
+<td>72,586</td>
+<td>131,704</td>
+<td>55</td>
+<td>2,117</td>
+<td>129,393</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>CD_36</td>
+<td>62,425</td>
+<td>123,492</td>
+<td>44</td>
+<td>1,544</td>
+<td>121,697</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>CD_48</td>
+<td>89,804</td>
+<td>146,969</td>
+<td>31</td>
+<td>2,357</td>
+<td>144,412</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Two things to take from this:</p>
 <ul>
-<li><a href="data_summary.html">Data summary — all three timepoints</a>
-— 30,686 cells, 217 M reads, 4 donors x 0/1/6 h; per-library stats,
-donor assignment, intronic dominance, and practical traps</li>
+<li><strong>98.5% of events are untestable.</strong> A heterozygous SNP
+and the splicing event must fall on the <em>same</em> read, and at ~506
+bp median read length with 62–101 k reads per donor, usually they do
+not.</li>
+<li><strong>Per-donor yield is very thin</strong> — CD_21 produced zero
+events passing the filter, the others 5–18.</li>
 </ul>
 </div>
-<div id="methods" class="section level1">
-<h1>Methods</h1>
-<ul>
-<li><a href="isolaser.html">isoLASER — setup and running notes</a> —
-installation, versions, how it is run, and the chr21 pilot</li>
-</ul>
+<div id="joint-results" class="section level1">
+<h1>Joint results</h1>
+<table>
+<tbody>
+<tr class="odd">
+<td>Events testable jointly</td>
+<td>1,936</td>
+</tr>
+<tr class="even">
+<td><strong>cis</strong></td>
+<td><strong>95</strong></td>
+</tr>
+<tr class="odd">
+<td>ambiguous</td>
+<td>37</td>
+</tr>
+<tr class="even">
+<td>trans</td>
+<td>1,804</td>
+</tr>
+</tbody>
+</table>
+<p>The joint step recovers more than any single donor (95 vs 25–55),
+which is the expected behaviour: it pools depth-normalised haplotype
+counts across donors and asks whether the <em>same allele</em>
+associates with the <em>same</em> splicing change in independent
+individuals.</p>
+<p>Coverage is good — of the 95 cis events, <strong>86 have DP ≥ 10 in
+all four donors</strong>, and none rest on a single donor:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Donors with data</th>
+<th>Events</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>86</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<div id="but-95-events-is-not-95-signals" class="section level2">
+<h2>But 95 events is not 95 signals</h2>
+<p>Collapsing by gene and variant:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rows</td>
+<td>95</td>
+</tr>
+<tr class="even">
+<td>Unique exonic parts</td>
+<td>75</td>
+</tr>
+<tr class="odd">
+<td><strong>Unique variants</strong></td>
+<td><strong>19</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Unique genes</strong></td>
+<td><strong>7</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Gene</th>
+<th>Events</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COL6A1</td>
+<td>39</td>
+</tr>
+<tr class="even">
+<td>IFNAR1</td>
+<td>30</td>
+</tr>
+<tr class="odd">
+<td>TTC3</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>GET1</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>GART</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>ATP5PF</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>SPATC1L</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>So chr21 yields <strong>7 genes</strong>. Two of them (COL6A1,
+IFNAR1) account for 73% of rows, because one variant is tested against
+many overlapping exonic parts in the same gene. <strong>Always collapse
+by gene or variant before interpreting or counting.</strong></p>
 </div>
-<div id="results" class="section level1">
-<h1>Results</h1>
+<div id="top-events-by-δpsi" class="section level2">
+<h2>Top events by ΔPSI</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Gene</th>
+<th>Variant</th>
+<th>Exonic part</th>
+<th>ΔPSI</th>
+<th>COV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GART</td>
+<td>chr21:33535273 C&gt;T</td>
+<td>33542547–33542586 (−)</td>
+<td>0.539</td>
+<td>31</td>
+</tr>
+<tr class="even">
+<td>TTC3</td>
+<td>chr21:37201716 C&gt;T</td>
+<td>37157160–37157214 (+)</td>
+<td>0.358</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>IFNAR1</td>
+<td>chr21:33341122 G&gt;A</td>
+<td>33324903–33324921 (+)</td>
+<td>0.239</td>
+<td>86</td>
+</tr>
+<tr class="even">
+<td>IFNAR1</td>
+<td>chr21:33341116 G&gt;A</td>
+<td>33355865–33355870 (+)</td>
+<td>0.181</td>
+<td>316</td>
+</tr>
+</tbody>
+</table>
+<p>The IFNAR1 rows are the better-supported ones: all four donors carry
+DP 68–176 with consistent PSI. GART and TTC3 have the largest effects
+but rest on COV 31–34, so treat them as provisional.</p>
+</div>
+</div>
+<div id="verdict" class="section level1">
+<h1>Verdict</h1>
+<p><strong>The pipeline works.</strong> Split → per donor →
+<code>combine_vcf</code> (GATK) → <code>isolaser_joint</code> runs
+clean, and the joint step behaves as designed.</p>
+<p><strong>The yield at this depth does not support biology.</strong> 7
+genes on chr21, with per-donor filtered counts of 0–18, is a plumbing
+result.</p>
+</div>
+<div id="scaling-up" class="section level1">
+<h1>Scaling up</h1>
+<p>chr21 is ~1.5% of the genome. Genome-wide gives each donor
+<strong>6.2–9.3 M reads</strong> instead of 62–101 k — roughly 90× more
+— which should lift per-donor yields into a usable range.</p>
+<p>With all three timepoints now available, the joint analysis could
+also run over <strong>12 samples (4 donors × 3 timepoints)</strong>
+rather than 4. Alternatively the timepoints can be pooled per donor to
+maximise depth, since haplotypes do not change with stimulation.</p>
+<div id="blocker-for-the-genome-wide-run" class="section level2">
+<h2>Blocker for the genome-wide run</h2>
+<p>We only have <code>chr21.fa</code>. Going genome-wide needs:</p>
+<ol style="list-style-type: decimal">
+<li>the full GRCh38 FASTA (<code>refdata-gex-GRCh38-2024-A</code>, ~11
+GB), indexed with <code>.fai</code> and <code>.dict</code></li>
+<li>the GTF normalisation, transcriptome FASTA and exonic-parts DB
+rebuilt for all contigs</li>
+</ol>
+</div>
+</div>
+<div id="notes-for-reproducing" class="section level1">
+<h1>Notes for reproducing</h1>
+<p>Several non-obvious things are baked into the scripts:</p>
 <ul>
-<li><a href="isolaser_per_donor.html">isoLASER per donor + joint — chr21
-test run</a> — splitting by donor, per-donor yields, and the joint
-analysis across 4 donors</li>
+<li><strong>Do not use <code>samtools fastq</code>.</strong> 20.5% of
+reads have <code>QUAL='*'</code>, and mixed QUAL/no-QUAL input makes it
+truncate silently — 629,035 reads in, 14,255 out, no error. The scripts
+convert with <code>awk</code> and assert the read count matches.</li>
+<li><strong><code>isolaser_extract_exon_parts</code> does not create its
+<code>-o</code> directory.</strong> <code>mkdir -p</code> first or it
+dies in pandas.</li>
+<li><strong>Keep the <code>#chrom</code> header on line 1</strong> of
+<code>mi_summary.tab</code> before bgzip — <code>isolaser_filter</code>
+uses <code>pd.read_csv(..., escapechar='#')</code> and fails with
+<code>KeyError: 'label'</code> if it has been sorted into the body.</li>
+<li><strong><code>PyVCF3</code> is required but undeclared</strong> —
+<code>setup.cfg</code> has <code>#PyVCF</code> commented out, so
+<code>isolaser_joint</code> dies on <code>import vcf</code> until it is
+installed.</li>
+<li><strong>Pass <code>-n</code></strong> — isoLASER spawns 64 processes
+by default, which the login-node watchdog kills. Run under SLURM.</li>
+<li><strong><code>|| true</code> after <code>sort | head</code></strong>
+— <code>set -o pipefail</code> otherwise turns SIGPIPE from
+<code>head</code> into a job failure <em>after</em> the analysis has
+succeeded.</li>
+<li>Results are <strong>not bit-reproducible</strong>; phasing uses
+k-means with random initialisation, so marginal events move between
+runs.</li>
 </ul>
 </div>
 
@@ -592,6 +899,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -624,6 +933,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -1,0 +1,178 @@
+---
+title: "isoLASER per donor + joint — chr21 test run"
+author: "XSun"
+date: "2026-09-11"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+editor_options:
+  chunk_output_type: console
+---
+
+# What this run is
+
+A **test of the full per-donor → joint isoLASER pipeline** on chr21, using the
+0 hr library. The point was to establish that the chain runs correctly and to
+measure the event yield at per-donor depth before committing to a genome-wide
+run — not to produce biological results.
+
+Why per donor at all: isoLASER's phasing assumes **one diploid genome**
+(weighted k-means, K = 2). Run on the pooled BAM it splits *donors* rather than
+haplotypes — we
+[demonstrated that directly](data_summary.html), so the pooled cis/trans calls
+were uninterpretable. Splitting first makes each donor's haplotype table valid;
+`isolaser_joint` then pools those tables across donors.
+
+Scripts: `3.isolaser_per_donor/` — `1.split_bam_by_donor.sbatch`,
+`2.run_isolaser_per_donor.sbatch` (SLURM array), `3.run_isolaser_joint.sbatch`.
+All three completed.
+
+# Splitting the BAM
+
+The cell barcode is in the `RG` tag, so `samtools view -R <barcode_list>`
+subsets by donor with no re-tagging:
+
+```bash
+samtools view -b -R rg_CD_21.txt chr21.bam > CD_21.chr21.bam
+```
+
+| Donor | Sex | Dx | chr21 reads | barcodes |
+|---|---|---|---|---|
+| CD_21 | M | case | 101,115 | 1,462 |
+| CD_31 | F | control | 77,160 | 1,236 |
+| CD_36 | M | case | 66,202 | 823 |
+| CD_48 | F | control | 95,383 | 1,343 |
+| **total** | | | **339,860** | 4,864 |
+
+339,860 of chr21's 629,035 reads (54%) — the remainder belong to the 3,746
+barcodes with no donor assignment, which are dropped.
+
+# Per-donor results
+
+| Donor | reads in | events tested | cis | trans | untestable (`nan`) | passing `isolaser_filter` |
+|---|---|---|---|---|---|---|
+| CD_21 | 95,349 | 169,060 | 25 | 2,423 | 166,434 | **0** |
+| CD_31 | 72,586 | 131,704 | 55 | 2,117 | 129,393 | 18 |
+| CD_36 | 62,425 | 123,492 | 44 | 1,544 | 121,697 | 11 |
+| CD_48 | 89,804 | 146,969 | 31 | 2,357 | 144,412 | 5 |
+
+Two things to take from this:
+
+* **98.5% of events are untestable.** A heterozygous SNP and the splicing event
+  must fall on the *same* read, and at ~506 bp median read length with
+  62–101 k reads per donor, usually they do not.
+* **Per-donor yield is very thin** — CD_21 produced zero events passing the
+  filter, the others 5–18.
+
+# Joint results
+
+| | |
+|---|---|
+| Events testable jointly | 1,936 |
+| **cis** | **95** |
+| ambiguous | 37 |
+| trans | 1,804 |
+
+The joint step recovers more than any single donor (95 vs 25–55), which is the
+expected behaviour: it pools depth-normalised haplotype counts across donors
+and asks whether the *same allele* associates with the *same* splicing change
+in independent individuals.
+
+Coverage is good — of the 95 cis events, **86 have DP ≥ 10 in all four
+donors**, and none rest on a single donor:
+
+| Donors with data | Events |
+|---|---|
+| 4 | 86 |
+| 3 | 5 |
+| 2 | 4 |
+| 1 | 0 |
+
+## But 95 events is not 95 signals
+
+Collapsing by gene and variant:
+
+| | Count |
+|---|---|
+| Rows | 95 |
+| Unique exonic parts | 75 |
+| **Unique variants** | **19** |
+| **Unique genes** | **7** |
+
+| Gene | Events |
+|---|---|
+| COL6A1 | 39 |
+| IFNAR1 | 30 |
+| TTC3 | 10 |
+| GET1 | 7 |
+| GART | 4 |
+| ATP5PF | 4 |
+| SPATC1L | 1 |
+
+So chr21 yields **7 genes**. Two of them (COL6A1, IFNAR1) account for 73% of
+rows, because one variant is tested against many overlapping exonic parts in
+the same gene. **Always collapse by gene or variant before interpreting or
+counting.**
+
+## Top events by ΔPSI
+
+| Gene | Variant | Exonic part | ΔPSI | COV |
+|---|---|---|---|---|
+| GART | chr21:33535273 C>T | 33542547–33542586 (−) | 0.539 | 31 |
+| TTC3 | chr21:37201716 C>T | 37157160–37157214 (+) | 0.358 | 34 |
+| IFNAR1 | chr21:33341122 G>A | 33324903–33324921 (+) | 0.239 | 86 |
+| IFNAR1 | chr21:33341116 G>A | 33355865–33355870 (+) | 0.181 | 316 |
+
+The IFNAR1 rows are the better-supported ones: all four donors carry
+DP 68–176 with consistent PSI. GART and TTC3 have the largest effects but rest
+on COV 31–34, so treat them as provisional.
+
+# Verdict
+
+**The pipeline works.** Split → per donor → `combine_vcf` (GATK) →
+`isolaser_joint` runs clean, and the joint step behaves as designed.
+
+**The yield at this depth does not support biology.** 7 genes on chr21, with
+per-donor filtered counts of 0–18, is a plumbing result.
+
+# Scaling up
+
+chr21 is ~1.5% of the genome. Genome-wide gives each donor **6.2–9.3 M reads**
+instead of 62–101 k — roughly 90× more — which should lift per-donor yields
+into a usable range.
+
+With all three timepoints now available, the joint analysis could also run over
+**12 samples (4 donors × 3 timepoints)** rather than 4. Alternatively the
+timepoints can be pooled per donor to maximise depth, since haplotypes do not
+change with stimulation.
+
+## Blocker for the genome-wide run
+
+We only have `chr21.fa`. Going genome-wide needs:
+
+1. the full GRCh38 FASTA (`refdata-gex-GRCh38-2024-A`, ~11 GB), indexed with
+   `.fai` and `.dict`
+2. the GTF normalisation, transcriptome FASTA and exonic-parts DB rebuilt for
+   all contigs
+
+# Notes for reproducing
+
+Several non-obvious things are baked into the scripts:
+
+* **Do not use `samtools fastq`.** 20.5% of reads have `QUAL='*'`, and mixed
+  QUAL/no-QUAL input makes it truncate silently — 629,035 reads in, 14,255 out,
+  no error. The scripts convert with `awk` and assert the read count matches.
+* **`isolaser_extract_exon_parts` does not create its `-o` directory.** `mkdir -p`
+  first or it dies in pandas.
+* **Keep the `#chrom` header on line 1** of `mi_summary.tab` before bgzip —
+  `isolaser_filter` uses `pd.read_csv(..., escapechar='#')` and fails with
+  `KeyError: 'label'` if it has been sorted into the body.
+* **`PyVCF3` is required but undeclared** — `setup.cfg` has `#PyVCF` commented
+  out, so `isolaser_joint` dies on `import vcf` until it is installed.
+* **Pass `-n`** — isoLASER spawns 64 processes by default, which the login-node
+  watchdog kills. Run under SLURM.
+* **`|| true` after `sort | head`** — `set -o pipefail` otherwise turns SIGPIPE
+  from `head` into a job failure *after* the analysis has succeeded.
+* Results are **not bit-reproducible**; phasing uses k-means with random
+  initialisation, so marginal events move between runs.

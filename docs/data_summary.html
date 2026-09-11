@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-09-11" />
 
-<title>Data Summary</title>
+<title>Data Summary — all three timepoints</title>
 
 <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -359,7 +359,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data Summary</h1>
+<h1 class="title toc-ignore">Data Summary — all three timepoints</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2026-09-11</h4>
 
@@ -440,15 +440,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0665a25de4ede0281b01a8b5665b4b581a66c679targetblank0665a25a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree70c6cc44d27c535ebd1f681a78d6774f08124d9ctargetblank70c6cc4a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/0665a25de4ede0281b01a8b5665b4b581a66c679" target="_blank">0665a25</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/70c6cc44d27c535ebd1f681a78d6774f08124d9c" target="_blank">70c6cc4</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0665a25de4ede0281b01a8b5665b4b581a66c679targetblank0665a25a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree70c6cc44d27c535ebd1f681a78d6774f08124d9ctargetblank70c6cc4a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -458,7 +458,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/0665a25de4ede0281b01a8b5665b4b581a66c679" target="_blank">0665a25</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/70c6cc44d27c535ebd1f681a78d6774f08124d9c" target="_blank">70c6cc4</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -473,7 +473,7 @@ were generated:
 </p>
 <pre><code>
 Untracked files:
-    Untracked:  analysis/isolaser.Rmd
+    Untracked:  analysis/isolaser_per_donor.Rmd
 
 Unstaged changes:
     Modified:   analysis/data_summary.Rmd
@@ -523,6 +523,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/70c6cc44d27c535ebd1f681a78d6774f08124d9c/analysis/data_summary.Rmd" target="_blank">70c6cc4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-11
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/70c6cc44d27c535ebd1f681a78d6774f08124d9c/docs/data_summary.html" target="_blank">70c6cc4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-11
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -600,53 +634,509 @@ update
 </div>
 <div id="the-dataset" class="section level1">
 <h1>The dataset</h1>
-<pre><code>data/NP184_NP187_NP188_combined_DUAN_21-0/
-  merged.curated.minimap2.bam       27.5 GB
-  merged.curated.minimap2.bam.bai</code></pre>
-<p>Long-read single-nucleus RNA-seq of hiPSC-derived neurons from the
-Duan lab. The same cells and donors as <a
+<p>Long-read (Oxford Nanopore) single-nucleus RNA-seq of hiPSC-derived
+neurons from the Duan lab — the same cells and donors as <a
 href="https://www.science.org/doi/10.1126/science.adw3949">Liang et al.,
-<em>Science</em> 392:eadw3949 (2026)</a> — this is a Nanopore assay on
-one of that study’s libraries, and is not itself published.</p>
-<p>Numbers below are <strong>measured from the BAM</strong> unless
-tagged <em>[metadata]</em> (from Table S1 of the paper, or
+<em>Science</em> 392:eadw3949 (2026)</a>, assayed on Nanopore rather
+than the published 10x Multiome. Not itself published.</p>
+<pre><code>data/NP184_NP187_NP188_combined_DUAN_21-0/   0 hr   27.5 GB
+data/NP189_NP190_NP193_combined_DUAN_21-1/   1 hr   34.2 GB
+data/NP191_NP192_NP194_combined_DUAN_21-6/   6 hr   36.4 GB</code></pre>
+<p><strong>Coculture batch 21, four donors, three KCl-stimulation
+timepoints (0 / 1 / 6 h).</strong> The three <code>NP</code> identifiers
+in each name are sequencing runs (flow cells) of that one library —
+three per library, all distinct across the three files.</p>
+<p>Numbers below are <strong>measured from the BAMs</strong> unless
+tagged <em>[metadata]</em> (Table S1 of the paper, or
 <code>cell_barcodes_w_meta.txt.gz</code>) or <em>[slides]</em> (the
 scNanoGPS statistics we were sent).</p>
 </div>
 <div id="headline-numbers" class="section level1">
 <h1>Headline numbers</h1>
 <table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0 hr</th>
+<th>1 hr</th>
+<th>6 hr</th>
+<th>total</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td>Cell barcodes</td>
-<td><strong>8,612</strong></td>
+<td>8,612</td>
+<td>12,023</td>
+<td>10,051</td>
+<td><strong>30,686</strong></td>
 </tr>
 <tr class="even">
-<td>Primary reads (= molecules)</td>
-<td><strong>61,189,011</strong></td>
+<td>Primary reads</td>
+<td>61.19 M</td>
+<td>75.62 M</td>
+<td>80.65 M</td>
+<td><strong>217.46 M</strong></td>
 </tr>
 <tr class="odd">
-<td>Donors</td>
-<td><strong>4</strong> (2 male / 2 female, 2 SCZ case / 2 control)</td>
+<td>Cells with donor assignment</td>
+<td>4,866</td>
+<td>7,891</td>
+<td>6,625</td>
+<td><strong>19,382</strong></td>
 </tr>
 <tr class="even">
-<td>Stimulation state</td>
-<td><strong>0 hr only — unstimulated</strong></td>
+<td>Reads in assigned cells</td>
+<td>31.76 M</td>
+<td>46.73 M</td>
+<td>50.57 M</td>
+<td><strong>129.06 M</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Four donors present at every timepoint, so the design is
+<strong>paired within donor across stimulation</strong>.</p>
+</div>
+<div id="library-identity" class="section level1">
+<h1>Library identity</h1>
+<p>Each BAM’s barcodes were cross-matched against all three library
+barcode lists <em>[metadata]</em>. Each matches its own and essentially
+nothing else:</p>
+<table>
+<thead>
+<tr class="header">
+<th>BAM</th>
+<th>vs 21-0</th>
+<th>vs 21-1</th>
+<th>vs 21-6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DUAN_21-0</code></td>
+<td><strong>87.0%</strong></td>
+<td>0.4%</td>
+<td>0.6%</td>
+</tr>
+<tr class="even">
+<td><code>DUAN_21-1</code></td>
+<td>1.9%</td>
+<td><strong>80.8%</strong></td>
+<td>0.4%</td>
 </tr>
 <tr class="odd">
-<td>Cells with a donor assignment</td>
-<td>4,866 (56.5%)</td>
+<td><code>DUAN_21-6</code></td>
+<td>1.4%</td>
+<td>1.5%</td>
+<td><strong>83.9%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Off-diagonal values are at or below what random 16-mer collisions
+between independent 10x libraries would give. Cell counts also match the
+scNanoGPS “Cell number” exactly for all three <em>[slides]</em>: 8,612 /
+12,023 / 10,051.</p>
+</div>
+<div id="per-library-statistics" class="section level1">
+<h1>Per-library statistics</h1>
+<p>Full pass over every primary read in each library.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0 hr</th>
+<th>1 hr</th>
+<th>6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cells</td>
+<td>8,612</td>
+<td>12,023</td>
+<td>10,051</td>
+</tr>
+<tr class="even">
+<td>Primary reads</td>
+<td>61,189,011</td>
+<td>75,617,929</td>
+<td>80,650,873</td>
+</tr>
+<tr class="odd">
+<td>Total alignment records</td>
+<td>85,465,939</td>
+<td>102,144,372</td>
+<td>108,264,439</td>
+</tr>
+<tr class="even">
+<td>Median UMIs / cell</td>
+<td>4,967</td>
+<td>4,622</td>
+<td>6,028</td>
+</tr>
+<tr class="odd">
+<td>Mean UMIs / cell</td>
+<td>7,105</td>
+<td>6,289</td>
+<td>8,024</td>
+</tr>
+<tr class="even">
+<td>Mean read length</td>
+<td>617 bp</td>
+<td>610 bp</td>
+<td>627 bp</td>
+</tr>
+<tr class="odd">
+<td>Median read length</td>
+<td>578 bp</td>
+<td>512 bp</td>
+<td>541 bp</td>
+</tr>
+<tr class="even">
+<td><strong>% spliced</strong></td>
+<td>19.45%</td>
+<td>20.17%</td>
+<td>19.87%</td>
+</tr>
+<tr class="odd">
+<td><strong>% no base quality</strong></td>
+<td>20.81%</td>
+<td>16.16%</td>
+<td>19.15%</td>
+</tr>
+<tr class="even">
+<td><strong>% chrM</strong></td>
+<td>6.27%</td>
+<td>7.48%</td>
+<td>6.53%</td>
+</tr>
+</tbody>
+</table>
+<p>The three libraries are <strong>remarkably consistent</strong> — %
+spliced within 0.7 points, read length within 17 bp. So QC thresholds
+and pipeline settings established on one apply to all three.</p>
+<p>Read-length percentiles (100 k sample):</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>p10</th>
+<th>p25</th>
+<th>median</th>
+<th>p75</th>
+<th>p90</th>
+<th>p99</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 hr</td>
+<td>306</td>
+<td>412</td>
+<td>578</td>
+<td>776</td>
+<td>1,005</td>
+<td>2,044</td>
+</tr>
+<tr class="even">
+<td>1 hr</td>
+<td>276</td>
+<td>353</td>
+<td>512</td>
+<td>753</td>
+<td>1,049</td>
+<td>2,110</td>
+</tr>
+<tr class="odd">
+<td>6 hr</td>
+<td>273</td>
+<td>367</td>
+<td>541</td>
+<td>773</td>
+<td>1,054</td>
+<td>2,128</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Always filter with <code>-F 0x900</code>.</strong> Secondary
+alignments are 26–28% of records.</p>
+<p>The BAMs are already <strong>UMI-deduplicated</strong> (1.01 reads
+per barcode-UMI pair at 0 hr), so primary reads ≈ unique molecules.</p>
+</div>
+<div id="donor-assignment" class="section level1">
+<h1>Donor assignment</h1>
+<p><em>[metadata]</em> Four donors, balanced 2 cases / 2 controls and 2
+male / 2 female, all European ancestry, coculture batch 21, sequencing
+batch 25.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Donor</th>
+<th>Sex</th>
+<th>Diagnosis</th>
+<th>Age</th>
+<th>dbGaP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CD_21</td>
+<td>M</td>
+<td>case</td>
+<td>29</td>
+<td>phs000167.v1.p1</td>
+</tr>
+<tr class="even">
+<td>CD_31</td>
+<td>F</td>
+<td>control</td>
+<td>29</td>
+<td>phs000021.v3.p2</td>
+</tr>
+<tr class="odd">
+<td>CD_36</td>
+<td>M</td>
+<td>case</td>
+<td>57</td>
+<td>phs000021.v3.p2</td>
+</tr>
+<tr class="even">
+<td>CD_48</td>
+<td>F</td>
+<td>control</td>
+<td>72</td>
+<td>phs000167.v1.p1</td>
+</tr>
+</tbody>
+</table>
+<div id="cells-per-donor" class="section level2">
+<h2>Cells per donor</h2>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Timepoint</th>
+<th>CD_21</th>
+<th>CD_31</th>
+<th>CD_36</th>
+<th>CD_48</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 hr</td>
+<td>1,463</td>
+<td>1,237</td>
+<td>823</td>
+<td>1,343</td>
+<td>4,866</td>
+</tr>
+<tr class="even">
+<td>1 hr</td>
+<td>2,122</td>
+<td>2,146</td>
+<td>1,267</td>
+<td>2,356</td>
+<td>7,891</td>
+</tr>
+<tr class="odd">
+<td>6 hr</td>
+<td>1,936</td>
+<td>1,746</td>
+<td>1,056</td>
+<td>1,887</td>
+<td>6,625</td>
+</tr>
+<tr class="even">
+<td><strong>total</strong></td>
+<td><strong>5,521</strong></td>
+<td><strong>5,129</strong></td>
+<td><strong>3,146</strong></td>
+<td><strong>5,586</strong></td>
+<td><strong>19,382</strong></td>
 </tr>
 </tbody>
 </table>
 </div>
+<div id="reads-per-donor-millions" class="section level2">
+<h2>Reads per donor (millions)</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Timepoint</th>
+<th>CD_21</th>
+<th>CD_31</th>
+<th>CD_36</th>
+<th>CD_48</th>
+<th>assigned</th>
+<th>unassigned</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 hr</td>
+<td>9.30</td>
+<td>7.47</td>
+<td>6.25</td>
+<td>8.75</td>
+<td>31.76</td>
+<td>29.42</td>
+</tr>
+<tr class="even">
+<td>1 hr</td>
+<td>12.66</td>
+<td>12.35</td>
+<td>7.85</td>
+<td>13.87</td>
+<td>46.73</td>
+<td>28.89</td>
+</tr>
+<tr class="odd">
+<td>6 hr</td>
+<td>14.97</td>
+<td>13.22</td>
+<td>8.44</td>
+<td>13.93</td>
+<td>50.57</td>
+<td>30.08</td>
+</tr>
+</tbody>
+</table>
+<p>CD_36 is consistently the smallest donor (~6–8 M reads); the others
+are 7–15 M. Every donor × timepoint cell has at least 6.2 M reads, which
+is ample for per-sample isoLASER.</p>
+</div>
+<div id="coverage-of-the-assignment" class="section level2">
+<h2>Coverage of the assignment</h2>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Timepoint</th>
+<th>BAM cells</th>
+<th>Cell-line <em>[slides]</em></th>
+<th>%</th>
+<th>Both line + type <em>[metadata]</em></th>
+<th>%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 hr</td>
+<td>8,612</td>
+<td>5,035</td>
+<td>58.46%</td>
+<td>4,866</td>
+<td>56.50%</td>
+</tr>
+<tr class="even">
+<td>1 hr</td>
+<td>12,023</td>
+<td>8,097</td>
+<td>67.35%</td>
+<td>7,891</td>
+<td>65.63%</td>
+</tr>
+<tr class="odd">
+<td>6 hr</td>
+<td>10,051</td>
+<td>6,911</td>
+<td>68.76%</td>
+<td>6,625</td>
+<td>65.91%</td>
+</tr>
+</tbody>
+</table>
+<p>The small gap (169 / 206 / 286 cells) is the cell-type filter: the
+mapping file contains only
+<code>GABA</code>/<code>nmglut</code>/<code>npglut</code>, so it is the
+<em>intersection</em> of the cell-line and cell-type calls. For
+allele-specific splicing only the donor matters, so the unfiltered
+cell-line list would be slightly preferable.</p>
+<p>Note 0 hr has a lower assignment rate (56.5%) than 1 hr and 6 hr
+(~66%) — the unstimulated library had proportionally more cells failing
+QC.</p>
+</div>
+<div id="unassigned-cells-are-modestly-worse" class="section level2">
+<h2>Unassigned cells are modestly worse</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Timepoint</th>
+<th>group</th>
+<th>median UMIs</th>
+<th>% chrM</th>
+<th>% spliced</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 hr</td>
+<td>assigned</td>
+<td>4,867</td>
+<td>5.85%</td>
+<td>17.94%</td>
+</tr>
+<tr class="even">
+<td>0 hr</td>
+<td>unassigned</td>
+<td>5,072</td>
+<td>6.71%</td>
+<td>21.08%</td>
+</tr>
+<tr class="odd">
+<td>1 hr</td>
+<td>assigned</td>
+<td>4,598</td>
+<td>6.82%</td>
+<td>19.29%</td>
+</tr>
+<tr class="even">
+<td>1 hr</td>
+<td>unassigned</td>
+<td>4,734</td>
+<td>8.55%</td>
+<td>21.60%</td>
+</tr>
+<tr class="odd">
+<td>6 hr</td>
+<td>assigned</td>
+<td>6,067</td>
+<td>5.96%</td>
+<td>18.88%</td>
+</tr>
+<tr class="even">
+<td>6 hr</td>
+<td>unassigned</td>
+<td>5,937</td>
+<td>7.49%</td>
+<td>21.53%</td>
+</tr>
+</tbody>
+</table>
+<p>Consistently higher mitochondrial content but comparable depth — so
+they are cells that failed the published QC rather than empty droplets.
+Dropping them costs ~30 M reads per timepoint (~48%, ~38%, ~37%).</p>
+</div>
+</div>
 <div id="platform-and-processing" class="section level1">
 <h1>Platform and processing</h1>
 <table>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
 <tbody>
 <tr class="odd">
 <td>Sequencing</td>
@@ -654,7 +1144,7 @@ scNanoGPS statistics we were sent).</p>
 </tr>
 <tr class="even">
 <td>Chemistry</td>
-<td>10x Genomics Multiome / scARC — 16 bp cell barcode + 12 bp UMI</td>
+<td>10x Multiome / scARC — 16 bp cell barcode + 12 bp UMI</td>
 </tr>
 <tr class="odd">
 <td>Pre-processing</td>
@@ -662,7 +1152,7 @@ scNanoGPS statistics we were sent).</p>
 </tr>
 <tr class="even">
 <td>Aligner</td>
-<td>minimap2, spliced mode</td>
+<td>minimap2, spliced</td>
 </tr>
 <tr class="odd">
 <td>Reference</td>
@@ -678,128 +1168,24 @@ scNanoGPS statistics we were sent).</p>
 </tr>
 </tbody>
 </table>
-<p>Two conventions inherited from scNanoGPS are worth knowing, because
-most single-cell tooling assumes otherwise:</p>
+<p>Two scNanoGPS conventions differ from what single-cell tooling
+expects:</p>
 <ul>
-<li>the <strong>cell barcode lives in the <code>RG</code> tag</strong>,
-not <code>CB</code></li>
-<li>the <strong>UMI is appended to the read name</strong>
-(<code>&lt;ONT-UUID&gt;_&lt;12bp UMI&gt;</code>), not in
+<li>the <strong>cell barcode is in the <code>RG</code> tag</strong>, not
+<code>CB</code></li>
+<li>the <strong>UMI is appended to the read name</strong>, not in
 <code>UB</code></li>
 </ul>
-<p>Example read:</p>
 <pre><code>QNAME  281b9c59-a0da-477b-84b9-d9895f6ec585_TTCAAGATATAT
 RG:Z:  TTCGTTAGTACCAGGT</code></pre>
+<p>This is convenient for one thing:
+<code>samtools view -R &lt;barcode_list&gt;</code> splits a BAM by donor
+directly, with no re-tagging.</p>
 </div>
-<div id="cells" class="section level1">
-<h1>Cells</h1>
-<table>
-<tbody>
-<tr class="odd">
-<td>Cell barcodes</td>
-<td><strong>8,612</strong></td>
-</tr>
-<tr class="even">
-<td>— all exactly 16 bp, all carrying reads</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Median UMIs / cell</td>
-<td>4,967</td>
-</tr>
-<tr class="even">
-<td>Mean UMIs / cell</td>
-<td>7,105</td>
-</tr>
-<tr class="odd">
-<td>Minimum</td>
-<td>508 reads / cell</td>
-</tr>
-</tbody>
-</table>
-<p>The 8,612 barcodes account for all 61,189,011 primary reads, so there
-are no empty or orphaned read groups. The 508-read floor means empty
-droplets were already filtered upstream.</p>
-<p>This matches the scNanoGPS “Cell number” for group 21 / 0 hr exactly
-<em>[slides]</em>, which is one of the strongest pieces of evidence for
-which library this is.</p>
-</div>
-<div id="reads" class="section level1">
-<h1>Reads</h1>
-<table>
-<tbody>
-<tr class="odd">
-<td>Alignment records</td>
-<td>85,465,939</td>
-</tr>
-<tr class="even">
-<td><strong>Primary</strong></td>
-<td><strong>61,189,011</strong></td>
-</tr>
-<tr class="odd">
-<td>Secondary (multimappers, retained)</td>
-<td>23,879,762</td>
-</tr>
-<tr class="even">
-<td>Supplementary</td>
-<td>397,166</td>
-</tr>
-<tr class="odd">
-<td>Mapped</td>
-<td>99.99%</td>
-</tr>
-<tr class="even">
-<td>Marked duplicates</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Always filter with <code>-F 0x900</code>.</strong> Secondary
-alignments are 28% of records and inflate any naive count — unevenly,
-since they concentrate in repeats.</p>
-<p>The BAM is already <strong>UMI-deduplicated</strong>: 1.01 reads per
-(barcode, UMI) pair, so reads ≈ unique molecules.</p>
-</div>
-<div id="read-characteristics" class="section level1">
-<h1>Read characteristics</h1>
-<table>
-<tbody>
-<tr class="odd">
-<td>Median read length</td>
-<td><strong>506 bp</strong> (mean 617, p90 1,115, max ~6 kb)</td>
-</tr>
-<tr class="even">
-<td>Reads containing a splice junction</td>
-<td><strong>27.3%</strong></td>
-</tr>
-<tr class="odd">
-<td>Median per-read error rate</td>
-<td>~1.1%</td>
-</tr>
-<tr class="even">
-<td>Soft-clipped reads</td>
-<td>97.8%</td>
-</tr>
-<tr class="odd">
-<td><strong>Reads with no base-quality string</strong></td>
-<td><strong>20.5%</strong> (<code>QUAL</code> = <code>*</code>)</td>
-</tr>
-</tbody>
-</table>
-<p>The near-universal soft clipping is untrimmed polyA/adapter. It turns
-out to be harmless for isoLASER (its <code>large_soft_clip</code> filter
-removed only 225 of 585,767 reads).</p>
-<p>The missing base qualities are more consequential than they look.
-Besides mattering for variant calling, <strong>mixed QUAL/no-QUAL reads
-silently break <code>samtools fastq</code></strong>: it reported
-<code>processed 629035 reads</code> while writing only 14,255 — a 97.7%
-loss with no error. Splitting the input by QUAL presence converts both
-halves correctly, so it is the interleaving that breaks it. Convert with
-an explicit parser instead.</p>
-</div>
-<div id="genomic-context-mostly-intronic" class="section level1">
-<h1>Genomic context — mostly intronic</h1>
-<p>Read midpoints against the IsoQuant annotation, chr21:</p>
+<div id="the-constraint-that-matters-most-intronic-dominance"
+class="section level1">
+<h1>The constraint that matters most: intronic dominance</h1>
+<p>Read midpoints against the IsoQuant annotation, chr21 (0 hr):</p>
 <table>
 <thead>
 <tr class="header">
@@ -826,219 +1212,39 @@ an explicit parser instead.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>This is the single most important property for the splicing
-aims.</strong> It is single-<em>nucleus</em> RNA, so the library is
-dominated by unspliced nuclear pre-mRNA. Reads sitting in introns cannot
-be assigned to a mature transcript, which is exactly what exon-centric
-isoform methods require.</p>
+<p>This is single-<em>nucleus</em> RNA, so the libraries are dominated
+by unspliced nuclear pre-mRNA. Reads inside introns cannot be assigned
+to a mature transcript, which is what exon-centric isoform methods
+require.</p>
 <p>It directly explains the largest loss in the isoLASER pilot
-(<code>unassigned_tx_id</code> = 53.8% of reads). That is inherent to
-the assay, not a tunable parameter.</p>
+(<code>unassigned_tx_id</code> = 53.8% of reads, overall retention
+14.8%). That is inherent to the assay, not a tunable parameter. It is
+consistent across timepoints (% spliced 19.5–20.2%).</p>
 </div>
 <div id="background-to-filter" class="section level1">
 <h1>Background to filter</h1>
 <ul>
 <li><strong>rRNA carryover</strong> — 677 k of chr21’s 1.31 M primary
-reads lie in the chr21:8.2–8.6 Mb rDNA array. The rDNA scaffolds
+reads lie in the chr21:8.2–8.6 Mb rDNA array; scaffolds
 <code>GL000220.1</code> and <code>KI270733.1</code> are also heavily
 loaded.</li>
-<li><strong>Mitochondrial</strong> — ~4.6% of reads overall, median 4.2%
-per cell.</li>
+<li><strong>Mitochondrial</strong> — 6.3–7.5% of primary reads.</li>
 <li><strong>Rat astrocytes</strong> were in the coculture
 <em>[metadata]</em>. They are filtered out of the metadata file, but
-rat-derived reads may still be in the BAM.</li>
+rat-derived reads may still be in the BAMs.</li>
 </ul>
 </div>
-<div id="donors-four-individuals" class="section level1">
-<h1>Donors — four individuals</h1>
-<p><em>[metadata]</em> Coculture batch 21, sequencing batch 25, all
-European ancestry.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Donor</th>
-<th>Sex</th>
-<th>Diagnosis</th>
-<th>Age</th>
-<th>Cells</th>
-<th>Reads</th>
-<th>dbGaP</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>CD_21</td>
-<td>M</td>
-<td>case</td>
-<td>29</td>
-<td>1,463</td>
-<td>9.30 M</td>
-<td>phs000167.v1.p1</td>
-</tr>
-<tr class="even">
-<td>CD_31</td>
-<td>F</td>
-<td>control</td>
-<td>29</td>
-<td>1,237</td>
-<td>7.47 M</td>
-<td>phs000021.v3.p2</td>
-</tr>
-<tr class="odd">
-<td>CD_36</td>
-<td>M</td>
-<td>case</td>
-<td>57</td>
-<td>823</td>
-<td>6.25 M</td>
-<td>phs000021.v3.p2</td>
-</tr>
-<tr class="even">
-<td>CD_48</td>
-<td>F</td>
-<td>control</td>
-<td>72</td>
-<td>1,343</td>
-<td>8.75 M</td>
-<td>phs000167.v1.p1</td>
-</tr>
-</tbody>
-</table>
-<p>Balanced 2 cases / 2 controls, 2 male / 2 female.</p>
-<p>By neuronal subtype:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Donor</th>
-<th>GABA</th>
-<th>nmglut (NEFM−)</th>
-<th>npglut (NEFM+)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>CD_21</td>
-<td>596</td>
-<td>389</td>
-<td>478</td>
-</tr>
-<tr class="even">
-<td>CD_31</td>
-<td>476</td>
-<td>386</td>
-<td>375</td>
-</tr>
-<tr class="odd">
-<td>CD_36</td>
-<td>234</td>
-<td>187</td>
-<td>402</td>
-</tr>
-<tr class="even">
-<td>CD_48</td>
-<td>482</td>
-<td>339</td>
-<td>522</td>
-</tr>
-</tbody>
-</table>
-<div id="assignment-coverage" class="section level2">
-<h2>Assignment coverage</h2>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>Cells</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Barcodes in the BAM</td>
-<td>8,612</td>
-</tr>
-<tr class="even">
-<td>With both a cell-line and a cell-type assignment</td>
-<td><strong>4,866 (56.5%)</strong></td>
-</tr>
-<tr class="odd">
-<td>Without an assignment in the mapping file</td>
-<td>3,746</td>
-</tr>
-</tbody>
-</table>
-<p>The unassigned cells look lower quality — mean 8.2% mitochondrial
-versus 4.7% for assigned cells — so they are largely cells that failed
-QC in the published analysis.</p>
-<p>The slides report <strong>5,035</strong> cells with a confident
-<em>cell line</em> <em>[slides]</em>. Ours is lower because the mapping
-file we hold is restricted to cells also assigned to GABA/nmglut/npglut,
-i.e. it is the intersection of the cell-line and cell-type calls. For
-allele-specific splicing only the donor matters, so the unfiltered
-cell-line list would be preferable.</p>
-</div>
-<div id="sex-verified-independently" class="section level2">
-<h2>Sex verified independently</h2>
-<p>Scoring each cell on chrY-specific genes (PAR excluded) versus XIST
-gives <strong>47% male</strong> among assigned cells, consistent with
-the 2M/2F design.</p>
-<p>Worth recording as a cautionary note: before the donor labels
-arrived, the same test on <em>all</em> 8,612 cells gave 65% male. The
-calls it made were 98% accurate, but coverage was badly asymmetric —
-female cells went unassigned 55% of the time versus 14% for male,
-because one XIST locus is a weaker detector than nine pooled chrY genes.
-The method was sound; the marginal totals were not.</p>
-</div>
-</div>
-<div id="stimulation-state-0-hr-only" class="section level1">
-<h1>Stimulation state — 0 hr only</h1>
-<p>The published design has three timepoints per batch (0 / 1 / 6 h
-after 53 mM KCl), so batch 21 has libraries <code>21-0</code>,
-<code>21-1</code>, <code>21-6</code>. Matching our 8,612 barcodes
-against each:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Library</th>
-<th>Timepoint</th>
-<th>Barcodes</th>
-<th>Overlap with our BAM</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>21-0</strong></td>
-<td><strong>0 hr, unstimulated</strong></td>
-<td>5,592</td>
-<td><strong>4,866 — 87.0%</strong></td>
-</tr>
-<tr class="even">
-<td>21-1</td>
-<td>1 hr</td>
-<td>9,760</td>
-<td>43 — 0.4%</td>
-</tr>
-<tr class="odd">
-<td>21-6</td>
-<td>6 hr</td>
-<td>7,895</td>
-<td>48 — 0.6%</td>
-</tr>
-</tbody>
-</table>
-<p>The 0.4–0.6% is what random 16-mer collisions between independent 10x
-libraries would give. So <strong>this BAM is the unstimulated library
-only</strong>, and
-<code>NP184</code>/<code>NP187</code>/<code>NP188</code> are most likely
-three sequencing runs of it rather than three timepoints.</p>
-<p>Corroborating evidence — immediate-early genes are low, with no
-activated population:</p>
+<div id="stimulation-worked" class="section level1">
+<h1>Stimulation worked</h1>
+<p>Immediate-early genes at 0 hr are low, with no activated population —
+the expected baseline:</p>
 <table>
 <thead>
 <tr class="header">
 <th>IEG</th>
-<th>% of cells</th>
+<th>% of cells (0 hr)</th>
 <th>IEG</th>
-<th>% of cells</th>
+<th>% of cells (0 hr)</th>
 </tr>
 </thead>
 <tbody>
@@ -1068,45 +1274,60 @@ activated population:</p>
 </tr>
 </tbody>
 </table>
-<p><strong>The 1 hr and 6 hr Nanopore libraries do exist</strong>
-<em>[slides]</em> — 12,023 and 10,051 cells respectively. We simply do
-not have them.</p>
+<p>The published design has ERGs (FOS, NPAS4) peaking at 1 h and LRGs
+(BDNF, VGF) at 6 h, so these should rise sharply in the 1 hr and 6 hr
+libraries. <strong>Not yet measured on the new files</strong> — worth
+doing as a positive control that the timepoints are what they claim.</p>
 </div>
-<div id="what-this-means-for-the-analysis" class="section level1">
-<h1>What this means for the analysis</h1>
-<p><strong>Splicing changes during the neuronal response</strong> cannot
-be done with this file: there is no stimulated condition in it. It needs
-the <code>21-1</code> and <code>21-6</code> BAMs.</p>
-<p><strong>Allele-specific splicing</strong> is feasible now. We have
-four donors with direct barcode-level assignment, so no genotype
-demultiplexing is required. The route is: split the BAM per donor → run
-isoLASER per donor → <code>isolaser_joint</code> across the four. See
-the <a href="isolaser.html">isoLASER page</a>.</p>
-<p>Two caveats to size expectations:</p>
-<ul>
-<li>Four donors is a small cohort for anything genetic — the paper used
-100 lines for its QTL mapping. What is realistically deliverable is
-allele-specific splicing within donors plus cross-donor
-consistency.</li>
-<li>Read retention through isoLASER is <strong>14.8%</strong> (measured
-on chr21), dominated by the intronic fraction above. And 97% of tested
-events were untestable for linkage, because a heterozygous SNP and the
-splicing event must fall on the same ~506 bp read.</li>
-</ul>
+<div id="what-is-now-possible" class="section level1">
+<h1>What is now possible</h1>
+<p><strong>Differential splicing across stimulation</strong> — 0 / 1 / 6
+h for the same four donors, paired within donor, so donor genetics is
+controlled by construction. Given the intronic dominance, junction-level
+intron clustering (LeafCutter-style) is likely better powered here than
+isoform-level methods.</p>
+<p><strong>Allele-specific splicing</strong> — four donors with
+barcode-level assignment, so no genotype demultiplexing is needed.
+<code>isolaser_joint</code> can run over <strong>12 samples (4 donors ×
+3 timepoints)</strong>, or the timepoints can be pooled per donor for
+maximum depth since haplotypes do not change with stimulation. The chr21
+test run is <a href="isolaser_per_donor.html">here</a>.</p>
+<p>Caveat on scale: four donors is small for anything genetic — the
+paper used 100 lines for its QTL mapping. What is realistically
+deliverable is allele-specific splicing within donors plus cross-donor
+consistency.</p>
+</div>
+<div id="practical-traps" class="section level1">
+<h1>Practical traps</h1>
+<p><strong><code>cell_barcodes_w_meta.txt.gz</code> is not
+line-parseable.</strong> The <code>cell.type.counts</code> column is a
+plot label containing a literal newline, so every record spans two lines
+and the barcode sits on the <em>second</em>. <code>wc -l</code> reports
+46,495 lines for 23,247 records, and <code>grep 21-1</code> returns rows
+without barcodes. Parse by re-pairing:</p>
+<pre class="bash"><code>zcat cell_barcodes_w_meta.txt.gz | awk -F&#39;\t&#39; &#39;
+  NF==15 { lib=$1; time=$4; line=$6; type=$13; next }
+  NF==2  { print $2&quot;\t&quot;lib&quot;\t&quot;time&quot;\t&quot;line&quot;\t&quot;type }&#39;</code></pre>
+<p><strong>Do not use <code>samtools fastq</code> on these
+BAMs.</strong> With ~20% of reads carrying <code>QUAL='*'</code>, mixed
+input makes it truncate silently — 629,035 reads in, 14,255 out, no
+error. Each half converts correctly in isolation, so it is the
+interleaving. Convert explicitly and assert the read count.</p>
 </div>
 <div id="open-questions" class="section level1">
 <h1>Open questions</h1>
 <ol style="list-style-type: decimal">
-<li>Can we get the <strong>1 hr and 6 hr</strong> Nanopore BAMs?</li>
-<li>Is there documentation for this BAM? It carries no sample-level
-annotation — <code>@RG</code> holds only a bare 16 bp barcode, with no
-<code>SM</code>/<code>LB</code>/<code>DS</code>.</li>
 <li>Can we get the <strong>cell-line assignment before the cell-type
-filter</strong> (5,035 rather than 4,866 cells)?</li>
-<li>At what stage were the <strong>base qualities lost</strong> for 20%
-of reads?</li>
+filter</strong> (5,035 / 8,097 / 6,911 rather than 4,866 / 7,891 /
+6,625)?</li>
+<li>At what stage were the <strong>base qualities lost</strong> for
+16–21% of reads?</li>
+<li>Is there documentation for these BAMs? They carry no sample-level
+annotation — <code>@RG</code> holds only a bare 16 bp barcode, no
+<code>SM</code>/<code>LB</code>/<code>DS</code>.</li>
 <li>Are there long-read data for <strong>other coculture
-batches</strong> beyond batch 21?</li>
+batches</strong> beyond batch 21? Four donors limits the genetic
+analyses.</li>
 </ol>
 </div>
 

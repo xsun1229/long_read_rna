@@ -8,7 +8,13 @@ editor_options:
   chunk_output_type: console
 ---
 
+
 # Data
 
-* [Data summary](data_summary.html) — platform, QC, cell identity, donor
-  structure, blockers, and the planned isoLASER route
+* [Data summary](data_summary.html) — 8,612 cells, 61.2 M reads, 4 donors,
+  0 hr unstimulated; read properties, intronic dominance, and open questions
+
+# Methods
+
+* [isoLASER — setup and running notes](isolaser.html) — installation, versions,
+  how it is run, and the chr21 pilot

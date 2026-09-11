@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-09-08" />
+
+<title>isoLASER — setup and running notes</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">isoLASER — setup and running notes</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-09-08</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-09-08
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0665a25de4ede0281b01a8b5665b4b581a66c679targetblank0665a25a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/0665a25de4ede0281b01a8b5665b4b581a66c679" target="_blank">0665a25</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0665a25de4ede0281b01a8b5665b4b581a66c679targetblank0665a25a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/0665a25de4ede0281b01a8b5665b4b581a66c679" target="_blank">0665a25</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="what-it-is" class="section level1">
+<h1>What it is</h1>
+<p><a href="https://github.com/gxiaolab/isoLASER">isoLASER</a> —
+<em>isoform-Level Analysis of Allele-Specific processing of Exonic
+Regions</em>. Quinones-Valdez, Amoah &amp; Xiao, <a
+href="https://www.nature.com/articles/s41467-025-64605-6"><em>Nat
+Commun</em> 16:9603 (2025)</a>.</p>
+<p>It is the planned method for aim 2 (genetic variants associated with
+splicing). Three steps in one tool:</p>
+<ol style="list-style-type: decimal">
+<li><strong>De novo variant calling</strong> from the long reads —
+scAllele-based de Bruijn local reassembly, then a multi-layer perceptron
+to filter false positives.</li>
+<li><strong>Gene-level phasing</strong> — weighted k-means over
+read-level alleles, <strong>K = 2, assuming one diploid genome</strong>.
+Simultaneously phases variants and haplotags reads.</li>
+<li><strong>Linkage testing</strong> between haplotype and exonic-part
+inclusion, scored by adjusted mutual information (AMI).</li>
+</ol>
+<p>Events are classified <strong>cis-directed</strong> (AMI above the
+99th percentile of a simulated null, plus |delta PSI| &gt;= 5%),
+<strong>trans-directed</strong> (below the 95th), or ambiguous.
+<code>isolaser_joint</code> merges &gt;= 2 samples to call
+splicing-associated variants (SAVs) and can reach rare variants.</p>
+<p>The appeal for this project: it requires neither a pre-phased genome
+nor a VCF, and works at small sample sizes — the paper frames it
+explicitly as an alternative to sQTL mapping. Their SAVs replicated
+against GTEx sQTLs (delta PSI vs sQTL beta, R = -0.37).</p>
+</div>
+<div id="installation-done-2026-09-08" class="section level1">
+<h1>Installation (done 2026-09-08)</h1>
+<div id="source" class="section level2">
+<h2>Source</h2>
+<pre><code>/project/xinhe/xsun/long_read_RNA/software/isoLASER/        commit 7656083, tag v0.0.3
+/project/xinhe/xsun/long_read_RNA/software/isoLASER_paper/  Snakemake workflows s1-s4</code></pre>
+</div>
+<div id="environment" class="section level2">
+<h2>Environment</h2>
+<p>Conda env <strong><code>isolaser_env</code></strong> at
+<code>/home/sxt1229/miniconda3/envs/isolaser_env</code>, Python
+<strong>3.8.20</strong>.</p>
+<pre class="bash"><code>conda create -n isolaser_env python=3.8 pip -c conda-forge --override-channels -y
+cd /project/xinhe/xsun/long_read_RNA/software/isoLASER
+/home/sxt1229/miniconda3/envs/isolaser_env/bin/pip install .</code></pre>
+<p>Activate with:</p>
+<pre class="bash"><code>conda activate isolaser_env
+# or call binaries directly:
+/home/sxt1229/miniconda3/envs/isolaser_env/bin/isolaser --help</code></pre>
+</div>
+<div id="installed-versions" class="section level2">
+<h2>Installed versions</h2>
+<p>Worth recording, because <strong>they are not the versions the README
+lists</strong>. The README gives a “tested with” table
+(<code>pysam==0.16.0.1</code>, <code>numpy==1.24.4</code>, …) but
+<code>setup.cfg</code> only actually pins <code>scipy==1.10.1</code>.
+Everything else resolved to current wheels, and nothing needed compiling
+from source.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Installed</th>
+<th>README says</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>python</td>
+<td>3.8.20</td>
+<td>3.8</td>
+</tr>
+<tr class="even">
+<td><strong>pysam</strong></td>
+<td><strong>0.24.0</strong></td>
+<td>0.16.0.1</td>
+</tr>
+<tr class="odd">
+<td>scipy</td>
+<td>1.10.1 (pinned)</td>
+<td>1.10.1</td>
+</tr>
+<tr class="even">
+<td>numpy</td>
+<td>1.24.4</td>
+<td>1.24.4</td>
+</tr>
+<tr class="odd">
+<td>pandas</td>
+<td>2.0.3</td>
+<td>2.0.3</td>
+</tr>
+<tr class="even">
+<td>scikit-learn</td>
+<td>1.3.2</td>
+<td>1.3.2</td>
+</tr>
+<tr class="odd">
+<td>networkx</td>
+<td>3.1</td>
+<td>3.1</td>
+</tr>
+<tr class="even">
+<td>HTSeq</td>
+<td>2.0.9</td>
+<td>0.12.4</td>
+</tr>
+<tr class="odd">
+<td>biopython</td>
+<td>1.83</td>
+<td>1.76</td>
+</tr>
+<tr class="even">
+<td>pyfaidx</td>
+<td>0.9.0.4</td>
+<td>0.5.8</td>
+</tr>
+<tr class="odd">
+<td>pytabix</td>
+<td>0.1</td>
+<td>0.1</td>
+</tr>
+<tr class="even">
+<td>multiprocess</td>
+<td>0.70.18</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Note <code>vcfpy</code> is listed in the README requirements but is
+<strong>not</strong> in <code>setup.cfg</code>, and was not installed.
+If a joint-analysis step later fails on a <code>vcfpy</code> import,
+that is the reason.</p>
+</div>
+<div id="verification" class="section level2">
+<h2>Verification</h2>
+<p>All 10 console scripts resolve and execute:</p>
+<pre><code>isolaser                       isolaser_convert_gtf_to_fasta   nigiri_parse
+isolaser_joint                 isolaser_extract_exon_parts     nigiri_split
+isolaser_combine_vcf           isolaser_annotate               nigiri_plot
+isolaser_filter</code></pre>
+<p>Every invocation prints a harmless warning — cosmetic, biopython 1.83
+still ships the module:</p>
+<pre><code>BiopythonDeprecationWarning: Bio.pairwise2 has been deprecated</code></pre>
+</div>
+<div id="pitfalls-hit-during-install" class="section level2">
+<h2>Pitfalls hit during install</h2>
+<ul>
+<li><strong><code>conda create</code> appeared to hang for &gt;10
+min.</strong> It was <em>not</em> the solver (libmamba solves in
+seconds) — it was the “Executing transaction” stage writing thousands of
+small files to the shared <code>/home</code> filesystem. Do not pipe
+conda through <code>tail</code>, or you see no progress and may kill a
+job that is nearly finished. Expect ~10 min.</li>
+<li><strong>The system Python 3.8</strong>
+(<code>/software/python-3.8.5-el8-x86_64/bin/python3</code>) fails with
+<code>libpython3.8.so.1.0: cannot open shared object file</code> unless
+you set
+<code>LD_LIBRARY_PATH=/software/python-3.8.5-el8-x86_64/lib</code>.
+Avoided by using conda instead of a venv.</li>
+<li>A container fallback exists if the env ever breaks
+(<code>singularity pull library://giovas/collection/s6</code>); modules
+<code>apptainer/1.4.1</code> and <code>singularity/3.9.2</code> are
+available.</li>
+</ul>
+</div>
+</div>
+<div id="still-missing-before-it-can-run" class="section level1">
+<h1>Still missing before it can run</h1>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Requirement</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Python package</td>
+<td><strong>done</strong></td>
+</tr>
+<tr class="even">
+<td>samtools</td>
+<td>OK — <code>/software/samtools-1.22.1-el8-x86_64/bin</code></td>
+</tr>
+<tr class="odd">
+<td>GATK (only for <code>isolaser_joint</code>)</td>
+<td>module <code>gatk/4.5.0</code></td>
+</tr>
+<tr class="even">
+<td>tabix / bgzip</td>
+<td>module <code>htslib/1.16</code></td>
+</tr>
+<tr class="odd">
+<td><strong>minimap2</strong></td>
+<td><strong>missing</strong> — no cluster module; install from bioconda
+into <code>isolaser_env</code></td>
+</tr>
+<tr class="even">
+<td><strong>hg38 FASTA + <code>.fai</code> +
+<code>.dict</code></strong></td>
+<td><strong>missing</strong> — see below</td>
+</tr>
+</tbody>
+</table>
+<div id="which-reference-to-use" class="section level2">
+<h2>Which reference to use</h2>
+<p>The IsoQuant GTF at
+<code>data/reference/OUT.extended_annotation.gtf</code> records the
+original command line in its header, which names the reference
+explicitly:</p>
+<pre><code>-r .../refdata-gex-GRCh38-2024-A/fasta/genome.fa
+-g .../refdata-gex-GRCh38-2024-A/genes/genes.gtf</code></pre>
+<p>That is the <strong>10x Cell Ranger GRCh38 2024-A</strong> bundle,
+publicly downloadable and shipping an indexed <code>genome.fa</code>.
+Use that one — not the Ensembl v112 GTF that was used as a stopgap for
+early QC, which is a different annotation with different coordinates and
+IDs.</p>
+</div>
+</div>
+<div id="the-blocker-that-matters-most" class="section level1">
+<h1>The blocker that matters most</h1>
+<p><strong>isoLASER assumes bulk, single-donor long-read RNA-seq. Our
+BAM is pooled single-cell across &gt;= 2 donors.</strong> Phasing fixes
+K = 2 on the assumption of one diploid genome, so running it directly on
+all 8,612 cells would be meaningless.</p>
+<p>Required order:</p>
+<blockquote>
+<p>demultiplex donors (vireo / souporcell) -&gt; pseudobulk per donor
+-&gt; <code>isolaser</code> per donor -&gt; <code>isolaser_joint</code>
+across donors</p>
+</blockquote>
+<p>So <strong>installation is not on the critical path — donor
+demultiplexing is.</strong></p>
+<p>A second concern to quantify before committing: isoLASER needs a
+heterozygous SNP <strong>and</strong> the splicing event on the <em>same
+read</em>, and its pipeline discards reads lacking splice junctions.
+With our ~506 bp median read and 27% spliced fraction, testable events
+per donor will be well below what the full-length PacBio data the method
+was built on yields.</p>
+<p>Also, the paper’s own ONT guidance: exclude indels and validate
+variants against gnomAD before phasing. Our median error (~1.1%) is
+better than the R9.4.1 data they used, but the advice still applies.</p>
+</div>
+<div id="how-it-is-run" class="section level1">
+<h1>How it is run</h1>
+<p>From the README, with our paths. Not yet executed on project
+data.</p>
+<div id="preprocessing" class="section level2">
+<h2>Preprocessing</h2>
+<pre class="bash"><code># 1. transcriptome fasta from the GTF
+isolaser_convert_gtf_to_fasta -g {annot.gtf} -f {genome.fa} -o {transcriptome}
+
+# 2. re-align reads to that transcriptome (this is what needs minimap2)
+samtools fastq {input.bam} &gt; {input.fq}
+minimap2 -t 16 -ax splice:hq -uf --MD {transcriptome.fa} {input.fq} &gt; {transcriptome.sam}
+
+# 3. annotate the BAM with ZG (gene) and ZT (transcript) tags,
+#    dropping secondary/supplementary and trans-gene reads
+isolaser_annotate -b {input.bam} -t {transcriptome.sam} -g {annot.gtf} -o {input.annot}
+
+# 4. exonic parts database (one pickle per gene)
+isolaser_extract_exon_parts -g {annot.gtf} -o {transcript.db}</code></pre>
+</div>
+<div id="single-sample" class="section level2">
+<h2>Single sample</h2>
+<pre class="bash"><code>isolaser -b {input.annot.bam} -o {prefix} -t {transcript.db} -f {genome.fa}
+# -&gt; {prefix}.vcf, {prefix}.mi_summary.tsv
+
+sort -k1,1V -k2,2n -k3,3n {prefix}.mi_summary.tsv | bgzip -c -f &gt; {prefix}.mi_summary.tsv.gz
+tabix -f -p bed {prefix}.mi_summary.tsv.gz
+
+isolaser_filter -m {prefix}.mi_summary.tsv.gz -o {prefix}.mi_summary.filtered.tsv.gz</code></pre>
+</div>
+<div id="joint-across-samples" class="section level2">
+<h2>Joint across samples</h2>
+<p><code>fofn.tsv</code> lists one sample per line:</p>
+<pre><code>SM1  SM1.mi_summary.tsv.gz  SM1.gvcf
+SM2  SM2.mi_summary.tsv.gz  SM2.gvcf</code></pre>
+<pre class="bash"><code>isolaser_combine_vcf -i fofn.tsv -o {prefix} -f {genome.fa}   # wraps GATK
+isolaser_joint -i fofn.tsv -o {prefix} -t {transcript.db} -v {prefix}.genotyped.vcf
+# -&gt; {prefix}.merged.mi_summary.tsv</code></pre>
+</div>
+<div id="validating-the-install" class="section level2">
+<h2>Validating the install</h2>
+<p><code>software/isoLASER/test_pipeline/</code> ships three DLPFC BAMs,
+expected outputs, and a Snakemake workflow. It is self-contained — no
+genome FASTA or project data needed — so it is the right way to confirm
+the install end to end:</p>
+<pre class="bash"><code>cd /project/xinhe/xsun/long_read_RNA/software/isoLASER/test_pipeline
+snakemake -s isolaser_test.smk</code></pre>
+<p><strong>Not yet run.</strong></p>
+</div>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next steps</h1>
+<ol style="list-style-type: decimal">
+<li>Run <code>test_pipeline</code> to validate the install end to
+end.</li>
+<li>Install minimap2 into <code>isolaser_env</code> from bioconda.</li>
+<li>Download the <code>refdata-gex-GRCh38-2024-A</code> reference
+bundle.</li>
+<li>Demultiplex donors (vireo / souporcell) — the actual critical
+path.</li>
+<li>Estimate testable events per donor given the 506 bp median read
+length, before committing to isoLASER over junction-level intron
+clustering.</li>
+</ol>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

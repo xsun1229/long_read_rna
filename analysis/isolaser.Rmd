@@ -1,0 +1,242 @@
+---
+title: "isoLASER — setup and running notes"
+author: "XSun"
+date: "2026-09-08"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# What it is
+
+[isoLASER](https://github.com/gxiaolab/isoLASER) — *isoform-Level Analysis of
+Allele-Specific processing of Exonic Regions*. Quinones-Valdez, Amoah & Xiao,
+[*Nat Commun* 16:9603 (2025)](https://www.nature.com/articles/s41467-025-64605-6).
+
+It is the planned method for aim 2 (genetic variants associated with splicing).
+Three steps in one tool:
+
+1. **De novo variant calling** from the long reads — scAllele-based de Bruijn
+   local reassembly, then a multi-layer perceptron to filter false positives.
+2. **Gene-level phasing** — weighted k-means over read-level alleles,
+   **K = 2, assuming one diploid genome**. Simultaneously phases variants and
+   haplotags reads.
+3. **Linkage testing** between haplotype and exonic-part inclusion, scored by
+   adjusted mutual information (AMI).
+
+Events are classified **cis-directed** (AMI above the 99th percentile of a
+simulated null, plus |delta PSI| >= 5%), **trans-directed** (below the 95th),
+or ambiguous. `isolaser_joint` merges >= 2 samples to call splicing-associated
+variants (SAVs) and can reach rare variants.
+
+The appeal for this project: it requires neither a pre-phased genome nor a VCF,
+and works at small sample sizes — the paper frames it explicitly as an
+alternative to sQTL mapping. Their SAVs replicated against GTEx sQTLs
+(delta PSI vs sQTL beta, R = -0.37).
+
+# Installation (done 2026-09-08)
+
+## Source
+
+```
+/project/xinhe/xsun/long_read_RNA/software/isoLASER/        commit 7656083, tag v0.0.3
+/project/xinhe/xsun/long_read_RNA/software/isoLASER_paper/  Snakemake workflows s1-s4
+```
+
+## Environment
+
+Conda env **`isolaser_env`** at `/home/sxt1229/miniconda3/envs/isolaser_env`,
+Python **3.8.20**.
+
+```bash
+conda create -n isolaser_env python=3.8 pip -c conda-forge --override-channels -y
+cd /project/xinhe/xsun/long_read_RNA/software/isoLASER
+/home/sxt1229/miniconda3/envs/isolaser_env/bin/pip install .
+```
+
+Activate with:
+
+```bash
+conda activate isolaser_env
+# or call binaries directly:
+/home/sxt1229/miniconda3/envs/isolaser_env/bin/isolaser --help
+```
+
+## Installed versions
+
+Worth recording, because **they are not the versions the README lists**. The
+README gives a "tested with" table (`pysam==0.16.0.1`, `numpy==1.24.4`, …) but
+`setup.cfg` only actually pins `scipy==1.10.1`. Everything else resolved to
+current wheels, and nothing needed compiling from source.
+
+| Package | Installed | README says |
+|---|---|---|
+| python | 3.8.20 | 3.8 |
+| **pysam** | **0.24.0** | 0.16.0.1 |
+| scipy | 1.10.1 (pinned) | 1.10.1 |
+| numpy | 1.24.4 | 1.24.4 |
+| pandas | 2.0.3 | 2.0.3 |
+| scikit-learn | 1.3.2 | 1.3.2 |
+| networkx | 3.1 | 3.1 |
+| HTSeq | 2.0.9 | 0.12.4 |
+| biopython | 1.83 | 1.76 |
+| pyfaidx | 0.9.0.4 | 0.5.8 |
+| pytabix | 0.1 | 0.1 |
+| multiprocess | 0.70.18 | — |
+
+Note `vcfpy` is listed in the README requirements but is **not** in
+`setup.cfg`, and was not installed. If a joint-analysis step later fails on a
+`vcfpy` import, that is the reason.
+
+## Verification
+
+All 10 console scripts resolve and execute:
+
+```
+isolaser                       isolaser_convert_gtf_to_fasta   nigiri_parse
+isolaser_joint                 isolaser_extract_exon_parts     nigiri_split
+isolaser_combine_vcf           isolaser_annotate               nigiri_plot
+isolaser_filter
+```
+
+Every invocation prints a harmless warning — cosmetic, biopython 1.83 still
+ships the module:
+
+```
+BiopythonDeprecationWarning: Bio.pairwise2 has been deprecated
+```
+
+## Pitfalls hit during install
+
+- **`conda create` appeared to hang for >10 min.** It was *not* the solver
+  (libmamba solves in seconds) — it was the "Executing transaction" stage
+  writing thousands of small files to the shared `/home` filesystem. Do not
+  pipe conda through `tail`, or you see no progress and may kill a job that is
+  nearly finished. Expect ~10 min.
+- **The system Python 3.8** (`/software/python-3.8.5-el8-x86_64/bin/python3`)
+  fails with `libpython3.8.so.1.0: cannot open shared object file` unless you
+  set `LD_LIBRARY_PATH=/software/python-3.8.5-el8-x86_64/lib`. Avoided by using
+  conda instead of a venv.
+- A container fallback exists if the env ever breaks
+  (`singularity pull library://giovas/collection/s6`); modules
+  `apptainer/1.4.1` and `singularity/3.9.2` are available.
+
+# Still missing before it can run
+
+| Requirement | Status |
+|---|---|
+| Python package | **done** |
+| samtools | OK — `/software/samtools-1.22.1-el8-x86_64/bin` |
+| GATK (only for `isolaser_joint`) | module `gatk/4.5.0` |
+| tabix / bgzip | module `htslib/1.16` |
+| **minimap2** | **missing** — no cluster module; install from bioconda into `isolaser_env` |
+| **hg38 FASTA + `.fai` + `.dict`** | **missing** — see below |
+
+## Which reference to use
+
+The IsoQuant GTF at `data/reference/OUT.extended_annotation.gtf` records the
+original command line in its header, which names the reference explicitly:
+
+```
+-r .../refdata-gex-GRCh38-2024-A/fasta/genome.fa
+-g .../refdata-gex-GRCh38-2024-A/genes/genes.gtf
+```
+
+That is the **10x Cell Ranger GRCh38 2024-A** bundle, publicly downloadable and
+shipping an indexed `genome.fa`. Use that one — not the Ensembl v112 GTF that
+was used as a stopgap for early QC, which is a different annotation with
+different coordinates and IDs.
+
+# The blocker that matters most
+
+**isoLASER assumes bulk, single-donor long-read RNA-seq. Our BAM is pooled
+single-cell across >= 2 donors.** Phasing fixes K = 2 on the assumption of one
+diploid genome, so running it directly on all 8,612 cells would be meaningless.
+
+Required order:
+
+> demultiplex donors (vireo / souporcell) -> pseudobulk per donor ->
+> `isolaser` per donor -> `isolaser_joint` across donors
+
+So **installation is not on the critical path — donor demultiplexing is.**
+
+A second concern to quantify before committing: isoLASER needs a heterozygous
+SNP **and** the splicing event on the *same read*, and its pipeline discards
+reads lacking splice junctions. With our ~506 bp median read and 27% spliced
+fraction, testable events per donor will be well below what the full-length
+PacBio data the method was built on yields.
+
+Also, the paper's own ONT guidance: exclude indels and validate variants
+against gnomAD before phasing. Our median error (~1.1%) is better than the
+R9.4.1 data they used, but the advice still applies.
+
+# How it is run
+
+From the README, with our paths. Not yet executed on project data.
+
+## Preprocessing
+
+```bash
+# 1. transcriptome fasta from the GTF
+isolaser_convert_gtf_to_fasta -g {annot.gtf} -f {genome.fa} -o {transcriptome}
+
+# 2. re-align reads to that transcriptome (this is what needs minimap2)
+samtools fastq {input.bam} > {input.fq}
+minimap2 -t 16 -ax splice:hq -uf --MD {transcriptome.fa} {input.fq} > {transcriptome.sam}
+
+# 3. annotate the BAM with ZG (gene) and ZT (transcript) tags,
+#    dropping secondary/supplementary and trans-gene reads
+isolaser_annotate -b {input.bam} -t {transcriptome.sam} -g {annot.gtf} -o {input.annot}
+
+# 4. exonic parts database (one pickle per gene)
+isolaser_extract_exon_parts -g {annot.gtf} -o {transcript.db}
+```
+
+## Single sample
+
+```bash
+isolaser -b {input.annot.bam} -o {prefix} -t {transcript.db} -f {genome.fa}
+# -> {prefix}.vcf, {prefix}.mi_summary.tsv
+
+sort -k1,1V -k2,2n -k3,3n {prefix}.mi_summary.tsv | bgzip -c -f > {prefix}.mi_summary.tsv.gz
+tabix -f -p bed {prefix}.mi_summary.tsv.gz
+
+isolaser_filter -m {prefix}.mi_summary.tsv.gz -o {prefix}.mi_summary.filtered.tsv.gz
+```
+
+## Joint across samples
+
+`fofn.tsv` lists one sample per line:
+
+```
+SM1  SM1.mi_summary.tsv.gz  SM1.gvcf
+SM2  SM2.mi_summary.tsv.gz  SM2.gvcf
+```
+
+```bash
+isolaser_combine_vcf -i fofn.tsv -o {prefix} -f {genome.fa}   # wraps GATK
+isolaser_joint -i fofn.tsv -o {prefix} -t {transcript.db} -v {prefix}.genotyped.vcf
+# -> {prefix}.merged.mi_summary.tsv
+```
+
+## Validating the install
+
+`software/isoLASER/test_pipeline/` ships three DLPFC BAMs, expected outputs,
+and a Snakemake workflow. It is self-contained — no genome FASTA or project
+data needed — so it is the right way to confirm the install end to end:
+
+```bash
+cd /project/xinhe/xsun/long_read_RNA/software/isoLASER/test_pipeline
+snakemake -s isolaser_test.smk
+```
+
+**Not yet run.**
+
+# Next steps
+
+1. Run `test_pipeline` to validate the install end to end.
+2. Install minimap2 into `isolaser_env` from bioconda.
+3. Download the `refdata-gex-GRCh38-2024-A` reference bundle.
+4. Demultiplex donors (vireo / souporcell) — the actual critical path.
+5. Estimate testable events per donor given the 506 bp median read length,
+   before committing to isoLASER over junction-level intron clustering.

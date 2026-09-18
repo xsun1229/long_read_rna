@@ -37,10 +37,10 @@ statistics we were sent).
 
 | | 0 hr | 1 hr | 6 hr | total |
 |---|---|---|---|---|
-| Cell barcodes | 8,612 | 12,023 | 10,051 | **30,686** |
-| Primary reads | 61.19 M | 75.62 M | 80.65 M | **217.46 M** |
-| Cells with donor assignment | 4,866 | 7,891 | 6,625 | **19,382** |
-| Reads in assigned cells | 31.76 M | 46.73 M | 50.57 M | **129.06 M** |
+| Cell barcodes | 8,612 | 12,023 | 10,051 | 30,686 |
+| Primary reads | 61.19 M | 75.62 M | 80.65 M | 217.46 M |
+| Cells with donor assignment | 4,866 | 7,891 | 6,625 | 19,382 |
+| Reads in assigned cells | 31.76 M | 46.73 M | 50.57 M | 129.06 M |
 
 Four donors present at every timepoint, so the design is **paired within
 donor across stimulation**.
@@ -69,8 +69,12 @@ Full pass over every primary read in each library.
 | Cells | 8,612 | 12,023 | 10,051 |
 | Primary reads | 61,189,011 | 75,617,929 | 80,650,873 |
 | Total alignment records | 85,465,939 | 102,144,372 | 108,264,439 |
-| Median UMIs / cell | 4,967 | 4,622 | 6,028 |
-| Mean UMIs / cell | 7,105 | 6,289 | 8,024 |
+| Median reads / cell | 4,967 | 4,623 | 6,029 |
+| Mean reads / cell | 7,105 | 6,289 | 8,024 |
+| Median UMIs / cell | 4,862 | 4,558 | 5,925 |
+| Mean UMIs / cell | 6,960 | 6,199 | 7,883 |
+| Total UMIs | 59,937,336 | 74,527,527 | 79,231,979 |
+| Reads per UMI | 1.021 | 1.015 | 1.018 |
 | Mean read length | 617 bp | 610 bp | 627 bp |
 | Median read length | 578 bp | 512 bp | 541 bp |
 | % spliced | 19.45% | 20.17% | 19.87% |
@@ -91,8 +95,57 @@ Read-length percentiles (100 k sample):
 
 **Always filter with `-F 0x900`.** Secondary alignments are 26–28% of records.
 
-The BAMs are already **UMI-deduplicated** (1.01 reads per barcode-UMI pair at
-0 hr), so primary reads ≈ unique molecules.
+**Reads vs UMIs.** A read is one sequencing observation; a UMI labels the
+original mRNA molecule, so molecule identity is the **pair** `RG barcode + UMI`
+(12 bp UMIs are reused across cells — counting UMI sequences alone
+under-counts). The BAMs are already UMI-deduplicated by scNanoGPS, at
+**1.015–1.021 reads per barcode-UMI pair genome-wide**, so the two numbers
+differ by only ~2% and primary reads ≈ unique molecules. The residual is
+almost entirely one molecule counted at two different loci, since dedup was
+applied per gene rather than per cell.
+
+## Cells with a donor assignment
+
+| Timepoint | | Cells | Reads | Median reads / cell | % chrM | % spliced |
+|---|---|---|---|---|---|---|
+| 0 hr | assigned | 4,866 | 31,764,783 | 4,868 | 5.85 | 17.94 |
+| | unassigned | 3,746 | 29,424,228 | 5,076 | 6.71 | 21.08 |
+| 1 hr | assigned | 7,891 | 46,727,286 | 4,599 | 6.82 | 19.29 |
+| | unassigned | 4,132 | 28,890,643 | 4,735 | 8.55 | 21.60 |
+| 6 hr | assigned | 6,625 | 50,568,815 | 6,069 | 5.96 | 18.88 |
+| | unassigned | 3,426 | 30,082,058 | 5,940 | 7.49 | 21.53 |
+
+Unassigned cells are **not** shallower — their median depth is equal or higher.
+They are the cells that failed the published multiome QC, and they carry
+consistently **higher %chrM (6.7–8.6 vs 5.9–6.8) and higher %spliced
+(21.1–21.6 vs 17.9–19.3)**. So dropping them is a quality filter, not a depth
+filter, and it measurably shifts the spliced fraction — worth remembering when
+comparing any splicing statistic computed on all cells versus assigned cells.
+
+### Per donor
+
+| Timepoint | Donor | Cells | Reads | Median reads / cell | % chrM | % spliced |
+|---|---|---|---|---|---|---|
+| 0 hr | CD_21 | 1,463 | 9,299,355 | 4,596 | 6.46 | 18.48 |
+| | CD_31 | 1,237 | 7,471,280 | 4,767 | 5.40 | 17.46 |
+| | CD_36 | 823 | 6,247,851 | 5,708 | 5.82 | 18.35 |
+| | CD_48 | 1,343 | 8,746,297 | 4,960 | 5.62 | 17.48 |
+| 1 hr | CD_21 | 2,122 | 12,658,295 | 4,414 | 7.08 | 19.32 |
+| | CD_31 | 2,146 | 12,352,134 | 4,644 | 6.74 | 19.52 |
+| | CD_36 | 1,267 | 7,850,674 | 4,993 | 6.42 | 19.13 |
+| | CD_48 | 2,356 | 13,866,183 | 4,532 | 6.88 | 19.16 |
+| 6 hr | CD_21 | 1,936 | 14,974,269 | 5,764 | 6.25 | 18.90 |
+| | CD_31 | 1,746 | 13,218,971 | 6,043 | 6.01 | 19.52 |
+| | CD_36 | 1,056 | 8,441,497 | 6,808 | 5.54 | 18.49 |
+| | CD_48 | 1,886 | 13,920,267 | 6,019 | 5.85 | 18.47 |
+
+**CD_36 has the fewest cells but the highest median depth per cell** at all
+three timepoints (5,708 / 4,993 / 6,808). Fewer, more deeply sequenced cells —
+which is why it is still the limiting donor for per-gene coverage despite
+healthy per-cell depth.
+
+Scripts: `0.data_prep/3.umi_per_cell.sbatch` (distinct barcode+UMI pairs per
+cell) and `0.data_prep/4.percell_by_donor.R` (the two tables above).
 
 # Genomic origin of reads
 
@@ -110,9 +163,9 @@ intronic. Annotation is the IsoQuant extended GTF.
 
 | | 0 hr | 1 hr | 6 hr |
 |---|---|---|---|
-| **Exonic** | **36.48%** | **41.19%** | **39.21%** |
-| **Intronic** | **57.02%** | **52.89%** | **55.34%** |
-| **Intergenic** | 6.50% | 5.92% | 5.45% |
+| Exonic | 36.48% | 41.19% | 39.21% |
+| Intronic | 57.02% | 52.89% | 55.34% |
+| Intergenic | 6.50% | 5.92% | 5.45% |
 | Reads classified | 61,179,472 | 75,613,564 | 80,644,703 |
 
 Restricted to the donor-assigned cells (the set used for all downstream
@@ -168,7 +221,7 @@ all European ancestry, coculture batch 21, sequencing batch 25.
 | 0 hr | 1,463 | 1,237 | 823 | 1,343 | 4,866 |
 | 1 hr | 2,122 | 2,146 | 1,267 | 2,356 | 7,891 |
 | 6 hr | 1,936 | 1,746 | 1,056 | 1,887 | 6,625 |
-| **total** | **5,521** | **5,129** | **3,146** | **5,586** | **19,382** |
+| total | 5,521 | 5,129 | 3,146 | 5,586 | 19,382 |
 
 ## Reads per donor (millions)
 
@@ -182,9 +235,9 @@ totals, not additional groups:
 
 | Timepoint | CD_21 | CD_31 | CD_36 | CD_48 | assigned<br>(4 donors) | unassigned<br>(discarded) | total |
 |---|---|---|---|---|---|---|---|
-| 0 hr | 9.30 | 7.47 | 6.25 | 8.75 | **31.76** | 29.42 | 61.19 |
-| 1 hr | 12.66 | 12.35 | 7.85 | 13.87 | **46.73** | 28.89 | 75.62 |
-| 6 hr | 14.97 | 13.22 | 8.44 | 13.93 | **50.57** | 30.08 | 80.65 |
+| 0 hr | 9.30 | 7.47 | 6.25 | 8.75 | 31.76 | 29.42 | 61.19 |
+| 1 hr | 12.66 | 12.35 | 7.85 | 13.87 | 46.73 | 28.89 | 75.62 |
+| 6 hr | 14.97 | 13.22 | 8.44 | 13.93 | 50.57 | 30.08 | 80.65 |
 
 Cells behind the unassigned column: 3,746 / 4,132 / 3,426.
 
@@ -229,7 +282,7 @@ unstimulated library had proportionally more cells failing QC.
 |---|---|
 | Sequencing | Oxford Nanopore |
 | Chemistry | 10x Multiome / scARC — 16 bp cell barcode + 12 bp UMI |
-| Pre-processing | **scNanoGPS** *[slides]* |
+| Pre-processing | scNanoGPS *[slides]* |
 | Aligner | minimap2, spliced |
 | Reference | GRCh38, 10x `refdata-gex-GRCh38-2024-A` |
 | Strandedness | `--strand reverse` |

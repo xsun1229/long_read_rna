@@ -124,11 +124,11 @@ sums to 100%.
 
 | Event | Definition | 0 hr | 1 hr | 6 hr |
 |---|---|---|---|---|
-| **Consecutive junction** | spliced onto the adjacent flattened exon (step = 1) | **76.03** | 75.58 | 75.45 |
-| **Minor-exon bypass** | spliced over exon(s) present in **< 2** transcripts | **11.24** | 11.63 | 11.54 |
-| **Genuine exon skip** | spliced over exon(s) present in **≥ 2** transcripts | **8.44** | 8.93 | 8.94 |
-| **Retained intron** | ≥ 50% of the intervening region covered, gap ≥ 70 bp | **1.94** | 1.79 | 1.99 |
-| **Artifact gap** | gap between flattened exons is **< 70 bp** | 2.34 | 2.08 | 2.08 |
+| Consecutive junction | spliced onto the adjacent flattened exon (step = 1) | 76.03 | 75.58 | 75.45 |
+| Minor-exon bypass | spliced over exon(s) present in < 2 transcripts | 11.24 | 11.63 | 11.54 |
+| Genuine exon skip | spliced over exon(s) present in ≥ 2 transcripts | 8.44 | 8.93 | 8.94 |
+| Retained intron | ≥ 50% of the intervening region covered, gap ≥ 70 bp | 1.94 | 1.79 | 1.99 |
+| Artifact gap | gap between flattened exons is < 70 bp | 2.34 | 2.08 | 2.08 |
 
 This is the headline summary: five numbers, whole dataset, comparable across
 timepoints.
@@ -163,7 +163,7 @@ to it. Sweeping it on chr21:
 | Threshold | Genuine skips | Minor bypasses | % called genuine |
 |---|---|---|---|
 | ≥1 (no filter) | 59,867 | 0 | 100.0% |
-| **≥2 (used here)** | **17,005** | 42,862 | **28.4%** |
+| ≥2 (used here) | 17,005 | 42,862 | 28.4% |
 | ≥3 | 11,241 | 48,626 | 18.8% |
 | ≥5 | 7,002 | 52,865 | 11.7% |
 | ≥10 | 3,240 | 56,627 | 5.4% |
@@ -190,7 +190,7 @@ does *not* sum to 100%.
 | ≥1 minor-exon bypass | 25.84 | 26.54 | 26.75 |
 | ≥1 genuine exon skip | 19.84 | 20.87 | 21.21 |
 | ≥1 retained intron | 4.80 | 4.39 | 4.96 |
-| **carries ≥2 different features** | **31.57** | **32.39** | **32.66** |
+| carries ≥2 different features | 31.57 | 32.39 | 32.66 |
 
 That last row is why a single per-read label is misleading: **about a third of
 multi-exon reads carry more than one kind of event.** The `class` column in the
@@ -207,9 +207,9 @@ reads — which is true for short genes and false for long ones:
 
 | Gene size | Reads | Distinct patterns | Reads in top pattern | Reads per pattern |
 |---|---|---|---|---|
-| **≤10 exons** | 4.36 M | 2,729 | 539,460 | **1,599** |
+| ≤10 exons | 4.36 M | 2,729 | 539,460 | 1,599 |
 | 11–19 exons | 1.98 M | 23,211 | 57,551 | 85 |
-| 20+ exons | 2.02 M | 77,403 | 48,543 | **26** |
+| 20+ exons | 2.02 M | 77,403 | 48,543 | 26 |
 
 For short genes a pattern is effectively an isoform readout. For 20+ exon genes
 there are 28 reads per pattern — no individual pattern has power, and the right
@@ -222,14 +222,14 @@ Top patterns at 0 hr (chr1–22, ≤10 exons, excluding novel genes):
 | RPLP1 | 2 | E1-E2 | CONSECUTIVE | 68,479 |
 | TMSB10 | 4 | E2-E3-E4 | CONSECUTIVE | 48,693 |
 | RPS8 | 3 | E1-E2-E3 | CONSECUTIVE | 33,274 |
-| RPS18 | 3 | **E1~E2**-E3 | CONSECUTIVE | 31,948 |
+| RPS18 | 3 | E1~E2-E3 | CONSECUTIVE | 31,948 |
 | TAGLN | 4 | E3-E4 | CONSECUTIVE | 30,945 |
 | RPL27A | 4 | E1-E2-E3 | CONSECUTIVE | 29,989 |
 | RPS19 | 9 | E2-E3-E4-E7-E8-E9 | SKIP_MINOR | 29,210 |
 | STMN2 | 9 | E1-E5-E6-E7-E9 | SKIP_MINOR | 28,669 |
 | TPT1 | 2 | E1-E2 | CONSECUTIVE | 28,308 |
 | MYL6 | 5 | E1-E2 | CONSECUTIVE | 24,365 |
-| RPL34 | 5 | **E1~E2**-E3 | CONSECUTIVE | 23,366 |
+| RPL34 | 5 | E1~E2-E3 | CONSECUTIVE | 23,366 |
 | RPL19 | 3 | E2-E3 | CONSECUTIVE | 22,872 |
 
 Dominated by ribosomal protein genes — short, very highly expressed, and
@@ -250,14 +250,14 @@ behaviour, not for biology.
 
 | Gene | Exons | Reads 0/1/6 hr | Distinct patterns 0/1/6 hr |
 |---|---|---|---|
-| RPLP1 | 2 | 68,490 / 53,825 / 57,524 | **2 / 2 / 2** |
+| RPLP1 | 2 | 68,490 / 53,825 / 57,524 | 2 / 2 / 2 |
 | ATP5PO | 6 | 2,702 / 4,477 / 4,157 | 30 / 27 / 29 |
 | SOD1 | 7 | 4,648 / 6,373 / 6,676 | 18 / 27 / 23 |
 | STMN2 | 9 | 52,728 / 80,426 / 73,011 | 52 / 50 / 50 |
 | HOMER1 | 11 | 223 / 1,236 / 737 | 34 / 63 / 50 |
 | MAP2 | 25 | 4,764 / 7,832 / 7,601 | 227 / 270 / 297 |
 | APP | 27 | 10,543 / 12,966 / 13,998 | 465 / 426 / 495 |
-| TTC3 | 54 | 8,265 / 13,566 / 15,924 | **906 / 1,202 / 1,350** |
+| TTC3 | 54 | 8,265 / 13,566 / 15,924 | 906 / 1,202 / 1,350 |
 
 **Pattern fragmentation scales with exon count.** RPLP1 has two exons, one
 pattern, and it holds 100% of reads. TTC3 has 54 exons and 78% of its reads sit

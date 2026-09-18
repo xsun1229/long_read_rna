@@ -15,7 +15,7 @@
 
 <title>Exon structure of reads — how exons are connected</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -37,8 +37,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -391,7 +391,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-09-17
+<strong>Last updated:</strong> 2026-09-18
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -409,7 +409,7 @@ title="This is the local directory in which the code in this file was executed."
 This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
 analysis was created with <a
   href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
 that were applied when the results were created. The <em>Past
 versions</em> tab lists the development history.
 </p>
@@ -429,10 +429,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -441,15 +441,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0d03de8a89ad792cc2aa7985d17615075731cfcdtargetblank0d03de8a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreec93c3734c584e16def769e432feb11ce6dbad20dtargetblankc93c373a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/0d03de8a89ad792cc2aa7985d17615075731cfcd" target="_blank">0d03de8</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/c93c3734c584e16def769e432feb11ce6dbad20d" target="_blank">c93c373</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0d03de8a89ad792cc2aa7985d17615075731cfcdtargetblank0d03de8a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreec93c3734c584e16def769e432feb11ce6dbad20dtargetblankc93c373a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -459,7 +459,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/0d03de8a89ad792cc2aa7985d17615075731cfcd" target="_blank">0d03de8</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/c93c3734c584e16def769e432feb11ce6dbad20d" target="_blank">c93c373</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -473,15 +473,9 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/exon_structure.Rmd
-    Untracked:  analysis/read_structure.Rmd
-    Untracked:  output/gene_examples_TEST.png
-    Untracked:  output/gene_examples_patterns.png
-
 Unstaged changes:
     Modified:   analysis/data_summary.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/exon_structure.Rmd
 
 </code></pre>
 <p>
@@ -496,30 +490,80 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/exon_structure.Rmd</code>) and
+HTML (<code>docs/exon_structure.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/c93c3734c584e16def769e432feb11ce6dbad20d/analysis/exon_structure.Rmd" target="_blank">c93c373</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-17
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/c93c3734c584e16def769e432feb11ce6dbad20d/docs/exon_structure.html" target="_blank">c93c373</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-17
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="scope" class="section level1">
-<h1>Scope</h1>
 <p>Genome-wide, all three timepoints, <strong>restricted to
-chr1–chr22</strong>. That one rule drops three things that would
-otherwise corrupt the numbers:</p>
-<ul>
-<li><strong>chrM</strong> — has no spliceosomal introns, yet IsoQuant
-calls novel multi-exon “genes” there. Continuous mitochondrial
-transcripts therefore get scored as retained introns. Before excluding
-it, <strong>45.8% of all retained-intron events were on chrM</strong>,
-and every one of them is false.</li>
-<li><strong>chrX / chrY</strong> — differ systematically between the two
-male and two female donors.</li>
-<li><strong>Unplaced scaffolds</strong> — <code>GL000220.1</code> and
-<code>KI270733.1</code> carry the rRNA carryover.</li>
-</ul>
+chr1–chr22</strong>.</p>
 <p>Reads analysed (multi-exon, chr1–22): 8.37 M / 11.06 M / 11.47 M at 0
 / 1 / 6 hr.</p>
 <p>Scripts: <code>4.read_structure/</code> —
@@ -527,7 +571,6 @@ male and two female donors.</li>
 <code>1.annotate_read_structure.py</code> (stage B),
 <code>7.summarise_levels.R</code> (summaries).</p>
 <hr />
-</div>
 <div id="extracting-exon-information-from-the-gtf"
 class="section level1">
 <h1>1. Extracting exon information from the GTF</h1>
@@ -665,38 +708,36 @@ exactly one of five types, so the column sums to 100%.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Consecutive junction</strong></td>
+<td>Consecutive junction</td>
 <td>spliced onto the adjacent flattened exon (step = 1)</td>
-<td><strong>76.03</strong></td>
+<td>76.03</td>
 <td>75.58</td>
 <td>75.45</td>
 </tr>
 <tr class="even">
-<td><strong>Minor-exon bypass</strong></td>
-<td>spliced over exon(s) present in <strong>&lt; 2</strong>
-transcripts</td>
-<td><strong>11.24</strong></td>
+<td>Minor-exon bypass</td>
+<td>spliced over exon(s) present in &lt; 2 transcripts</td>
+<td>11.24</td>
 <td>11.63</td>
 <td>11.54</td>
 </tr>
 <tr class="odd">
-<td><strong>Genuine exon skip</strong></td>
-<td>spliced over exon(s) present in <strong>≥ 2</strong>
-transcripts</td>
-<td><strong>8.44</strong></td>
+<td>Genuine exon skip</td>
+<td>spliced over exon(s) present in ≥ 2 transcripts</td>
+<td>8.44</td>
 <td>8.93</td>
 <td>8.94</td>
 </tr>
 <tr class="even">
-<td><strong>Retained intron</strong></td>
+<td>Retained intron</td>
 <td>≥ 50% of the intervening region covered, gap ≥ 70 bp</td>
-<td><strong>1.94</strong></td>
+<td>1.94</td>
 <td>1.79</td>
 <td>1.99</td>
 </tr>
 <tr class="odd">
-<td><strong>Artifact gap</strong></td>
-<td>gap between flattened exons is <strong>&lt; 70 bp</strong></td>
+<td>Artifact gap</td>
+<td>gap between flattened exons is &lt; 70 bp</td>
 <td>2.34</td>
 <td>2.08</td>
 <td>2.08</td>
@@ -755,10 +796,10 @@ chr21:</p>
 <td>100.0%</td>
 </tr>
 <tr class="even">
-<td><strong>≥2 (used here)</strong></td>
-<td><strong>17,005</strong></td>
+<td>≥2 (used here)</td>
+<td>17,005</td>
 <td>42,862</td>
-<td><strong>28.4%</strong></td>
+<td>28.4%</td>
 </tr>
 <tr class="odd">
 <td>≥3</td>
@@ -799,12 +840,6 @@ constant.</p>
 <strong>non-exclusive</strong> — a read can carry several, so the column
 does <em>not</em> sum to 100%.</p>
 <table>
-<colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Feature</th>
@@ -839,10 +874,10 @@ does <em>not</em> sum to 100%.</p>
 <td>4.96</td>
 </tr>
 <tr class="odd">
-<td><strong>carries ≥2 different features</strong></td>
-<td><strong>31.57</strong></td>
-<td><strong>32.39</strong></td>
-<td><strong>32.66</strong></td>
+<td>carries ≥2 different features</td>
+<td>31.57</td>
+<td>32.39</td>
+<td>32.66</td>
 </tr>
 </tbody>
 </table>
@@ -879,11 +914,11 @@ short genes and false for long ones:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>≤10 exons</strong></td>
+<td>≤10 exons</td>
 <td>4.36 M</td>
 <td>2,729</td>
 <td>539,460</td>
-<td><strong>1,599</strong></td>
+<td>1,599</td>
 </tr>
 <tr class="even">
 <td>11–19 exons</td>
@@ -897,7 +932,7 @@ short genes and false for long ones:</p>
 <td>2.02 M</td>
 <td>77,403</td>
 <td>48,543</td>
-<td><strong>26</strong></td>
+<td>26</td>
 </tr>
 </tbody>
 </table>
@@ -940,7 +975,7 @@ power, and the right unit there is the junction.</p>
 <tr class="even">
 <td>RPS18</td>
 <td>3</td>
-<td><strong>E1~E2</strong>-E3</td>
+<td>E1~E2-E3</td>
 <td>CONSECUTIVE</td>
 <td>31,948</td>
 </tr>
@@ -989,7 +1024,7 @@ power, and the right unit there is the junction.</p>
 <tr class="odd">
 <td>RPL34</td>
 <td>5</td>
-<td><strong>E1~E2</strong>-E3</td>
+<td>E1~E2-E3</td>
 <td>CONSECUTIVE</td>
 <td>23,366</td>
 </tr>
@@ -1029,7 +1064,7 @@ range of behaviour, not for biology.</p>
 <td>RPLP1</td>
 <td>2</td>
 <td>68,490 / 53,825 / 57,524</td>
-<td><strong>2 / 2 / 2</strong></td>
+<td>2 / 2 / 2</td>
 </tr>
 <tr class="even">
 <td>ATP5PO</td>
@@ -1071,7 +1106,7 @@ range of behaviour, not for biology.</p>
 <td>TTC3</td>
 <td>54</td>
 <td>8,265 / 13,566 / 15,924</td>
-<td><strong>906 / 1,202 / 1,350</strong></td>
+<td>906 / 1,202 / 1,350</td>
 </tr>
 </tbody>
 </table>

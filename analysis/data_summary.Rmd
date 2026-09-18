@@ -94,6 +94,61 @@ Read-length percentiles (100 k sample):
 The BAMs are already **UMI-deduplicated** (1.01 reads per barcode-UMI pair at
 0 hr), so primary reads ≈ unique molecules.
 
+# Genomic origin of reads
+
+Genome-wide, every primary read, using the **10x Cell Ranger definition** — the
+field standard for 10x data:
+
+> **Exonic** — ≥50% of the read's aligned bases fall within an exon
+> **Intronic** — not exonic, but the read overlaps a gene body
+> **Intergenic** — neither
+
+"Aligned bases" means matched bases only (`M/=/X`). Soft-clips, insertions,
+deletions and splice gaps are all excluded from the denominator — the last of
+these matters, because otherwise every spliced read would be misclassified as
+intronic. Annotation is the IsoQuant extended GTF.
+
+| | 0 hr | 1 hr | 6 hr |
+|---|---|---|---|
+| **Exonic** | **36.48%** | **41.19%** | **39.21%** |
+| **Intronic** | **57.02%** | **52.89%** | **55.34%** |
+| **Intergenic** | 6.50% | 5.92% | 5.45% |
+| Reads classified | 61,179,472 | 75,613,564 | 80,644,703 |
+
+Restricted to the donor-assigned cells (the set used for all downstream
+analysis):
+
+| | 0 hr | 1 hr | 6 hr |
+|---|---|---|---|
+| Exonic | 34.64% | 39.36% | 37.44% |
+| Intronic | 59.61% | 54.95% | 57.48% |
+| Intergenic | 5.75% | 5.69% | 5.08% |
+| Reads classified | 31,763,453 | 46,726,114 | 50,567,455 |
+
+Three things worth knowing about these numbers:
+
+* **The 50% threshold is not doing much work.** The distribution of exonic
+  fraction per read is strongly bimodal — 64.5% of reads have *no* exonic bases
+  at all and 24% are entirely exonic, with only 1.5% anywhere near the cut.
+  Moving the threshold from 30% to 90% changes the exonic fraction by ~4 points.
+  The result is a property of the data, not of the cutoff.
+* **Intron dominance is a size effect, not a capture failure.** Exons are only
+  ~9% of genic sequence, so a uniform library would be ~9% exonic. At 36–41%
+  the data is ~4× exon-enriched; introns still win on read count because there
+  is ~11× more intronic sequence.
+* **Do not use chr21 as a proxy for this.** chr21 alone gives 29.0% exonic /
+  65.0% intronic at 0 hr — 7–8 points off the genome-wide value, because it is
+  unusually intron-heavy (345 lncRNA vs 190 protein-coding genes).
+
+The 1 hr shift toward exonic (+4.7 points) and away from intronic (−4.1) is
+consistent with post-stimulation transcript maturation, and the same shape
+appears in the collaborators' independently computed QC numbers. Treat it as
+suggestive until tested within donors — library-level differences in
+nuclear/cytoplasmic capture would produce the same pattern.
+
+Method detail, per-read exon structure and the 3′ bias:
+[read structure](read_structure.html).
+
 # Donor assignment
 
 *[metadata]* Four donors, balanced 2 cases / 2 controls and 2 male / 2 female,

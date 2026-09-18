@@ -17,3 +17,8 @@ editor_options:
 
 * [isoLASER per donor + joint — chr21 test run](isolaser_per_donor.html) —
   splitting by donor, per-donor yields, and the joint analysis across 4 donors
+* [Read structure — exon/intron assignment and per-read exon patterns](read_structure.html) —
+  where reads fall, which exons each read supports, and the 3' bias measured directly
+* [Exon structure of reads](exon_structure.html) —
+  how exon information is extracted from the GTF, and the three-level summary of
+  how exons are connected (consecutive / skipped / retained)

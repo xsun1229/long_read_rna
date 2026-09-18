@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-09-17" />
+
+<title>Exon structure of reads — how exons are connected</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Exon structure of reads — how exons are
+connected</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-09-17</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-09-17
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0d03de8a89ad792cc2aa7985d17615075731cfcdtargetblank0d03de8a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/0d03de8a89ad792cc2aa7985d17615075731cfcd" target="_blank">0d03de8</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0d03de8a89ad792cc2aa7985d17615075731cfcdtargetblank0d03de8a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/0d03de8a89ad792cc2aa7985d17615075731cfcd" target="_blank">0d03de8</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/exon_structure.Rmd
+    Untracked:  analysis/read_structure.Rmd
+    Untracked:  output/gene_examples_TEST.png
+    Untracked:  output/gene_examples_patterns.png
+
+Unstaged changes:
+    Modified:   analysis/data_summary.Rmd
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="scope" class="section level1">
+<h1>Scope</h1>
+<p>Genome-wide, all three timepoints, <strong>restricted to
+chr1–chr22</strong>. That one rule drops three things that would
+otherwise corrupt the numbers:</p>
+<ul>
+<li><strong>chrM</strong> — has no spliceosomal introns, yet IsoQuant
+calls novel multi-exon “genes” there. Continuous mitochondrial
+transcripts therefore get scored as retained introns. Before excluding
+it, <strong>45.8% of all retained-intron events were on chrM</strong>,
+and every one of them is false.</li>
+<li><strong>chrX / chrY</strong> — differ systematically between the two
+male and two female donors.</li>
+<li><strong>Unplaced scaffolds</strong> — <code>GL000220.1</code> and
+<code>KI270733.1</code> carry the rRNA carryover.</li>
+</ul>
+<p>Reads analysed (multi-exon, chr1–22): 8.37 M / 11.06 M / 11.47 M at 0
+/ 1 / 6 hr.</p>
+<p>Scripts: <code>4.read_structure/</code> —
+<code>0.build_exon_model.R</code> (stage A),
+<code>1.annotate_read_structure.py</code> (stage B),
+<code>7.summarise_levels.R</code> (summaries).</p>
+<hr />
+</div>
+<div id="extracting-exon-information-from-the-gtf"
+class="section level1">
+<h1>1. Extracting exon information from the GTF</h1>
+<div id="input" class="section level2">
+<h2>Input</h2>
+<p><code>data/reference/OUT.extended_annotation.gtf</code> (266 MB,
+IsoQuant extended):</p>
+<pre><code>chr21  IsoQuant  exon  5086740  5087232  .  +  .  gene_id &quot;ENSG00000289905&quot;;
+       transcript_id &quot;ENST00000701545&quot;; exon &quot;1&quot;; exon_id &quot;chr21.15229&quot;;
+       gene_name &quot;ENSG00000289905&quot;;</code></pre>
+<p>Only <code>exon</code> and <code>gene</code> lines are used.</p>
+</div>
+<div id="four-steps" class="section level2">
+<h2>Four steps</h2>
+<p><strong>A1. Read every <code>exon</code> record</strong>, grouped by
+<code>gene_id</code>. The same physical exon appears once per
+transcript, so records overlap heavily.</p>
+<p><strong>A2. Flatten</strong> — merge overlapping exons <em>within
+each gene</em> into non-overlapping blocks
+(<code>GenomicRanges::reduce</code>). On chr21 this takes 19,557 exon
+records down to 3,870 blocks.</p>
+<p><strong>A3. Number them 5′→3′</strong>, reversing the order on
+minus-strand genes.</p>
+<p><strong>A4. Count transcript support</strong> — how many of the
+gene’s transcripts contain each flattened block. This is what later
+separates real exon skipping from annotation clutter.</p>
+</div>
+<div id="output" class="section level2">
+<h2>Output</h2>
+<p><code>exon_model_chr21.tsv.gz</code> — one row per flattened
+exon:</p>
+<pre><code>contig  gene_id          gene_name  strand  exon_number  start     end       width  n_tx  n_tx_total  is_minor
+chr21   ENSG00000154723  ATP5PF     -       8            25716503  25716560  58     1     8           TRUE
+chr21   ENSG00000154723  ATP5PF     -       6            25724480  25724677  198    6     8           FALSE
+chr21   ENSG00000154723  ATP5PF     -       5            25724698  25725350  653    8     8           FALSE</code></pre>
+<p>Column meanings: <code>n_tx_total</code> is how many transcripts the
+<strong>gene</strong> has; <code>n_tx</code> is how many of those
+contain <strong>this</strong> flattened exon; <code>is_minor</code> is
+<code>n_tx &lt; 2</code>. So for ATP5PF (8 transcripts), E5 at 8/8 is
+constitutive, while E3 at 1/8 exists in a single isoform.</p>
+<p><strong>34.7% of chr21 flattened exons are “minor”</strong> — in
+exactly one transcript. For contrast only 23.2% are constitutive.
+<code>n_tx = 1</code> is the largest single bin, which is why the
+genuine/minor distinction below exists.</p>
+</div>
+<div id="why-flattening-has-a-cost" class="section level2">
+<h2>Why flattening has a cost</h2>
+<p>Merging exons across isoforms means <strong>alternative splice sites
+disappear</strong>. If two isoforms use different acceptors for the same
+exon, they fuse into one block, and a read using the inner acceptor is
+indistinguishable from one using the outer. So this model can describe
+<strong>exon skipping and intron retention</strong>, but is blind to
+<strong>A5SS / A3SS / MXE</strong> events.</p>
+<hr />
+</div>
+</div>
+<div id="notation" class="section level1">
+<h1>2. Notation</h1>
+<p>Each read is described by which flattened exons it covers and how
+consecutive covered exons are joined:</p>
+<pre><code>E1-E2      spliced onto the next exon
+E1-E4      spliced, bypassing exons in between
+E1=E2      alignment continuous through the intron (intron retained)
+E1~E2      gap is &lt; 70 bp -- an annotation artifact, not an intron
+E4         single exon, no junction</code></pre>
+<p>In figures, runs of consecutive exons are collapsed for readability:
+<code>E1-E2-E3-E4-E5-E6</code> is shown as <code>E1..E6</code>, and
+<code>E2-E4-E5-E6</code> as <code>E2-E4..E6</code>. A run is only
+collapsed across <code>-</code> links, so <code>=</code> and
+<code>~</code> stay visible.</p>
+<p>A read is <strong>decomposed into its links</strong>, not given one
+label. <code>E1-E2-E4-E7</code> contributes three:</p>
+<table>
+<thead>
+<tr class="header">
+<th>from → to</th>
+<th>link</th>
+<th>step</th>
+<th>event</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E1 → E2</td>
+<td><code>-</code></td>
+<td>1</td>
+<td>consecutive</td>
+</tr>
+<tr class="even">
+<td>E2 → E4</td>
+<td><code>-</code></td>
+<td>2</td>
+<td>skip (bypasses E3)</td>
+</tr>
+<tr class="odd">
+<td>E4 → E7</td>
+<td><code>-</code></td>
+<td>3</td>
+<td>skip (bypasses E5, E6)</td>
+</tr>
+</tbody>
+</table>
+<p>“<strong>Step</strong>” = the gap in exon numbering, <em>not</em> the
+exon number. It is our own term, not standard usage — the field calls
+these <strong>splice junctions</strong>, and step &gt; 1 is an
+<strong>SE (skipped exon)</strong> event.</p>
+<hr />
+</div>
+<div id="three-levels-of-summary" class="section level1">
+<h1>3. Three levels of summary</h1>
+<p>Patterns themselves do not aggregate — TTC3 alone produces 906
+distinct ones, most with ~2 reads. So the summary is built at three
+levels.</p>
+<div id="level-1-step-level-event-rates" class="section level2">
+<h2>Level 1 — step-level event rates</h2>
+<p><strong>Definition.</strong> One row per exon-to-exon link. A read
+covering <em>n</em> exons contributes <em>n−1</em> links. Each link is
+exactly one of five types, so the column sums to 100%.</p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Event</th>
+<th>Definition</th>
+<th>0 hr</th>
+<th>1 hr</th>
+<th>6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Consecutive junction</strong></td>
+<td>spliced onto the adjacent flattened exon (step = 1)</td>
+<td><strong>76.03</strong></td>
+<td>75.58</td>
+<td>75.45</td>
+</tr>
+<tr class="even">
+<td><strong>Minor-exon bypass</strong></td>
+<td>spliced over exon(s) present in <strong>&lt; 2</strong>
+transcripts</td>
+<td><strong>11.24</strong></td>
+<td>11.63</td>
+<td>11.54</td>
+</tr>
+<tr class="odd">
+<td><strong>Genuine exon skip</strong></td>
+<td>spliced over exon(s) present in <strong>≥ 2</strong>
+transcripts</td>
+<td><strong>8.44</strong></td>
+<td>8.93</td>
+<td>8.94</td>
+</tr>
+<tr class="even">
+<td><strong>Retained intron</strong></td>
+<td>≥ 50% of the intervening region covered, gap ≥ 70 bp</td>
+<td><strong>1.94</strong></td>
+<td>1.79</td>
+<td>1.99</td>
+</tr>
+<tr class="odd">
+<td><strong>Artifact gap</strong></td>
+<td>gap between flattened exons is <strong>&lt; 70 bp</strong></td>
+<td>2.34</td>
+<td>2.08</td>
+<td>2.08</td>
+</tr>
+</tbody>
+</table>
+<p>This is the headline summary: five numbers, whole dataset, comparable
+across timepoints.</p>
+<blockquote>
+<p><strong>Why the artifact-gap row exists.</strong> Human spliceosomal
+introns are essentially never shorter than 50–70 bp, so a sub-70 bp gap
+between two flattened exons is not an intron — it is one real exon split
+in two by a novel IsoQuant transcript. Any read crossing such a gap is
+trivially “≥50% covered” and was previously scored as a <strong>retained
+intron</strong>.</p>
+<p>HOMER1 is the case that exposed it: a <strong>38 bp</strong> gap
+between its flattened exons 6 and 7, created by
+<code>transcript12951.chr5.nnic</code>, generated 462 spurious retention
+calls at 1 hr and made HOMER1 look like a dramatic activity-dependent
+retention event. It is not one.</p>
+<p>Excluding these gaps cut retention by <strong>21%</strong> (2.46% →
+1.94%). They are reported as their own row rather than folded into
+another category or dropped from the denominator.</p>
+</blockquote>
+<blockquote>
+<p><strong>The minor/genuine split is essential.</strong> Pooling them
+gives ~19.7% “skipping”, but only 8.4% survives the filter — the
+artifact is larger than the signal. <code>SON E1-E2-E4</code> is the
+single most common pattern on chr21 and is the <em>canonical</em> SON
+structure; it looks like a skip only because SON’s flattened exon 3 is
+39 bp and appears in 1 of 23 transcripts.</p>
+</blockquote>
+<div
+id="the-genuineminor-threshold-is-arbitrary-treat-8.44-as-conditional"
+class="section level3">
+<h3>The genuine/minor threshold is arbitrary — treat 8.44% as
+conditional</h3>
+<p>“Minor” means the bypassed exon is in <strong>&lt; 2</strong>
+transcripts (<code>is_minor</code> in the exon model). That cutoff is a
+judgement call, and the skip count is sensitive to it. Sweeping it on
+chr21:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Threshold</th>
+<th>Genuine skips</th>
+<th>Minor bypasses</th>
+<th>% called genuine</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>≥1 (no filter)</td>
+<td>59,867</td>
+<td>0</td>
+<td>100.0%</td>
+</tr>
+<tr class="even">
+<td><strong>≥2 (used here)</strong></td>
+<td><strong>17,005</strong></td>
+<td>42,862</td>
+<td><strong>28.4%</strong></td>
+</tr>
+<tr class="odd">
+<td>≥3</td>
+<td>11,241</td>
+<td>48,626</td>
+<td>18.8%</td>
+</tr>
+<tr class="even">
+<td>≥5</td>
+<td>7,002</td>
+<td>52,865</td>
+<td>11.7%</td>
+</tr>
+<tr class="odd">
+<td>≥10</td>
+<td>3,240</td>
+<td>56,627</td>
+<td>5.4%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>There is no plateau</strong>, so the absolute genuine-skip
+rate is a function of the cutoff. What is defensible is the 1→2 step,
+which removes 72% of skip calls — those are annotation
+<em>singletons</em>, exons supported by one isoform only, the weakest
+possible evidence that the exon exists. Excluding them is principled;
+everything beyond 2 is a continuum with no natural break.</p>
+<p>Read 8.44% as <em>“the skipping rate after excluding annotation
+singletons”</em>, not as a precise quantity. Comparisons across
+timepoints and donors stay valid because the threshold is held
+constant.</p>
+</div>
+</div>
+<div id="level-2-per-read-feature-rates" class="section level2">
+<h2>Level 2 — per-read feature rates</h2>
+<p><strong>Definition.</strong> Percent of multi-exon reads carrying
+<strong>at least one</strong> of each feature. These are
+<strong>non-exclusive</strong> — a read can carry several, so the column
+does <em>not</em> sum to 100%.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>0 hr</th>
+<th>1 hr</th>
+<th>6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>≥1 consecutive junction</td>
+<td>83.98</td>
+<td>84.05</td>
+<td>83.41</td>
+</tr>
+<tr class="even">
+<td>≥1 minor-exon bypass</td>
+<td>25.84</td>
+<td>26.54</td>
+<td>26.75</td>
+</tr>
+<tr class="odd">
+<td>≥1 genuine exon skip</td>
+<td>19.84</td>
+<td>20.87</td>
+<td>21.21</td>
+</tr>
+<tr class="even">
+<td>≥1 retained intron</td>
+<td>4.80</td>
+<td>4.39</td>
+<td>4.96</td>
+</tr>
+<tr class="odd">
+<td><strong>carries ≥2 different features</strong></td>
+<td><strong>31.57</strong></td>
+<td><strong>32.39</strong></td>
+<td><strong>32.66</strong></td>
+</tr>
+</tbody>
+</table>
+<p>That last row is why a single per-read label is misleading:
+<strong>about a third of multi-exon reads carry more than one kind of
+event.</strong> The <code>class</code> column in the per-read output
+resolves this by precedence
+(<code>MIXED &gt; RETAINED &gt; SKIP &gt; SKIP_MINOR &gt; CONSECUTIVE</code>),
+so it reports only the highest-priority feature. Use the count columns,
+not <code>class</code>, for anything quantitative.</p>
+</div>
+<div id="level-3-illustrative-patterns" class="section level2">
+<h2>Level 3 — illustrative patterns</h2>
+<p><strong>Definition.</strong> Full patterns, restricted to genes with
+<strong>≤10 exons</strong> and ≥500 reads. Patterns are only
+interpretable where a few of them cover most reads — which is true for
+short genes and false for long ones:</p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gene size</th>
+<th>Reads</th>
+<th>Distinct patterns</th>
+<th>Reads in top pattern</th>
+<th>Reads per pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>≤10 exons</strong></td>
+<td>4.36 M</td>
+<td>2,729</td>
+<td>539,460</td>
+<td><strong>1,599</strong></td>
+</tr>
+<tr class="even">
+<td>11–19 exons</td>
+<td>1.98 M</td>
+<td>23,211</td>
+<td>57,551</td>
+<td>85</td>
+</tr>
+<tr class="odd">
+<td>20+ exons</td>
+<td>2.02 M</td>
+<td>77,403</td>
+<td>48,543</td>
+<td><strong>26</strong></td>
+</tr>
+</tbody>
+</table>
+<p>For short genes a pattern is effectively an isoform readout. For 20+
+exon genes there are 28 reads per pattern — no individual pattern has
+power, and the right unit there is the junction.</p>
+<p>Top patterns at 0 hr (chr1–22, ≤10 exons, excluding novel genes):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Gene</th>
+<th>Exons</th>
+<th>Pattern</th>
+<th>Class</th>
+<th>Reads</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RPLP1</td>
+<td>2</td>
+<td>E1-E2</td>
+<td>CONSECUTIVE</td>
+<td>68,479</td>
+</tr>
+<tr class="even">
+<td>TMSB10</td>
+<td>4</td>
+<td>E2-E3-E4</td>
+<td>CONSECUTIVE</td>
+<td>48,693</td>
+</tr>
+<tr class="odd">
+<td>RPS8</td>
+<td>3</td>
+<td>E1-E2-E3</td>
+<td>CONSECUTIVE</td>
+<td>33,274</td>
+</tr>
+<tr class="even">
+<td>RPS18</td>
+<td>3</td>
+<td><strong>E1~E2</strong>-E3</td>
+<td>CONSECUTIVE</td>
+<td>31,948</td>
+</tr>
+<tr class="odd">
+<td>TAGLN</td>
+<td>4</td>
+<td>E3-E4</td>
+<td>CONSECUTIVE</td>
+<td>30,945</td>
+</tr>
+<tr class="even">
+<td>RPL27A</td>
+<td>4</td>
+<td>E1-E2-E3</td>
+<td>CONSECUTIVE</td>
+<td>29,989</td>
+</tr>
+<tr class="odd">
+<td>RPS19</td>
+<td>9</td>
+<td>E2-E3-E4-E7-E8-E9</td>
+<td>SKIP_MINOR</td>
+<td>29,210</td>
+</tr>
+<tr class="even">
+<td>STMN2</td>
+<td>9</td>
+<td>E1-E5-E6-E7-E9</td>
+<td>SKIP_MINOR</td>
+<td>28,669</td>
+</tr>
+<tr class="odd">
+<td>TPT1</td>
+<td>2</td>
+<td>E1-E2</td>
+<td>CONSECUTIVE</td>
+<td>28,308</td>
+</tr>
+<tr class="even">
+<td>MYL6</td>
+<td>5</td>
+<td>E1-E2</td>
+<td>CONSECUTIVE</td>
+<td>24,365</td>
+</tr>
+<tr class="odd">
+<td>RPL34</td>
+<td>5</td>
+<td><strong>E1~E2</strong>-E3</td>
+<td>CONSECUTIVE</td>
+<td>23,366</td>
+</tr>
+<tr class="even">
+<td>RPL19</td>
+<td>3</td>
+<td>E2-E3</td>
+<td>CONSECUTIVE</td>
+<td>22,872</td>
+</tr>
+</tbody>
+</table>
+<p>Dominated by ribosomal protein genes — short, very highly expressed,
+and consistently fully spliced. That is a reassuring sanity check rather
+than a finding.</p>
+<p>Note RPS18 and RPL34, whose top patterns contain <code>~</code>: both
+have a sub-70 bp gap between their flattened exons 1 and 2, which was
+being counted as a real junction before the filter. Even in the cleanest
+examples the annotation carries artifacts.</p>
+</div>
+<div id="per-gene-examples-across-timepoints" class="section level2">
+<h2>Per-gene examples across timepoints</h2>
+<p>Eight genes spanning the range of exon counts — chosen to show the
+range of behaviour, not for biology.</p>
+<p><img src="assets/gene_examples_patterns.png" /></p>
+<table>
+<thead>
+<tr class="header">
+<th>Gene</th>
+<th>Exons</th>
+<th>Reads 0/1/6 hr</th>
+<th>Distinct patterns 0/1/6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RPLP1</td>
+<td>2</td>
+<td>68,490 / 53,825 / 57,524</td>
+<td><strong>2 / 2 / 2</strong></td>
+</tr>
+<tr class="even">
+<td>ATP5PO</td>
+<td>6</td>
+<td>2,702 / 4,477 / 4,157</td>
+<td>30 / 27 / 29</td>
+</tr>
+<tr class="odd">
+<td>SOD1</td>
+<td>7</td>
+<td>4,648 / 6,373 / 6,676</td>
+<td>18 / 27 / 23</td>
+</tr>
+<tr class="even">
+<td>STMN2</td>
+<td>9</td>
+<td>52,728 / 80,426 / 73,011</td>
+<td>52 / 50 / 50</td>
+</tr>
+<tr class="odd">
+<td>HOMER1</td>
+<td>11</td>
+<td>223 / 1,236 / 737</td>
+<td>34 / 63 / 50</td>
+</tr>
+<tr class="even">
+<td>MAP2</td>
+<td>25</td>
+<td>4,764 / 7,832 / 7,601</td>
+<td>227 / 270 / 297</td>
+</tr>
+<tr class="odd">
+<td>APP</td>
+<td>27</td>
+<td>10,543 / 12,966 / 13,998</td>
+<td>465 / 426 / 495</td>
+</tr>
+<tr class="even">
+<td>TTC3</td>
+<td>54</td>
+<td>8,265 / 13,566 / 15,924</td>
+<td><strong>906 / 1,202 / 1,350</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pattern fragmentation scales with exon count.</strong> RPLP1
+has two exons, one pattern, and it holds 100% of reads. TTC3 has 54
+exons and 78% of its reads sit in “other” — no single structure
+dominates. ATP5PO and SOD1 sit in between with one pattern at
+65–75%.</p>
+<p>Two cautions:</p>
+<ul>
+<li><strong>The pattern-count column is depth-dependent and should not
+be compared across timepoints.</strong> HOMER1 goes 34 → 63 → 50
+patterns while its reads go 223 → 1,236 → 737; that is sampling, not
+biology. The figure avoids this by plotting proportions, which are
+depth-stable.</li>
+<li><strong>HOMER1’s top pattern at 1 hr is <code>E6~E7</code></strong>
+— an annotation artifact, kept here deliberately as the cautionary case.
+Before the minimum-intron filter it read as <code>E6=E7</code> and
+looked like a striking activity-dependent retention event.</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="caveats" class="section level1">
+<h1>Caveats</h1>
+<p><strong>The pattern is not a complete record of a read’s
+splicing.</strong> Comparing our link count against the CIGAR’s
+<code>N</code> operations, <strong>13.4% of multi-exon reads contain
+more junctions than the pattern records</strong> — junctions falling
+inside a merged exon block, or outside the range of covered exons, are
+invisible. For junction-level quantification use the
+<code>n_junc_annot</code> / <code>n_junc_novel</code> columns, which
+come straight from the CIGAR.</p>
+<p><strong>Long steps are not credible.</strong> The step distribution
+has a thin tail out to 53 (one junction bypassing 52 exons), which is
+mismapping rather than biology. ~0.9% of spliced steps are step ≥ 7. Any
+skipping analysis should require annotated junctions or cap the step
+size.</p>
+<p><strong>Novel-junction rates are not yet reportable.</strong> 27% of
+spliced reads look all-novel, which is implausible given the annotation
+already contains 22,490 novel transcripts. The likely cause is the 5 bp
+junction-matching tolerance against ~1.1% ONT error; it needs
+calibrating against GT-AG motifs first.</p>
+<p><strong>Timepoint differences are small and donor-pooled.</strong>
+Genuine skipping rises 8.44 → 8.94% and retention dips at 1 hr, but
+donors are pooled here. These need testing within donors before they
+mean anything.</p>
+</div>
+<div id="for-downstream-analysis" class="section level1">
+<h1>For downstream analysis</h1>
+<p>Level 1 and Level 2 are descriptive QC. For statistics — comparing
+timepoints or donors — use <strong>junction counts or PSI (percent
+spliced in)</strong> rather than patterns or classes, which is what
+rMATS / LeafCutter / isoLASER all do and what reviewers will expect.</p>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

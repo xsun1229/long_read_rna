@@ -15,7 +15,7 @@
 
 <title>Data Summary — all three timepoints</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -37,8 +37,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -390,7 +390,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-09-11
+<strong>Last updated:</strong> 2026-09-16
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -408,7 +408,7 @@ title="This is the local directory in which the code in this file was executed."
 This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
 analysis was created with <a
   href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
 that were applied when the results were created. The <em>Past
 versions</em> tab lists the development history.
 </p>
@@ -440,15 +440,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0f7bbcdb188c5f650e56236b9f7cb083fa529b85targetblank0f7bbcda">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0d03de8a89ad792cc2aa7985d17615075731cfcdtargetblank0d03de8a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/0f7bbcdb188c5f650e56236b9f7cb083fa529b85" target="_blank">0f7bbcd</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/0d03de8a89ad792cc2aa7985d17615075731cfcd" target="_blank">0d03de8</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0f7bbcdb188c5f650e56236b9f7cb083fa529b85targetblank0f7bbcda"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0d03de8a89ad792cc2aa7985d17615075731cfcdtargetblank0d03de8a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -458,7 +458,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/0f7bbcdb188c5f650e56236b9f7cb083fa529b85" target="_blank">0f7bbcd</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/0d03de8a89ad792cc2aa7985d17615075731cfcd" target="_blank">0d03de8</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -472,8 +472,12 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Untracked files:
+    Untracked:  analysis/read_structure.Rmd
+
 Unstaged changes:
     Modified:   analysis/data_summary.Rmd
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -519,6 +523,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/bb394a498a61c156c4fe5720f9e02a3d12c5fb03/analysis/data_summary.Rmd" target="_blank">bb394a4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-11
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/bb394a498a61c156c4fe5720f9e02a3d12c5fb03/docs/data_summary.html" target="_blank">bb394a4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-11
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -863,6 +901,121 @@ established on one apply to all three.</p>
 alignments are 26–28% of records.</p>
 <p>The BAMs are already <strong>UMI-deduplicated</strong> (1.01 reads
 per barcode-UMI pair at 0 hr), so primary reads ≈ unique molecules.</p>
+</div>
+<div id="genomic-origin-of-reads" class="section level1">
+<h1>Genomic origin of reads</h1>
+<p>Genome-wide, every primary read, using the <strong>10x Cell Ranger
+definition</strong> — the field standard for 10x data:</p>
+<blockquote>
+<p><strong>Exonic</strong> — ≥50% of the read’s aligned bases fall
+within an exon <strong>Intronic</strong> — not exonic, but the read
+overlaps a gene body <strong>Intergenic</strong> — neither</p>
+</blockquote>
+<p>“Aligned bases” means matched bases only (<code>M/=/X</code>).
+Soft-clips, insertions, deletions and splice gaps are all excluded from
+the denominator — the last of these matters, because otherwise every
+spliced read would be misclassified as intronic. Annotation is the
+IsoQuant extended GTF.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0 hr</th>
+<th>1 hr</th>
+<th>6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Exonic</strong></td>
+<td><strong>36.48%</strong></td>
+<td><strong>41.19%</strong></td>
+<td><strong>39.21%</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Intronic</strong></td>
+<td><strong>57.02%</strong></td>
+<td><strong>52.89%</strong></td>
+<td><strong>55.34%</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Intergenic</strong></td>
+<td>6.50%</td>
+<td>5.92%</td>
+<td>5.45%</td>
+</tr>
+<tr class="even">
+<td>Reads classified</td>
+<td>61,179,472</td>
+<td>75,613,564</td>
+<td>80,644,703</td>
+</tr>
+</tbody>
+</table>
+<p>Restricted to the donor-assigned cells (the set used for all
+downstream analysis):</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0 hr</th>
+<th>1 hr</th>
+<th>6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exonic</td>
+<td>34.64%</td>
+<td>39.36%</td>
+<td>37.44%</td>
+</tr>
+<tr class="even">
+<td>Intronic</td>
+<td>59.61%</td>
+<td>54.95%</td>
+<td>57.48%</td>
+</tr>
+<tr class="odd">
+<td>Intergenic</td>
+<td>5.75%</td>
+<td>5.69%</td>
+<td>5.08%</td>
+</tr>
+<tr class="even">
+<td>Reads classified</td>
+<td>31,763,453</td>
+<td>46,726,114</td>
+<td>50,567,455</td>
+</tr>
+</tbody>
+</table>
+<p>Three things worth knowing about these numbers:</p>
+<ul>
+<li><strong>The 50% threshold is not doing much work.</strong> The
+distribution of exonic fraction per read is strongly bimodal — 64.5% of
+reads have <em>no</em> exonic bases at all and 24% are entirely exonic,
+with only 1.5% anywhere near the cut. Moving the threshold from 30% to
+90% changes the exonic fraction by ~4 points. The result is a property
+of the data, not of the cutoff.</li>
+<li><strong>Intron dominance is a size effect, not a capture
+failure.</strong> Exons are only ~9% of genic sequence, so a uniform
+library would be ~9% exonic. At 36–41% the data is ~4× exon-enriched;
+introns still win on read count because there is ~11× more intronic
+sequence.</li>
+<li><strong>Do not use chr21 as a proxy for this.</strong> chr21 alone
+gives 29.0% exonic / 65.0% intronic at 0 hr — 7–8 points off the
+genome-wide value, because it is unusually intron-heavy (345 lncRNA vs
+190 protein-coding genes).</li>
+</ul>
+<p>The 1 hr shift toward exonic (+4.7 points) and away from intronic
+(−4.1) is consistent with post-stimulation transcript maturation, and
+the same shape appears in the collaborators’ independently computed QC
+numbers. Treat it as suggestive until tested within donors —
+library-level differences in nuclear/cytoplasmic capture would produce
+the same pattern.</p>
+<p>Method detail, per-read exon structure and the 3′ bias: <a
+href="read_structure.html">read structure</a>.</p>
 </div>
 <div id="donor-assignment" class="section level1">
 <h1>Donor assignment</h1>

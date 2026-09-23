@@ -1,0 +1,216 @@
+---
+title: "The IsoQuant annotation, classified with SQANTI3"
+author: "XSun"
+date: "2026-09-18"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+editor_options:
+  chunk_output_type: console
+---
+
+# What was run
+
+`data/reference/OUT.extended_annotation.gtf` is the annotation we were given
+with the data — the 10x reference plus transcripts assembled from the long
+reads themselves. To find out what those extra transcripts actually are, we
+classified the whole file with **SQANTI3** (`6.sqanti3/`).
+
+| | |
+|---|---|
+| Query | `OUT.extended_annotation.gtf` — all 247,450 transcripts |
+| Reference | GENCODE v44 — the release 10x `refdata-gex-GRCh38-2024-A` is built from |
+| Genome | 10x 2020-A FASTA (same GRCh38 sequence; all 194 contigs match the BAM) |
+| Runtime | 27 min, 12 cores |
+
+Two checks before trusting the output: all 224,960 reference `ENST` transcripts
+in the query are present in v44 (so the reference version is right), and all 47
+GENCODE contigs exist in the FASTA. We classified the whole annotation rather
+than just the extra transcripts, so the reference ones act as a built-in
+control — they must come back as full-splice matches.
+
+---
+
+# How many transcripts, genes and exons?
+
+| Feature | Count |
+|---|---|
+| Transcripts | 247,450 |
+| Genes | 39,878 |
+| Exons | 1,666,293 |
+
+Of the genes, 37,933 are reference `ENSG`; the other 1,945 are new loci.
+22,490 of the transcripts are not in the 10x reference.
+
+---
+
+# Known vs novel
+
+SQANTI3 assigns every transcript one structural category:
+
+| Category | Transcripts | % | Meaning |
+|---|---|---|---|
+| full-splice_match (FSM) | 225,023 | 90.9 | splice chain matches a reference transcript exactly |
+| incomplete-splice_match (ISM) | 13,498 | 5.5 | splice chain is a contiguous subset of a reference transcript |
+| novel_not_in_catalog (NNC) | 3,247 | 1.3 | uses at least one splice site absent from the reference |
+| novel_in_catalog (NIC) | 2,176 | 0.9 | new arrangement of splice sites that all exist in the reference |
+| antisense | 1,595 | 0.6 | opposite strand of a known gene |
+| genic_intron | 958 | 0.4 | entirely inside an intron |
+| genic | 444 | 0.2 | overlaps a gene but fits no cleaner class |
+| intergenic | 371 | 0.1 | outside any annotated gene |
+| fusion | 138 | 0.1 | spans two genes |
+
+The control passed: 225,023 FSM against 224,960 reference transcripts. The 63
+extra are transcripts that exactly match a v44 transcript which 10x's filtered
+reference happened to exclude.
+
+## Most of the extra transcripts are fragments, not new structures
+
+Of the 22,490 transcripts beyond the reference, only **2,176 NIC + 3,247 NNC
+≈ 5,400 (2.2% of the annotation)** are genuinely novel splice structures. The
+largest group by far — 13,498 — is **ISM: contiguous subsets of transcripts
+already in the reference**. The subcategories say what kind:
+
+| ISM subcategory | Count |
+|---|---|
+| 5′ fragment | 11,118 |
+| internal fragment | 1,088 |
+| 3′ fragment | 863 |
+| intron retention | 429 |
+
+<!-- **82% are 5′ fragments.** Note SQANTI names these for the portion the -->
+<!-- transcript *consists of*, not the end it is missing — so a `5prime_fragment` -->
+<!-- keeps the 5′ end and is truncated at the 3′ end. Verified from genomic -->
+<!-- coordinates: for the 11,118 5′ fragments the gap at the 5′ end averages 103 bp -->
+<!-- (49.8% match the reference within 50 bp) while the gap at the 3′ end averages -->
+<!-- 56 kb (0.0% match). The 863 3′ fragments are the mirror image. -->
+
+<!-- So the annotation is not reporting thousands of new isoforms. It is largely -->
+<!-- re-reporting known transcripts truncated at the 3′ end. The genuinely novel -->
+<!-- set is ~5,400 transcripts across 3,697 genes. -->
+
+<!-- > **An unresolved tension.** The reads in this library are 3′-biased — 41.7% of -->
+<!-- > single-exon reads sit on the gene's terminal exon versus 3.2% on the first. -->
+<!-- > If assembled fragments simply followed read coverage they should retain the -->
+<!-- > 3′ end, i.e. be *3prime* fragments. We see the opposite by 13:1. -->
+<!-- > -->
+<!-- > A plausible explanation is that these are assembler *models* rather than -->
+<!-- > reads: if IsoQuant anchors a model at an annotated TSS and extends it only as -->
+<!-- > far as read evidence supports, the result is exactly this signature — 5′ end -->
+<!-- > matching the reference, 3′ end short. That would mean model extent reflects -->
+<!-- > the assembler's anchoring rather than the read distribution, and the two -->
+<!-- > should not be compared. This has not been tested. -->
+
+---
+
+# For the novel ones: new exon combinations, or retained introns?
+
+Combinations dominate:
+
+| | Subcategory | Count |
+|---|---|---|
+| NIC (2,176) | combination of known splice sites | 945 |
+| | combination of known junctions | 880 |
+| | intron retention | 351 |
+| NNC (3,247) | at least one novel splice site | 3,122 |
+| | intron retention | 125 |
+
+Intron retention across the whole annotation:
+
+| Category | Retained-intron transcripts |
+|---|---|
+| incomplete-splice_match | 429 |
+| novel_in_catalog | 351 |
+| novel_not_in_catalog | 125 |
+| fusion | 10 |
+| Total | 915 |
+
+So of ~5,400 genuinely novel transcripts, ~1,825 are rearrangements of known
+splice sites, ~3,122 introduce a new splice site, and only 476 are
+intron-retention events. Retention is real but a minor mode — 915 transcripts
+in the entire annotation.
+
+---
+
+<!-- # Which categories can be trusted -->
+
+<!-- Three quality measures, with different provenance — worth being explicit -->
+<!-- about which came from the tool and which we computed: -->
+
+<!-- * **non-canonical junctions** — from SQANTI3, which checks each junction's -->
+<!--   GT-AG motif against the genome sequence. Reported two ways below, because -->
+<!--   SQANTI's `all_canonical` column is per *transcript* ("are all of its -->
+<!--   junctions canonical?") and that reads much higher than the per-*junction* -->
+<!--   rate. -->
+<!-- * **RT-switching** — from SQANTI3's `RTS_stage` flag. -->
+<!-- * **introns < 70 bp** — our own calculation from the GTF coordinates, not a -->
+<!--   SQANTI output. Below ~70 bp a spliceosomal intron is not physically -->
+<!--   plausible, so any such gap is an annotation error. The threshold is our -->
+<!--   choice. -->
+
+<!-- Transcript-level figures exclude mono-exonic transcripts, which have no -->
+<!-- junctions to assess (6,427 of them, almost all FSM). -->
+
+<!-- | Category | % tx with a non-canonical junction | % junctions non-canonical | % RT-switching | % introns < 70 bp | -->
+<!-- |---|---|---|---|---| -->
+<!-- | novel_not_in_catalog | 16.1 | 5.46 | 9.1 | 0.91 | -->
+<!-- | intergenic | 3.2 | 3.40 | 19.4 | 2.98 | -->
+<!-- | fusion | 2.2 | 0.79 | 3.6 | 0.26 | -->
+<!-- | genic | 2.0 | 2.36 | 10.6 | 5.78 | -->
+<!-- | antisense | 1.4 | 1.52 | 17.4 | 5.90 | -->
+<!-- | genic_intron | 1.1 | 1.64 | 23.7 | 9.51 | -->
+<!-- | full-splice_match | 0.5 | 0.09 | 9.9 | 0.07 | -->
+<!-- | novel_in_catalog | 0.2 | 0.05 | 7.5 | 0.03 | -->
+<!-- | incomplete-splice_match | 0.1 | 0.04 | 3.7 | 0.01 | -->
+
+<!-- Two different problems, in different categories: -->
+
+<!-- * **NNC has by far the worst splice-site motifs** — 5.46% of its junctions are -->
+<!--   non-canonical, 60x the reference rate of 0.09%, and 16.1% of its transcripts -->
+<!--   carry at least one. Its novel splice sites are the least believable thing in -->
+<!--   the annotation. -->
+<!-- * **genic_intron, antisense, genic and intergenic carry the impossible -->
+<!--   introns** (3-9.5% under 70 bp against 0.07% in the reference) and the highest -->
+<!--   RT-switching rates (10-24%). These look like assembly artifacts rather than -->
+<!--   transcripts. -->
+
+<!-- ISM and NIC are clean on every measure, which supports reading ISM as genuine -->
+<!-- fragments of real transcripts rather than noise. -->
+
+<!-- Transcript sizes point the same way: FSM averages 7.04 exons, while the -->
+<!-- artifact-heavy categories average about two. -->
+
+<!-- | Category | Exons / transcript | -->
+<!-- |---|---| -->
+<!-- | full-splice_match | 7.04 | -->
+<!-- | novel_in_catalog | 5.20 | -->
+<!-- | novel_not_in_catalog | 4.08 | -->
+<!-- | incomplete-splice_match | 3.72 | -->
+<!-- | antisense / genic_intron / genic / intergenic | 2.0–2.3 | -->
+
+<!-- --- -->
+
+<!-- # Consequences for our analyses -->
+
+<!-- **A concrete artifact this explains.** HOMER1 appeared to show a dramatic -->
+<!-- activity-dependent intron-retention event at 1 hr (45% of its reads). The cause -->
+<!-- was a 38 bp "intron" introduced by `transcript12951.chr5.nnic` — which SQANTI3 -->
+<!-- classifies as **genic_intron**, the category with the highest short-intron rate -->
+<!-- in the table above. See [exon structure](exon_structure.html). -->
+
+<!-- **Our flattened exon model is built on the unfiltered annotation**, so every -->
+<!-- low-quality transcript contributed exons to the union. Since minor exons come -->
+<!-- disproportionately from single-transcript entries, rebuilding on a filtered GTF -->
+<!-- should reduce the `SKIP_MINOR` rate. -->
+
+<!-- **Suggested filter:** keep FSM, ISM and NIC; drop NNC, antisense, genic_intron, -->
+<!-- genic, intergenic and fusion. That removes ~6,750 transcripts (2.7%) and -->
+<!-- eliminates the categories responsible for both the non-canonical junctions and -->
+<!-- the sub-70 bp gaps. -->
+
+<!-- Outputs in `long_read_processed/sqanti3/` — `extended_classification.txt` -->
+<!-- (one row per transcript, 54 columns) and `extended_junctions.txt` (one row per -->
+<!-- junction, 1,418,844 rows, with canonical status). The junctions file is what -->
+<!-- would let us calibrate the novel-junction rate against GT-AG motifs, which is -->
+<!-- still outstanding. -->

@@ -1,0 +1,202 @@
+---
+title: "Splice junctions and sashimi plots — CLDND1"
+author: "XSun"
+date: "2026-09-23"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+editor_options:
+  chunk_output_type: console
+---
+
+# Question and result
+
+Can we see a change in how reads connect exons after neuronal stimulation?
+Here we focus on **CLDND1**, comparing **0 hr (baseline), 1 hr, and 6 hr**
+in batch 21, with cells assigned to CD_21, CD_31, CD_36, and CD_48.
+
+**CLDND1 shows a progressive shift from proximal to distal splice-donor
+usage.** Among reads supporting the two main competing junctions, the
+shorter junction's share falls from approximately **74% to 28%**, while
+the longer junction's share rises from **26% to 72%**. All four donors
+show the same direction of change.
+
+These are **junction-supporting read fractions**, not estimates of
+full-length transcript proportions. This is an exploratory example of
+a time-associated splicing change; it is not a formal differential-splicing
+test or proof of a response within each neuronal cell type.
+
+# Reading the sashimi plot
+
+![CLDND1 sashimi plot across 0, 1, and 6 hours. Colored coverage tracks show raw read depth; arcs are splice junctions and their labels are supporting-read counts.](assets/CLDND1_filtered.png)
+
+*Figure 1. CLDND1 on chromosome 3, minus strand. Inputs contain primary
+alignments from donor-assigned cells. All available reads in the selected
+region are used, without the subsampling used in the earlier equal-depth
+figure. The coverage tracks use a common scale and represent raw read depth.*
+
+| Element | Meaning |
+|---|---|
+| Blue, orange, green panels | 0 hr, 1 hr, 6 hr, respectively |
+| Horizontal axis | Genomic position on chromosome 3 (GRCh38) |
+| Filled colored areas | Number of reads covering each genomic position |
+| Curved line | A splice junction: reads align on either side of an intron, skipping its sequence |
+| Number on a curve | Number of reads supporting that particular junction |
+| Black rectangles at the bottom | Annotated exons in the displayed transcript models |
+| One annotation row | One reference transcript; this is not an individual read |
+
+The placement of an arc **above or below** the coverage is a layout choice.
+It does not indicate increased/decreased usage or the strand of the gene.
+A long read can cross more than one junction and contribute to several arc
+counts, so adding every number in a panel does not give the number of reads.
+
+## Start with two curves
+
+Find the short curve labeled **141** at baseline. It connects the left exon
+to the nearby exon boundary. Now find the longer curve labeled **50** that
+starts at that same left boundary and extends farther to the right.
+
+These are the two competing junctions discussed here. Follow them through
+the panels:
+
+| Junction | 0 hr | 1 hr | 6 hr |
+|---|---:|---:|---:|
+| Shorter / proximal | 141 | 272 | 185 |
+| Longer / distal | 50 | 241 | 483 |
+| Total for these two junctions | 191 | 513 | 668 |
+
+For example, **141 means 141 reads support removal of the intron represented
+by that short arc**. It does not mean 141 reads skip an exon. The other labels,
+such as 97 and 25 in the baseline panel, describe other junctions with
+different endpoints and are not part of this two-choice calculation.
+
+## Why counts alone are not enough
+
+The shorter junction increases from 141 to 185 reads between baseline and
+6 hr, but that does not mean its relative usage increases. There are also
+many more reads supporting its competitor.
+
+For this simple two-junction comparison:
+
+**Shorter-junction share = shorter count / (shorter count + longer count).**
+
+**Longer-junction share = longer count / (shorter count + longer count).**
+
+| Share among the two main junctions | 0 hr | 1 hr | 6 hr |
+|---|---:|---:|---:|
+| Shorter / proximal | 73.8% | 53.0% | 27.7% |
+| Longer / distal | 26.2% | 47.0% | 72.3% |
+
+At baseline, the shorter connection predominates. At 1 hr the two are close
+to equally used. At 6 hr, the longer connection predominates.
+
+**The evidence for a change is the shift in relative junction usage, not
+the increase in the height of a coverage track.** Raw coverage also depends
+on library depth, cell numbers, and gene expression.
+
+# Which splice sites are changing?
+
+CLDND1 is on the **minus strand**, so its transcriptional direction is
+**right to left**, opposite to the increasing genomic coordinates.
+The shared left boundary is the **acceptor**; the two competing right
+boundaries are **donors**. This is a local alternative 5′ splice-site
+(alternative donor) pattern.
+
+| Connection | Intron interval, 1-based inclusive | Length |
+|---|---|---:|
+| Shorter / proximal donor | chr3:98,521,443–98,521,652 | 210 bp |
+| Longer / distal donor | chr3:98,521,443–98,522,848 | 1,406 bp |
+
+The coordinates above describe the intronic bases counted by the junction
+extraction script. The adjacent exon boundaries are 98,521,442 on the left
+and 98,521,653 or 98,522,849 on the right.
+
+This local junction change does not establish the full splice chain or the
+abundance of any one annotated transcript. Other junctions in the same
+region show that the locus has more structure than these two choices alone.
+
+# Does the change occur in all four donors?
+
+![Donor-level CLDND1 junction usage. Each donor shows increasing distal and decreasing proximal usage from 0 to 6 hours.](assets/CLDND1_psi.png)
+
+*Figure 2. Each colored line follows one donor. Usage is calculated separately
+within each donor and timepoint, using all observed junctions sharing the
+left intron boundary at chr3:98,521,443 as the denominator. Here that boundary
+corresponds to the shared acceptor.*
+
+| Donor | Distal usage, 0 hr | Distal usage, 1 hr | Distal usage, 6 hr |
+|---|---:|---:|---:|
+| CD_21 | 31.1% | 45.5% | 68.4% |
+| CD_31 | 25.0% | 47.1% | 75.9% |
+| CD_36 | 27.3% | 49.4% | 65.5% |
+| CD_48 | 19.6% | 45.9% | 75.8% |
+
+All four donors show increasing distal usage. This supports a consistent
+pattern rather than a pooled shift driven only by different donor weights.
+Cell-type composition remains a possible contributor because the current
+counts pool neuronal cell types within each donor.
+
+## Why these percentages differ slightly from the simple calculation
+
+The two-junction table above ignores rare competing junctions to make the
+arithmetic easy to follow. The screening code and donor plot include those
+rare alternatives in their denominator.
+
+| Pooled across donors | 0 hr | 1 hr | 6 hr |
+|---|---:|---:|---:|
+| Reads supporting other junctions at the shared site | 2 | 3 | 5 |
+| All junction reads at this site | 193 | 516 | 673 |
+| Distal share using all alternatives | 25.9% | 46.7% | 71.8% |
+
+Also, a pooled read fraction weights donors by their coverage. The candidate
+screen averages the four donor-specific changes equally. Its mean distal
+change is **+0.457**, or **45.7 percentage points**, from 0 to 6 hr.
+
+# How the example was selected and checked
+
+The candidate screen uses primary alignments from donor-assigned cells on
+chr1–chr22. It counts introns from `N` operations in the alignment CIGAR,
+then compares junction usage within each shared left genomic boundary.
+
+For a candidate to be retained in a comparison, the current script requires:
+
+* At least 20 junction reads at the shared site for each donor and timepoint.
+* The junction to be observed in all four donors at both timepoints.
+* The same direction of change in all four donors.
+* An absolute mean donor-level usage change of at least 0.15.
+
+CLDND1 was a leading candidate for visual inspection. Its regional BAMs were
+independently recounted, and the donor-specific counts at the shared site
+matched the saved junction tables at all three timepoints.
+
+This screen has no replicate-aware statistical model or multiple-testing
+correction. It currently excludes zero-count junctions rather than assigning
+zero usage when the site is adequately covered, and it only groups shared
+left boundaries. These limitations matter for discovering other events;
+they do not change the verified CLDND1 counts shown here.
+
+# Files used
+
+Paths below are relative to the long-read RNA project directory.
+
+| Purpose | File |
+|---|---|
+| Extract junction counts | `7.sashimi/1.extract_junctions.sbatch` |
+| Screen candidates | `7.sashimi/2.find_candidates.R` |
+| Candidate results | `long_read_processed/junctions/candidate_junctions.tsv` |
+| Donor/timepoint junction counts | `long_read_processed/junctions/junctions_{0hr,1hr,6hr}.tsv.gz` |
+| Filtered regional alignments | `7.sashimi/out/reg_{0hr,1hr,6hr}.bam` |
+| ggsashimi BAM list | `7.sashimi/out/bams_reg.tsv` |
+| Displayed annotation | `7.sashimi/out/cldnd1_pick.gtf` |
+| Corrected sashimi figure | `7.sashimi/out/CLDND1_filtered.png` |
+| Donor usage figure | `7.sashimi/out/CLDND1_psi.png` |
+
+The figures use the corrected ggsashimi inputs. The earlier MISO plot is
+excluded because the installed implementation skips reads spanning multiple
+junctions, substantially distorting this long-read example. Exact commands
+for regenerating the two figures have not yet been saved as a plotting script.
+
+Related pages: [data summary](data_summary.html),
+[exon structure](exon_structure.html), and
+[annotation QC](annotation_sqanti3.html).

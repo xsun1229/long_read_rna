@@ -19,6 +19,13 @@ editor_options:
   splitting by donor, per-donor yields, and the joint analysis across 4 donors
 * [Read structure — exon/intron assignment and per-read exon patterns](read_structure.html) —
   where reads fall, which exons each read supports, and the 3' bias measured directly
+* [The IsoQuant annotation, classified with SQANTI3](annotation_sqanti3.html) —
+  how many transcripts/genes/exons, how many are genuinely novel, and which
+  categories are trustworthy
 * [Exon structure of reads](exon_structure.html) —
   how exon information is extracted from the GTF, and the three-level summary of
   how exons are connected (consecutive / skipped / retained)
+
+* [Splicing changes across stimulation](splicing_candidates.html) —
+  how candidates were screened, the 100 candidate genes, which have neuronal
+  roles, and worked examples for CLDND1, NRXN2 and BDNF

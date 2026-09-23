@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-09-23" />
+
+<title>Splice junctions and sashimi plots — CLDND1</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Splice junctions and sashimi plots —
+CLDND1</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-09-23</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-09-23
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreefb6df253fec2d4cd155e67c6056f5a51333c4540targetblankfb6df25a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/fb6df253fec2d4cd155e67c6056f5a51333c4540" target="_blank">fb6df25</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreefb6df253fec2d4cd155e67c6056f5a51333c4540targetblankfb6df25a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/fb6df253fec2d4cd155e67c6056f5a51333c4540" target="_blank">fb6df25</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/annotation_sqanti3.Rmd
+    Untracked:  analysis/sashimi.Rmd
+
+Unstaged changes:
+    Modified:   analysis/data_summary.Rmd
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="question-and-result" class="section level1">
+<h1>Question and result</h1>
+<p>Can we see a change in how reads connect exons after neuronal
+stimulation? Here we focus on <strong>CLDND1</strong>, comparing
+<strong>0 hr (baseline), 1 hr, and 6 hr</strong> in batch 21, with cells
+assigned to CD_21, CD_31, CD_36, and CD_48.</p>
+<p><strong>CLDND1 shows a progressive shift from proximal to distal
+splice-donor usage.</strong> Among reads supporting the two main
+competing junctions, the shorter junction’s share falls from
+approximately <strong>74% to 28%</strong>, while the longer junction’s
+share rises from <strong>26% to 72%</strong>. All four donors show the
+same direction of change.</p>
+<p>These are <strong>junction-supporting read fractions</strong>, not
+estimates of full-length transcript proportions. This is an exploratory
+example of a time-associated splicing change; it is not a formal
+differential-splicing test or proof of a response within each neuronal
+cell type.</p>
+</div>
+<div id="reading-the-sashimi-plot" class="section level1">
+<h1>Reading the sashimi plot</h1>
+<div class="figure">
+<img src="assets/CLDND1_filtered.png" alt="" />
+<p class="caption">CLDND1 sashimi plot across 0, 1, and 6 hours. Colored
+coverage tracks show raw read depth; arcs are splice junctions and their
+labels are supporting-read counts.</p>
+</div>
+<p><em>Figure 1. CLDND1 on chromosome 3, minus strand. Inputs contain
+primary alignments from donor-assigned cells. All available reads in the
+selected region are used, without the subsampling used in the earlier
+equal-depth figure. The coverage tracks use a common scale and represent
+raw read depth.</em></p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blue, orange, green panels</td>
+<td>0 hr, 1 hr, 6 hr, respectively</td>
+</tr>
+<tr class="even">
+<td>Horizontal axis</td>
+<td>Genomic position on chromosome 3 (GRCh38)</td>
+</tr>
+<tr class="odd">
+<td>Filled colored areas</td>
+<td>Number of reads covering each genomic position</td>
+</tr>
+<tr class="even">
+<td>Curved line</td>
+<td>A splice junction: reads align on either side of an intron, skipping
+its sequence</td>
+</tr>
+<tr class="odd">
+<td>Number on a curve</td>
+<td>Number of reads supporting that particular junction</td>
+</tr>
+<tr class="even">
+<td>Black rectangles at the bottom</td>
+<td>Annotated exons in the displayed transcript models</td>
+</tr>
+<tr class="odd">
+<td>One annotation row</td>
+<td>One reference transcript; this is not an individual read</td>
+</tr>
+</tbody>
+</table>
+<p>The placement of an arc <strong>above or below</strong> the coverage
+is a layout choice. It does not indicate increased/decreased usage or
+the strand of the gene. A long read can cross more than one junction and
+contribute to several arc counts, so adding every number in a panel does
+not give the number of reads.</p>
+<div id="start-with-two-curves" class="section level2">
+<h2>Start with two curves</h2>
+<p>Find the short curve labeled <strong>141</strong> at baseline. It
+connects the left exon to the nearby exon boundary. Now find the longer
+curve labeled <strong>50</strong> that starts at that same left boundary
+and extends farther to the right.</p>
+<p>These are the two competing junctions discussed here. Follow them
+through the panels:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Junction</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Shorter / proximal</td>
+<td align="right">141</td>
+<td align="right">272</td>
+<td align="right">185</td>
+</tr>
+<tr class="even">
+<td>Longer / distal</td>
+<td align="right">50</td>
+<td align="right">241</td>
+<td align="right">483</td>
+</tr>
+<tr class="odd">
+<td>Total for these two junctions</td>
+<td align="right">191</td>
+<td align="right">513</td>
+<td align="right">668</td>
+</tr>
+</tbody>
+</table>
+<p>For example, <strong>141 means 141 reads support removal of the
+intron represented by that short arc</strong>. It does not mean 141
+reads skip an exon. The other labels, such as 97 and 25 in the baseline
+panel, describe other junctions with different endpoints and are not
+part of this two-choice calculation.</p>
+</div>
+<div id="why-counts-alone-are-not-enough" class="section level2">
+<h2>Why counts alone are not enough</h2>
+<p>The shorter junction increases from 141 to 185 reads between baseline
+and 6 hr, but that does not mean its relative usage increases. There are
+also many more reads supporting its competitor.</p>
+<p>For this simple two-junction comparison:</p>
+<p><strong>Shorter-junction share = shorter count / (shorter count +
+longer count).</strong></p>
+<p><strong>Longer-junction share = longer count / (shorter count +
+longer count).</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Share among the two main junctions</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Shorter / proximal</td>
+<td align="right">73.8%</td>
+<td align="right">53.0%</td>
+<td align="right">27.7%</td>
+</tr>
+<tr class="even">
+<td>Longer / distal</td>
+<td align="right">26.2%</td>
+<td align="right">47.0%</td>
+<td align="right">72.3%</td>
+</tr>
+</tbody>
+</table>
+<p>At baseline, the shorter connection predominates. At 1 hr the two are
+close to equally used. At 6 hr, the longer connection predominates.</p>
+<p><strong>The evidence for a change is the shift in relative junction
+usage, not the increase in the height of a coverage track.</strong> Raw
+coverage also depends on library depth, cell numbers, and gene
+expression.</p>
+</div>
+</div>
+<div id="which-splice-sites-are-changing" class="section level1">
+<h1>Which splice sites are changing?</h1>
+<p>CLDND1 is on the <strong>minus strand</strong>, so its
+transcriptional direction is <strong>right to left</strong>, opposite to
+the increasing genomic coordinates. The shared left boundary is the
+<strong>acceptor</strong>; the two competing right boundaries are
+<strong>donors</strong>. This is a local alternative 5′ splice-site
+(alternative donor) pattern.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Connection</th>
+<th>Intron interval, 1-based inclusive</th>
+<th align="right">Length</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Shorter / proximal donor</td>
+<td>chr3:98,521,443–98,521,652</td>
+<td align="right">210 bp</td>
+</tr>
+<tr class="even">
+<td>Longer / distal donor</td>
+<td>chr3:98,521,443–98,522,848</td>
+<td align="right">1,406 bp</td>
+</tr>
+</tbody>
+</table>
+<p>The coordinates above describe the intronic bases counted by the
+junction extraction script. The adjacent exon boundaries are 98,521,442
+on the left and 98,521,653 or 98,522,849 on the right.</p>
+<p>This local junction change does not establish the full splice chain
+or the abundance of any one annotated transcript. Other junctions in the
+same region show that the locus has more structure than these two
+choices alone.</p>
+</div>
+<div id="does-the-change-occur-in-all-four-donors"
+class="section level1">
+<h1>Does the change occur in all four donors?</h1>
+<div class="figure">
+<img src="assets/CLDND1_psi.png" alt="" />
+<p class="caption">Donor-level CLDND1 junction usage. Each donor shows
+increasing distal and decreasing proximal usage from 0 to 6 hours.</p>
+</div>
+<p><em>Figure 2. Each colored line follows one donor. Usage is
+calculated separately within each donor and timepoint, using all
+observed junctions sharing the left intron boundary at chr3:98,521,443
+as the denominator. Here that boundary corresponds to the shared
+acceptor.</em></p>
+<table>
+<thead>
+<tr class="header">
+<th>Donor</th>
+<th align="right">Distal usage, 0 hr</th>
+<th align="right">Distal usage, 1 hr</th>
+<th align="right">Distal usage, 6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CD_21</td>
+<td align="right">31.1%</td>
+<td align="right">45.5%</td>
+<td align="right">68.4%</td>
+</tr>
+<tr class="even">
+<td>CD_31</td>
+<td align="right">25.0%</td>
+<td align="right">47.1%</td>
+<td align="right">75.9%</td>
+</tr>
+<tr class="odd">
+<td>CD_36</td>
+<td align="right">27.3%</td>
+<td align="right">49.4%</td>
+<td align="right">65.5%</td>
+</tr>
+<tr class="even">
+<td>CD_48</td>
+<td align="right">19.6%</td>
+<td align="right">45.9%</td>
+<td align="right">75.8%</td>
+</tr>
+</tbody>
+</table>
+<p>All four donors show increasing distal usage. This supports a
+consistent pattern rather than a pooled shift driven only by different
+donor weights. Cell-type composition remains a possible contributor
+because the current counts pool neuronal cell types within each
+donor.</p>
+<div
+id="why-these-percentages-differ-slightly-from-the-simple-calculation"
+class="section level2">
+<h2>Why these percentages differ slightly from the simple
+calculation</h2>
+<p>The two-junction table above ignores rare competing junctions to make
+the arithmetic easy to follow. The screening code and donor plot include
+those rare alternatives in their denominator.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Pooled across donors</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Reads supporting other junctions at the shared site</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td>All junction reads at this site</td>
+<td align="right">193</td>
+<td align="right">516</td>
+<td align="right">673</td>
+</tr>
+<tr class="odd">
+<td>Distal share using all alternatives</td>
+<td align="right">25.9%</td>
+<td align="right">46.7%</td>
+<td align="right">71.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Also, a pooled read fraction weights donors by their coverage. The
+candidate screen averages the four donor-specific changes equally. Its
+mean distal change is <strong>+0.457</strong>, or <strong>45.7
+percentage points</strong>, from 0 to 6 hr.</p>
+</div>
+</div>
+<div id="how-the-example-was-selected-and-checked"
+class="section level1">
+<h1>How the example was selected and checked</h1>
+<p>The candidate screen uses primary alignments from donor-assigned
+cells on chr1–chr22. It counts introns from <code>N</code> operations in
+the alignment CIGAR, then compares junction usage within each shared
+left genomic boundary.</p>
+<p>For a candidate to be retained in a comparison, the current script
+requires:</p>
+<ul>
+<li>At least 20 junction reads at the shared site for each donor and
+timepoint.</li>
+<li>The junction to be observed in all four donors at both
+timepoints.</li>
+<li>The same direction of change in all four donors.</li>
+<li>An absolute mean donor-level usage change of at least 0.15.</li>
+</ul>
+<p>CLDND1 was a leading candidate for visual inspection. Its regional
+BAMs were independently recounted, and the donor-specific counts at the
+shared site matched the saved junction tables at all three
+timepoints.</p>
+<p>This screen has no replicate-aware statistical model or
+multiple-testing correction. It currently excludes zero-count junctions
+rather than assigning zero usage when the site is adequately covered,
+and it only groups shared left boundaries. These limitations matter for
+discovering other events; they do not change the verified CLDND1 counts
+shown here.</p>
+</div>
+<div id="files-used" class="section level1">
+<h1>Files used</h1>
+<p>Paths below are relative to the long-read RNA project directory.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Purpose</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Extract junction counts</td>
+<td><code>7.sashimi/1.extract_junctions.sbatch</code></td>
+</tr>
+<tr class="even">
+<td>Screen candidates</td>
+<td><code>7.sashimi/2.find_candidates.R</code></td>
+</tr>
+<tr class="odd">
+<td>Candidate results</td>
+<td><code>long_read_processed/junctions/candidate_junctions.tsv</code></td>
+</tr>
+<tr class="even">
+<td>Donor/timepoint junction counts</td>
+<td><code>long_read_processed/junctions/junctions_{0hr,1hr,6hr}.tsv.gz</code></td>
+</tr>
+<tr class="odd">
+<td>Filtered regional alignments</td>
+<td><code>7.sashimi/out/reg_{0hr,1hr,6hr}.bam</code></td>
+</tr>
+<tr class="even">
+<td>ggsashimi BAM list</td>
+<td><code>7.sashimi/out/bams_reg.tsv</code></td>
+</tr>
+<tr class="odd">
+<td>Displayed annotation</td>
+<td><code>7.sashimi/out/cldnd1_pick.gtf</code></td>
+</tr>
+<tr class="even">
+<td>Corrected sashimi figure</td>
+<td><code>7.sashimi/out/CLDND1_filtered.png</code></td>
+</tr>
+<tr class="odd">
+<td>Donor usage figure</td>
+<td><code>7.sashimi/out/CLDND1_psi.png</code></td>
+</tr>
+</tbody>
+</table>
+<p>The figures use the corrected ggsashimi inputs. The earlier MISO plot
+is excluded because the installed implementation skips reads spanning
+multiple junctions, substantially distorting this long-read example.
+Exact commands for regenerating the two figures have not yet been saved
+as a plotting script.</p>
+<p>Related pages: <a href="data_summary.html">data summary</a>, <a
+href="exon_structure.html">exon structure</a>, and <a
+href="annotation_sqanti3.html">annotation QC</a>.</p>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

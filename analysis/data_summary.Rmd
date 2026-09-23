@@ -45,20 +45,6 @@ statistics we were sent).
 Four donors present at every timepoint, so the design is **paired within
 donor across stimulation**.
 
-<!-- # Library identity -->
-
-<!-- Each BAM's barcodes were cross-matched against all three library barcode lists -->
-<!-- *[metadata]*. Each matches its own and essentially nothing else: -->
-
-<!-- | BAM | vs 21-0 | vs 21-1 | vs 21-6 | -->
-<!-- |---|---|---|---| -->
-<!-- | `DUAN_21-0` | **87.0%** | 0.4% | 0.6% | -->
-<!-- | `DUAN_21-1` | 1.9% | **80.8%** | 0.4% | -->
-<!-- | `DUAN_21-6` | 1.4% | 1.5% | **83.9%** | -->
-
-<!-- Off-diagonal values are at or below what random 16-mer collisions between -->
-<!-- independent 10x libraries would give. Cell counts also match the scNanoGPS -->
-<!-- "Cell number" exactly for all three *[slides]*: 8,612 / 12,023 / 10,051. -->
 
 # Per-library statistics
 
@@ -85,14 +71,6 @@ The three libraries are consistent — % spliced within 0.7
 points, read length within 17 bp. So QC thresholds and pipeline settings
 established on one apply to all three.
 
-Read-length percentiles (100 k sample):
-
-| | p10 | p25 | median | p75 | p90 | p99 |
-|---|---|---|---|---|---|---|
-| 0 hr | 306 | 412 | 578 | 776 | 1,005 | 2,044 |
-| 1 hr | 276 | 353 | 512 | 753 | 1,049 | 2,110 |
-| 6 hr | 273 | 367 | 541 | 773 | 1,054 | 2,128 |
-
 **Always filter with `-F 0x900`.** Secondary alignments are 26–28% of records.
 
 **Reads vs UMIs.** A read is one sequencing observation; a UMI labels the
@@ -100,9 +78,27 @@ original mRNA molecule, so molecule identity is the **pair** `RG barcode + UMI`
 (12 bp UMIs are reused across cells — counting UMI sequences alone
 under-counts). The BAMs are already UMI-deduplicated by scNanoGPS, at
 **1.015–1.021 reads per barcode-UMI pair genome-wide**, so the two numbers
-differ by only ~2% and primary reads ≈ unique molecules. The residual is
-almost entirely one molecule counted at two different loci, since dedup was
-applied per gene rather than per cell.
+differ by only ~2% and primary reads ≈ unique molecules.
+
+<!-- Where does that residual 2% come from? Measuring the genomic distance between -->
+<!-- every pair of reads sharing a barcode+UMI (chr21, 8,967 pairs): -->
+
+<!-- | Distance between the two reads | Pairs | % | Interpretation | -->
+<!-- |---|---|---|---| -->
+<!-- | exactly 0 bp | 785 | 8.8 | identical start — plain duplicate | -->
+<!-- | 1–99 bp | 6,152 | 68.6 | same locus, ragged 5′ end | -->
+<!-- | 100–999 bp | 1,076 | 12.0 | same locus | -->
+<!-- | 1 kb – 100 kb | 751 | 8.4 | same gene, different exon | -->
+<!-- | > 100 kb | 203 | 2.3 | genuinely a different gene | -->
+
+<!-- So **~89% of the residual is the same molecule at the same locus**, its two -->
+<!-- reads starting a few base pairs apart and therefore not collapsed. It is -->
+<!-- incomplete deduplication, not the per-gene dedup unit: only 2.3% is the -->
+<!-- cross-gene case where one UMI legitimately labels molecules of two genes. -->
+
+<!-- This is small enough to ignore — collapsing every same-locus pair would move -->
+<!-- reads-per-UMI from ~1.02 to ~1.002 — but it is the opposite of what an earlier -->
+<!-- version of this page claimed, so worth stating plainly. -->
 
 ## Cells with a donor assignment
 
@@ -153,7 +149,9 @@ Genome-wide, every primary read, using the **10x Cell Ranger definition** — th
 field standard for 10x data:
 
 > **Exonic** — ≥50% of the read's aligned bases fall within an exon
+
 > **Intronic** — not exonic, but the read overlaps a gene body
+
 > **Intergenic** — neither
 
 "Aligned bases" means matched bases only (`M/=/X`). Soft-clips, insertions,

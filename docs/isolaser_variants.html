@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-09-23" />
+
+<title>Validating isoLASER’s variant calls against our genotype data</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Validating isoLASER’s variant calls against
+our genotype data</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-09-23</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-09-23
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree5998ecc6b021edcd387813610a18e9f7bcd6e534targetblank5998ecca">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/5998ecc6b021edcd387813610a18e9f7bcd6e534" target="_blank">5998ecc</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree5998ecc6b021edcd387813610a18e9f7bcd6e534targetblank5998ecca"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/5998ecc6b021edcd387813610a18e9f7bcd6e534" target="_blank">5998ecc</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_variants.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>isoLASER’s first step is variant and haplotype calling: everything
+downstream — read phasing, allele-specific splicing — rests on those
+variants being real. We have independent genotypes for the same four
+donors, so we can check.</p>
+<p>The short version: where the genotype data can adjudicate, isoLASER
+is accurate. But most of its calls are at sites the genotype data does
+not contain, and those look like sequencing error. Two configuration
+problems in how we ran it probably explain much of that.</p>
+<hr />
+<div id="what-was-compared" class="section level1">
+<h1>1. What was compared</h1>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>isoLASER calls</td>
+<td>chr21 only, four donors, per-donor gVCFs</td>
+</tr>
+<tr class="even">
+<td>Genotype data</td>
+<td><code>/project/xinhe/lifan/neuron_stim/zicheng_100lines_all_snp_sorted.vcf.gz</code></td>
+</tr>
+<tr class="odd">
+<td>Genotyping</td>
+<td>Michigan Imputation Server, TOPMed r2 panel, minimac4 + eagle</td>
+</tr>
+<tr class="even">
+<td>chr21 content</td>
+<td>105,897 SNP sites — 60,284 directly genotyped, 45,613 imputed</td>
+</tr>
+</tbody>
+</table>
+<p>Two things checked before comparing anything:</p>
+<p><strong>Genome build.</strong> The genotype VCF is
+<strong>GRCh38</strong>, verified against known SNP positions rather
+than taken from the header — rs429358 at chr19:44,908,684, rs7412 at
+44,908,822, rs4988235 at chr2:135,851,076, all exact hg38 matches. Same
+build as the long-read data.</p>
+<p><strong>Donor identity.</strong> All four donors are in the VCF. Its
+100 samples are 58 named <code>CD_xx</code> and 42 named
+<code>CW#####</code>; ours are CD_21, CD_31, CD_36 and CD_48.</p>
+<p>The VCF ships without an index, so we index a symlink in our own
+directory and write nothing to the shared folder.</p>
+<hr />
+</div>
+<div id="how-many-isolaser-variants-are-in-the-genotype-data"
+class="section level1">
+<h1>2. How many isoLASER variants are in the genotype data?</h1>
+<p>chr21, PASS calls, after collapsing duplicate records (see the note
+at the end of this section).</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">donor</th>
+<th align="right">SNVs called</th>
+<th align="right">in genotype VCF</th>
+<th align="right">absent</th>
+<th align="right">% in VCF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">CD_21</td>
+<td align="right">206</td>
+<td align="right">76</td>
+<td align="right">130</td>
+<td align="right">36.9</td>
+</tr>
+<tr class="even">
+<td align="left">CD_31</td>
+<td align="right">166</td>
+<td align="right">72</td>
+<td align="right">94</td>
+<td align="right">43.4</td>
+</tr>
+<tr class="odd">
+<td align="left">CD_36</td>
+<td align="right">133</td>
+<td align="right">54</td>
+<td align="right">79</td>
+<td align="right">40.6</td>
+</tr>
+<tr class="even">
+<td align="left">CD_48</td>
+<td align="right">176</td>
+<td align="right">87</td>
+<td align="right">89</td>
+<td align="right">49.4</td>
+</tr>
+<tr class="odd">
+<td align="left">all</td>
+<td align="right">681</td>
+<td align="right">289</td>
+<td align="right">392</td>
+<td align="right">42.4</td>
+</tr>
+</tbody>
+</table>
+<p>Under half. The split by match type is what matters next:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">match</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">absent</td>
+<td align="right">392</td>
+</tr>
+<tr class="even">
+<td align="left">same site, same alleles</td>
+<td align="right">289</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Zero allele mismatches.</strong> Every isoLASER SNV that
+lands on a genotype-VCF position agrees on REF and ALT exactly. No
+strand flips, no REF/ALT swaps, no coordinate offset — which
+independently confirms the two datasets are on the same build and
+coordinate convention.</p>
+<p>Of the 289 matches, 206 are directly genotyped and 83 imputed; 273
+have R2 ≥ 0.8.</p>
+<p>Two notes on what is <em>not</em> in this table. isoLASER also called
+75 PASS indels, none of which appear in the VCF — but that file is
+SNP-only, so there is nothing to match against and 0% is uninformative.
+And every PASS SNV already has DP ≥ 10 (median 20), because isoLASER
+applies that floor itself, so a depth filter changes nothing here.</p>
+<p>A quirk worth knowing: <strong>isoLASER emits one record per
+gene</strong>, so a variant in two overlapping genes appears twice with
+different read subsets. At chr21:36,156,814 in CD_21 the same G&gt;A
+appears as <code>1|0</code> with DP 10 under DOP1B and <code>0|1</code>
+with DP 22 under CBR3-AS1 — opposite phase, because phasing is per-gene.
+Only 3 positions across all four donors, but do not count gVCF rows as
+variants.</p>
+<hr />
+</div>
+<div id="where-the-genotype-can-adjudicate-isolaser-is-accurate"
+class="section level1">
+<h1>3. Where the genotype can adjudicate, isoLASER is accurate</h1>
+<p>Restricting to the 276 calls at sites present in the VCF with R2 ≥
+0.8:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">n</th>
+<th align="right">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>genotype confirms, identical genotype</td>
+<td align="right">249</td>
+<td align="right">90.2</td>
+</tr>
+<tr class="even">
+<td>genotype says hom-ref</td>
+<td align="right">17</td>
+<td align="right">6.2</td>
+</tr>
+<tr class="odd">
+<td>variant confirmed, genotype differs</td>
+<td align="right">10</td>
+<td align="right">3.6</td>
+</tr>
+</tbody>
+</table>
+<p>Concordance among sites carrying an alt allele:
+<strong>96.1%</strong>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>genotype VCF ↓ / isoLASER →</th>
+<th align="right">het</th>
+<th align="right">hom-alt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>hom-ref</td>
+<td align="right">16</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td>het</td>
+<td align="right">174</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td>hom-alt</td>
+<td align="right">7</td>
+<td align="right">75</td>
+</tr>
+</tbody>
+</table>
+<p>The 7 hom-alt sites called het are the expected RNA failure mode —
+some reference-allele reads present, whether from mismapping or
+imputation error.</p>
+<hr />
+</div>
+<div id="the-off-panel-calls-look-like-error-not-novel-variants"
+class="section level1">
+<h1>4. The off-panel calls look like error, not novel variants</h1>
+<p>392 calls have no genotype-VCF record. The innocent explanation is
+that an array-plus-imputation panel lacks rare variation. Allelic
+balance argues otherwise: a genuinely heterozygous site sits near 0.5
+regardless of how rare it is.</p>
+<div class="figure">
+<img src="assets/isolaser_allelic_balance.png" alt="" />
+<p class="caption">Allelic balance of isoLASER heterozygous SNV calls on
+chr21.</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">present in VCF</th>
+<th align="right">absent from VCF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>het calls</td>
+<td align="right">201</td>
+<td align="right">352</td>
+</tr>
+<tr class="even">
+<td>median allelic balance</td>
+<td align="right">0.48</td>
+<td align="right">0.28</td>
+</tr>
+<tr class="odd">
+<td>% with AB &lt; 0.25 or &gt; 0.75</td>
+<td align="right">6.0</td>
+<td align="right">44.9</td>
+</tr>
+</tbody>
+</table>
+<p>The left panel is what heterozygotes should look like. The right
+panel is not.</p>
+<p>Two further signatures point the same way. The base-change spectrum
+is skewed:</p>
+<table>
+<thead>
+<tr class="header">
+<th>substitution</th>
+<th align="right">% of confirmed</th>
+<th align="right">% of absent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C&gt;T / G&gt;A</td>
+<td align="right">35.9</td>
+<td align="right">52.0</td>
+</tr>
+<tr class="even">
+<td>A&gt;G / T&gt;C</td>
+<td align="right">38.9</td>
+<td align="right">17.1</td>
+</tr>
+<tr class="odd">
+<td>A&gt;T / T&gt;A</td>
+<td align="right">2.7</td>
+<td align="right">13.5</td>
+</tr>
+</tbody>
+</table>
+<p>In real human variation C&gt;T and A&gt;G are comparable; a 3:1 skew
+toward C&gt;T is an error signature, not biology. And the calls cluster
+spatially — the chr21 29 Mb and 33 Mb bins are 91% and 85% unconfirmed,
+against 29% in the 46 Mb bin.</p>
+<p><strong>An allelic-balance filter of [0.25, 0.75] removes 45% of the
+unconfirmed calls (352 → 194) while keeping 96% of the confirmed
+ones.</strong> That is the cheapest available improvement and needs no
+re-run.</p>
+<p>This is inference from allelic balance, not proof. A dbSNP or gnomAD
+lookup is what would separate “rare real variant” from “error”
+definitively, and we have not run one.</p>
+<hr />
+</div>
+<div id="sensitivity-70-and-the-misses-are-not-coverage-gaps"
+class="section level1">
+<h1>5. Sensitivity: 70%, and the misses are not coverage gaps</h1>
+<p>Taking it from the other direction — genotype sites that are directly
+genotyped, well imputed, non-reference, and inside a region isoLASER
+could call (a REF_BLOCK or a variant at depth ≥ 10):</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sites isoLASER could have called</td>
+<td align="right">276</td>
+</tr>
+<tr class="even">
+<td>sites isoLASER did call</td>
+<td align="right">193 (69.9%)</td>
+</tr>
+<tr class="odd">
+<td>missed</td>
+<td align="right">83</td>
+</tr>
+</tbody>
+</table>
+<p>All 83 misses sit <strong>inside REF_BLOCKs with median depth
+26</strong>. isoLASER did not run out of reads; it looked at those
+positions and called them homozygous reference. 32 of the 83 are hom-alt
+in the genotype data, which is the harder group to explain.</p>
+<hr />
+</div>
+<div id="can-we-feed-our-genotypes-into-isolaser"
+class="section level1">
+<h1>6. Can we feed our genotypes into isoLASER?</h1>
+<p>Checked, not run. The answer is a qualified no.</p>
+<p><strong>The variant caller takes no VCF.</strong>
+<code>isolaser</code> accepts a BAM, a genome FASTA and a transcript
+database. There is no option to supply known sites.</p>
+<p><strong><code>isolaser_joint</code> does take one</strong> —
+<code>-v</code> — and it uses it in exactly the two ways that would help
+us:</p>
+<ul>
+<li>as a whitelist, dropping any isoLASER variant with no VCF record
+within ±3 bp (this would remove the 392 off-panel calls), and</li>
+<li>as a rescue, promoting a REF_BLOCK to a variant where the VCF has
+one (this would recover the 83 missed sites).</li>
+</ul>
+<p>But the rescue path reads a per-sample <strong><code>AB</code> FORMAT
+field</strong> and matches samples by name. It is designed for
+isoLASER’s own merged gVCF (<code>GT:AB:AC:AD:DP:GQ:PGT:PL</code>), not
+a genotype panel — ours carries <code>GT:DS:HDS:GP</code> and has no
+<code>AB</code>. The whole branch sits inside a bare
+<code>except Exception</code>, so passing an incompatible VCF fails
+<strong>silently</strong>: the whitelist filtering still works, the
+rescue quietly does nothing.</p>
+<p>Using our genotypes properly would mean converting them — subset to
+the four donors and to sites where at least one carries an alt allele,
+rename samples to match the fofn, and synthesise an <code>AB</code>
+field. Workable, but it is a hack against an undocumented internal
+format.</p>
+<p><strong>The simpler route is post-hoc filtering</strong>, which is
+what this page already does: intersect isoLASER’s output with the panel
+and apply an allelic-balance cut. No code changes, no re-run, and the
+effect is measurable.</p>
+<hr />
+</div>
+<div id="two-configuration-problems-in-how-we-ran-it"
+class="section level1">
+<h1>7. Two configuration problems in how we ran it</h1>
+<p>Both found while checking the above. Neither has been fixed.</p>
+<p><strong>We used the PacBio error model on Nanopore data.</strong>
+<code>isolaser --platform</code> defaults to <code>PacBio</code>, and it
+selects the trained classifier used to call variants —
+<code>GM12878_PBSQ2_F1.pickle</code> for PacBio,
+<code>GM12878_ONT_ROC.pickle</code> for Nanopore. The command recorded
+in every gVCF header shows no <code>--platform</code> flag, in the pilot
+and in all four per-donor runs. A caller tuned for PacBio error rates
+will be too permissive on ONT reads, which is a direct candidate
+explanation for the low-allelic-balance calls in section 4.</p>
+<p><strong>The joint step’s sample names never matched, so the rescue
+silently did nothing.</strong> We did not pass
+<code>-s/--sample-name</code> to <code>isolaser</code>, so the merged
+gVCF carries full BAM paths as sample names
+(<code>/project/…/CD_21.annot.sorted.bam</code>) while the fofn uses
+<code>CD_21</code>. The lookup in <code>isolaser_joint</code> matches on
+exact sample name, fails, and the exception is swallowed. The REF_BLOCK
+rescue has therefore never run in any of our joint analyses.</p>
+<p>Fixing both is a re-run with <code>--platform Nanopore</code> and
+<code>-s CD_21</code> (etc.), which is cheap — chr21 took minutes.
+Re-running this validation afterwards would show directly whether the
+platform model is the cause.</p>
+<hr />
+</div>
+<div id="files" class="section level1">
+<h1>8. Files</h1>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Purpose</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Index genotype VCF, verify build</td>
+<td><code>8.isolaser_validation/1.index_and_check_build.sbatch</code></td>
+</tr>
+<tr class="even">
+<td>chr21 genotypes for the four donors</td>
+<td><code>8.isolaser_validation/2.extract_chr21_genotypes.sh</code></td>
+</tr>
+<tr class="odd">
+<td>Precision / concordance / sensitivity</td>
+<td><code>8.isolaser_validation/3.compare_variants.R</code></td>
+</tr>
+<tr class="even">
+<td>Diagnose unconfirmed calls</td>
+<td><code>8.isolaser_validation/4.diagnose.R</code>,
+<code>5.diagnose2.R</code></td>
+</tr>
+<tr class="odd">
+<td>Overlap summary</td>
+<td><code>8.isolaser_validation/7.overlap_summary.R</code></td>
+</tr>
+<tr class="even">
+<td>Allelic-balance figure</td>
+<td><code>8.isolaser_validation/8.plot_ab.R</code></td>
+</tr>
+<tr class="odd">
+<td>Per-variant results</td>
+<td><code>8.isolaser_validation/out/isolaser_variants_in_genotype.tsv</code></td>
+</tr>
+<tr class="even">
+<td>Concordance detail</td>
+<td><code>8.isolaser_validation/out/isolaser_vs_genotype_snvs.tsv</code></td>
+</tr>
+<tr class="odd">
+<td>Missed genotype sites</td>
+<td><code>8.isolaser_validation/out/genotype_sites_in_callable_region.tsv</code></td>
+</tr>
+</tbody>
+</table>
+<p>Related pages: <a href="isolaser_per_donor.html">isoLASER per
+donor</a>, <a href="splicing_candidates.html">splicing
+candidates</a>.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+ [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+ [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] knitr_1.51        data.table_1.14.4 workflowr_1.7.1  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.1.1-1.1   bslib_0.3.1      jquerylib_0.1.4  compiler_4.2.0  
+ [5] pillar_1.9.0     later_1.3.0      git2r_0.30.1     tools_4.2.0     
+ [9] getPass_0.2-2    digest_0.6.29    jsonlite_2.0.0   evaluate_0.15   
+[13] lifecycle_1.0.4  tibble_3.2.1     pkgconfig_2.0.3  rlang_1.1.2     
+[17] cli_3.6.2        rstudioapi_0.14  yaml_2.3.5       xfun_0.59       
+[21] fastmap_1.1.0    httr_1.4.8       stringr_1.5.0    sass_0.4.1      
+[25] fs_1.5.2         vctrs_0.6.1      rprojroot_2.0.3  glue_1.6.2      
+[29] R6_2.5.1         processx_3.5.3   fansi_1.0.3      otel_0.2.0      
+[33] rmarkdown_2.31   callr_3.7.0      magrittr_2.0.3   whisker_0.4     
+[37] ps_1.7.0         promises_1.2.0.1 htmltools_0.5.7  httpuv_1.6.5    
+[41] utf8_1.2.2       stringi_1.7.6   </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 ---
-title: "Splicing changes across stimulation — candidate screen and gene examples"
+title: "Junction usage after neuronal stimulation: CREM and TTLL7"
 author: "XSun"
 date: "2026-09-23"
 output:
@@ -10,370 +10,164 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-suppressPackageStartupMessages({library(data.table); library(DT); library(knitr)})
-JD <- "/project/xinhe/xsun/long_read_RNA/long_read_processed/junctions"
-cg <- fread(file.path(JD, "candidate_genes_v2.tsv"))
-```
+# Two examples
 
-Which genes change how their exons are joined between 0, 1 and 6 hours after
-stimulation? This page covers how candidates were selected, what came out,
-what those genes do, and four worked examples.
+We screened splice junctions in the 0, 1 and 6 hour libraries for changes
+that occur in the same direction in all four donors. The two examples show
+different kinds of transcript change: **CREM** has a strong internal-promoter
+signal, while **TTLL7** shows a change consistent with skipping an annotated exon.
+CREM has a documented activity-response role; TTLL7 has an experimentally
+supported neuronal role, but its changing junction has not been functionally
+validated in this stimulation experiment.
 
-This is a screen for picking events worth looking at, not a differential
-splicing analysis: no replicate-aware model, no multiple-testing correction,
-and library depth is confounded with timepoint.
+# CREM: an internal-promoter-associated junction
 
----
+CREM has one clear changing junction: a junction from an internal exon to the common downstream exon
+rises from **9/60 (15.0%)** of reads at that acceptor at baseline to
+**270/414 (65.2%)** at 1 hour and **941/1,241 (75.8%)** at 6 hours.
 
-# 1. How candidates were selected
+CREM is an activity-responsive gene. An alternative intronic promoter is
+known to produce the inducible CREM isoform ICER
+([Molina et al., 1993](https://pubmed.ncbi.nlm.nih.gov/8252624/)).
+The observed junction starts beside an annotated internal CREM transcript
+start, so **alternative promoter usage is a plausible explanation**. We
+have not established that these particular molecules are ICER transcripts.
+The figure shows a change in *junction usage*; it does not by itself prove
+within-cell regulation by stimulation.
 
-## Counting junctions
+# The CREM sashimi plot
 
-Junctions are read directly from the alignments — every `N` operation in a
-CIGAR string is one intron, recorded per cell. Only **primary alignments**
-(`-F 0x900`) from **donor-assigned cells** on **chr1–chr22** are counted, so
-counts are comparable across timepoints and can be checked per donor.
+![CREM sashimi plot: pooled donor-assigned primary reads at 0, 1 and 6 hours. The short junction at the right has 9, 270 and 941 supporting reads, respectively; the 0 hour arc is below the display threshold.](assets/CREM_sashimi.png)
 
-## Scoring usage, not abundance
+*CREM, chr10, plus strand. Each panel pools reads from CD_21, CD_31,
+CD_36 and CD_48 at one timepoint. Colored areas show raw coverage. Curves
+connect aligned segments across an intron; the number on a curve is its
+supporting-read count. The black rows below are selected transcript models.
+Arcs drawn above and below the coverage do not represent different directions
+of change.*
 
-A gene that is simply induced raises all of its junctions together. To avoid
-ranking induction as splicing, each junction is scored by its **share of reads
-at the same splice site**, not by raw count:
+The junction of interest is the **short, heavy curve on the right**,
+connecting genomic positions **35,195,215–35,206,894**. It is labeled
+**270** at 1 hr and **941** at 6 hr. It has **9** supporting reads at
+0 hr, below this figure's arc display threshold. The plot also shows junctions elsewhere in the
+gene. Neither the visible labels nor all the arcs in a panel form the
+denominator for this event.
 
-<p style="margin-left:2em">usage = reads on this junction / reads on all junctions at that site</p>
+# CREM usage calculation
 
-computed separately within every donor × timepoint. Junctions are grouped both
-by shared genomic **start** and by shared genomic **end**, so competitors are
-compared whichever side they have in common.
+At this locus, several junctions end at the same **acceptor**,
+chr10:35,206,894. For each timepoint we add the counts of *all* junctions
+ending there, across the four donor-assigned cell sets. The usage rate is:
 
-## The filters
+> **CREM internal-junction usage = reads on the 35,195,215–35,206,894
+> junction ÷ reads on every junction ending at 35,206,894.**
 
-| Requirement | Value |
-|---|---|
-| Reads at the site, all four donors, at the deeper timepoint | ≥ 20 |
-| Reads at the site, all four donors, at the shallower timepoint | ≥ 10 |
-| Junctions with no reads at a timepoint | scored as usage 0, not dropped |
-| Direction of change | same sign in all four donors |
-| Mean donor-level usage change | \|ΔPSI\| ≥ 0.15 |
-| Comparisons | 0→1 hr, 0→6 hr, 1→6 hr |
-
-```{r funnel}
-kable(data.frame(
-  Step  = c("Junction rows, chr1-22, all timepoints",
-            "Candidate junctions", "Distinct genes"),
-  Count = c("9,353,702", "1,022", "392")))
-```
-
-```{r bycomp}
-cj <- fread(file.path(JD, "candidate_junctions_v2.tsv"))
-kable(cj[, .(junctions = .N), by = comparison][order(comparison)])
-```
-
-## Why the depth rule is asymmetric
-
-An earlier version required 20 reads at the site in every donor at **both**
-timepoints. That rule discards induced genes by construction: a gene that is
-off at baseline and switched on by stimulation has low 0 hr depth *by
-definition*. It removed ATF3, BDNF, FOS, HOMER1, NR4A1, SIK1 and TIPARP — 7 of
-the 12 detectable canonical immediate-early genes — along with 1,410 genes in
-total.
-
-Requiring 20 reads only at the deeper timepoint, and 10 at the shallower one,
-keeps those genes while still demanding enough reads to say a junction is
-genuinely absent rather than merely unobserved. Junctions with zero reads now
-score usage 0 instead of being dropped, which is what makes an on/off switch
-like BDNF visible at all.
-
-The change is purely additive: every gene found by the old screen is still
-here, plus 292 more.
-
----
-
-# 2. The candidate genes
-
-1,022 junctions across 392 genes. Sorted by the largest absolute usage change
-per gene. `events` uses strand to name the splice site correctly — a shared
-genomic start is the intron's donor on the plus strand and its acceptor on the
-minus strand.
-
-```{r candtable}
-d <- cg[, .(gene, description, category, chrom, strand,
-            `length (kb)` = round(gene_length/1000, 1),
-            n_junctions, `max |dPSI|` = max_abs_dpsi, comparisons, events)]
-datatable(d, rownames = FALSE, filter = "top",
-          options = list(pageLength = 15, order = list(list(7, "desc")),
-                         scrollX = TRUE))
-```
-
-Full tables: `candidate_genes_v2.tsv` (gene level) and
-`candidate_junctions_v2.tsv` (junction level, with coordinates, per-donor ΔPSI
-range, and usage at each timepoint).
-
-Most genes contribute two rows to the junction file with equal and opposite
-ΔPSI. That is by construction — the two competing junctions at one shared
-site — not two independent findings.
-
----
-
-# 3. What are these genes?
-
-Each candidate is labelled by function: whether it is a known
-stimulation-response gene, a known neuronal gene, or neither.
-
-```{r cats}
-kable(cg[, .(genes = .N), by = category][order(-genes)])
-```
-
-Labelling rules, so the categories can be checked:
-
-* **activity-regulated** — the gene is on a curated list of immediate-early and
-  secondary activity-response genes (FOS/JUN/EGR/NR4A families, ARC, NPAS4,
-  BDNF, ATF3, CREM, HOMER1, VGF, SCG2, HDAC9, …).
-* **neuronal** — four or more GO terms matching
-  `neuron|synap|axon|dendri|neurotransmit|neurite|nerve|neural|glia`.
-* **neuronal (weak annotation)** — one to three such terms. Often a single
-  incidental term on a gene that is not really neuronal, so read these
-  individually.
-
-## Known stimulation-response genes
-
-```{r arg}
-kable(cg[category == "activity-regulated",
-         .(gene, description, `max |dPSI|` = max_abs_dpsi, comparisons)])
-```
-
-CREM is the second-largest effect in the whole screen, and BDNF is at rank 26
-of 1,022. Both are worked through in section 4.
-
-## Known neuronal genes
-
-```{r neuro}
-kable(cg[category == "neuronal",
-         .(gene, description, `max |dPSI|` = max_abs_dpsi,
-           `neuro GO terms` = n_neuro_go)][order(-`max |dPSI|`)])
-```
-
-A caution on the GO-term count: it measures annotation composition, not
-biology, so it under-rates well-studied pleiotropic genes. ANK2 falls into the
-"weak annotation" bucket on 2 of 71 terms, yet ankyrin-B is genuinely neuronal;
-PTK2 is similar. Conversely ACADM is a fatty-acid oxidation enzyme carrying one
-incidental "axon" term. Use the category as a starting point, not a verdict.
-
-## Genes with weak or no neuronal annotation
-
-```{r rest}
-datatable(cg[category %in% c("neuronal (weak annotation)", "other"),
-             .(gene, description, category, `max |dPSI|` = max_abs_dpsi,
-               `neuro GO terms` = n_neuro_go)][order(-`max |dPSI|`)],
-          rownames = FALSE, filter = "top",
-          options = list(pageLength = 10, scrollX = TRUE))
-```
-
----
-
-# 4. Gene examples
-
-All figures use the same reads: donor-assigned cells, primary alignments only,
-native depth. Arc labels are supporting-read counts and were checked against
-the junction tables.
-
-Reading a panel: filled areas are read depth, curves are splice junctions, and
-the number on a curve is how many reads support that junction. Whether an arc
-is drawn above or below the coverage is layout only. One long read can cross
-several junctions, so the numbers in a panel do not sum to a read count.
-
-## CREM — the largest effect, and a known activity-response gene
-
-chr10, plus strand. Five junctions share the acceptor at 35,206,894; they
-differ in where they start.
-
-![CREM across 0, 1 and 6 hours.](assets/CREM_sashimi.png)
-
-| donor position | 0 hr | 1 hr | 6 hr |
+| Time after stimulation | Target-junction reads | All junction reads at the acceptor | Target usage |
 |---|---:|---:|---:|
-| 35,127,194 (gene 5′ end) | 28 | 57 | 46 |
-| 35,195,215 (internal) | 9 | 270 | 941 |
-| 35,196,100 | 1 | 42 | 113 |
-| 35,201,487 | 6 | 13 | 45 |
-| 35,179,277 | 5 | 2 | 43 |
+| 0 hr | 9 | 60 | 15.0% |
+| 1 hr | 270 | 414 | 65.2% |
+| 6 hr | 941 | 1,241 | 75.8% |
 
-| usage share | 0 hr | 1 hr | 6 hr |
-|---|---:|---:|---:|
-| 35,127,194 (gene 5′ end) | 0.467 | 0.138 | 0.037 |
-| 35,195,215 (internal) | 0.150 | 0.652 | 0.758 |
+For example, at 6 hr: **941 ÷ 1,241 = 0.758**, or **75.8%**. The
+denominator includes rare alternatives not labeled on the sashimi plot.
+These are fractions of *junction-supporting reads*, not measured fractions
+of full-length CREM transcripts. Using fractions matters because total read
+depth differs greatly among timepoints.
 
-![Per-donor CREM junction usage at the shared acceptor.](assets/CREM_psi.png)
+We checked each donor separately before pooling. The same junction gains
+usage from 0 to 6 hr in **all four donors**:
 
-The exon at 35,195,127–35,195,214 is a **transcript start** for
-ENST00000356917 and three other models, roughly 68 kb inside a gene that begins
-at 35,126,791. So the switch is from the gene's own 5′ end to an internal
-alternative promoter, and it is close to complete: 0.47 → 0.04 for the
-full-length start, 0.15 → 0.76 for the internal one.
-
-That architecture — an internal, activity-inducible promoter within CREM — is
-how ICER is produced. We have not confirmed that these reads correspond to the
-annotated ICER first exon specifically; what is verified here is an internal
-promoter, strongly induced.
-
-## BDNF — an on/off switch the earlier screen could not see
-
-BDNF's 5′ non-coding exons each have their own promoter and all splice to one
-common coding exon, so junctions at the shared acceptor chr11:27,658,586
-report **promoter usage**.
-
-![BDNF across 0, 1 and 6 hours. One arc at 0 hr, two at 1 hr, four at 6 hr.](assets/BDNF_promoters_sashimi.png)
-
-| 5′ exon | position | 0 hr | 1 hr | 6 hr |
-|---|---|---:|---:|---:|
-| exon I (most 5′) | 27,721,412–27,722,058 | 0 | 11 | 317 |
-| exon IV | 27,701,297–27,701,633 | 28 | 81 | 327 |
-| exon VI | 27,700,164–27,700,455 | 16 | 28 | 110 |
-| exon II | 27,720,346–27,720,723 | 3 | 8 | 34 |
-
-Exon I usage goes 0.000 → 0.075 → 0.388.
-
-![Per-donor BDNF 5′ exon usage.](assets/BDNF_promoters.png)
-
-| Donor | exon I, 1 hr | exon I, 6 hr |
+| Donor | 0 hr | 6 hr |
 |---|---:|---:|
-| CD_21 | 4.7% | 36.7% |
-| CD_31 | 14.3% | 44.7% |
-| CD_36 | 0.0% | 34.9% |
-| CD_48 | 11.1% | 35.8% |
+| CD_21 | 5/23 (21.7%) | 274/371 (73.9%) |
+| CD_31 | 0/12 (0%) | 305/388 (78.6%) |
+| CD_36 | 0/10 (0%) | 141/199 (70.9%) |
+| CD_48 | 4/15 (26.7%) | 221/283 (78.1%) |
 
-A true zero at baseline in all four donors, and the tightest cross-donor
-agreement at 6 hr anywhere in this dataset. Exon IV is the canonical
-CREB/NPAS4-responsive BDNF promoter (hg38 promoter chr11:27,701,325–27,702,402);
-exon I is the other classic activity-induced promoter. Both fire.
+The pooled percentages above give greater weight to donors with more reads.
+The candidate screen instead averages the **four donor-specific changes**,
+giving each donor equal weight; for this junction its mean change from 0 to
+6 hr is **+0.633**, or **63.3 percentage points**.
 
-Locus reads are 1,236 → 6,890 → 9,696, about 4.6× induction after normalising
-to genome-wide junction depth.
+# TTLL7: an exon-skipping pattern in a neuronal gene
 
-Site depth at 0 hr is 21/10/15/13 reads across the four donors. Under the old
-rule — 20 reads in every donor at both timepoints — three of four donors failed
-and BDNF was dropped before any ΔPSI was computed.
+TTLL7 modifies tubulin in neurons. Experimental depletion suppressed
+nerve-growth-factor-stimulated neurite growth in PC12 cells and reduced
+beta-tubulin polyglutamylation in primary neurons
+([Ikegami et al., 2006](https://pubmed.ncbi.nlm.nih.gov/16901895/)).
+That supports a neuronal role for the **gene**, but does not establish that
+this particular junction is regulated by stimulation or changes TTLL7 protein
+function.
 
-Like CREM, this is a promoter switch rather than a splicing change. Resolving
-which promoter an individual molecule used is something long reads do well and
-short reads do not.
+![TTLL7 sashimi plot at 0, 1 and 6 hours, pooling primary alignments from four donor-assigned cell sets at each timepoint. The short junction has 573, 1153 and 1066 reads; the competing long junction has 81, 336 and 1116 reads.](assets/TTLL7_sashimi.png)
 
-## CLDND1 — the largest single-gene splicing change
+*TTLL7, chr1, minus strand. Numbers on curves are supporting reads, not
+percentages. The short arc is at the far left; the long arc reaches from the
+left to the far right. Arc placement above or below the coverage has no
+biological meaning. The black track is one GENCODE reference transcript.*
 
-chr3, minus strand. A shared acceptor with two competing donors: a local
-alternative 5′ splice-site choice.
+Both arcs end at the same TTLL7 exon boundary at **chr1:83,951,977**. The
+short junction spans **83,951,977–83,952,186**, entering the intervening
+annotated exon. The long junction spans **83,951,977–83,998,930** and
+bypasses that 201-nucleotide exon. In the minus-strand transcript, this is
+consistent with skipping the second exon of the displayed reference model.
+We have not established complete isoforms or the protein consequence.
 
-![CLDND1 across 0, 1 and 6 hours.](assets/CLDND1_filtered.png)
+> **TTLL7 long-junction usage = reads on the 83,951,977–83,998,930
+> junction ÷ reads on every junction starting at 83,951,977.**
 
-| Junction | intron | 0 hr | 1 hr | 6 hr |
-|---|---|---:|---:|---:|
-| proximal | chr3:98,521,443–98,521,652 (210 bp) | 141 | 272 | 185 |
-| distal | chr3:98,521,443–98,522,848 (1,406 bp) | 50 | 241 | 483 |
+| Time after stimulation | Short-junction reads | Long-junction reads | All junction reads at shared site | Long-junction usage |
+|---|---:|---:|---:|---:|
+| 0 hr | 573 | 81 | 659 | 12.3% |
+| 1 hr | 1,153 | 336 | 1,491 | 22.5% |
+| 6 hr | 1,066 | 1,116 | 2,198 | 50.8% |
 
-The proximal junction *rises* in raw count from 141 to 185, yet its usage
-falls, because its competitor rises far more. Relative usage is the measure;
-coverage height also reflects library depth and expression.
+At 6 hr, **1,116 ÷ 2,198 = 50.8%**. The denominator includes 16 reads
+on other rare junctions at this boundary, which is why it exceeds
+1,066 + 1,116. The long-junction usage rises in **each of the four donors**:
+from 7.3–16.0% at baseline to 46.8–57.1% at 6 hr. The mean of the four
+donor-specific changes is **+39.8 percentage points**. As for CREM, these
+are fractions of junction-supporting reads, not fractions of full-length
+transcripts; changes in cell composition could also affect the pattern.
 
-| share of the two | 0 hr | 1 hr | 6 hr |
-|---|---:|---:|---:|
-| proximal | 73.8% | 53.0% | 27.7% |
-| distal | 26.2% | 47.0% | 72.3% |
+# How candidates were selected
 
-![Per-donor CLDND1 distal usage.](assets/CLDND1_psi.png)
+The screen counts every `N` operation in the BAM alignment CIGAR as a
+junction. It uses **primary alignments from donor-assigned cells** on
+chromosomes 1–22, counted separately by donor and timepoint. Junctions are
+compared when they share either genomic boundary; usage is calculated within
+that shared-site group. An unobserved junction is assigned **zero usage**
+only when that site has enough reads to evaluate it.
 
-| Donor | 0 hr | 1 hr | 6 hr |
-|---|---:|---:|---:|
-| CD_21 | 31.1% | 45.5% | 68.4% |
-| CD_31 | 25.0% | 47.1% | 75.9% |
-| CD_36 | 27.3% | 49.4% | 65.5% |
-| CD_48 | 19.6% | 45.9% | 75.8% |
+A candidate needs at least **10 reads at the site per donor at the shallower
+timepoint** and **20 at the deeper timepoint**, a consistent direction of
+change in all four donors, and an average change of at least **15 percentage
+points**. The screen compares 0→1, 0→6 and 1→6 hr. Under these exploratory
+rules it yielded **1,022 junction rows across 392 genes**. Rows may describe
+competing junctions at the same site, so they are not 1,022 independent
+splicing events.
 
-Monotonic in all four donors, mean ΔPSI +0.457. Splicing *efficiency* is flat
-across timepoints, so this is site choice rather than a change in how
-completely the intron is removed.
+CREM and TTLL7 were chosen because their junction shifts are large and
+consistent across all four donors, and because their genes have documented
+activity-responsive and neuronal roles, respectively. The two examples
+illustrate different transcript structures.
+The displayed counts were checked against donor-specific junction tables
+and the filtered BAM inputs. The screen has no formal replicate-aware
+test or multiple-testing correction, and the current analysis pools cell
+types within each donor.
 
-CLDND1 is not a known activity-response gene, and its highest CNS expression is
-in corpus callosum, so it is likely glia-enriched. A shift in the neuron/glia
-proportion of nuclei across timepoints would produce this figure without any
-within-cell splicing change, and the donor-consistency filter gives no
-protection — all four donors share the same composition drift.
+The complete [candidate gene table](assets/candidate_genes_v2.tsv) is
+available for exploring other loci. BDNF is another strong
+activity-responsive example, but its main change concerns alternative
+first exons/promoters. The observed NRXN2 junction is a terminal-intron
+event and should not be labeled as the classic neurexin SS4 event.
 
-## NRXN2 — a neuronal candidate, read with caution
-
-chr11, minus strand. Three junctions at the terminal intron; the novel cryptic
-one declines while the annotated one rises.
-
-![NRXN2 terminal intron across 0, 1 and 6 hours.](assets/NRXN2_filtered.png)
-
-| | junction | 0 hr | 1 hr | 6 hr | status |
-|---|---|---:|---:|---:|---|
-| J1 | 64,608,083–64,620,293 | 62 | 94 | 112 | annotated last intron |
-| J2 | 64,607,501–64,620,293 | 62 | 93 | 81 | annotated, alternative acceptor |
-| J3 | 64,608,083–64,608,563 | 49 | 49 | 37 | novel cryptic donor |
-
-![Per-donor usage of all three NRXN2 junctions.](assets/NRXN2_psi3.png)
-
-Three reasons for caution:
-
-* Depth is thin — 29–67 reads per donor per timepoint for the whole locus, so
-  J3 rests on 6–14 reads per donor. CD_36's 0 hr value of 0.48 comes from 29
-  reads and does much of the visual work.
-* Genome-wide the share of reads on non-GENCODE junctions also falls
-  (14.81% → 13.08% → 13.79%, consistent in all four donors). NRXN2's 12-point
-  drop is ~8× that drift, so it survives — but the drift is real.
-* **This is not SS4.** Neurexin splice site 4 is the textbook
-  activity-dependent event, but it lies in the LNS6 domain, far 5′ of this
-  terminal intron. The gene name alone does not carry that precedent.
-
-The neurexin literature has already been caught by the composition confounder
-raised for CLDND1: depolarising cortical cultures produced an *apparent*
-Nrxn1-SS4 shift by killing neurons but not astroglia.
-
----
-
-# Still outstanding
-
-1. **A permutation null.** Shuffle timepoint labels within donor and rerun, to
-   estimate how many of the 1,022 are noise. Random 4/4 sign agreement alone
-   occurs 12.5% of the time and there is no multiple-testing correction.
-2. **A cell-type split.** Every candidate here is vulnerable to a shift in the
-   neuron/glia composition of nuclei across timepoints. CLDND1 is the clearest
-   case where this must be settled before the result can be called splicing.
-3. **Promoter versus splicing.** The two strongest results, CREM and BDNF, are
-   alternative-promoter events. They belong in the results but should be
-   labelled as such rather than counted as splicing changes.
-
----
-
-# Files
-
-Paths relative to the long-read RNA project directory.
-
-| Purpose | File |
-|---|---|
-| Junction counts per donor/timepoint | `7.sashimi/1.extract_junctions.sbatch` |
-| Candidate screen | `7.sashimi/14.find_candidates_v2.R` (+ `.sbatch`) |
-| Gene-level annotation | `7.sashimi/15.annotate_candidate_genes.R` |
-| Region BAMs for any gene | `7.sashimi/5.region_bams.sh GENE chr:start-end` |
-| Per-donor usage at a site | `7.sashimi/16.site_psi.R` |
-| BDNF promoter usage | `7.sashimi/12.bdnf_promoters.R` |
-| NRXN2 three-junction analysis | `7.sashimi/6.nrxn2_three_junctions.R` |
-| Global novel-junction control | `7.sashimi/7.novel_junction_global.R` |
-| Junction tables | `long_read_processed/junctions/junctions_{0hr,1hr,6hr}.tsv.gz` |
-| Candidates | `long_read_processed/junctions/candidate_{junctions,genes}_v2.tsv` |
-| Figures | `7.sashimi/out/*.png` |
-
-The superseded v1 screen (`2.find_candidates.R`, `candidate_junctions.tsv`,
-174 junctions / 100 genes) is kept for reference only.
-
-Plots use ggsashimi (`software/ggsashimi/ggsashimi.py`, run in the
-`isolaser_env` conda environment). `--shrink` is deliberately not used: it
-makes the x-axis non-linear so exons stop aligning with the coverage track.
-An earlier MISO attempt was abandoned — that implementation discards reads
-whose CIGAR contains `I` or `D`, which is 80–83% of these long reads, giving
-junction counts wrong by 10–50× with junction-dependent bias.
+The relevant scripts are `7.sashimi/1.extract_junctions.sbatch` and
+`7.sashimi/14.find_candidates_v2.R`. Counts and candidate tables are in
+`long_read_processed/junctions/`. The plotted regional BAMs and the
+`CREM_sashimi.png` source figure is in `7.sashimi/out/`; the TTLL7 source
+figure and donor-level usage table are in `7.sashimi/out/ttll7_review/`.
 
 Related pages: [data summary](data_summary.html),
-[exon structure](exon_structure.html),
+[exon structure](exon_structure.html), and
 [annotation QC](annotation_sqanti3.html).

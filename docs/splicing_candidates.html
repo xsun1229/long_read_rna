@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-09-23" />
 
-<title>Junction usage after neuronal stimulation: CREM and TTLL7</title>
+<title>Junction screen and neuronal examples</title>
 
 <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -37,6 +37,18 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 <link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -359,8 +371,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Junction usage after neuronal stimulation:
-CREM and TTLL7</h1>
+<h1 class="title toc-ignore">Junction screen and neuronal examples</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2026-09-23</h4>
 
@@ -395,13 +406,14 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 0
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>ttll7_website_review/</code>
-<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+<strong>Knit directory:</strong>
+<code>crem_rate_explanation_revision/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
 </p>
@@ -417,6 +429,90 @@ versions</em> tab lists the development history.
 </div>
 <div id="checks" class="tab-pane fade">
 <div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
@@ -448,83 +544,94 @@ reproducibility benefits of using workflowr, please see
 </div>
 </div>
 </div>
-<div id="two-examples" class="section level1">
-<h1>Two examples</h1>
-<p>We screened splice junctions in the 0, 1 and 6 hour libraries for
-changes that occur in the same direction in all four donors. The two
-examples show different kinds of transcript change:
-<strong>CREM</strong> has a strong internal-promoter signal, while
-<strong>TTLL7</strong> shows a change consistent with skipping an
-annotated exon. CREM has a documented activity-response role; TTLL7 has
-an experimentally supported neuronal role, but its changing junction has
-not been functionally validated in this stimulation experiment.</p>
+<div id="from-junctions-to-candidate-genes" class="section level1">
+<h1>From junctions to candidate genes</h1>
+<p>The screen asks whether the <strong>fraction of reads using a splice
+junction</strong> changes between 0, 1 and 6 hours. It uses primary
+alignments from donor-assigned cells on chromosomes 1–22. For each donor
+and timepoint, the pipeline counts each <code>N</code> operation in an
+alignment’s CIGAR string as one junction-supporting read. A junction’s
+usage is its read count divided by the count of <strong>all junctions
+sharing the same genomic start or end</strong>. The screen evaluates
+both shared-boundary groupings; the biological donor or acceptor site
+depends on gene strand.</p>
+<p>The three comparisons are <strong>0→1, 0→6 and 1→6 hours</strong>. To
+test a shared site, each of the four donors must have at least 10 site
+reads at the shallower timepoint and 20 at the deeper timepoint. An
+unobserved junction is assigned zero usage when its shared site passes
+this depth rule. A junction is retained if its usage changes in the same
+direction in every donor and the <strong>mean of the four donor-specific
+changes</strong> is at least 15 percentage points in magnitude. These
+are exploratory screening rules, not a statistical test.</p>
+<p>This yields <strong>1,022 candidate junction rows in 392
+genes</strong>. Multiple rows can represent competing junctions or
+different comparisons of one event. We annotated the gene list with a
+curated activity-response list and simple GO keyword counts: 5 genes
+have an activity-response tag, 19 have a stronger neuronal GO tag, 48
+have a weaker neuronal GO tag, and 320 have neither tag. The tags are
+<strong>prioritization aids, not validated functional
+assignments</strong>; for example, TTLL7 has only a weak automated GO
+tag despite experimental evidence for a neuronal role.</p>
+<div id="candidate-gene-list" class="section level2">
+<h2>Candidate gene list</h2>
+<p>Search or filter the table to see <strong>all 392 genes</strong>. The
+last column is the largest absolute mean usage change for a gene across
+retained junctions and timepoint comparisons; it is not a
+gene-expression fold change or a significance score. The <a
+href="assets/candidate_genes_v2.tsv">complete candidate gene TSV</a>
+also includes genomic position, event labels and GO terms.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"15\" data-max=\"67.5\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["R3HDM2","CREM","CLDND1","ANKRD12","HDAC9","ATF3","FNDC3A","TTLL7","MIA2","YPEL5","BDNF","JMJD1C","ZNF302","R3HDM1","HMGXB4","CTNND2","SGIP1","SEC31A","MRPS18C","ZFAND1","ORAI2","ELF2","HIVEP2","PITPNB","ZNF331","AHI1","ZNF493","MTUS1","USP33","PCCA","LDAF1","JARID2","PSIP1","NRP1","AFF3","PLEKHA5","PBRM1","SNX29","CALD1","TRIM33","CCDC82","HMCES","MAP7","FBXW2","GPBP1","ATF2","ENSG00000290921","CCDC66","EIF2AK2","ZMYND8","ETV1","DGKD","IFNAR2","LCOR","ARHGAP18","ARL13B","HMGA1","KDM1A","ENSG00000226824","MBOAT2","CEP170","MBNL1","TVP23A","ONECUT1","NCALD","RSPRY1","TERF1","LRBA","OSBPL6","RBM6","C20orf96","CARMIL2","ENSG00000284707","ENSG00000290928","CCNL1","PEAK1","PHF3","WSB1","TMEM181","MALAT1","LRRFIP1","UBE2Q2P2","KIAA0825","PSD3","ZNF608","ANKRD36C","ADGRB3-DT","BTBD3","SLC25A29","PDE10A","THSD7B","AP2B1","ZNF93","ENSG00000291220","MLLT10","ENSG00000288035","NEDD4L","ZNF33B","ST18","ZFYVE16","CHD7","ENSG00000291073","PTPRN","CKLF","DAAM1","ICA1","ZNF254","GOLGA1","PRKAG2-AS1","ENSG00000254400","GPCPD1","CSRNP3","GIGYF2","DAPK3","ENSG00000291174","FBXO44","CHST8","CYLD","NCOR1","NTNG1","ZNF638","PRRC2C","SGCE","YTHDC2","ATP2B1","ING2","PRKACB","SLC12A2","TRA2A","DHX30","DLEU2","RPRD2","ICA1L","MAD2L2","RABEP1","ASH1L","CFC1B","EHBP1","CARD19","ACADM","FAM104A","RNF24","PMFBP1","SENP6","ZNF749","ASXL3","TACC2","TANK","TMEM170A","CFC1","ENTPD6","FBXO2","DRAM2","ELAPOR1","TPM1","OSBPL9","PGAP1","RND2","DENND4C","DLX6-AS1","NOL4","NRXN2","SECISBP2L","SPAG1","ZNF43","ADGRB3","CYRIB","DGCR5","ENAH","RNMT","AUH","FAM110B","CAMK2B","ZFP90","AKAP11","GPR155","MAGI2-AS3","RABGAP1","NMD3","SNRK","USP47","GPANK1","MVD","NAA38","ZNF569","BLOC1S6","APOC1","PLEKHA6","POLB","SVIL","ZNF433-AS1","CD2AP","COPS2","FOCAD","KIAA1522","PTK2","USP37","ZMYM2","ZNF138","ZNG1E","ENSG00000291075","ZNF326","ANKRD36","NPIPB3","ZFYVE21","BUB3","ENSG00000226526","NAGK","ZFHX4","HNRNPAB","PPP4R1","ENSG00000291136","RSRP1","CROCCP2","DIRAS2","KLHL7","ZMYM5","CHFR","NXPE3","RWDD3","UXS1","CELF1","CHCHD3","SLC16A3","ZDBF2","CCDC186","GOLGA4","PAM","LMBR1L","OSBPL8","PDE6D","PRRC2A","SLC5A7","ZKSCAN7-AS1","ATXN1","LIN28B","MPRIP","SMG1","MDM2","SMG7","STMN2","ERC2","LIMCH1","MAPKAPK5-AS1","ENSG00000268362","EZH1","FBXW11","KISS1","USP53","CCDC112","KAT6B","MIER1","NR4A1","NUMB","PHACTR4","PNISR","PPA2","TRAPPC13","ZNF483","KATNAL1","TET2","UBAP2L","ZBTB38","ARL10","COQ4","DNAJC6","PDCD6IP","DLGAP4","FASTKD1","GTF2H2","N4BP2","PPP2R2B","RPL21","SLC20A1","FAM135A","MIA3","SCN1A-AS1","SDHC","SRP19","CELF4","CLK1","EPC1","GGPS1","ZC3H11A","ENOPH1","FIP1L1","GPBP1L1","NBPF15","RARS2","ZC3H13","ZDHHC16","DTNA","NAA35","PPIP5K2","ANK2","CLASP2","CSPP1","IFT88","NARF","ODF2L","RAB3D","RNF216P1","ZNF432","BLCAP","MACF1","PCM1","ZNF92","ARMC8","RBM39","SKIC8","ENSG00000290937","SCN2A","TCP11L1","TRIM7-AS2","ACACA","ANKRD36B","BAZ2B","CHD9","IMMP2L","RBM5","SDHB","TRPV2","ZEB1","AGPAT5","ARFGAP2","LINC00662","RTN2","TAF11","NAP1L4","NCOA2","PPFIA2","TMEM11","DIS3","GGCX","ILF3","LEMD1-AS1","MYH10","UCHL5","CEP70","ENSG00000277701","G3BP2","GLCE","NASP","NFXL1","RUNDC3A-AS1","KIAA1586","LEMD1","CARS1","CCSER2","HNRNPH3","MED27","NUTM2A-AS1","RFX3","SMYD3","SUPV3L1","SYT1","DEF8","LARP7","OTUB1","PDCD10","SEMA6D","THYN1","CEPT1","FBXO42","SLC35E3","ZFAND6","ACIN1","CD200","CFAP410","ENSG00000240401","MARCHF7","NAV1","PPP2R2D","TMX3","VPS53","BTBD10","DICER1","ERCC6L2-AS1","PDE4DIP","ARID5B","DOP1A","FGF9","RBM4","SLC25A35","ST7","ATP2C1","CAMK2G","CXXC4","NDUFAF1","TPM3","TRMU","TXNL4A"],["R3H domain containing 2","cAMP responsive element modulator","claudin domain containing 1","ankyrin repeat domain 12","histone deacetylase 9","activating transcription factor 3","fibronectin type III domain containing 3A","tubulin tyrosine ligase like 7","MIA SH3 domain ER export factor 2","yippee like 5","brain derived neurotrophic factor","jumonji domain containing 1C","zinc finger protein 302","R3H domain containing 1","HMG-box containing 4","catenin delta 2","SH3GL interacting endocytic adaptor 1","SEC31 homolog A, COPII coat complex component","mitochondrial ribosomal protein S18C","zinc finger AN1-type containing 1","ORAI calcium release-activated calcium modulator 2","E74 like ETS transcription factor 2","HIVEP zinc finger 2","phosphatidylinositol transfer protein beta","zinc finger protein 331","Abelson helper integration site 1","zinc finger protein 493","microtubule associated scaffold protein 1","ubiquitin specific peptidase 33","propionyl-CoA carboxylase subunit alpha","lipid droplet assembly factor 1","jumonji and AT-rich interaction domain containing 2","PC4 and SFRS1 interacting protein 1","neuropilin 1","ALF transcription elongation factor 3","pleckstrin homology domain containing A5","polybromo 1","sorting nexin 29","caldesmon 1","tripartite motif containing 33","coiled-coil domain containing 82","5-hydroxymethylcytosine binding, ES cell specific","microtubule associated protein 7","F-box and WD repeat domain containing 2","GC-rich promoter binding protein 1","activating transcription factor 2","","coiled-coil domain containing 66","eukaryotic translation initiation factor 2 alpha kinase 2","zinc finger MYND-type containing 8","ETS variant transcription factor 1","diacylglycerol kinase delta","interferon alpha and beta receptor subunit 2","ligand dependent nuclear receptor corepressor","Rho GTPase activating protein 18","ADP ribosylation factor like GTPase 13B","high mobility group AT-hook 1","lysine demethylase 1A","","membrane bound O-acyltransferase domain containing 2","centrosomal protein 170","muscleblind like splicing regulator 1","trans-golgi network vesicle protein 23 homolog A","one cut homeobox 1","neurocalcin delta","ring finger and SPRY domain containing 1","telomeric repeat binding factor 1","LPS responsive beige-like anchor protein","oxysterol binding protein like 6","RNA binding motif protein 6","chromosome 20 open reading frame 96","capping protein regulator and myosin 1 linker 2","","","cyclin L1","pseudopodium enriched atypical kinase 1","PHD finger protein 3","WD repeat and SOCS box containing 1","transmembrane protein 181","metastasis associated lung adenocarcinoma transcript 1","LRR binding FLII interacting protein 1","UBE2Q2 pseudogene 2","KIAA0825","pleckstrin and Sec7 domain containing 3","zinc finger protein 608","ankyrin repeat domain 36C","ADGRB3 divergent transcript","BTB domain containing 3","solute carrier family 25 member 29","phosphodiesterase 10A","thrombospondin type 1 domain containing 7B","adaptor related protein complex 2 subunit beta 1","zinc finger protein 93","","MLLT10 histone lysine methyltransferase DOT1L cofactor","","NEDD4 like E3 ubiquitin protein ligase","zinc finger protein 33B","ST18 C2H2C-type zinc finger transcription factor","zinc finger FYVE-type containing 16","chromodomain helicase DNA binding protein 7","","protein tyrosine phosphatase receptor type N","chemokine like factor","dishevelled associated activator of morphogenesis 1","islet cell autoantigen 1","zinc finger protein 254","golgin A1","PRKAG2 antisense RNA 1","","glycerophosphocholine phosphodiesterase 1","cysteine and serine rich nuclear protein 3","GRB10 interacting GYF protein 2","death associated protein kinase 3","","F-box protein 44","carbohydrate sulfotransferase 8","CYLD lysine 63 deubiquitinase","nuclear receptor corepressor 1","netrin G1","zinc finger protein 638","proline rich coiled-coil 2C","sarcoglycan epsilon","YTH domain containing 2","ATPase plasma membrane Ca2+ transporting 1","inhibitor of growth family member 2","protein kinase cAMP-activated catalytic subunit beta","solute carrier family 12 member 2","transformer 2 alpha homolog","DExH-box helicase 30","deleted in lymphocytic leukemia 2","regulation of nuclear pre-mRNA domain containing 2","islet cell autoantigen 1 like","mitotic arrest deficient 2 like 2","rabaptin, RAB GTPase binding effector protein 1","ASH1 like histone lysine methyltransferase","cripto, FRL-1, cryptic family 1B","EH domain binding protein 1","caspase recruitment domain family member 19","acyl-CoA dehydrogenase medium chain","family with sequence similarity 104 member A","ring finger protein 24","polyamine modulated factor 1 binding protein 1","SUMO specific peptidase 6","zinc finger protein 749","ASXL transcriptional regulator 3","transforming acidic coiled-coil containing protein 2","TRAF family member associated NFKB activator","transmembrane protein 170A","cripto, FRL-1, cryptic family 1","ectonucleoside triphosphate diphosphohydrolase 6","F-box protein 2","DNA damage regulated autophagy modulator 2","endosome-lysosome associated apoptosis and autophagy regulator 1","tropomyosin 1","oxysterol binding protein like 9","post-GPI attachment to proteins inositol deacylase 1","Rho family GTPase 2","DENN domain containing 4C","DLX6 antisense RNA 1","nucleolar protein 4","neurexin 2","SECIS binding protein 2 like","sperm associated antigen 1","zinc finger protein 43","adhesion G protein-coupled receptor B3","CYFIP related Rac1 interactor B","DiGeorge syndrome critical region gene 5","ENAH actin regulator","RNA guanine-7 methyltransferase","AU RNA binding methylglutaconyl-CoA hydratase","family with sequence similarity 110 member B","calcium/calmodulin dependent protein kinase II beta","ZFP90 zinc finger protein","A-kinase anchoring protein 11","G protein-coupled receptor 155","MAGI2 antisense RNA 3","RAB GTPase activating protein 1","NMD3 ribosome export adaptor","SNF related kinase","ubiquitin specific peptidase 47","G-patch domain and ankyrin repeats 1","mevalonate diphosphate decarboxylase","N-alpha-acetyltransferase 38, NatC auxiliary subunit","zinc finger protein 569","biogenesis of lysosomal organelles complex 1 subunit 6","apolipoprotein C1","pleckstrin homology domain containing A6","DNA polymerase beta","supervillin","ZNF433 and ZNF878 antisense RNA 1","CD2 associated protein","COP9 signalosome subunit 2","focadhesin","KIAA1522","protein tyrosine kinase 2","ubiquitin specific peptidase 37","zinc finger MYM-type containing 2","zinc finger protein 138","Zn regulated GTPase metalloprotein activator 1E","","zinc finger protein 326","ankyrin repeat domain 36","nuclear pore complex interacting protein family member B3","zinc finger FYVE-type containing 21","BUB3 mitotic checkpoint protein","","N-acetylglucosamine kinase","zinc finger homeobox 4","heterogeneous nuclear ribonucleoprotein A/B","protein phosphatase 4 regulatory subunit 1","","arginine and serine rich protein 1","CROCC pseudogene 2","DIRAS family GTPase 2","kelch like family member 7","zinc finger MYM-type containing 5","checkpoint with forkhead and ring finger domains","neurexophilin and PC-esterase domain family member 3","RWD domain containing 3","UDP-glucuronate decarboxylase 1","CUGBP Elav-like family member 1","coiled-coil-helix-coiled-coil-helix domain containing 3","solute carrier family 16 member 3","zinc finger DBF-type containing 2","coiled-coil domain containing 186","golgin A4","peptidylglycine alpha-amidating monooxygenase","limb development membrane protein 1 like","oxysterol binding protein like 8","phosphodiesterase 6D","proline rich coiled-coil 2A","solute carrier family 5 member 7","ZKSCAN7 ZNF cluster antisense RNA 1","ataxin 1","lin-28 homolog B","myosin phosphatase Rho interacting protein","SMG1 nonsense mediated mRNA decay associated PI3K related kinase","MDM2 proto-oncogene","SMG7 nonsense mediated mRNA decay factor","stathmin 2","ELKS/RAB6-interacting/CAST family member 2","LIM and calponin homology domains 1","MAPKAPK5 antisense RNA 1","","enhancer of zeste 1 polycomb repressive complex 2 subunit","F-box and WD repeat domain containing 11","KiSS-1 metastasis suppressor","ubiquitin specific peptidase 53","coiled-coil domain containing 112","lysine acetyltransferase 6B","MIER1 transcriptional regulator","nuclear receptor subfamily 4 group A member 1","NUMB endocytic adaptor protein","phosphatase and actin regulator 4","PNN interacting serine and arginine rich protein","inorganic pyrophosphatase 2","trafficking protein particle complex subunit 13","zinc finger protein 483","katanin catalytic subunit A1 like 1","tet methylcytosine dioxygenase 2","ubiquitin associated protein 2 like","zinc finger and BTB domain containing 38","ADP ribosylation factor like GTPase 10","coenzyme Q4","DnaJ heat shock protein family (Hsp40) member C6","programmed cell death 6 interacting protein","DLG associated protein 4","FAST kinase domains 1","general transcription factor IIH subunit 2","NEDD4 binding protein 2","protein phosphatase 2 regulatory subunit Bbeta","ribosomal protein L21","solute carrier family 20 member 1","family with sequence similarity 135 member A","MIA SH3 domain ER export factor 3","SCN1A and SCN9A antisense RNA 1","succinate dehydrogenase complex subunit C","signal recognition particle 19","CUGBP Elav-like family member 4","CDC like kinase 1","enhancer of polycomb homolog 1","geranylgeranyl diphosphate synthase 1","zinc finger CCCH-type containing 11A","enolase-phosphatase 1","factor interacting with PAPOLA and CPSF1","GC-rich promoter binding protein 1 like 1","NBPF member 15","arginyl-tRNA synthetase 2, mitochondrial","zinc finger CCCH-type containing 13","zinc finger DHHC-type palmitoyltransferase 16","dystrobrevin alpha","N-alpha-acetyltransferase 35, NatC auxiliary subunit","diphosphoinositol pentakisphosphate kinase 2","ankyrin 2","cytoplasmic linker associated protein 2","centrosome and spindle pole associated protein 1","intraflagellar transport 88","nuclear prelamin A recognition factor","outer dense fiber of sperm tails 2 like","RAB3D, member RAS oncogene family","ring finger protein 216 pseudogene 1","zinc finger protein 432","BLCAP apoptosis inducing factor","microtubule actin crosslinking factor 1","pericentriolar material 1","zinc finger protein 92","armadillo repeat containing 8","RNA binding motif protein 39","SKI8 subunit of superkiller complex","","sodium voltage-gated channel alpha subunit 2","t-complex 11 like 1","TRIM7 antisense RNA 2","acetyl-CoA carboxylase alpha","ankyrin repeat domain 36B","bromodomain adjacent to zinc finger domain 2B","chromodomain helicase DNA binding protein 9","inner mitochondrial membrane peptidase subunit 2","RNA binding motif protein 5","succinate dehydrogenase complex iron sulfur subunit B","transient receptor potential cation channel subfamily V member 2","zinc finger E-box binding homeobox 1","1-acylglycerol-3-phosphate O-acyltransferase 5","ADP ribosylation factor GTPase activating protein 2","long intergenic non-protein coding RNA 662","reticulon 2","TATA-box binding protein associated factor 11","nucleosome assembly protein 1 like 4","nuclear receptor coactivator 2","PTPRF interacting protein alpha 2","transmembrane protein 11","DIS3 homolog, exosome endoribonuclease and 3'-5' exoribonuclease","gamma-glutamyl carboxylase","interleukin enhancer binding factor 3","LEMD1 antisense RNA 1","myosin heavy chain 10","ubiquitin C-terminal hydrolase L5","centrosomal protein 70","","G3BP stress granule assembly factor 2","glucuronic acid epimerase","nuclear autoantigenic sperm protein","nuclear transcription factor, X-box binding like 1","RUNDC3A antisense RNA 1","KIAA1586","LEM domain containing 1","cysteinyl-tRNA synthetase 1","coiled-coil serine rich protein 2","heterogeneous nuclear ribonucleoprotein H3","mediator complex subunit 27","NUTM2A antisense RNA 1","regulatory factor X3","SET and MYND domain containing 3","Suv3 like RNA helicase","synaptotagmin 1","differentially expressed in FDCP 8 homolog","La ribonucleoprotein 7, transcriptional regulator","OTU deubiquitinase, ubiquitin aldehyde binding 1","programmed cell death 10","semaphorin 6D","thymocyte nuclear protein 1","choline/ethanolamine phosphotransferase 1","F-box protein 42","solute carrier family 35 member E3","zinc finger AN1-type containing 6","apoptotic chromatin condensation inducer 1","CD200 molecule","cilia and flagella associated protein 410","","membrane associated ring-CH-type finger 7","neuron navigator 1","protein phosphatase 2 regulatory subunit Bdelta","thioredoxin related transmembrane protein 3","VPS53 subunit of GARP complex","BTB domain containing 10","dicer 1, ribonuclease III","ERCC6L2 antisense RNA 1","phosphodiesterase 4D interacting protein","AT-rich interaction domain 5B","DOP1 leucine zipper like protein A","fibroblast growth factor 9","RNA binding motif protein 4","solute carrier family 25 member 35","suppression of tumorigenicity 7","ATPase secretory pathway Ca2+ transporting 1","calcium/calmodulin dependent protein kinase II gamma","CXXC finger protein 4","NADH:ubiquinone oxidoreductase complex assembly factor 1","tropomyosin 3","tRNA mitochondrial 2-thiouridylase","thioredoxin like 4A"],["other","activity-regulated","other","other","activity-regulated","activity-regulated","other","neuronal (weak annotation)","other","other","activity-regulated","other","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","neuronal","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","other","other","other","other","neuronal (weak annotation)","other","other","other","other","neuronal","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","other","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal","other","other","neuronal (weak annotation)","other","neuronal","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","neuronal","other","neuronal (weak annotation)","other","neuronal","other","other","neuronal (weak annotation)","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","other","other","other","neuronal","other","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","neuronal","other","other","other","other","other","other","other","neuronal","neuronal","other","other","other","other","neuronal","neuronal (weak annotation)","other","other","other","other","activity-regulated","neuronal (weak annotation)","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","neuronal","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","neuronal","other","other","neuronal (weak annotation)","other","other","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other"],[67.5,63.3,45.7,44.4,42.4,41.2,39.9,39.8,38.2,38.1,38,37.5,36.2,36,34.4,34.3,32.6,32.4,32.2,32.2,32.1,31.9,31.5,31,30.9,30.6,30.5,30.3,30.3,29.8,29.3,29.1,29,28.9,28.7,28.7,28.4,28.4,27.7,27.7,27.6,27.6,27.5,27.4,27.4,27.3,27.3,26.9,26.9,26.9,26.8,26.7,26.7,26.4,26.2,26.1,26.1,26.1,26,25.9,25.8,25.8,25.8,25.7,25.5,25.4,25.3,25.1,25.1,25.1,25,25,24.8,24.8,24.7,24.7,24.6,24.5,24.4,24.2,24.1,24.1,24,24,24,23.9,23.8,23.8,23.8,23.7,23.7,23.6,23.6,23.5,23.5,23.3,23.1,23.1,22.9,22.9,22.8,22.7,22.7,22.6,22.5,22.5,22.5,22.4,22.4,22.3,22.3,22.2,22.2,22,22,22,21.9,21.9,21.9,21.9,21.9,21.8,21.8,21.8,21.7,21.7,21.7,21.7,21.7,21.6,21.6,21.6,21.5,21.5,21.5,21.3,21.3,21.3,21.2,21.1,21.1,21.1,21,21,21,20.9,20.9,20.9,20.9,20.8,20.8,20.7,20.6,20.6,20.6,20.5,20.5,20.4,20.2,20.2,20.2,20.1,20.1,20.1,20.1,20,20,20,20,20,19.9,19.9,19.8,19.8,19.7,19.7,19.6,19.6,19.5,19.5,19.5,19.4,19.4,19.4,19.4,19.3,19.2,19.2,19.2,19.2,19.2,19.1,19.1,19.1,19.1,19.1,19.1,19.1,19.1,19.1,19,19,18.9,18.9,18.9,18.8,18.8,18.8,18.7,18.6,18.6,18.5,18.5,18.4,18.4,18.4,18.4,18.3,18.3,18.3,18.3,18.2,18.2,18.2,18.2,18.1,18.1,18.1,18,18,18,18,18,18,17.9,17.9,17.9,17.9,17.8,17.8,17.8,17.7,17.7,17.7,17.6,17.6,17.6,17.6,17.6,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.4,17.4,17.4,17.4,17.3,17.3,17.3,17.3,17.2,17.2,17.2,17.2,17.2,17.2,17.2,17.1,17.1,17.1,17.1,17.1,17,17,17,17,17,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.8,16.8,16.8,16.7,16.7,16.7,16.7,16.7,16.7,16.7,16.7,16.7,16.6,16.6,16.6,16.6,16.5,16.5,16.5,16.4,16.4,16.4,16.4,16.3,16.3,16.3,16.3,16.3,16.3,16.3,16.3,16.3,16.2,16.2,16.2,16.2,16.2,16.1,16.1,16.1,16.1,16,16,16,16,16,16,15.9,15.9,15.9,15.9,15.9,15.9,15.9,15.8,15.8,15.7,15.7,15.7,15.7,15.7,15.7,15.7,15.7,15.7,15.6,15.6,15.6,15.6,15.6,15.6,15.5,15.5,15.5,15.5,15.4,15.4,15.4,15.4,15.4,15.4,15.4,15.4,15.4,15.3,15.3,15.3,15.3,15.2,15.2,15.2,15.2,15.2,15.2,15.1,15.1,15.1,15.1,15.1,15.1,15],["0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Description<\/th>\n      <th>Screen tag<\/th>\n      <th>Max mean change (pp)<\/th>\n      <th>Comparisons<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"lengthMenu":[12,25,50],"scrollX":true,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="crem-an-internal-promoter-associated-junction"
+<div id="why-these-two-examples" class="section level2">
+<h2>Why these two examples?</h2>
+<p>We selected <strong>CREM</strong> and <strong>TTLL7</strong> from the
+screen because each has a large, same-direction junction shift in all
+four donors, enough reads to inspect the alignment, and relevant
+biological context. CREM is an established activity-responsive gene;
+TTLL7 has an experimentally supported neuronal function. They also
+illustrate different transcript patterns: a possible
+internal-promoter-associated junction and a junction consistent with
+bypassing an annotated exon. We checked both against the saved
+donor-specific junction tables and filtered regional BAMs. Biological
+relevance of a <em>gene</em> does not prove that its observed splice
+change is functionally regulated by stimulation.</p>
+</div>
+</div>
+<div id="crem-internal-promoter-associated-junction"
 class="section level1">
-<h1>CREM: an internal-promoter-associated junction</h1>
-<p>CREM has one clear changing junction: a junction from an internal
-exon to the common downstream exon rises from <strong>9/60
-(15.0%)</strong> of reads at that acceptor at baseline to
-<strong>270/414 (65.2%)</strong> at 1 hour and <strong>941/1,241
-(75.8%)</strong> at 6 hours.</p>
-<p>CREM is an activity-responsive gene. An alternative intronic promoter
-is known to produce the inducible CREM isoform ICER (<a
+<h1>CREM: internal-promoter-associated junction</h1>
+<p>An alternative intronic CREM promoter is known to produce the
+inducible ICER isoform (<a
 href="https://pubmed.ncbi.nlm.nih.gov/8252624/">Molina et al.,
-1993</a>). The observed junction starts beside an annotated internal
-CREM transcript start, so <strong>alternative promoter usage is a
-plausible explanation</strong>. We have not established that these
-particular molecules are ICER transcripts. The figure shows a change in
-<em>junction usage</em>; it does not by itself prove within-cell
-regulation by stimulation.</p>
-</div>
-<div id="the-crem-sashimi-plot" class="section level1">
-<h1>The CREM sashimi plot</h1>
+1993</a>). Our changing junction starts beside an annotated internal
+CREM transcript start, so promoter usage is plausible. These data alone
+do not identify the molecules as ICER transcripts.</p>
+<div id="percentage-trend-in-each-donor" class="section level2">
+<h2>Percentage trend in each donor</h2>
 <div class="figure">
-<img src="assets/CREM_sashimi.png" alt="" />
-<p class="caption">CREM sashimi plot: pooled donor-assigned primary
-reads at 0, 1 and 6 hours. The short junction at the right has 9, 270
-and 941 supporting reads, respectively; the 0 hour arc is below the
-display threshold.</p>
+<img src="assets/CREM_donor_trend.png" alt="" />
+<p class="caption">CREM target-junction usage at 0, 1 and 6 hours in
+each of four donors. All donor percentages rise from baseline to 6
+hours.</p>
 </div>
-<p><em>CREM, chr10, plus strand. Each panel pools reads from CD_21,
-CD_31, CD_36 and CD_48 at one timepoint. Colored areas show raw
-coverage. Curves connect aligned segments across an intron; the number
-on a curve is its supporting-read count. The black rows below are
-selected transcript models. Arcs drawn above and below the coverage do
-not represent different directions of change.</em></p>
-<p>The junction of interest is the <strong>short, heavy curve on the
-right</strong>, connecting genomic positions
-<strong>35,195,215–35,206,894</strong>. It is labeled
-<strong>270</strong> at 1 hr and <strong>941</strong> at 6 hr. It has
-<strong>9</strong> supporting reads at 0 hr, below this figure’s arc
-display threshold. The plot also shows junctions elsewhere in the gene.
-Neither the visible labels nor all the arcs in a panel form the
-denominator for this event.</p>
-</div>
-<div id="crem-usage-calculation" class="section level1">
-<h1>CREM usage calculation</h1>
-<p>At this locus, several junctions end at the same
-<strong>acceptor</strong>, chr10:35,206,894. For each timepoint we add
-the counts of <em>all</em> junctions ending there, across the four
-donor-assigned cell sets. The usage rate is:</p>
-<blockquote>
-<p><strong>CREM internal-junction usage = reads on the
-35,195,215–35,206,894 junction ÷ reads on every junction ending at
-35,206,894.</strong></p>
-</blockquote>
+<p><em>Each colored line is one donor, CD_21, CD_31, CD_36 or CD_48. A
+point is 100 × target-junction reads ÷ all junction reads ending at the
+shared acceptor, chr10:35,206,894, <strong>within that donor and
+timepoint</strong>. These percentages are junction-read fractions, not
+fractions of complete transcripts. The low 0-hour percentages for CD_31
+and CD_36 are each 0/12 and 0/10 reads, respectively.</em></p>
+<p>The target junction is <strong>chr10:35,195,215–35,206,894</strong>.
+The pooled counts give the following descriptive summary; pooling gives
+more weight to donors with more reads, whereas the screen weights donors
+equally when averaging their percentage-point changes.</p>
 <table>
-<colgroup>
-<col width="20%" />
-<col width="26%" />
-<col width="26%" />
-<col width="26%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th>Time after stimulation</th>
-<th align="right">Target-junction reads</th>
-<th align="right">All junction reads at the acceptor</th>
-<th align="right">Target usage</th>
+<th>Time</th>
+<th align="right">Target reads</th>
+<th align="right">All reads at shared acceptor</th>
+<th align="right">Pooled usage</th>
 </tr>
 </thead>
 <tbody>
@@ -548,86 +655,111 @@ donor-assigned cell sets. The usage rate is:</p>
 </tr>
 </tbody>
 </table>
-<p>For example, at 6 hr: <strong>941 ÷ 1,241 = 0.758</strong>, or
-<strong>75.8%</strong>. The denominator includes rare alternatives not
-labeled on the sashimi plot. These are fractions of
-<em>junction-supporting reads</em>, not measured fractions of
-full-length CREM transcripts. Using fractions matters because total read
-depth differs greatly among timepoints.</p>
-<p>We checked each donor separately before pooling. The same junction
-gains usage from 0 to 6 hr in <strong>all four donors</strong>:</p>
+<p><strong>Where does 1,241 come from?</strong> At 6 hours, we find
+every junction whose intron ends at <strong>chr10:35,206,894</strong> in
+the primary alignments from the four donor-assigned cell sets. We count
+reads supporting the target junction (start <strong>35,195,215</strong>)
+and reads supporting <em>any other</em> junction ending at that same
+acceptor. The counts add up as follows:</p>
 <table>
+<colgroup>
+<col width="20%" />
+<col width="26%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th>Donor</th>
-<th align="right">0 hr</th>
-<th align="right">6 hr</th>
+<th>Donor at 6 hr</th>
+<th align="right">Target-junction reads</th>
+<th align="right">Other junction reads at this acceptor</th>
+<th align="right">All reads at this acceptor</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>CD_21</td>
-<td align="right">5/23 (21.7%)</td>
-<td align="right">274/371 (73.9%)</td>
+<td align="right">274</td>
+<td align="right">97</td>
+<td align="right">371</td>
 </tr>
 <tr class="even">
 <td>CD_31</td>
-<td align="right">0/12 (0%)</td>
-<td align="right">305/388 (78.6%)</td>
+<td align="right">305</td>
+<td align="right">83</td>
+<td align="right">388</td>
 </tr>
 <tr class="odd">
 <td>CD_36</td>
-<td align="right">0/10 (0%)</td>
-<td align="right">141/199 (70.9%)</td>
+<td align="right">141</td>
+<td align="right">58</td>
+<td align="right">199</td>
 </tr>
 <tr class="even">
 <td>CD_48</td>
-<td align="right">4/15 (26.7%)</td>
-<td align="right">221/283 (78.1%)</td>
+<td align="right">221</td>
+<td align="right">62</td>
+<td align="right">283</td>
+</tr>
+<tr class="odd">
+<td><strong>Pooled</strong></td>
+<td align="right"><strong>941</strong></td>
+<td align="right"><strong>300</strong></td>
+<td align="right"><strong>1,241</strong></td>
 </tr>
 </tbody>
 </table>
-<p>The pooled percentages above give greater weight to donors with more
-reads. The candidate screen instead averages the <strong>four
-donor-specific changes</strong>, giving each donor equal weight; for
-this junction its mean change from 0 to 6 hr is <strong>+0.633</strong>,
-or <strong>63.3 percentage points</strong>.</p>
+<p>Thus <strong>941 = 274 + 305 + 141 + 221</strong> target-junction
+reads, while <strong>1,241 = 371 + 388 + 199 + 283 = 941 + 300</strong>
+reads on <em>all</em> junctions at that acceptor. The 300 competing
+reads are spread across 12 other junction starts, including starts with
+too few reads to label on the sashimi plot. The pooled rate is
+<strong>941 / 1,241 = 75.8%</strong>. It is a fraction of
+junction-supporting reads at this splice site, <strong>not</strong> a
+fraction of all reads mapped anywhere in CREM. The mean of the four
+donor-specific 0→6-hour changes is <strong>+63.3 percentage
+points</strong>.</p>
 </div>
-<div id="ttll7-an-exon-skipping-pattern-in-a-neuronal-gene"
+<div id="pooled-alignment-view" class="section level2">
+<h2>Pooled alignment view</h2>
+<div class="figure">
+<img src="assets/CREM_sashimi.png" alt="" />
+<p class="caption">CREM sashimi plot: primary donor-assigned reads
+pooled across four donors within each timepoint. The junction of
+interest has 9, 270 and 941 reads at 0, 1 and 6 hours.</p>
+</div>
+<p><em>The short curve at the right connects 35,195,215–35,206,894. Its
+1-hour and 6-hour arc labels are 270 and 941. The 0-hour count is 9,
+below this plot’s arc display threshold. Arc numbers are raw
+supporting-read counts; the denominator in the table includes every
+junction at the shared site, including alternatives that are not labeled
+here.</em></p>
+</div>
+</div>
+<div id="ttll7-junction-bypassing-an-annotated-exon"
 class="section level1">
-<h1>TTLL7: an exon-skipping pattern in a neuronal gene</h1>
-<p>TTLL7 modifies tubulin in neurons. Experimental depletion suppressed
+<h1>TTLL7: junction bypassing an annotated exon</h1>
+<p>TTLL7 modifies neuronal tubulin. Experimental depletion suppressed
 nerve-growth-factor-stimulated neurite growth in PC12 cells and reduced
 beta-tubulin polyglutamylation in primary neurons (<a
 href="https://pubmed.ncbi.nlm.nih.gov/16901895/">Ikegami et al.,
-2006</a>). That supports a neuronal role for the <strong>gene</strong>,
-but does not establish that this particular junction is regulated by
-stimulation or changes TTLL7 protein function.</p>
+2006</a>). This supports a neuronal role for TTLL7, but the protein
+effect of this particular junction has not been established.</p>
+<div id="ttll7-trend" class="section level2">
+<h2>Percentage trend in each donor</h2>
 <div class="figure">
-<img src="assets/TTLL7_sashimi.png" alt="" />
-<p class="caption">TTLL7 sashimi plot at 0, 1 and 6 hours, pooling
-primary alignments from four donor-assigned cell sets at each timepoint.
-The short junction has 573, 1153 and 1066 reads; the competing long
-junction has 81, 336 and 1116 reads.</p>
+<img src="assets/TTLL7_donor_trend.png" alt="" />
+<p class="caption">TTLL7 long-junction usage at 0, 1 and 6 hours in each
+of four donors. All donor percentages rise from baseline to 6 hours.</p>
 </div>
-<p><em>TTLL7, chr1, minus strand. Numbers on curves are supporting
-reads, not percentages. The short arc is at the far left; the long arc
-reaches from the left to the far right. Arc placement above or below the
-coverage has no biological meaning. The black track is one GENCODE
-reference transcript.</em></p>
-<p>Both arcs end at the same TTLL7 exon boundary at
-<strong>chr1:83,951,977</strong>. The short junction spans
-<strong>83,951,977–83,952,186</strong>, entering the intervening
-annotated exon. The long junction spans
-<strong>83,951,977–83,998,930</strong> and bypasses that 201-nucleotide
-exon. In the minus-strand transcript, this is consistent with skipping
-the second exon of the displayed reference model. We have not
-established complete isoforms or the protein consequence.</p>
-<blockquote>
-<p><strong>TTLL7 long-junction usage = reads on the
-83,951,977–83,998,930 junction ÷ reads on every junction starting at
-83,951,977.</strong></p>
-</blockquote>
+<p><em>Each point is 100 × reads on the long junction ÷ all junction
+reads starting at the shared boundary, chr1:83,951,977, within one donor
+and timepoint. The same four donor colors are used as in the CREM
+plot.</em></p>
+<p>The short competing junction spans
+<strong>chr1:83,951,977–83,952,186</strong>; the long target junction
+spans <strong>chr1:83,951,977–83,998,930</strong>. At 6 hours the pooled
+long-junction usage is <strong>1,116 ÷ 2,198 = 50.8%</strong>.</p>
 <table>
 <colgroup>
 <col width="15%" />
@@ -638,11 +770,11 @@ established complete isoforms or the protein consequence.</p>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Time after stimulation</th>
+<th>Time</th>
 <th align="right">Short-junction reads</th>
 <th align="right">Long-junction reads</th>
-<th align="right">All junction reads at shared site</th>
-<th align="right">Long-junction usage</th>
+<th align="right">All reads at shared site</th>
+<th align="right">Pooled long-junction usage</th>
 </tr>
 </thead>
 <tbody>
@@ -669,55 +801,92 @@ established complete isoforms or the protein consequence.</p>
 </tr>
 </tbody>
 </table>
-<p>At 6 hr, <strong>1,116 ÷ 2,198 = 50.8%</strong>. The denominator
-includes 16 reads on other rare junctions at this boundary, which is why
-it exceeds 1,066 + 1,116. The long-junction usage rises in <strong>each
-of the four donors</strong>: from 7.3–16.0% at baseline to 46.8–57.1% at
-6 hr. The mean of the four donor-specific changes is <strong>+39.8
-percentage points</strong>. As for CREM, these are fractions of
-junction-supporting reads, not fractions of full-length transcripts;
-changes in cell composition could also affect the pattern.</p>
+<p>For TTLL7, the same rule applies at its shared site: the 6-hour
+denominator is <strong>2,198 = 1,116 long-junction + 1,066
+short-junction + 16 other-junction reads</strong> (also <strong>660 +
+604 + 312 + 622</strong> across the four donors). At 0 and 1 hours,
+other alternatives contribute 5 and 2 reads. Long-junction usage rises
+in each donor from 0 to 6 hours; the mean donor-specific change is
+<strong>+39.8 percentage points</strong>.</p>
 </div>
-<div id="how-candidates-were-selected" class="section level1">
-<h1>How candidates were selected</h1>
-<p>The screen counts every <code>N</code> operation in the BAM alignment
-CIGAR as a junction. It uses <strong>primary alignments from
-donor-assigned cells</strong> on chromosomes 1–22, counted separately by
-donor and timepoint. Junctions are compared when they share either
-genomic boundary; usage is calculated within that shared-site group. An
-unobserved junction is assigned <strong>zero usage</strong> only when
-that site has enough reads to evaluate it.</p>
-<p>A candidate needs at least <strong>10 reads at the site per donor at
-the shallower timepoint</strong> and <strong>20 at the deeper
-timepoint</strong>, a consistent direction of change in all four donors,
-and an average change of at least <strong>15 percentage points</strong>.
-The screen compares 0→1, 0→6 and 1→6 hr. Under these exploratory rules
-it yielded <strong>1,022 junction rows across 392 genes</strong>. Rows
-may describe competing junctions at the same site, so they are not 1,022
-independent splicing events.</p>
-<p>CREM and TTLL7 were chosen because their junction shifts are large
-and consistent across all four donors, and because their genes have
-documented activity-responsive and neuronal roles, respectively. The two
-examples illustrate different transcript structures. The displayed
-counts were checked against donor-specific junction tables and the
-filtered BAM inputs. The screen has no formal replicate-aware test or
-multiple-testing correction, and the current analysis pools cell types
-within each donor.</p>
-<p>The complete <a href="assets/candidate_genes_v2.tsv">candidate gene
-table</a> is available for exploring other loci. BDNF is another strong
-activity-responsive example, but its main change concerns alternative
-first exons/promoters. The observed NRXN2 junction is a terminal-intron
-event and should not be labeled as the classic neurexin SS4 event.</p>
-<p>The relevant scripts are
-<code>7.sashimi/1.extract_junctions.sbatch</code> and
-<code>7.sashimi/14.find_candidates_v2.R</code>. Counts and candidate
-tables are in <code>long_read_processed/junctions/</code>. The plotted
-regional BAMs and the <code>CREM_sashimi.png</code> source figure is in
-<code>7.sashimi/out/</code>; the TTLL7 source figure and donor-level
-usage table are in <code>7.sashimi/out/ttll7_review/</code>.</p>
+<div id="ttll7-sashimi" class="section level2">
+<h2>Pooled alignment view</h2>
+<div class="figure">
+<img src="assets/TTLL7_sashimi.png" alt="" />
+<p class="caption">TTLL7 sashimi plot: primary donor-assigned reads
+pooled across four donors within each timepoint. The short junction has
+573, 1153 and 1066 reads, and the long junction has 81, 336 and
+1116.</p>
+</div>
+<p><em>TTLL7 is on the minus strand. The short arc is at the far left;
+the long arc reaches from the left to the far right. In the displayed
+GENCODE reference transcript, the long junction bypasses a
+201-nucleotide exon, consistent with exon skipping. Arc placement above
+or below the coverage has no biological meaning. These reads do not
+establish complete isoforms or a protein consequence.</em></p>
+</div>
+</div>
+<div id="scope-and-source-data" class="section level1">
+<h1>Scope and source data</h1>
+<p>The trends describe donor-assigned junction reads pooled across cell
+types. They do not separate cell-type composition changes from
+within-cell regulation, and the screen has no formal replicate-aware
+test or multiple-testing correction. BDNF is another activity-responsive
+candidate, but its leading change here concerns alternative first
+exons/promoters.</p>
+<p>The screen is implemented in
+<code>7.sashimi/14.find_candidates_v2.R</code>; the gene annotations in
+<code>7.sashimi/15.annotate_candidate_genes.R</code>; and the donor
+plots in <code>7.sashimi/17.plot_example_trends.R</code>. Source counts
+and candidate tables are in <code>long_read_processed/junctions/</code>,
+with the plot’s <a href="assets/example_donor_usage.tsv">donor-level
+numerator and denominator table</a> provided here for direct
+checking.</p>
 <p>Related pages: <a href="data_summary.html">data summary</a>, <a
 href="exon_structure.html">exon structure</a>, and <a
 href="annotation_sqanti3.html">annotation QC</a>.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+ [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+ [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] workflowr_1.7.1
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.1.1-1.1    bslib_0.3.1       jquerylib_0.1.4   compiler_4.2.0   
+ [5] pillar_1.9.0      later_1.3.0       git2r_0.30.1      tools_4.2.0      
+ [9] getPass_0.2-2     digest_0.6.29     jsonlite_2.0.0    evaluate_0.15    
+[13] lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3   rlang_1.1.2      
+[17] cli_3.6.2         rstudioapi_0.14   crosstalk_1.2.0   yaml_2.3.5       
+[21] xfun_0.59         fastmap_1.1.0     httr_1.4.8        stringr_1.5.0    
+[25] knitr_1.51        htmlwidgets_1.6.2 sass_0.4.1        fs_1.5.2         
+[29] vctrs_0.6.1       DT_0.22           rprojroot_2.0.3   glue_1.6.2       
+[33] R6_2.5.1          processx_3.5.3    fansi_1.0.3       otel_0.2.0       
+[37] rmarkdown_2.31    callr_3.7.0       magrittr_2.0.3    whisker_0.4      
+[41] ellipsis_0.3.2    ps_1.7.0          promises_1.2.0.1  htmltools_0.5.7  
+[45] httpuv_1.6.5      utf8_1.2.2        stringi_1.7.6    </code></pre>
+</div>
 </div>
 
 

@@ -33,6 +33,9 @@ We compared **24 Nanopore-model runs**: chr1 and chr10, four donors
 The reference is the 100-line TOPMed-imputed genotype panel. Its GRCh38
 coordinates and donor names were checked before comparison.
 
+**Genotype VCF:**
+`/project/xinhe/lifan/neuron_stim/zicheng_100lines_all_snp_sorted.vcf.gz`
+
 The analysis includes PASS SNVs with at least 10 reads. Duplicate gene-level
 records are collapsed within each run, keeping the deepest record. A **call**
 is one donor × timepoint × genomic variant; the same variant observed in
@@ -64,8 +67,7 @@ genotype and one has a different alternate allele**. The latter is
 chr1:23,344,310 in CD_48 at 1 hour: isoLASER calls G>T, while the panel
 record is G>C. It is excluded from both confirmation counts above.
 
-<details>
-<summary>Results by chromosome and timepoint (four donors combined)</summary>
+## Results by chromosome and timepoint (four donors combined)
 
 ```{r per-run}
 rows <- lapply(split(x, paste(x$chr,x$tp)), function(z) {
@@ -79,7 +81,18 @@ rows <- lapply(split(x, paste(x$chr,x$tp)), function(z) {
 knitr::kable(do.call(rbind,rows), row.names=FALSE)
 ```
 
-</details>
+**Column guide**
+
+- **Chromosome / Time:** chromosome and time after stimulation; each row combines the four donors.
+- **Calls:** number of PASS SNV calls with at least 10 reads, after collapsing duplicate gene-level records within each donor and timepoint. A site called in two donors counts twice.
+- **In panel:** calls whose genomic position has a genotype for that donor in the reference VCF, regardless of imputation quality or allele agreement.
+- **Adjudicable:** the subset of “In panel” with imputation R² ≥ 0.8. This is the denominator for both percentage columns.
+- **Allele confirmed (%):** 100 × calls with matching reference/alternate alleles and a non-reference panel genotype ÷ adjudicable calls. Heterozygous versus homozygous-alternate differences are allowed.
+- **Exact genotype (%):** 100 × calls with matching alleles **and** matching heterozygous/homozygous status ÷ adjudicable calls. Phasing orientation is not compared.
+
+For example, a panel genotype of **0/1** and an isoLASER genotype of **1/1**
+for the same alternate allele contributes to “Allele confirmed” but not
+“Exact genotype.”
 
 # Main discrepancy: heterozygotes called homozygous
 
@@ -101,9 +114,7 @@ knitr::kable(data.frame(`Read depth`=rownames(rates),
 The discrepant calls have a median alternate-read fraction of about 0.58,
 so loss of all reference-allele reads does not explain the typical case.
 This association warrants checking the genotype-calling logic and running
-both error models on the **same donor, chromosome and library**. Comparisons
-with the older chr21 runs cannot isolate a model effect because the inputs
-also differ. Raising the depth threshold removes many discrepant calls but
+both error models on the **same donor, chromosome and library**. Raising the depth threshold removes many discrepant calls but
 also removes usable sites; filtering outputs alone cannot restore
 heterozygotes omitted from the original phasing.
 

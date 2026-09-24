@@ -1,0 +1,7 @@
+chrom	timepoint	calls	in_panel	pct_in_panel	adjudicable	confirmed	exact_gt	pct_confirmed	pct_exact
+chr1	0hr	2282	884	38.7	769	746	512	97	66.6
+chr1	1hr	2719	1261	46.4	1108	1069	722	96.5	65.2
+chr1	6hr	2710	1378	50.8	1219	1189	825	97.5	67.7
+chr10	0hr	1008	434	43.1	403	394	298	97.8	73.9
+chr10	1hr	1452	658	45.3	609	593	439	97.4	72.1
+chr10	6hr	1402	646	46.1	602	585	427	97.2	70.9

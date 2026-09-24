@@ -17,9 +17,9 @@ editor_options:
 
 * [isoLASER per donor + joint — chr21 test run](isolaser_per_donor.html) —
   splitting by donor, per-donor yields, and the joint analysis across 4 donors
-* [Validating isoLASER's variant calls against our genotype data](isolaser_variants.html) —
-  how many of its chr21 calls are in the 100-line panel, how well they agree,
-  and whether the genotypes can be fed back into isoLASER
+* [Checking isoLASER's variant calls against our genotypes](isolaser_variants.html) —
+  how many chr1 and chr10 calls the 100-line panel confirms, and why the
+  heterozygous-versus-homozygous calls need a depth filter
 * [Read structure — exon/intron assignment and per-read exon patterns](read_structure.html) —
   where reads fall, which exons each read supports, and the 3' bias measured directly
 * [The IsoQuant annotation, classified with SQANTI3](annotation_sqanti3.html) —
@@ -28,7 +28,6 @@ editor_options:
 * [Exon structure of reads](exon_structure.html) —
   how exon information is extracted from the GTF, and the three-level summary of
   how exons are connected (consecutive / skipped / retained)
-
 * [Splicing changes across stimulation](splicing_candidates.html) —
-  how candidates were screened, the 100 candidate genes, which have neuronal
-  roles, and worked examples for CLDND1, NRXN2 and BDNF
+  how candidates were screened, the candidate genes, which have neuronal
+  roles, and worked examples. 

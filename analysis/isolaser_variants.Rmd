@@ -1,225 +1,141 @@
 ---
-title: "Checking isoLASER's variant calls against our genotypes"
+title: "Checking isoLASER variant calls against donor genotypes"
 author: "XSun"
 date: "2026-09-24"
 output:
   workflowr::wflow_html:
     toc: true
     toc_float: true
-editor_options:
-  chunk_output_type: console
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-suppressPackageStartupMessages(library(knitr))
-by_run <- read.delim("docs/assets/isolaser_validation_chrom_timepoint.tsv",
-                     check.names = FALSE, stringsAsFactors = FALSE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+x <- read.delim("docs/assets/isolaser_validation_calls.tsv", stringsAsFactors=FALSE)
+x$alleles_match <- with(x, inPanel & ref == g_ref & alt1 == g_alt)
+x$alleles_match[is.na(x$alleles_match)] <- FALSE
+hq <- subset(x, inPanel & R2 >= 0.8)
+confirmed <- with(hq, alleles_match & g_nalt > 0)
+exact <- with(hq, alleles_match & g_nalt == i_nalt)
+fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+pct <- function(n,d) sprintf("%.1f%%", 100*n/d)
+stopifnot(!anyDuplicated(x[c("chr","tp","donor","pos","ref","alt1")]))
 ```
 
-isoLASER starts by calling variants and phasing reads onto haplotypes. Every
-allele-specific result downstream rests on those variants being real, so it is
-worth checking them against genotypes we already hold for the same four donors.
+**Most calls that the genotype panel can assess have the correct alternate
+allele, but exact genotype agreement is lower.** The main discrepancy is a
+panel heterozygote called homozygous-alternate by isoLASER, especially at low
+read depth. Calls absent from the panel remain unvalidated.
 
-The headline: **the variants isoLASER finds are overwhelmingly real, but its
-heterozygous-versus-homozygous calls are not reliable at low read depth.** That
-distinction matters, because phasing runs on heterozygous sites.
+# Comparison and counting
 
-# What was compared
+We compared **24 Nanopore-model runs**: chr1 and chr10, four donors
+(CD_21, CD_31, CD_36 and CD_48), and three timepoints (0, 1 and 6 hours).
+The reference is the 100-line TOPMed-imputed genotype panel. Its GRCh38
+coordinates and donor names were checked before comparison.
 
-isoLASER was run on chr1 and chr10, separately for each donor and each
-timepoint — 24 runs. chr1 carries TTLL7 and chr10 carries CREM.
+The analysis includes PASS SNVs with at least 10 reads. Duplicate gene-level
+records are collapsed within each run, keeping the deepest record. A **call**
+is one donor × timepoint × genomic variant; the same variant observed in
+several samples contributes several calls. The `r fmt(nrow(x))` calls span
+`r fmt(nrow(unique(x[c("chr","pos","ref","alt1")])) )` distinct variants.
+We use call-level counts below because genotype agreement is donor-specific.
 
-The reference is the imputed 100-line genotype panel,
-`/project/xinhe/lifan/neuron_stim/zicheng_100lines_all_snp_sorted.vcf.gz`,
-from the Michigan Imputation Server using the TOPMed r2 panel. It holds
-**597,637 chr1 sites and 402,137 chr10 sites**.
+# How much does the panel confirm?
 
-Two checks before comparing anything.
+A call is **adjudicable** when the panel has a donor genotype at its position
+and site-level imputation R² ≥ 0.8. Confirmation additionally requires the
+same reference and alternate alleles and a non-reference panel genotype.
+Exact agreement also requires matching heterozygous/homozygous status.
 
-**The panel is GRCh38**, the same build as the long-read data. Verified against
-known SNP positions rather than read off the header, because the builds differ
-by hundreds of kilobases and a mismatch would silently produce near-zero
-agreement.
-
-| SNP | position in panel | GRCh37 | GRCh38 |
-|---|---|---|---|
-| rs429358 | 44,908,684 | 45,411,941 | 44,908,684 |
-| rs7412 | 44,908,822 | 45,412,079 | 44,908,822 |
-| rs4988235 | 135,851,076 | 136,608,646 | 135,851,076 |
-
-**All four donors are in the panel.** Its 100 samples are named 58 `CD_xx` and
-42 `CW#####`; ours are CD_21, CD_31, CD_36 and CD_48.
-
-The panel ships without a tabix index, so we index a symlink in our own stage
-folder and write nothing to the shared directory. The extraction is checked
-against the panel's own variant count — an earlier attempt was truncated by a
-stray process kill and still passed `gzip -t`, because the stream had been
-flushed at a clean block boundary.
-
-# How many variants does the panel validate?
-
-The answer depends on what you count, so all three levels are given. A variant
-seen in four donors at three timepoints contributes twelve call-level rows but
-one distinct variant.
-
-## Distinct genomic variants
-
-Collapsing donors and timepoints, so each position counts once:
-
-| | count | % of called |
-|---|---:|---:|
-| PASS single-nucleotide calls | 3,191 | |
-| present in the panel | 1,478 | 46.3 |
-| adjudicable (in panel, R² ≥ 0.8) | 1,366 | 42.8 |
-| panel confirms the variant is really there | 1,309 | 41.0 |
-| panel also agrees on the exact genotype | 845 | 26.5 |
-
-**1,309 variants are validated** in the sense that matters most — an
-independent genotype source says that variant exists in that donor. Of those,
-845 also agree on heterozygous versus homozygous.
-
-## The same calls at two other units
-
-| unit | calls | in panel | confirmed | exact genotype |
-|---|---:|---:|---:|---:|
-| call (donor × timepoint × site) | 11,573 | 5,261 (45.5%) | 4,576 | 3,223 |
-| donor–variant (timepoints collapsed) | 6,627 | 2,828 (42.7%) | 2,474 | 1,687 |
-| distinct variant | 3,191 | 1,478 (46.3%) | 1,309 | 845 |
-
-## Per run
-
-```{r perrun}
-kable(setNames(by_run[, c("chrom","timepoint","calls","in_panel","pct_in_panel",
-                          "adjudicable","confirmed","pct_confirmed","pct_exact")],
-               c("Chrom","Time","Calls","In panel","% in panel","Adjudicable",
-                 "Confirmed","% confirmed","% exact genotype")))
+```{r overall}
+knitr::kable(data.frame(
+  Measure=c("PASS SNV calls", "Calls at a panel position", "Adjudicable calls",
+            "Alternate allele confirmed", "Exact genotype agreement"),
+  Count=c(fmt(nrow(x)), fmt(sum(x$inPanel)), fmt(nrow(hq)),
+          fmt(sum(confirmed)), fmt(sum(exact))),
+  Denominator=c("", paste0(pct(sum(x$inPanel),nrow(x)), " of all calls"),
+                "Panel position and R² ≥ 0.8",
+                paste0(pct(sum(confirmed),nrow(hq)), " of adjudicable calls"),
+                paste0(pct(sum(exact),nrow(hq)), " of adjudicable calls"))))
 ```
 
-The rise in panel overlap from 0 hr to 6 hr on chr1 (38.7% to 50.8%) tracks
-read depth, not biology: deeper libraries reach more of the common variants the
-panel can represent.
+Of the 4,710 adjudicable calls, **134 have a homozygous-reference panel
+genotype and one has a different alternate allele**. The latter is
+chr1:23,344,310 in CD_48 at 1 hour: isoLASER calls G>T, while the panel
+record is G>C. It is excluded from both confirmation counts above.
 
-**Every match is an exact allele match.** Of the calls landing on a panel
-position, all agree on both the reference and the alternate allele — no strand
-flips, no reference/alternate swaps, no coordinate offsets. That is also an
-independent confirmation that the two datasets share a coordinate system.
+<details>
+<summary>Results by chromosome and timepoint (four donors combined)</summary>
 
-Two things are deliberately excluded. isoLASER also emits insertion and
-deletion calls; the panel is SNP-only, so there is nothing to match them
-against and a 0% rate would be uninformative. And a depth filter changes
-nothing at the low end, because isoLASER applies its own floor of 10 reads.
+```{r per-run}
+rows <- lapply(split(x, paste(x$chr,x$tp)), function(z) {
+  h <- subset(z, inPanel & R2 >= 0.8)
+  data.frame(Chromosome=z$chr[1], Time=z$tp[1], Calls=nrow(z),
+             `In panel`=sum(z$inPanel), Adjudicable=nrow(h),
+             `Allele confirmed (%)`=pct(sum(h$alleles_match & h$g_nalt>0),nrow(h)),
+             `Exact genotype (%)`=pct(sum(h$alleles_match & h$g_nalt==h$i_nalt),nrow(h)),
+             check.names=FALSE)
+})
+knitr::kable(do.call(rbind,rows), row.names=FALSE)
+```
 
-A counting quirk worth knowing when reading the raw output: **isoLASER writes
-one record per gene**, so a variant inside two overlapping genes appears twice,
-with different read subsets and sometimes opposite phase. All counts here
-collapse such duplicates, keeping the deepest record.
+</details>
 
-# The calls the panel does not contain
+# Main discrepancy: heterozygotes called homozygous
 
-Just over half of the calls have no panel record. This is largely a statement
-about the panel rather than about isoLASER: it is array genotyping plus
-imputation, so it represents common variation and cannot carry rare variants.
+Among allele-matched, adjudicable calls where the panel is heterozygous,
+**1,321 of 2,983 (44.3%)** are called homozygous-alternate by isoLASER.
+This discrepancy is more frequent at low depth:
 
-Allelic balance is the test that separates a real heterozygote from a
-sequencing artifact, because **a true heterozygote produces roughly half
-alternate-allele reads however rare it is**.
+```{r depth}
+p <- subset(hq, alleles_match & g_nalt == 1)
+p$depth <- cut(p$DP, c(9,14,19,29,49,99,Inf),
+               labels=c("10–14","15–19","20–29","30–49","50–99","100+"))
+rates <- tapply(p$i_nalt == 2, list(p$depth,p$chr), mean)
+knitr::kable(data.frame(`Read depth`=rownames(rates),
+                        chr1=sprintf("%.1f%%",100*rates[,"chr1"]),
+                        chr10=sprintf("%.1f%%",100*rates[,"chr10"]),
+                        check.names=FALSE), row.names=FALSE)
+```
 
-![Allelic balance of heterozygous isoLASER calls on chr1 and chr10, split by whether the panel contains the site.](assets/isolaser_ab_chrom.png)
+The discrepant calls have a median alternate-read fraction of about 0.58,
+so loss of all reference-allele reads does not explain the typical case.
+This association warrants checking the genotype-calling logic and running
+both error models on the **same donor, chromosome and library**. Comparisons
+with the older chr21 runs cannot isolate a model effect because the inputs
+also differ. Raising the depth threshold removes many discrepant calls but
+also removes usable sites; filtering outputs alone cannot restore
+heterozygotes omitted from the original phasing.
 
-*Each bar counts heterozygous PASS calls. The horizontal axis is the fraction
-of reads at that position carrying the alternate allele. Dashed lines mark 0.25
-and 0.75. Systematic sequencing error produces a low fraction, because the
-erroneous allele appears in a minority of reads.*
+# Calls absent from the panel
 
-Both distributions are centred near 0.5 and **no heterozygous call on either
-chromosome falls outside 0.25–0.75**, whether or not the panel contains it. The
-off-panel calls carry no error signature, so they are best read as plausible
-variants the panel cannot represent, not as false positives.
+The panel has no record for **`r fmt(sum(!x$inPanel))` calls**. Their accuracy
+cannot be determined from this comparison. The imputed panel does not cover
+all variants, while RNA sequencing and alignment can also introduce artifacts.
 
-That is an inference from allelic balance, not proof. A dbSNP or gnomAD lookup
-is what would separate a rare real variant from an artifact definitively, and
-that has not been done.
+![Alternate-read fraction among isoLASER calls labeled heterozygous, split by panel overlap.](assets/isolaser_ab_chrom.png)
 
-# The real problem: heterozygotes called homozygous
+*These histograms include only calls isoLASER labels heterozygous. Their
+balanced allele fractions are a useful diagnostic, but are conditional on
+that label and do not independently validate off-panel calls. RNA allele
+fractions can also be affected by allele-specific expression.*
 
-Among the 1,366 adjudicable variants, only 845 match the panel genotype
-exactly. The loss is almost entirely one error, running one way: **the panel
-says heterozygous and isoLASER says homozygous-alternate.** Across all calls
-that is 1,321 of 4,710 adjudicable calls, 28%.
+# Interpretation and source data
 
-| Panel ↓ / isoLASER → | heterozygous | homozygous alt |
-|---|---:|---:|
-| homozygous reference | 69 | 65 |
-| heterozygous | 1,663 | 1,321 |
-| homozygous alt | 32 | 1,560 |
+The evidence supports **high alternate-allele confirmation within the
+adjudicable subset**, with substantial genotype discordance at shallow
+sites. Both confirmation and exact-genotype agreement should be reported,
+particularly because phasing depends on heterozygous sites. This analysis
+does not estimate sensitivity: it starts from isoLASER calls and does not
+count known variants that isoLASER missed. The comparison panel is imputed,
+so it is not an error-free truth set.
 
-This is not allele dropout. The miscalled sites have a median allelic balance
-of **0.58** — plainly heterozygous read data, genotyped as homozygous anyway.
-
-It is strongly depth-dependent:
-
-![Percentage of panel-heterozygous variants that isoLASER calls homozygous-alternate, by read depth.](assets/isolaser_het_error_by_depth.png)
-
-*Only variants the panel calls heterozygous are included. Point size is the
-number of calls in that bin. Both chromosomes behave the same way.*
-
-| Read depth | chr1 | chr10 |
-|---|---:|---:|
-| 10–14 | 89.9% | 90.2% |
-| 15–19 | 71.7% | 74.5% |
-| 20–29 | 59.2% | 41.1% |
-| 30–49 | 28.4% | 31.9% |
-| 50–99 | 19.7% | 15.1% |
-| 100+ | 14.9% | 8.1% |
-
-At isoLASER's own default floor of 10 reads, **roughly 90% of true
-heterozygotes are miscalled**. The rate only becomes tolerable above about 50
-reads.
-
-This matters more than the raw validation rate. isoLASER phases reads using
-heterozygous sites, so a heterozygote called homozygous is not a small
-inaccuracy — it is a site removed from phasing altogether. Any allele-specific
-splicing result built on shallow sites rests on a depleted and non-random
-subset of the available heterozygotes.
-
-A comparison against the alternative error model indicates this behaviour is
-specific to the Nanopore classifier rather than intrinsic to the data. That
-comparison is not yet controlled — it varies chromosome and library layout at
-the same time — so the configuration question is still open.
-
-# What follows from this
-
-**Raise the depth floor.** Filtering to sites with at least 30 reads, better
-50, brings the heterozygote error rate from ~90% down to 15–30%. This can be
-applied after the fact; no re-run is needed.
-
-**Report 1,309, not 845.** The count of variants the panel independently
-confirms is the defensible validation number. The exact-genotype figure is
-depressed by a caller behaviour we understand and can filter around.
-
-**Settle the error model before scaling up.** The decisive test is one
-chromosome and donor run under both models, which takes minutes and would fix
-the configuration for everything downstream.
-
-# Scope and source data
-
-This covers chr1 and chr10 against an imputed panel rather than
-sequencing-based genotypes. The conclusion that off-panel calls are plausible
-rests on allelic balance, not on a variant database.
-
-Scripts are in `8.isolaser_validation/`: `1.index_and_check_build.sbatch`
-indexes the panel and verifies the build, `10.extract_genotypes_chrom.sh` pulls
-the four donors for a chromosome, `11.validate_chrom_timepoint.R` does the
-comparison, `13.website_assets.R` makes these figures, and
-`12.revalidate.sbatch` runs the whole chain. The isoLASER runs themselves are
-in `1.isolaser/` (`10.run_isolaser_chrom_timepoint.sbatch` and
-`11.run_isolaser_joint_timepoint.sbatch`).
-
-The [per-run summary](assets/isolaser_validation_chrom_timepoint.tsv) and the
-[full list of distinct variants](assets/isolaser_chrom_variants.tsv), with
-panel status, depth, allelic balance and imputation quality on every row, are
-provided for direct checking.
+The [call-level comparison table](assets/isolaser_validation_calls.tsv)
+contains donor, timepoint, alleles, depth and panel genotype. Counts on this
+page are calculated from that table and require allele agreement.
+The underlying analysis is in `8.isolaser_validation/11.validate_chrom_timepoint.R`;
+its position-based matching should also be updated before regenerating the
+original summary assets.
 
 Related pages: [isoLASER per donor](isolaser_per_donor.html),
 [junction screen](splicing_candidates.html).

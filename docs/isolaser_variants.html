@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-09-24" />
 
-<title>Checking isoLASER’s variant calls against our genotypes</title>
+<title>Checking isoLASER variant calls against donor genotypes</title>
 
 <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -359,8 +359,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Checking isoLASER’s variant calls against
-our genotypes</h1>
+<h1 class="title toc-ignore">Checking isoLASER variant calls against
+donor genotypes</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2026-09-24</h4>
 
@@ -395,12 +395,12 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+<strong>Knit directory:</strong> <code>site/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -417,27 +417,6 @@ versions</em> tab lists the development history.
 </div>
 <div id="checks" class="tab-pane fade">
 <div id="workflowr-checks" class="panel-group">
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
-</p>
-</div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
-</div>
-</div>
-</div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
@@ -525,48 +504,18 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree845c8437117cb044ef5e3ebd717114a453a437aftargetblank845c843a">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/845c8437117cb044ef5e3ebd717114a453a437af" target="_blank">845c843</a>
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongnoversioncontrol">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>Repository version:</strong> no
+version control </a>
 </p>
 </div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree845c8437117cb044ef5e3ebd717114a453a437aftargetblank845c843a"
+<div id="strongRepositoryversionstrongnoversioncontrol"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
-</p>
-<p>
-The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/845c8437117cb044ef5e3ebd717114a453a437af" target="_blank">845c843</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
-</p>
-<p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
-</p>
-<pre><code>
-Unstaged changes:
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/isolaser_variants.Rmd
-
-</code></pre>
-<p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
-</p>
+<p>Tracking code development and connecting the code version to the
+results is critical for reproducibility. To start using Git, open the
+Terminal and type <code>git init</code> in your project directory.</p>
 </div>
 </div>
 </div>
@@ -574,258 +523,106 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/isolaser_variants.Rmd</code>) and
-HTML (<code>docs/isolaser_variants.html</code>) files. If you’ve
-configured a remote Git repository (see <code>?wflow_git_remote</code>),
-click on the hyperlinks in the table below to view the files as they
-were in that past version.
+This project is not being versioned with Git. To obtain the full
+reproducibility benefits of using workflowr, please see
+<code>?wflow_start</code>.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/long_read_rna/blob/77348fb7b1415030ab0a7dabab1eb955d9d7110d/analysis/isolaser_variants.Rmd" target="_blank">77348fb</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-23
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/77348fb7b1415030ab0a7dabab1eb955d9d7110d/docs/isolaser_variants.html" target="_blank">77348fb</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2026-09-23
-</td>
-<td>
-update
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<p>isoLASER starts by calling variants and phasing reads onto
-haplotypes. Every allele-specific result downstream rests on those
-variants being real, so it is worth checking them against genotypes we
-already hold for the same four donors.</p>
-<p>The headline: <strong>the variants isoLASER finds are overwhelmingly
-real, but its heterozygous-versus-homozygous calls are not reliable at
-low read depth.</strong> That distinction matters, because phasing runs
-on heterozygous sites.</p>
-<div id="what-was-compared" class="section level1">
-<h1>What was compared</h1>
-<p>isoLASER was run on chr1 and chr10, separately for each donor and
-each timepoint — 24 runs. chr1 carries TTLL7 and chr10 carries CREM.</p>
-<p>The reference is the imputed 100-line genotype panel,
-<code>/project/xinhe/lifan/neuron_stim/zicheng_100lines_all_snp_sorted.vcf.gz</code>,
-from the Michigan Imputation Server using the TOPMed r2 panel. It holds
-<strong>597,637 chr1 sites and 402,137 chr10 sites</strong>.</p>
-<p>Two checks before comparing anything.</p>
-<p><strong>The panel is GRCh38</strong>, the same build as the long-read
-data. Verified against known SNP positions rather than read off the
-header, because the builds differ by hundreds of kilobases and a
-mismatch would silently produce near-zero agreement.</p>
+<p><strong>Most calls that the genotype panel can assess have the
+correct alternate allele, but exact genotype agreement is
+lower.</strong> The main discrepancy is a panel heterozygote called
+homozygous-alternate by isoLASER, especially at low read depth. Calls
+absent from the panel remain unvalidated.</p>
+<div id="comparison-and-counting" class="section level1">
+<h1>Comparison and counting</h1>
+<p>We compared <strong>24 Nanopore-model runs</strong>: chr1 and chr10,
+four donors (CD_21, CD_31, CD_36 and CD_48), and three timepoints (0, 1
+and 6 hours). The reference is the 100-line TOPMed-imputed genotype
+panel. Its GRCh38 coordinates and donor names were checked before
+comparison.</p>
+<p>The analysis includes PASS SNVs with at least 10 reads. Duplicate
+gene-level records are collapsed within each run, keeping the deepest
+record. A <strong>call</strong> is one donor × timepoint × genomic
+variant; the same variant observed in several samples contributes
+several calls. The 11,573 calls span 3,191 distinct variants. We use
+call-level counts below because genotype agreement is
+donor-specific.</p>
+</div>
+<div id="how-much-does-the-panel-confirm" class="section level1">
+<h1>How much does the panel confirm?</h1>
+<p>A call is <strong>adjudicable</strong> when the panel has a donor
+genotype at its position and site-level imputation R² ≥ 0.8.
+Confirmation additionally requires the same reference and alternate
+alleles and a non-reference panel genotype. Exact agreement also
+requires matching heterozygous/homozygous status.</p>
 <table>
 <thead>
 <tr class="header">
-<th>SNP</th>
-<th>position in panel</th>
-<th>GRCh37</th>
-<th>GRCh38</th>
+<th align="left">Measure</th>
+<th align="left">Count</th>
+<th align="left">Denominator</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>rs429358</td>
-<td>44,908,684</td>
-<td>45,411,941</td>
-<td>44,908,684</td>
+<td align="left">PASS SNV calls</td>
+<td align="left">11,573</td>
+<td align="left"></td>
 </tr>
 <tr class="even">
-<td>rs7412</td>
-<td>44,908,822</td>
-<td>45,412,079</td>
-<td>44,908,822</td>
+<td align="left">Calls at a panel position</td>
+<td align="left">5,261</td>
+<td align="left">45.5% of all calls</td>
 </tr>
 <tr class="odd">
-<td>rs4988235</td>
-<td>135,851,076</td>
-<td>136,608,646</td>
-<td>135,851,076</td>
+<td align="left">Adjudicable calls</td>
+<td align="left">4,710</td>
+<td align="left">Panel position and R² ≥ 0.8</td>
+</tr>
+<tr class="even">
+<td align="left">Alternate allele confirmed</td>
+<td align="left">4,575</td>
+<td align="left">97.1% of adjudicable calls</td>
+</tr>
+<tr class="odd">
+<td align="left">Exact genotype agreement</td>
+<td align="left">3,222</td>
+<td align="left">68.4% of adjudicable calls</td>
 </tr>
 </tbody>
 </table>
-<p><strong>All four donors are in the panel.</strong> Its 100 samples
-are named 58 <code>CD_xx</code> and 42 <code>CW#####</code>; ours are
-CD_21, CD_31, CD_36 and CD_48.</p>
-<p>The panel ships without a tabix index, so we index a symlink in our
-own stage folder and write nothing to the shared directory. The
-extraction is checked against the panel’s own variant count — an earlier
-attempt was truncated by a stray process kill and still passed
-<code>gzip -t</code>, because the stream had been flushed at a clean
-block boundary.</p>
-</div>
-<div id="how-many-variants-does-the-panel-validate"
-class="section level1">
-<h1>How many variants does the panel validate?</h1>
-<p>The answer depends on what you count, so all three levels are given.
-A variant seen in four donors at three timepoints contributes twelve
-call-level rows but one distinct variant.</p>
-<div id="distinct-genomic-variants" class="section level2">
-<h2>Distinct genomic variants</h2>
-<p>Collapsing donors and timepoints, so each position counts once:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">count</th>
-<th align="right">% of called</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PASS single-nucleotide calls</td>
-<td align="right">3,191</td>
-<td align="right"></td>
-</tr>
-<tr class="even">
-<td>present in the panel</td>
-<td align="right">1,478</td>
-<td align="right">46.3</td>
-</tr>
-<tr class="odd">
-<td>adjudicable (in panel, R² ≥ 0.8)</td>
-<td align="right">1,366</td>
-<td align="right">42.8</td>
-</tr>
-<tr class="even">
-<td>panel confirms the variant is really there</td>
-<td align="right">1,309</td>
-<td align="right">41.0</td>
-</tr>
-<tr class="odd">
-<td>panel also agrees on the exact genotype</td>
-<td align="right">845</td>
-<td align="right">26.5</td>
-</tr>
-</tbody>
-</table>
-<p><strong>1,309 variants are validated</strong> in the sense that
-matters most — an independent genotype source says that variant exists
-in that donor. Of those, 845 also agree on heterozygous versus
-homozygous.</p>
-</div>
-<div id="the-same-calls-at-two-other-units" class="section level2">
-<h2>The same calls at two other units</h2>
+<p>Of the 4,710 adjudicable calls, <strong>134 have a
+homozygous-reference panel genotype and one has a different alternate
+allele</strong>. The latter is chr1:23,344,310 in CD_48 at 1 hour:
+isoLASER calls G&gt;T, while the panel record is G&gt;C. It is excluded
+from both confirmation counts above.</p>
+<details>
+<summary>
+Results by chromosome and timepoint (four donors combined)
+</summary>
 <table>
 <colgroup>
-<col width="15%" />
-<col width="21%" />
-<col width="21%" />
-<col width="21%" />
-<col width="21%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>unit</th>
-<th align="right">calls</th>
-<th align="right">in panel</th>
-<th align="right">confirmed</th>
-<th align="right">exact genotype</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>call (donor × timepoint × site)</td>
-<td align="right">11,573</td>
-<td align="right">5,261 (45.5%)</td>
-<td align="right">4,576</td>
-<td align="right">3,223</td>
-</tr>
-<tr class="even">
-<td>donor–variant (timepoints collapsed)</td>
-<td align="right">6,627</td>
-<td align="right">2,828 (42.7%)</td>
-<td align="right">2,474</td>
-<td align="right">1,687</td>
-</tr>
-<tr class="odd">
-<td>distinct variant</td>
-<td align="right">3,191</td>
-<td align="right">1,478 (46.3%)</td>
-<td align="right">1,309</td>
-<td align="right">845</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="per-run" class="section level2">
-<h2>Per run</h2>
-<table>
-<colgroup>
+<col width="13%" />
 <col width="6%" />
-<col width="5%" />
-<col width="6%" />
+<col width="7%" />
 <col width="10%" />
-<col width="12%" />
-<col width="13%" />
-<col width="11%" />
-<col width="13%" />
-<col width="19%" />
+<col width="14%" />
+<col width="25%" />
+<col width="22%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Chrom</th>
+<th align="left">Chromosome</th>
 <th align="left">Time</th>
 <th align="right">Calls</th>
 <th align="right">In panel</th>
-<th align="right">% in panel</th>
 <th align="right">Adjudicable</th>
-<th align="right">Confirmed</th>
-<th align="right">% confirmed</th>
-<th align="right">% exact genotype</th>
+<th align="left">Allele confirmed (%)</th>
+<th align="left">Exact genotype (%)</th>
 </tr>
 </thead>
 <tbody>
@@ -834,252 +631,151 @@ homozygous.</p>
 <td align="left">0hr</td>
 <td align="right">2282</td>
 <td align="right">884</td>
-<td align="right">38.7</td>
 <td align="right">769</td>
-<td align="right">746</td>
-<td align="right">97.0</td>
-<td align="right">66.6</td>
+<td align="left">97.0%</td>
+<td align="left">66.6%</td>
 </tr>
 <tr class="even">
 <td align="left">chr1</td>
 <td align="left">1hr</td>
 <td align="right">2719</td>
 <td align="right">1261</td>
-<td align="right">46.4</td>
 <td align="right">1108</td>
-<td align="right">1069</td>
-<td align="right">96.5</td>
-<td align="right">65.2</td>
+<td align="left">96.4%</td>
+<td align="left">65.1%</td>
 </tr>
 <tr class="odd">
 <td align="left">chr1</td>
 <td align="left">6hr</td>
 <td align="right">2710</td>
 <td align="right">1378</td>
-<td align="right">50.8</td>
 <td align="right">1219</td>
-<td align="right">1189</td>
-<td align="right">97.5</td>
-<td align="right">67.7</td>
+<td align="left">97.5%</td>
+<td align="left">67.7%</td>
 </tr>
 <tr class="even">
 <td align="left">chr10</td>
 <td align="left">0hr</td>
 <td align="right">1008</td>
 <td align="right">434</td>
-<td align="right">43.1</td>
 <td align="right">403</td>
-<td align="right">394</td>
-<td align="right">97.8</td>
-<td align="right">73.9</td>
+<td align="left">97.8%</td>
+<td align="left">73.9%</td>
 </tr>
 <tr class="odd">
 <td align="left">chr10</td>
 <td align="left">1hr</td>
 <td align="right">1452</td>
 <td align="right">658</td>
-<td align="right">45.3</td>
 <td align="right">609</td>
-<td align="right">593</td>
-<td align="right">97.4</td>
-<td align="right">72.1</td>
+<td align="left">97.4%</td>
+<td align="left">72.1%</td>
 </tr>
 <tr class="even">
 <td align="left">chr10</td>
 <td align="left">6hr</td>
 <td align="right">1402</td>
 <td align="right">646</td>
-<td align="right">46.1</td>
 <td align="right">602</td>
-<td align="right">585</td>
-<td align="right">97.2</td>
-<td align="right">70.9</td>
+<td align="left">97.2%</td>
+<td align="left">70.9%</td>
 </tr>
 </tbody>
 </table>
-<p>The rise in panel overlap from 0 hr to 6 hr on chr1 (38.7% to 50.8%)
-tracks read depth, not biology: deeper libraries reach more of the
-common variants the panel can represent.</p>
-<p><strong>Every match is an exact allele match.</strong> Of the calls
-landing on a panel position, all agree on both the reference and the
-alternate allele — no strand flips, no reference/alternate swaps, no
-coordinate offsets. That is also an independent confirmation that the
-two datasets share a coordinate system.</p>
-<p>Two things are deliberately excluded. isoLASER also emits insertion
-and deletion calls; the panel is SNP-only, so there is nothing to match
-them against and a 0% rate would be uninformative. And a depth filter
-changes nothing at the low end, because isoLASER applies its own floor
-of 10 reads.</p>
-<p>A counting quirk worth knowing when reading the raw output:
-<strong>isoLASER writes one record per gene</strong>, so a variant
-inside two overlapping genes appears twice, with different read subsets
-and sometimes opposite phase. All counts here collapse such duplicates,
-keeping the deepest record.</p>
+</details>
 </div>
+<div id="main-discrepancy-heterozygotes-called-homozygous"
+class="section level1">
+<h1>Main discrepancy: heterozygotes called homozygous</h1>
+<p>Among allele-matched, adjudicable calls where the panel is
+heterozygous, <strong>1,321 of 2,983 (44.3%)</strong> are called
+homozygous-alternate by isoLASER. This discrepancy is more frequent at
+low depth:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Read depth</th>
+<th align="left">chr1</th>
+<th align="left">chr10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">10–14</td>
+<td align="left">89.9%</td>
+<td align="left">90.2%</td>
+</tr>
+<tr class="even">
+<td align="left">15–19</td>
+<td align="left">71.7%</td>
+<td align="left">74.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">20–29</td>
+<td align="left">59.2%</td>
+<td align="left">41.1%</td>
+</tr>
+<tr class="even">
+<td align="left">30–49</td>
+<td align="left">28.5%</td>
+<td align="left">31.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">50–99</td>
+<td align="left">19.7%</td>
+<td align="left">15.1%</td>
+</tr>
+<tr class="even">
+<td align="left">100+</td>
+<td align="left">14.9%</td>
+<td align="left">8.1%</td>
+</tr>
+</tbody>
+</table>
+<p>The discrepant calls have a median alternate-read fraction of about
+0.58, so loss of all reference-allele reads does not explain the typical
+case. This association warrants checking the genotype-calling logic and
+running both error models on the <strong>same donor, chromosome and
+library</strong>. Comparisons with the older chr21 runs cannot isolate a
+model effect because the inputs also differ. Raising the depth threshold
+removes many discrepant calls but also removes usable sites; filtering
+outputs alone cannot restore heterozygotes omitted from the original
+phasing.</p>
 </div>
-<div id="the-calls-the-panel-does-not-contain" class="section level1">
-<h1>The calls the panel does not contain</h1>
-<p>Just over half of the calls have no panel record. This is largely a
-statement about the panel rather than about isoLASER: it is array
-genotyping plus imputation, so it represents common variation and cannot
-carry rare variants.</p>
-<p>Allelic balance is the test that separates a real heterozygote from a
-sequencing artifact, because <strong>a true heterozygote produces
-roughly half alternate-allele reads however rare it is</strong>.</p>
+<div id="calls-absent-from-the-panel" class="section level1">
+<h1>Calls absent from the panel</h1>
+<p>The panel has no record for <strong>6,312 calls</strong>. Their
+accuracy cannot be determined from this comparison. The imputed panel
+does not cover all variants, while RNA sequencing and alignment can also
+introduce artifacts.</p>
 <div class="figure">
 <img src="assets/isolaser_ab_chrom.png" alt="" />
-<p class="caption">Allelic balance of heterozygous isoLASER calls on
-chr1 and chr10, split by whether the panel contains the site.</p>
+<p class="caption">Alternate-read fraction among isoLASER calls labeled
+heterozygous, split by panel overlap.</p>
 </div>
-<p><em>Each bar counts heterozygous PASS calls. The horizontal axis is
-the fraction of reads at that position carrying the alternate allele.
-Dashed lines mark 0.25 and 0.75. Systematic sequencing error produces a
-low fraction, because the erroneous allele appears in a minority of
-reads.</em></p>
-<p>Both distributions are centred near 0.5 and <strong>no heterozygous
-call on either chromosome falls outside 0.25–0.75</strong>, whether or
-not the panel contains it. The off-panel calls carry no error signature,
-so they are best read as plausible variants the panel cannot represent,
-not as false positives.</p>
-<p>That is an inference from allelic balance, not proof. A dbSNP or
-gnomAD lookup is what would separate a rare real variant from an
-artifact definitively, and that has not been done.</p>
+<p><em>These histograms include only calls isoLASER labels heterozygous.
+Their balanced allele fractions are a useful diagnostic, but are
+conditional on that label and do not independently validate off-panel
+calls. RNA allele fractions can also be affected by allele-specific
+expression.</em></p>
 </div>
-<div id="the-real-problem-heterozygotes-called-homozygous"
-class="section level1">
-<h1>The real problem: heterozygotes called homozygous</h1>
-<p>Among the 1,366 adjudicable variants, only 845 match the panel
-genotype exactly. The loss is almost entirely one error, running one
-way: <strong>the panel says heterozygous and isoLASER says
-homozygous-alternate.</strong> Across all calls that is 1,321 of 4,710
-adjudicable calls, 28%.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Panel ↓ / isoLASER →</th>
-<th align="right">heterozygous</th>
-<th align="right">homozygous alt</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>homozygous reference</td>
-<td align="right">69</td>
-<td align="right">65</td>
-</tr>
-<tr class="even">
-<td>heterozygous</td>
-<td align="right">1,663</td>
-<td align="right">1,321</td>
-</tr>
-<tr class="odd">
-<td>homozygous alt</td>
-<td align="right">32</td>
-<td align="right">1,560</td>
-</tr>
-</tbody>
-</table>
-<p>This is not allele dropout. The miscalled sites have a median allelic
-balance of <strong>0.58</strong> — plainly heterozygous read data,
-genotyped as homozygous anyway.</p>
-<p>It is strongly depth-dependent:</p>
-<div class="figure">
-<img src="assets/isolaser_het_error_by_depth.png" alt="" />
-<p class="caption">Percentage of panel-heterozygous variants that
-isoLASER calls homozygous-alternate, by read depth.</p>
-</div>
-<p><em>Only variants the panel calls heterozygous are included. Point
-size is the number of calls in that bin. Both chromosomes behave the
-same way.</em></p>
-<table>
-<thead>
-<tr class="header">
-<th>Read depth</th>
-<th align="right">chr1</th>
-<th align="right">chr10</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>10–14</td>
-<td align="right">89.9%</td>
-<td align="right">90.2%</td>
-</tr>
-<tr class="even">
-<td>15–19</td>
-<td align="right">71.7%</td>
-<td align="right">74.5%</td>
-</tr>
-<tr class="odd">
-<td>20–29</td>
-<td align="right">59.2%</td>
-<td align="right">41.1%</td>
-</tr>
-<tr class="even">
-<td>30–49</td>
-<td align="right">28.4%</td>
-<td align="right">31.9%</td>
-</tr>
-<tr class="odd">
-<td>50–99</td>
-<td align="right">19.7%</td>
-<td align="right">15.1%</td>
-</tr>
-<tr class="even">
-<td>100+</td>
-<td align="right">14.9%</td>
-<td align="right">8.1%</td>
-</tr>
-</tbody>
-</table>
-<p>At isoLASER’s own default floor of 10 reads, <strong>roughly 90% of
-true heterozygotes are miscalled</strong>. The rate only becomes
-tolerable above about 50 reads.</p>
-<p>This matters more than the raw validation rate. isoLASER phases reads
-using heterozygous sites, so a heterozygote called homozygous is not a
-small inaccuracy — it is a site removed from phasing altogether. Any
-allele-specific splicing result built on shallow sites rests on a
-depleted and non-random subset of the available heterozygotes.</p>
-<p>A comparison against the alternative error model indicates this
-behaviour is specific to the Nanopore classifier rather than intrinsic
-to the data. That comparison is not yet controlled — it varies
-chromosome and library layout at the same time — so the configuration
-question is still open.</p>
-</div>
-<div id="what-follows-from-this" class="section level1">
-<h1>What follows from this</h1>
-<p><strong>Raise the depth floor.</strong> Filtering to sites with at
-least 30 reads, better 50, brings the heterozygote error rate from ~90%
-down to 15–30%. This can be applied after the fact; no re-run is
-needed.</p>
-<p><strong>Report 1,309, not 845.</strong> The count of variants the
-panel independently confirms is the defensible validation number. The
-exact-genotype figure is depressed by a caller behaviour we understand
-and can filter around.</p>
-<p><strong>Settle the error model before scaling up.</strong> The
-decisive test is one chromosome and donor run under both models, which
-takes minutes and would fix the configuration for everything
-downstream.</p>
-</div>
-<div id="scope-and-source-data" class="section level1">
-<h1>Scope and source data</h1>
-<p>This covers chr1 and chr10 against an imputed panel rather than
-sequencing-based genotypes. The conclusion that off-panel calls are
-plausible rests on allelic balance, not on a variant database.</p>
-<p>Scripts are in <code>8.isolaser_validation/</code>:
-<code>1.index_and_check_build.sbatch</code> indexes the panel and
-verifies the build, <code>10.extract_genotypes_chrom.sh</code> pulls the
-four donors for a chromosome, <code>11.validate_chrom_timepoint.R</code>
-does the comparison, <code>13.website_assets.R</code> makes these
-figures, and <code>12.revalidate.sbatch</code> runs the whole chain. The
-isoLASER runs themselves are in <code>1.isolaser/</code>
-(<code>10.run_isolaser_chrom_timepoint.sbatch</code> and
-<code>11.run_isolaser_joint_timepoint.sbatch</code>).</p>
-<p>The <a href="assets/isolaser_validation_chrom_timepoint.tsv">per-run
-summary</a> and the <a href="assets/isolaser_chrom_variants.tsv">full
-list of distinct variants</a>, with panel status, depth, allelic balance
-and imputation quality on every row, are provided for direct
-checking.</p>
+<div id="interpretation-and-source-data" class="section level1">
+<h1>Interpretation and source data</h1>
+<p>The evidence supports <strong>high alternate-allele confirmation
+within the adjudicable subset</strong>, with substantial genotype
+discordance at shallow sites. Both confirmation and exact-genotype
+agreement should be reported, particularly because phasing depends on
+heterozygous sites. This analysis does not estimate sensitivity: it
+starts from isoLASER calls and does not count known variants that
+isoLASER missed. The comparison panel is imputed, so it is not an
+error-free truth set.</p>
+<p>The <a href="assets/isolaser_validation_calls.tsv">call-level
+comparison table</a> contains donor, timepoint, alleles, depth and panel
+genotype. Counts on this page are calculated from that table and require
+allele agreement. The underlying analysis is in
+<code>8.isolaser_validation/11.validate_chrom_timepoint.R</code>; its
+position-based matching should also be updated before regenerating the
+original summary assets.</p>
 <p>Related pages: <a href="isolaser_per_donor.html">isoLASER per
 donor</a>, <a href="splicing_candidates.html">junction screen</a>.</p>
 <br>
@@ -1107,7 +803,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] knitr_1.51      workflowr_1.7.1
+[1] workflowr_1.7.1
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.1.1-1.1   bslib_0.3.1      jquerylib_0.1.4  compiler_4.2.0  
@@ -1115,12 +811,12 @@ loaded via a namespace (and not attached):
  [9] getPass_0.2-2    digest_0.6.29    jsonlite_2.0.0   evaluate_0.15   
 [13] lifecycle_1.0.4  tibble_3.2.1     pkgconfig_2.0.3  rlang_1.1.2     
 [17] cli_3.6.2        rstudioapi_0.14  yaml_2.3.5       xfun_0.59       
-[21] fastmap_1.1.0    httr_1.4.8       stringr_1.5.0    sass_0.4.1      
-[25] fs_1.5.2         vctrs_0.6.1      rprojroot_2.0.3  glue_1.6.2      
-[29] R6_2.5.1         processx_3.5.3   fansi_1.0.3      otel_0.2.0      
-[33] rmarkdown_2.31   callr_3.7.0      magrittr_2.0.3   whisker_0.4     
-[37] ps_1.7.0         promises_1.2.0.1 htmltools_0.5.7  httpuv_1.6.5    
-[41] utf8_1.2.2       stringi_1.7.6   </code></pre>
+[21] fastmap_1.1.0    httr_1.4.8       stringr_1.5.0    knitr_1.51      
+[25] sass_0.4.1       fs_1.5.2         vctrs_0.6.1      rprojroot_2.0.3 
+[29] glue_1.6.2       R6_2.5.1         processx_3.5.3   fansi_1.0.3     
+[33] otel_0.2.0       rmarkdown_2.31   callr_3.7.0      magrittr_2.0.3  
+[37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.7 
+[41] httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   </code></pre>
 </div>
 </div>
 

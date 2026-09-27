@@ -64,15 +64,15 @@ DT::datatable(shown, rownames = FALSE, filter = "top",
                              scrollX = TRUE, autoWidth = TRUE))
 ```
 
-## Why these two examples?
+## Why these three examples?
 
-We selected **CREM** and **TTLL7** from the screen because each has a large,
+We selected **CREM, TTLL7 and BDNF** from the screen because each has a large,
 same-direction junction shift in all four donors, enough reads to inspect
-the alignment, and relevant biological context. CREM is an established
-activity-responsive gene; TTLL7 has an experimentally supported neuronal
-function. They also illustrate different transcript patterns: a possible
-internal-promoter-associated junction and a junction consistent with
-bypassing an annotated exon. We checked both against the saved
+the alignment, and relevant biological context. CREM and BDNF are established
+activity-responsive genes; TTLL7 has an experimentally supported neuronal
+function. They illustrate different transcript patterns: junctions associated
+with alternative transcript starts in CREM and BDNF, and a junction consistent
+with bypassing an annotated exon in TTLL7. We checked them against the saved
 donor-specific junction tables and filtered regional BAMs. Biological
 relevance of a *gene* does not prove that its observed splice change is
 functionally regulated by stimulation.
@@ -135,8 +135,13 @@ reads mapped anywhere in CREM. The mean of the four donor-specific
 ![CREM sashimi plot: primary donor-assigned reads pooled across four donors within each timepoint. The junction of interest has 9, 270 and 941 reads at 0, 1 and 6 hours.](assets/CREM_sashimi.png)
 
 *The short curve at the right connects 35,195,215–35,206,894. Its 1-hour
-and 6-hour arc labels are 270 and 941. The 0-hour count is 9, below this
-plot's arc display threshold. Arc numbers are raw supporting-read counts;
+and 6-hour arc labels are 270 and 941. **At 0 hours, 9 of the 60 reads at
+the shared acceptor support this same junction, but the plot hides its arc
+because 9 is below the minimum junction-read display threshold.** The table
+and donor trend still include those reads; an absent arc here does not mean
+zero supporting reads. The 0-hour coverage also looks nearly flat because
+all three timepoints use the same vertical scale. Arc numbers are raw
+supporting-read counts;
 the denominator in the table includes every junction at the shared site,
 including alternatives that are not labeled here.*
 
@@ -186,20 +191,66 @@ consistent with exon skipping. Arc placement above or below the coverage
 has no biological meaning. These reads do not establish complete isoforms
 or a protein consequence.*
 
+# BDNF: alternative first-exon junction
+
+BDNF has multiple promoters and alternative 5′ exons that join a shared
+coding region ([Pruunsild et al., 2007](https://pubmed.ncbi.nlm.nih.gov/17629449/)).
+The target junction, **chr11:27,658,586–27,721,411**, links one of those
+upstream exons to the common downstream exon. BDNF is on the minus strand:
+27,658,586 is the shared acceptor in transcript direction. Its increased
+usage is consistent with a shift in alternative first-exon usage; junction
+counts alone do not establish which promoter initiated each full transcript.
+
+## Percentage trend in each donor
+
+![BDNF target-junction usage at 0, 1 and 6 hours in each of four donors. Usage rises from baseline in all donors.](assets/BDNF_donor_usage.png)
+
+*A point is 100 × reads supporting this junction ÷ all junction reads at
+the shared acceptor within that donor and timepoint. The 0-hour target count
+is 0 in every donor, with 10–21 total site reads per donor; this means no
+target-supporting reads were observed at that depth, not that the transcript
+is absent.*
+
+| Time | Target-junction reads | All reads at shared acceptor | Pooled usage |
+|---|---:|---:|---:|
+| 0 hr | 0 | 59 | 0.0% |
+| 1 hr | 11 | 146 | 7.5% |
+| 6 hr | 317 | 817 | 38.8% |
+
+At 6 hours, the 317 target reads come from **92, 118, 45 and 62** reads in
+CD_21, CD_31, CD_36 and CD_48, respectively. The denominator is the sum of
+all junction reads at the shared acceptor across those donors:
+**251 + 264 + 129 + 173 = 817**. The [donor-level counts](assets/BDNF_donor_usage.tsv)
+and [pooled counts](assets/BDNF_pooled_usage.tsv) allow each percentage to
+be checked.
+
+## Pooled alignment view
+
+![BDNF sashimi plot of donor-assigned primary reads pooled within each timepoint; the target long junction has 0, 11 and 317 supporting reads.](assets/BDNF_activity.png)
+
+*The target is the long arc reaching the rightmost first exon: 11 reads at
+1 hour and 317 at 6 hours. The 0-hour arc is absent because its count is
+zero. Other arcs join different first exons to the shared acceptor. These
+are local junction counts, not proportions of complete isoforms.*
+
 # Scope and source data
 
 The trends describe donor-assigned junction reads pooled across cell types.
 They do not separate cell-type composition changes from within-cell
 regulation, and the screen has no formal replicate-aware test or
-multiple-testing correction. BDNF is another activity-responsive candidate,
-but its leading change here concerns alternative first exons/promoters.
+multiple-testing correction. For BDNF, the observed shift concerns an
+alternative first exon; it should not be read as evidence of a protein-coding
+exon-skipping event.
 
 The screen is implemented in `7.sashimi/14.find_candidates_v2.R`; the gene
 annotations in `7.sashimi/15.annotate_candidate_genes.R`; and the donor
 plots in `7.sashimi/17.plot_example_trends.R`. Source counts and candidate
 tables are in `long_read_processed/junctions/`, with the plot's
 [donor-level numerator and denominator table](assets/example_donor_usage.tsv)
-provided here for direct checking.
+provided here for direct checking. The BDNF plots and counts were generated
+by `7.sashimi/8.plot_bdnf_activity.py`,
+`7.sashimi/9.plot_bdnf_usage.R` and
+`7.sashimi/10.plot_bdnf_pooled_usage.R`.
 
 Related pages: [data summary](data_summary.html),
 [exon structure](exon_structure.html), and

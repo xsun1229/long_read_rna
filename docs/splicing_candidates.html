@@ -402,17 +402,16 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-09-23
+<strong>Last updated:</strong> 2026-09-27
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong>
-<code>crem_rate_explanation_revision/</code> <span
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -429,6 +428,27 @@ versions</em> tab lists the development history.
 </div>
 <div id="checks" class="tab-pane fade">
 <div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
@@ -516,18 +536,47 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongnoversioncontrol">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>Repository version:</strong> no
-version control </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2fb3e030aac0c3a88d224ad1f64138834fe7bf72targetblank2fb3e03a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/2fb3e030aac0c3a88d224ad1f64138834fe7bf72" target="_blank">2fb3e03</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongnoversioncontrol"
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2fb3e030aac0c3a88d224ad1f64138834fe7bf72targetblank2fb3e03a"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Tracking code development and connecting the code version to the
-results is critical for reproducibility. To start using Git, open the
-Terminal and type <code>git init</code> in your project directory.</p>
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/2fb3e030aac0c3a88d224ad1f64138834fe7bf72" target="_blank">2fb3e03</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Unstaged changes:
+    Modified:   analysis/splicing_candidates.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
 </div>
 </div>
 </div>
@@ -535,11 +584,142 @@ Terminal and type <code>git init</code> in your project directory.</p>
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-This project is not being versioned with Git. To obtain the full
-reproducibility benefits of using workflowr, please see
-<code>?wflow_start</code>.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/splicing_candidates.Rmd</code>)
+and HTML (<code>docs/splicing_candidates.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/845c8437117cb044ef5e3ebd717114a453a437af/analysis/splicing_candidates.Rmd" target="_blank">845c843</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/845c8437117cb044ef5e3ebd717114a453a437af/docs/splicing_candidates.html" target="_blank">845c843</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/77348fb7b1415030ab0a7dabab1eb955d9d7110d/analysis/splicing_candidates.Rmd" target="_blank">77348fb</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/77348fb7b1415030ab0a7dabab1eb955d9d7110d/docs/splicing_candidates.html" target="_blank">77348fb</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/5998ecc6b021edcd387813610a18e9f7bcd6e534/analysis/splicing_candidates.Rmd" target="_blank">5998ecc</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/5998ecc6b021edcd387813610a18e9f7bcd6e534/docs/splicing_candidates.html" target="_blank">5998ecc</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-23
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -583,16 +763,16 @@ also includes genomic position, event labels and GO terms.</p>
 <div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"15\" data-max=\"67.5\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["R3HDM2","CREM","CLDND1","ANKRD12","HDAC9","ATF3","FNDC3A","TTLL7","MIA2","YPEL5","BDNF","JMJD1C","ZNF302","R3HDM1","HMGXB4","CTNND2","SGIP1","SEC31A","MRPS18C","ZFAND1","ORAI2","ELF2","HIVEP2","PITPNB","ZNF331","AHI1","ZNF493","MTUS1","USP33","PCCA","LDAF1","JARID2","PSIP1","NRP1","AFF3","PLEKHA5","PBRM1","SNX29","CALD1","TRIM33","CCDC82","HMCES","MAP7","FBXW2","GPBP1","ATF2","ENSG00000290921","CCDC66","EIF2AK2","ZMYND8","ETV1","DGKD","IFNAR2","LCOR","ARHGAP18","ARL13B","HMGA1","KDM1A","ENSG00000226824","MBOAT2","CEP170","MBNL1","TVP23A","ONECUT1","NCALD","RSPRY1","TERF1","LRBA","OSBPL6","RBM6","C20orf96","CARMIL2","ENSG00000284707","ENSG00000290928","CCNL1","PEAK1","PHF3","WSB1","TMEM181","MALAT1","LRRFIP1","UBE2Q2P2","KIAA0825","PSD3","ZNF608","ANKRD36C","ADGRB3-DT","BTBD3","SLC25A29","PDE10A","THSD7B","AP2B1","ZNF93","ENSG00000291220","MLLT10","ENSG00000288035","NEDD4L","ZNF33B","ST18","ZFYVE16","CHD7","ENSG00000291073","PTPRN","CKLF","DAAM1","ICA1","ZNF254","GOLGA1","PRKAG2-AS1","ENSG00000254400","GPCPD1","CSRNP3","GIGYF2","DAPK3","ENSG00000291174","FBXO44","CHST8","CYLD","NCOR1","NTNG1","ZNF638","PRRC2C","SGCE","YTHDC2","ATP2B1","ING2","PRKACB","SLC12A2","TRA2A","DHX30","DLEU2","RPRD2","ICA1L","MAD2L2","RABEP1","ASH1L","CFC1B","EHBP1","CARD19","ACADM","FAM104A","RNF24","PMFBP1","SENP6","ZNF749","ASXL3","TACC2","TANK","TMEM170A","CFC1","ENTPD6","FBXO2","DRAM2","ELAPOR1","TPM1","OSBPL9","PGAP1","RND2","DENND4C","DLX6-AS1","NOL4","NRXN2","SECISBP2L","SPAG1","ZNF43","ADGRB3","CYRIB","DGCR5","ENAH","RNMT","AUH","FAM110B","CAMK2B","ZFP90","AKAP11","GPR155","MAGI2-AS3","RABGAP1","NMD3","SNRK","USP47","GPANK1","MVD","NAA38","ZNF569","BLOC1S6","APOC1","PLEKHA6","POLB","SVIL","ZNF433-AS1","CD2AP","COPS2","FOCAD","KIAA1522","PTK2","USP37","ZMYM2","ZNF138","ZNG1E","ENSG00000291075","ZNF326","ANKRD36","NPIPB3","ZFYVE21","BUB3","ENSG00000226526","NAGK","ZFHX4","HNRNPAB","PPP4R1","ENSG00000291136","RSRP1","CROCCP2","DIRAS2","KLHL7","ZMYM5","CHFR","NXPE3","RWDD3","UXS1","CELF1","CHCHD3","SLC16A3","ZDBF2","CCDC186","GOLGA4","PAM","LMBR1L","OSBPL8","PDE6D","PRRC2A","SLC5A7","ZKSCAN7-AS1","ATXN1","LIN28B","MPRIP","SMG1","MDM2","SMG7","STMN2","ERC2","LIMCH1","MAPKAPK5-AS1","ENSG00000268362","EZH1","FBXW11","KISS1","USP53","CCDC112","KAT6B","MIER1","NR4A1","NUMB","PHACTR4","PNISR","PPA2","TRAPPC13","ZNF483","KATNAL1","TET2","UBAP2L","ZBTB38","ARL10","COQ4","DNAJC6","PDCD6IP","DLGAP4","FASTKD1","GTF2H2","N4BP2","PPP2R2B","RPL21","SLC20A1","FAM135A","MIA3","SCN1A-AS1","SDHC","SRP19","CELF4","CLK1","EPC1","GGPS1","ZC3H11A","ENOPH1","FIP1L1","GPBP1L1","NBPF15","RARS2","ZC3H13","ZDHHC16","DTNA","NAA35","PPIP5K2","ANK2","CLASP2","CSPP1","IFT88","NARF","ODF2L","RAB3D","RNF216P1","ZNF432","BLCAP","MACF1","PCM1","ZNF92","ARMC8","RBM39","SKIC8","ENSG00000290937","SCN2A","TCP11L1","TRIM7-AS2","ACACA","ANKRD36B","BAZ2B","CHD9","IMMP2L","RBM5","SDHB","TRPV2","ZEB1","AGPAT5","ARFGAP2","LINC00662","RTN2","TAF11","NAP1L4","NCOA2","PPFIA2","TMEM11","DIS3","GGCX","ILF3","LEMD1-AS1","MYH10","UCHL5","CEP70","ENSG00000277701","G3BP2","GLCE","NASP","NFXL1","RUNDC3A-AS1","KIAA1586","LEMD1","CARS1","CCSER2","HNRNPH3","MED27","NUTM2A-AS1","RFX3","SMYD3","SUPV3L1","SYT1","DEF8","LARP7","OTUB1","PDCD10","SEMA6D","THYN1","CEPT1","FBXO42","SLC35E3","ZFAND6","ACIN1","CD200","CFAP410","ENSG00000240401","MARCHF7","NAV1","PPP2R2D","TMX3","VPS53","BTBD10","DICER1","ERCC6L2-AS1","PDE4DIP","ARID5B","DOP1A","FGF9","RBM4","SLC25A35","ST7","ATP2C1","CAMK2G","CXXC4","NDUFAF1","TPM3","TRMU","TXNL4A"],["R3H domain containing 2","cAMP responsive element modulator","claudin domain containing 1","ankyrin repeat domain 12","histone deacetylase 9","activating transcription factor 3","fibronectin type III domain containing 3A","tubulin tyrosine ligase like 7","MIA SH3 domain ER export factor 2","yippee like 5","brain derived neurotrophic factor","jumonji domain containing 1C","zinc finger protein 302","R3H domain containing 1","HMG-box containing 4","catenin delta 2","SH3GL interacting endocytic adaptor 1","SEC31 homolog A, COPII coat complex component","mitochondrial ribosomal protein S18C","zinc finger AN1-type containing 1","ORAI calcium release-activated calcium modulator 2","E74 like ETS transcription factor 2","HIVEP zinc finger 2","phosphatidylinositol transfer protein beta","zinc finger protein 331","Abelson helper integration site 1","zinc finger protein 493","microtubule associated scaffold protein 1","ubiquitin specific peptidase 33","propionyl-CoA carboxylase subunit alpha","lipid droplet assembly factor 1","jumonji and AT-rich interaction domain containing 2","PC4 and SFRS1 interacting protein 1","neuropilin 1","ALF transcription elongation factor 3","pleckstrin homology domain containing A5","polybromo 1","sorting nexin 29","caldesmon 1","tripartite motif containing 33","coiled-coil domain containing 82","5-hydroxymethylcytosine binding, ES cell specific","microtubule associated protein 7","F-box and WD repeat domain containing 2","GC-rich promoter binding protein 1","activating transcription factor 2","","coiled-coil domain containing 66","eukaryotic translation initiation factor 2 alpha kinase 2","zinc finger MYND-type containing 8","ETS variant transcription factor 1","diacylglycerol kinase delta","interferon alpha and beta receptor subunit 2","ligand dependent nuclear receptor corepressor","Rho GTPase activating protein 18","ADP ribosylation factor like GTPase 13B","high mobility group AT-hook 1","lysine demethylase 1A","","membrane bound O-acyltransferase domain containing 2","centrosomal protein 170","muscleblind like splicing regulator 1","trans-golgi network vesicle protein 23 homolog A","one cut homeobox 1","neurocalcin delta","ring finger and SPRY domain containing 1","telomeric repeat binding factor 1","LPS responsive beige-like anchor protein","oxysterol binding protein like 6","RNA binding motif protein 6","chromosome 20 open reading frame 96","capping protein regulator and myosin 1 linker 2","","","cyclin L1","pseudopodium enriched atypical kinase 1","PHD finger protein 3","WD repeat and SOCS box containing 1","transmembrane protein 181","metastasis associated lung adenocarcinoma transcript 1","LRR binding FLII interacting protein 1","UBE2Q2 pseudogene 2","KIAA0825","pleckstrin and Sec7 domain containing 3","zinc finger protein 608","ankyrin repeat domain 36C","ADGRB3 divergent transcript","BTB domain containing 3","solute carrier family 25 member 29","phosphodiesterase 10A","thrombospondin type 1 domain containing 7B","adaptor related protein complex 2 subunit beta 1","zinc finger protein 93","","MLLT10 histone lysine methyltransferase DOT1L cofactor","","NEDD4 like E3 ubiquitin protein ligase","zinc finger protein 33B","ST18 C2H2C-type zinc finger transcription factor","zinc finger FYVE-type containing 16","chromodomain helicase DNA binding protein 7","","protein tyrosine phosphatase receptor type N","chemokine like factor","dishevelled associated activator of morphogenesis 1","islet cell autoantigen 1","zinc finger protein 254","golgin A1","PRKAG2 antisense RNA 1","","glycerophosphocholine phosphodiesterase 1","cysteine and serine rich nuclear protein 3","GRB10 interacting GYF protein 2","death associated protein kinase 3","","F-box protein 44","carbohydrate sulfotransferase 8","CYLD lysine 63 deubiquitinase","nuclear receptor corepressor 1","netrin G1","zinc finger protein 638","proline rich coiled-coil 2C","sarcoglycan epsilon","YTH domain containing 2","ATPase plasma membrane Ca2+ transporting 1","inhibitor of growth family member 2","protein kinase cAMP-activated catalytic subunit beta","solute carrier family 12 member 2","transformer 2 alpha homolog","DExH-box helicase 30","deleted in lymphocytic leukemia 2","regulation of nuclear pre-mRNA domain containing 2","islet cell autoantigen 1 like","mitotic arrest deficient 2 like 2","rabaptin, RAB GTPase binding effector protein 1","ASH1 like histone lysine methyltransferase","cripto, FRL-1, cryptic family 1B","EH domain binding protein 1","caspase recruitment domain family member 19","acyl-CoA dehydrogenase medium chain","family with sequence similarity 104 member A","ring finger protein 24","polyamine modulated factor 1 binding protein 1","SUMO specific peptidase 6","zinc finger protein 749","ASXL transcriptional regulator 3","transforming acidic coiled-coil containing protein 2","TRAF family member associated NFKB activator","transmembrane protein 170A","cripto, FRL-1, cryptic family 1","ectonucleoside triphosphate diphosphohydrolase 6","F-box protein 2","DNA damage regulated autophagy modulator 2","endosome-lysosome associated apoptosis and autophagy regulator 1","tropomyosin 1","oxysterol binding protein like 9","post-GPI attachment to proteins inositol deacylase 1","Rho family GTPase 2","DENN domain containing 4C","DLX6 antisense RNA 1","nucleolar protein 4","neurexin 2","SECIS binding protein 2 like","sperm associated antigen 1","zinc finger protein 43","adhesion G protein-coupled receptor B3","CYFIP related Rac1 interactor B","DiGeorge syndrome critical region gene 5","ENAH actin regulator","RNA guanine-7 methyltransferase","AU RNA binding methylglutaconyl-CoA hydratase","family with sequence similarity 110 member B","calcium/calmodulin dependent protein kinase II beta","ZFP90 zinc finger protein","A-kinase anchoring protein 11","G protein-coupled receptor 155","MAGI2 antisense RNA 3","RAB GTPase activating protein 1","NMD3 ribosome export adaptor","SNF related kinase","ubiquitin specific peptidase 47","G-patch domain and ankyrin repeats 1","mevalonate diphosphate decarboxylase","N-alpha-acetyltransferase 38, NatC auxiliary subunit","zinc finger protein 569","biogenesis of lysosomal organelles complex 1 subunit 6","apolipoprotein C1","pleckstrin homology domain containing A6","DNA polymerase beta","supervillin","ZNF433 and ZNF878 antisense RNA 1","CD2 associated protein","COP9 signalosome subunit 2","focadhesin","KIAA1522","protein tyrosine kinase 2","ubiquitin specific peptidase 37","zinc finger MYM-type containing 2","zinc finger protein 138","Zn regulated GTPase metalloprotein activator 1E","","zinc finger protein 326","ankyrin repeat domain 36","nuclear pore complex interacting protein family member B3","zinc finger FYVE-type containing 21","BUB3 mitotic checkpoint protein","","N-acetylglucosamine kinase","zinc finger homeobox 4","heterogeneous nuclear ribonucleoprotein A/B","protein phosphatase 4 regulatory subunit 1","","arginine and serine rich protein 1","CROCC pseudogene 2","DIRAS family GTPase 2","kelch like family member 7","zinc finger MYM-type containing 5","checkpoint with forkhead and ring finger domains","neurexophilin and PC-esterase domain family member 3","RWD domain containing 3","UDP-glucuronate decarboxylase 1","CUGBP Elav-like family member 1","coiled-coil-helix-coiled-coil-helix domain containing 3","solute carrier family 16 member 3","zinc finger DBF-type containing 2","coiled-coil domain containing 186","golgin A4","peptidylglycine alpha-amidating monooxygenase","limb development membrane protein 1 like","oxysterol binding protein like 8","phosphodiesterase 6D","proline rich coiled-coil 2A","solute carrier family 5 member 7","ZKSCAN7 ZNF cluster antisense RNA 1","ataxin 1","lin-28 homolog B","myosin phosphatase Rho interacting protein","SMG1 nonsense mediated mRNA decay associated PI3K related kinase","MDM2 proto-oncogene","SMG7 nonsense mediated mRNA decay factor","stathmin 2","ELKS/RAB6-interacting/CAST family member 2","LIM and calponin homology domains 1","MAPKAPK5 antisense RNA 1","","enhancer of zeste 1 polycomb repressive complex 2 subunit","F-box and WD repeat domain containing 11","KiSS-1 metastasis suppressor","ubiquitin specific peptidase 53","coiled-coil domain containing 112","lysine acetyltransferase 6B","MIER1 transcriptional regulator","nuclear receptor subfamily 4 group A member 1","NUMB endocytic adaptor protein","phosphatase and actin regulator 4","PNN interacting serine and arginine rich protein","inorganic pyrophosphatase 2","trafficking protein particle complex subunit 13","zinc finger protein 483","katanin catalytic subunit A1 like 1","tet methylcytosine dioxygenase 2","ubiquitin associated protein 2 like","zinc finger and BTB domain containing 38","ADP ribosylation factor like GTPase 10","coenzyme Q4","DnaJ heat shock protein family (Hsp40) member C6","programmed cell death 6 interacting protein","DLG associated protein 4","FAST kinase domains 1","general transcription factor IIH subunit 2","NEDD4 binding protein 2","protein phosphatase 2 regulatory subunit Bbeta","ribosomal protein L21","solute carrier family 20 member 1","family with sequence similarity 135 member A","MIA SH3 domain ER export factor 3","SCN1A and SCN9A antisense RNA 1","succinate dehydrogenase complex subunit C","signal recognition particle 19","CUGBP Elav-like family member 4","CDC like kinase 1","enhancer of polycomb homolog 1","geranylgeranyl diphosphate synthase 1","zinc finger CCCH-type containing 11A","enolase-phosphatase 1","factor interacting with PAPOLA and CPSF1","GC-rich promoter binding protein 1 like 1","NBPF member 15","arginyl-tRNA synthetase 2, mitochondrial","zinc finger CCCH-type containing 13","zinc finger DHHC-type palmitoyltransferase 16","dystrobrevin alpha","N-alpha-acetyltransferase 35, NatC auxiliary subunit","diphosphoinositol pentakisphosphate kinase 2","ankyrin 2","cytoplasmic linker associated protein 2","centrosome and spindle pole associated protein 1","intraflagellar transport 88","nuclear prelamin A recognition factor","outer dense fiber of sperm tails 2 like","RAB3D, member RAS oncogene family","ring finger protein 216 pseudogene 1","zinc finger protein 432","BLCAP apoptosis inducing factor","microtubule actin crosslinking factor 1","pericentriolar material 1","zinc finger protein 92","armadillo repeat containing 8","RNA binding motif protein 39","SKI8 subunit of superkiller complex","","sodium voltage-gated channel alpha subunit 2","t-complex 11 like 1","TRIM7 antisense RNA 2","acetyl-CoA carboxylase alpha","ankyrin repeat domain 36B","bromodomain adjacent to zinc finger domain 2B","chromodomain helicase DNA binding protein 9","inner mitochondrial membrane peptidase subunit 2","RNA binding motif protein 5","succinate dehydrogenase complex iron sulfur subunit B","transient receptor potential cation channel subfamily V member 2","zinc finger E-box binding homeobox 1","1-acylglycerol-3-phosphate O-acyltransferase 5","ADP ribosylation factor GTPase activating protein 2","long intergenic non-protein coding RNA 662","reticulon 2","TATA-box binding protein associated factor 11","nucleosome assembly protein 1 like 4","nuclear receptor coactivator 2","PTPRF interacting protein alpha 2","transmembrane protein 11","DIS3 homolog, exosome endoribonuclease and 3'-5' exoribonuclease","gamma-glutamyl carboxylase","interleukin enhancer binding factor 3","LEMD1 antisense RNA 1","myosin heavy chain 10","ubiquitin C-terminal hydrolase L5","centrosomal protein 70","","G3BP stress granule assembly factor 2","glucuronic acid epimerase","nuclear autoantigenic sperm protein","nuclear transcription factor, X-box binding like 1","RUNDC3A antisense RNA 1","KIAA1586","LEM domain containing 1","cysteinyl-tRNA synthetase 1","coiled-coil serine rich protein 2","heterogeneous nuclear ribonucleoprotein H3","mediator complex subunit 27","NUTM2A antisense RNA 1","regulatory factor X3","SET and MYND domain containing 3","Suv3 like RNA helicase","synaptotagmin 1","differentially expressed in FDCP 8 homolog","La ribonucleoprotein 7, transcriptional regulator","OTU deubiquitinase, ubiquitin aldehyde binding 1","programmed cell death 10","semaphorin 6D","thymocyte nuclear protein 1","choline/ethanolamine phosphotransferase 1","F-box protein 42","solute carrier family 35 member E3","zinc finger AN1-type containing 6","apoptotic chromatin condensation inducer 1","CD200 molecule","cilia and flagella associated protein 410","","membrane associated ring-CH-type finger 7","neuron navigator 1","protein phosphatase 2 regulatory subunit Bdelta","thioredoxin related transmembrane protein 3","VPS53 subunit of GARP complex","BTB domain containing 10","dicer 1, ribonuclease III","ERCC6L2 antisense RNA 1","phosphodiesterase 4D interacting protein","AT-rich interaction domain 5B","DOP1 leucine zipper like protein A","fibroblast growth factor 9","RNA binding motif protein 4","solute carrier family 25 member 35","suppression of tumorigenicity 7","ATPase secretory pathway Ca2+ transporting 1","calcium/calmodulin dependent protein kinase II gamma","CXXC finger protein 4","NADH:ubiquinone oxidoreductase complex assembly factor 1","tropomyosin 3","tRNA mitochondrial 2-thiouridylase","thioredoxin like 4A"],["other","activity-regulated","other","other","activity-regulated","activity-regulated","other","neuronal (weak annotation)","other","other","activity-regulated","other","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","neuronal","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","other","other","other","other","neuronal (weak annotation)","other","other","other","other","neuronal","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","other","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal","other","other","neuronal (weak annotation)","other","neuronal","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","neuronal","other","neuronal (weak annotation)","other","neuronal","other","other","neuronal (weak annotation)","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","other","other","other","neuronal","other","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","neuronal","other","other","other","other","other","other","other","neuronal","neuronal","other","other","other","other","neuronal","neuronal (weak annotation)","other","other","other","other","activity-regulated","neuronal (weak annotation)","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","neuronal","other","other","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","other","other","neuronal","other","other","neuronal (weak annotation)","other","other","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","neuronal","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","neuronal","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other","other","neuronal","other","other","other","neuronal (weak annotation)","other","other","other","neuronal (weak annotation)","neuronal (weak annotation)","other","other","other","other","other","other","other","other","other","neuronal (weak annotation)","other","other","other","other","other"],[67.5,63.3,45.7,44.4,42.4,41.2,39.9,39.8,38.2,38.1,38,37.5,36.2,36,34.4,34.3,32.6,32.4,32.2,32.2,32.1,31.9,31.5,31,30.9,30.6,30.5,30.3,30.3,29.8,29.3,29.1,29,28.9,28.7,28.7,28.4,28.4,27.7,27.7,27.6,27.6,27.5,27.4,27.4,27.3,27.3,26.9,26.9,26.9,26.8,26.7,26.7,26.4,26.2,26.1,26.1,26.1,26,25.9,25.8,25.8,25.8,25.7,25.5,25.4,25.3,25.1,25.1,25.1,25,25,24.8,24.8,24.7,24.7,24.6,24.5,24.4,24.2,24.1,24.1,24,24,24,23.9,23.8,23.8,23.8,23.7,23.7,23.6,23.6,23.5,23.5,23.3,23.1,23.1,22.9,22.9,22.8,22.7,22.7,22.6,22.5,22.5,22.5,22.4,22.4,22.3,22.3,22.2,22.2,22,22,22,21.9,21.9,21.9,21.9,21.9,21.8,21.8,21.8,21.7,21.7,21.7,21.7,21.7,21.6,21.6,21.6,21.5,21.5,21.5,21.3,21.3,21.3,21.2,21.1,21.1,21.1,21,21,21,20.9,20.9,20.9,20.9,20.8,20.8,20.7,20.6,20.6,20.6,20.5,20.5,20.4,20.2,20.2,20.2,20.1,20.1,20.1,20.1,20,20,20,20,20,19.9,19.9,19.8,19.8,19.7,19.7,19.6,19.6,19.5,19.5,19.5,19.4,19.4,19.4,19.4,19.3,19.2,19.2,19.2,19.2,19.2,19.1,19.1,19.1,19.1,19.1,19.1,19.1,19.1,19.1,19,19,18.9,18.9,18.9,18.8,18.8,18.8,18.7,18.6,18.6,18.5,18.5,18.4,18.4,18.4,18.4,18.3,18.3,18.3,18.3,18.2,18.2,18.2,18.2,18.1,18.1,18.1,18,18,18,18,18,18,17.9,17.9,17.9,17.9,17.8,17.8,17.8,17.7,17.7,17.7,17.6,17.6,17.6,17.6,17.6,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.4,17.4,17.4,17.4,17.3,17.3,17.3,17.3,17.2,17.2,17.2,17.2,17.2,17.2,17.2,17.1,17.1,17.1,17.1,17.1,17,17,17,17,17,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.8,16.8,16.8,16.7,16.7,16.7,16.7,16.7,16.7,16.7,16.7,16.7,16.6,16.6,16.6,16.6,16.5,16.5,16.5,16.4,16.4,16.4,16.4,16.3,16.3,16.3,16.3,16.3,16.3,16.3,16.3,16.3,16.2,16.2,16.2,16.2,16.2,16.1,16.1,16.1,16.1,16,16,16,16,16,16,15.9,15.9,15.9,15.9,15.9,15.9,15.9,15.8,15.8,15.7,15.7,15.7,15.7,15.7,15.7,15.7,15.7,15.7,15.6,15.6,15.6,15.6,15.6,15.6,15.5,15.5,15.5,15.5,15.4,15.4,15.4,15.4,15.4,15.4,15.4,15.4,15.4,15.3,15.3,15.3,15.3,15.2,15.2,15.2,15.2,15.2,15.2,15.1,15.1,15.1,15.1,15.1,15.1,15],["0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;1hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr, 1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr, 1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr, 0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;1hr","1hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr","0hr-&gt;6hr"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Description<\/th>\n      <th>Screen tag<\/th>\n      <th>Max mean change (pp)<\/th>\n      <th>Comparisons<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"lengthMenu":[12,25,50],"scrollX":true,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="why-these-two-examples" class="section level2">
-<h2>Why these two examples?</h2>
-<p>We selected <strong>CREM</strong> and <strong>TTLL7</strong> from the
-screen because each has a large, same-direction junction shift in all
-four donors, enough reads to inspect the alignment, and relevant
-biological context. CREM is an established activity-responsive gene;
-TTLL7 has an experimentally supported neuronal function. They also
-illustrate different transcript patterns: a possible
-internal-promoter-associated junction and a junction consistent with
-bypassing an annotated exon. We checked both against the saved
+<div id="why-these-three-examples" class="section level2">
+<h2>Why these three examples?</h2>
+<p>We selected <strong>CREM, TTLL7 and BDNF</strong> from the screen
+because each has a large, same-direction junction shift in all four
+donors, enough reads to inspect the alignment, and relevant biological
+context. CREM and BDNF are established activity-responsive genes; TTLL7
+has an experimentally supported neuronal function. They illustrate
+different transcript patterns: junctions associated with alternative
+transcript starts in CREM and BDNF, and a junction consistent with
+bypassing an annotated exon in TTLL7. We checked them against the saved
 donor-specific junction tables and filtered regional BAMs. Biological
 relevance of a <em>gene</em> does not prove that its observed splice
 change is functionally regulated by stimulation.</p>
@@ -729,11 +909,15 @@ pooled across four donors within each timepoint. The junction of
 interest has 9, 270 and 941 reads at 0, 1 and 6 hours.</p>
 </div>
 <p><em>The short curve at the right connects 35,195,215–35,206,894. Its
-1-hour and 6-hour arc labels are 270 and 941. The 0-hour count is 9,
-below this plot’s arc display threshold. Arc numbers are raw
-supporting-read counts; the denominator in the table includes every
-junction at the shared site, including alternatives that are not labeled
-here.</em></p>
+1-hour and 6-hour arc labels are 270 and 941. <strong>At 0 hours, 9 of
+the 60 reads at the shared acceptor support this same junction, but the
+plot hides its arc because 9 is below the minimum junction-read display
+threshold.</strong> The table and donor trend still include those reads;
+an absent arc here does not mean zero supporting reads. The 0-hour
+coverage also looks nearly flat because all three timepoints use the
+same vertical scale. Arc numbers are raw supporting-read counts; the
+denominator in the table includes every junction at the shared site,
+including alternatives that are not labeled here.</em></p>
 </div>
 </div>
 <div id="ttll7-junction-bypassing-an-annotated-exon"
@@ -826,22 +1010,108 @@ or below the coverage has no biological meaning. These reads do not
 establish complete isoforms or a protein consequence.</em></p>
 </div>
 </div>
+<div id="bdnf-alternative-first-exon-junction" class="section level1">
+<h1>BDNF: alternative first-exon junction</h1>
+<p>BDNF has multiple promoters and alternative 5′ exons that join a
+shared coding region (<a
+href="https://pubmed.ncbi.nlm.nih.gov/17629449/">Pruunsild et al.,
+2007</a>). The target junction,
+<strong>chr11:27,658,586–27,721,411</strong>, links one of those
+upstream exons to the common downstream exon. BDNF is on the minus
+strand: 27,658,586 is the shared acceptor in transcript direction. Its
+increased usage is consistent with a shift in alternative first-exon
+usage; junction counts alone do not establish which promoter initiated
+each full transcript.</p>
+<div id="percentage-trend-in-each-donor-1" class="section level2">
+<h2>Percentage trend in each donor</h2>
+<div class="figure">
+<img src="assets/BDNF_donor_usage.png" alt="" />
+<p class="caption">BDNF target-junction usage at 0, 1 and 6 hours in
+each of four donors. Usage rises from baseline in all donors.</p>
+</div>
+<p><em>A point is 100 × reads supporting this junction ÷ all junction
+reads at the shared acceptor within that donor and timepoint. The 0-hour
+target count is 0 in every donor, with 10–21 total site reads per donor;
+this means no target-supporting reads were observed at that depth, not
+that the transcript is absent.</em></p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="26%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th align="right">Target-junction reads</th>
+<th align="right">All reads at shared acceptor</th>
+<th align="right">Pooled usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 hr</td>
+<td align="right">0</td>
+<td align="right">59</td>
+<td align="right">0.0%</td>
+</tr>
+<tr class="even">
+<td>1 hr</td>
+<td align="right">11</td>
+<td align="right">146</td>
+<td align="right">7.5%</td>
+</tr>
+<tr class="odd">
+<td>6 hr</td>
+<td align="right">317</td>
+<td align="right">817</td>
+<td align="right">38.8%</td>
+</tr>
+</tbody>
+</table>
+<p>At 6 hours, the 317 target reads come from <strong>92, 118, 45 and
+62</strong> reads in CD_21, CD_31, CD_36 and CD_48, respectively. The
+denominator is the sum of all junction reads at the shared acceptor
+across those donors: <strong>251 + 264 + 129 + 173 = 817</strong>. The
+<a href="assets/BDNF_donor_usage.tsv">donor-level counts</a> and <a
+href="assets/BDNF_pooled_usage.tsv">pooled counts</a> allow each
+percentage to be checked.</p>
+</div>
+<div id="pooled-alignment-view-1" class="section level2">
+<h2>Pooled alignment view</h2>
+<div class="figure">
+<img src="assets/BDNF_activity.png" alt="" />
+<p class="caption">BDNF sashimi plot of donor-assigned primary reads
+pooled within each timepoint; the target long junction has 0, 11 and 317
+supporting reads.</p>
+</div>
+<p><em>The target is the long arc reaching the rightmost first exon: 11
+reads at 1 hour and 317 at 6 hours. The 0-hour arc is absent because its
+count is zero. Other arcs join different first exons to the shared
+acceptor. These are local junction counts, not proportions of complete
+isoforms.</em></p>
+</div>
+</div>
 <div id="scope-and-source-data" class="section level1">
 <h1>Scope and source data</h1>
 <p>The trends describe donor-assigned junction reads pooled across cell
 types. They do not separate cell-type composition changes from
 within-cell regulation, and the screen has no formal replicate-aware
-test or multiple-testing correction. BDNF is another activity-responsive
-candidate, but its leading change here concerns alternative first
-exons/promoters.</p>
+test or multiple-testing correction. For BDNF, the observed shift
+concerns an alternative first exon; it should not be read as evidence of
+a protein-coding exon-skipping event.</p>
 <p>The screen is implemented in
 <code>7.sashimi/14.find_candidates_v2.R</code>; the gene annotations in
 <code>7.sashimi/15.annotate_candidate_genes.R</code>; and the donor
 plots in <code>7.sashimi/17.plot_example_trends.R</code>. Source counts
 and candidate tables are in <code>long_read_processed/junctions/</code>,
 with the plot’s <a href="assets/example_donor_usage.tsv">donor-level
-numerator and denominator table</a> provided here for direct
-checking.</p>
+numerator and denominator table</a> provided here for direct checking.
+The BDNF plots and counts were generated by
+<code>7.sashimi/8.plot_bdnf_activity.py</code>,
+<code>7.sashimi/9.plot_bdnf_usage.R</code> and
+<code>7.sashimi/10.plot_bdnf_pooled_usage.R</code>.</p>
 <p>Related pages: <a href="data_summary.html">data summary</a>, <a
 href="exon_structure.html">exon structure</a>, and <a
 href="annotation_sqanti3.html">annotation QC</a>.</p>
@@ -856,7 +1126,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

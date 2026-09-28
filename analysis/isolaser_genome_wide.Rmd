@@ -18,6 +18,7 @@ library(ggrepel)
 gene_tp <- fread("docs/assets/roc_gene_tp_signals.tsv")
 gene_wide <- fread("docs/assets/roc_gene_signals_wide.tsv")
 fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+sig <- function(x) !is.na(x) & x == TRUE
 ```
 
 We ran [isoLASER](https://github.com/gxiaolab/isoLASER) jointly across four
@@ -25,7 +26,9 @@ donors on all 22 autosomes, at each of the three timepoints (0, 1, and 6 hours
 after stimulation). isoLASER phases reads onto haplotypes using heterozygous
 variants it discovers in the RNA, then tests whether the two copies of each gene
 splice differently — allele-specific splicing, reported as **dPSI** (the
-difference in Percent Spliced In between haplotypes).
+difference in Percent Spliced In between haplotypes). The dPSI reported here
+is from the joint model across donors; per-donor allele-specific rates have not
+been examined separately.
 
 The model used is `--platform Nanopore`, which loads the default
 `GM12878_ONT_ROC` classifier. A second ONT classifier (`GTEx_ONT_F1`) ships
@@ -41,50 +44,60 @@ Four filters were applied to the raw isoLASER cis calls:
    calls have dPSI of 0.01–0.02, driven by high read depth rather than a
    meaningful splicing difference.
 
-2. **Clustered variants removed.** Real heterozygous SNPs occur roughly once per
-   kilobase. When multiple variants cluster within 30 bp, they are likely
-   sequencing errors in difficult sequence. 34% of all variants fall in such
-   clusters.
+2. **Clustered variants excluded (conservative heuristic).** When multiple
+   variants cluster within 30 bp, they may reflect sequencing errors in
+   difficult sequence context. This is a conservative exclusion — some real
+   variants in complex regions will also be removed. 34% of all variants fall
+   in such clusters.
 
 3. **Per-donor allelic balance.** At least one donor must have allelic balance
    0.25–0.75 and read depth >= 10 at the phasing variant. This is checked
    per donor, not averaged across donors — an average can hide a case where
    no individual donor is heterozygous (e.g., one reference-only and one
-   alternate-only donor averaging to 0.5).
+   alternate-only donor averaging to 0.5). This confirms phasing eligibility
+   in at least one donor but does not verify within-donor allele-specific
+   splicing.
 
 4. **Minimum exonic part length >= 10 bp.** The exon model splits overlapping
    annotations into non-overlapping parts, which can create fragments of 1–3 bp.
-   Allelic balance measured over such short regions is unreliable.
+   Splicing measured over such short regions is unreliable.
 
 # Signal counts
 
 After filtering: **`r fmt(uniqueN(gene_wide$gene))` genes** with at least one
-allele-specific splicing event. Each gene is represented by its strongest
+event passing all filters. Each gene is represented by its strongest
 (gene, variant, exonic part) combination, tracked as a fixed unit across all
 three timepoints.
 
+The bar chart below counts genes whose **selected representative event** passes
+at each timepoint. Counts of genes with **any** passing event are higher (445,
+576, and 626 at 0, 1, and 6 hours respectively).
+
 ```{r genes_per_tp, fig.height=4}
-tp_summary <- gene_tp[has_sig==TRUE, .(n_genes=uniqueN(gene)), by=tp]
+tp_summary <- gene_tp[sig(passes), .(n_genes=uniqueN(gene)), by=tp]
 tp_summary[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
 
 ggplot(tp_summary, aes(tp, n_genes)) +
   geom_col(fill=c("#888888","#E69F00","#D55E00"), width=0.6) +
   geom_text(aes(label=n_genes), vjust=-0.3, size=4) +
-  labs(x="Timepoint", y="Genes with cis signal") +
+  labs(x="Timepoint", y="Genes (selected event passes)") +
   ylim(0, max(tp_summary$n_genes)*1.15) +
   theme_minimal(base_size=14)
 ```
 
 # Timepoint patterns
 
-For each gene, we classified its signal across the three timepoints.
+For each gene's selected event, we classified its detection across the three
+timepoints. The classification requires a **usable** baseline (at least one
+heterozygous donor with sufficient depth at 0 hr for that event) before
+comparing timepoints.
 
 ```{r tp_patterns, fig.height=4}
 pat <- gene_wide[, .N, by=pattern]
-pat[, pattern := factor(pattern, levels=c("stimulation_dependent",
+pat[, pattern := factor(pattern, levels=c("detected_after_stim",
                                            "post_stim_only",
                                            "all_timepoints",
-                                           "lost_after_stim","other"))]
+                                           "detected_at_baseline_only","other"))]
 setorder(pat, pattern)
 
 ggplot(pat, aes(pattern, N)) +
@@ -97,33 +110,59 @@ ggplot(pat, aes(pattern, N)) +
 
 ```{r tp_table}
 pat_desc <- data.frame(
-  Pattern=c("stimulation_dependent", "post_stim_only",
-            "all_timepoints","lost_after_stim"),
+  Pattern=c("detected_after_stim", "post_stim_only",
+            "all_timepoints", "detected_at_baseline_only", "other"),
   Description=c(
-    "Tested at 0 hr with no signal; signal appears after stimulation",
-    "Not tested at 0 hr (no reads or no variant); signal only at 1 or 6 hr — absence at baseline is not established",
-    "Signal at all three timepoints (constitutive)",
-    "Signal at 0 hr but absent at one or both stimulated timepoints"),
-  Genes=c(sum(gene_wide$pattern=="stimulation_dependent"),
+    "Usable at 0 hr (het donor present) with no passing signal; passes after stimulation",
+    "No usable baseline (no het donor at 0 hr); signal only at 1 or 6 hr — absence at baseline is not established",
+    "Passes at all three timepoints (constitutive)",
+    "Passes at 0 hr but not after stimulation, with usable data at the later timepoints",
+    "Does not fit the above categories"),
+  Genes=c(sum(gene_wide$pattern=="detected_after_stim"),
           sum(gene_wide$pattern=="post_stim_only"),
           sum(gene_wide$pattern=="all_timepoints"),
-          sum(gene_wide$pattern=="lost_after_stim")))
+          sum(gene_wide$pattern=="detected_at_baseline_only"),
+          sum(gene_wide$pattern=="other")))
 knitr::kable(pat_desc)
 ```
 
-Of the genes with a post-stimulation signal, **`r sum(gene_wide$pattern=="stimulation_dependent")`
-were tested at baseline with no signal** — these are the strongest candidates
-for stimulation-dependent allele-specific splicing. The remaining
-`r sum(gene_wide$pattern=="post_stim_only")` were not tested at 0 hr at all
-(the gene was not expressed, had no heterozygous variant, or failed a filter),
-so baseline absence is not established.
+**`r sum(gene_wide$pattern=="detected_after_stim")` genes** had a usable
+baseline with no passing signal, then passed filters after stimulation. These
+are differences in signal detection between timepoints; establishing that the
+underlying allele-specific effect itself changes with stimulation would require
+comparing allele-specific splicing rates within individual heterozygous donors
+at each timepoint.
+
+The remaining `r sum(gene_wide$pattern=="post_stim_only")` genes had no usable
+baseline data for the selected event (no heterozygous donor at 0 hr), so
+baseline absence cannot be assessed.
 
 # Top signals
+
+The table shows measured |dPSI| at each timepoint. NA means the event was not
+present in the data; values below the 0.10 threshold or failing other filters
+are shown as measured (not zeroed out). The "passes" column indicates which
+timepoints passed all filters.
+
+```{r top_table}
+top_tab <- gene_wide[order(-max_signal)][1:30]
+top_tab[, passes := paste0(
+  fifelse(sig(passes_0hr), "0", ""),
+  fifelse(sig(passes_1hr), "1", ""),
+  fifelse(sig(passes_6hr), "6", ""))]
+knitr::kable(top_tab[, .(gene,
+                          dpsi_0hr=round(abs(dpsi_0hr),3),
+                          dpsi_1hr=round(abs(dpsi_1hr),3),
+                          dpsi_6hr=round(abs(dpsi_6hr),3),
+                          passes, pattern)],
+             col.names=c("Gene","|dPSI| 0 hr","|dPSI| 1 hr","|dPSI| 6 hr",
+                          "Passes (hr)","Pattern"))
+```
 
 ```{r top30, fig.height=9, fig.width=7}
 top_genes <- gene_wide[order(-max_signal)][1:30, gene]
 
-top_data <- gene_tp[gene %in% top_genes & has_sig == TRUE]
+top_data <- gene_tp[gene %in% top_genes & sig(passes)]
 top_data[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
 top_data[, gene := factor(gene, levels=rev(top_genes))]
 
@@ -134,16 +173,6 @@ ggplot(top_data, aes(tp, gene, size=abs_dpsi, color=abs_dpsi)) +
   labs(x="Timepoint", y="") +
   theme_minimal(base_size=12) +
   theme(panel.grid.major=element_line(color="#EEEEEE"))
-```
-
-Top 30 genes ranked by maximum |dPSI|. Each gene is represented by a single
-(variant, exonic part) combination tracked across all three timepoints. Missing
-dots mean that combination had no signal at that timepoint.
-
-```{r top_table}
-top_tab <- gene_wide[order(-max_signal)][1:30]
-knitr::kable(top_tab[, .(gene, hr0, hr1, hr6, pattern)],
-             digits=3, col.names=c("Gene","0 hr","1 hr","6 hr","Pattern"))
 ```
 
 # Neuronal and activity-regulated genes
@@ -164,7 +193,7 @@ neuronal <- c("NRXN1","NRXN2","NRXN3","NLGN1","NLGN2","NLGN3",
               "NOVA1","NOVA2","PTBP2","ANK3","MAPT","APP","DSCAM",
               "CNTNAP2","CADM1","TTLL7","CLDND1","MEF2C")
 
-gene_all <- gene_tp[has_sig==TRUE, .(max_dpsi=max(abs_dpsi), mean_cov=median(COV, na.rm=TRUE)), by=gene]
+gene_all <- gene_tp[sig(passes), .(max_dpsi=max(abs_dpsi), mean_cov=median(COV, na.rm=TRUE)), by=gene]
 gene_all <- merge(gene_all, gene_wide[, .(gene, pattern)], by="gene")
 gene_all[, label_cat := fcase(
   gene %in% ieg, "Activity-regulated",
@@ -193,20 +222,26 @@ named <- gene_wide[gene %in% c(ieg, neuronal)]
 named[, category := fifelse(gene %in% ieg, "Activity-regulated", "Neuronal")]
 named <- named[max_signal > 0]
 setorder(named, -max_signal)
-knitr::kable(named[, .(gene, category, hr0, hr1, hr6, pattern)],
-             digits=3,
-             col.names=c("Gene","Category","0 hr","1 hr","6 hr","Pattern"))
+named[, passes := paste0(
+  fifelse(sig(passes_0hr), "0", ""),
+  fifelse(sig(passes_1hr), "1", ""),
+  fifelse(sig(passes_6hr), "6", ""))]
+knitr::kable(named[, .(gene, category,
+                        dpsi_0hr=round(abs(dpsi_0hr),3),
+                        dpsi_1hr=round(abs(dpsi_1hr),3),
+                        dpsi_6hr=round(abs(dpsi_6hr),3),
+                        passes, pattern)],
+             col.names=c("Gene","Category","|dPSI| 0 hr","|dPSI| 1 hr",
+                          "|dPSI| 6 hr","Passes (hr)","Pattern"))
 ```
 
-Most classic immediate-early genes (FOS, JUN, EGR1, ARC) are not testable by
-isoLASER — they are either single-exon genes, have no heterozygous variant in
-the four donors, or have too few spliced reads.
+Many classic immediate-early genes (JUN, JUNB, JUND, IER2) are single-exon
+genes with no splicing to test. Others (e.g., FOS, EGR1) have isoLASER output
+rows but do not pass the effect-size or quality filters at any timepoint.
 
 # Top neuronal gene plots
 
 ```{r gene_plots, fig.height=4, fig.width=7, results='asis'}
-# Show each gene's selected (variant, exonic_part) across timepoints,
-# plus any other events faceted separately so they are not mixed.
 event_data <- fread("/project/xinhe/xsun/long_read_RNA/9.isolaser_results/out/roc_event_wide.tsv.gz")
 focus_genes <- c("GRIA2","ANK3","CACNA1E","SCN2A","CAMK2B","SYT1","NFKBIA")
 focus_genes <- focus_genes[focus_genes %in% event_data$gene]
@@ -214,19 +249,16 @@ focus_genes <- focus_genes[focus_genes %in% event_data$gene]
 for(g in focus_genes) {
   gd <- event_data[gene == g & pattern != "other"]
   if(nrow(gd) == 0) next
-  # reshape to long
   gd_long <- melt(gd, id.vars=c("gene","variant_qual","exonic_part","pattern"),
                   measure.vars=c("dpsi_0hr","dpsi_1hr","dpsi_6hr"),
                   variable.name="tp", value.name="dpsi")
   gd_long[, tp := factor(sub("dpsi_","",tp), levels=c("0hr","1hr","6hr"))]
   gd_long <- gd_long[!is.na(dpsi)]
 
-  # label each event
   gd_long[, event_id := paste0(
     sub(".*:(\\d+):.*","\\1", variant_qual), " / ",
     sub("chr[0-9]+:(\\d+)-(\\d+):.*","\\1-\\2", exonic_part))]
 
-  # pick up to 6 strongest events
   top_events <- gd[order(-max_abs_dpsi)][1:min(.N, 6), .(variant_qual, exonic_part)]
   gd_long <- gd_long[top_events, on=.(variant_qual, exonic_part)]
 
@@ -244,34 +276,36 @@ for(g in focus_genes) {
 
 Each panel shows one (variant, exonic part) combination tracked across
 timepoints. The variant position and exonic part coordinates are in the facet
-label (variant position / part start-end). This ensures each panel represents a
-single splicing event, not a mixture.
+label (variant position / part start-end). These are joint dPSI values across
+donors; per-donor allele-specific rates would be needed to confirm the signal
+in individual heterozygous donors.
 
 # Interpretation
 
-This analysis identifies **`r nrow(gene_wide)` genes** with allele-specific
-splicing after quality filtering. Each gene is represented by a fixed
-(variant, exonic part) combination tracked across all three timepoints, so
-the timepoint comparison is always between the same splicing event.
-**`r sum(gene_wide$pattern=="stimulation_dependent")` genes** were tested at
-baseline with no signal and then showed a signal after stimulation — these are
-the strongest candidates for stimulation-dependent allele-specific splicing.
-Another `r sum(gene_wide$pattern=="post_stim_only")` genes have post-stimulation
-signals but were not tested at baseline, so stimulation dependence is not
-established for those.
+This analysis identifies **`r nrow(gene_wide)` genes** with at least one event
+passing quality filters. Each gene is represented by a fixed (variant, exonic
+part) combination tracked across all three timepoints.
 
-The strongest neuronal hits are GRIA2 (AMPA receptor subunit, 6 hr only),
-ANK3 (spectrin adapter, all timepoints), CACNA1E (calcium channel, 6 hr only),
-and SCN2A (sodium channel, 6 hr only). These are genes with known alternative
-splicing in neurons, making the allele-specific signals plausible.
+**`r sum(gene_wide$pattern=="detected_after_stim")` genes** had usable data at
+baseline (a heterozygous donor present) with no passing signal, and then passed
+filters after stimulation. These are differences in signal detection between
+timepoints. Whether the underlying allele-specific splicing effect itself
+changes with stimulation — as opposed to changes in power, expression level,
+or isoform composition — would require comparing reference-versus-alternate
+splicing rates within individual heterozygous donors at each timepoint.
+
+Another `r sum(gene_wide$pattern=="post_stim_only")` genes had no usable
+baseline data for the selected event, so baseline absence cannot be assessed.
 
 Caveats:
 
-- **No sensitivity estimate.** This analysis starts from isoLASER's calls and
-  does not count variants or genes that isoLASER missed. The default Nanopore
-  model is known to miss ~36% of heterozygous sites (see the
-  [variant validation](isolaser_variants.html) page), which reduces the number
-  of testable genes.
+- **Joint model only.** The dPSI values are from isoLASER's joint analysis
+  across donors. Within-donor allele-specific splicing rates have not been
+  examined.
+- **Concordance, not sensitivity.** The
+  [variant validation](isolaser_variants.html) page measures agreement between
+  isoLASER calls and the genotype panel; it does not estimate what fraction of
+  true variants isoLASER detects, because it starts from isoLASER's calls.
 - **Four donors.** With n = 4, a signal requires a heterozygous variant in at
   least one donor. Rare variants are not testable.
 - **No multiple-testing correction** has been applied. The p-values from

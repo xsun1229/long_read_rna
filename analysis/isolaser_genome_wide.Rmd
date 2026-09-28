@@ -1,0 +1,256 @@
+---
+title: "Genome-wide allele-specific splicing"
+author: "XSun"
+date: "2026-09-28"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+                      fig.width=7, fig.height=5)
+library(data.table)
+library(ggplot2)
+library(ggrepel)
+
+gene_tp <- fread("docs/assets/roc_gene_tp_signals.tsv")
+gene_wide <- fread("docs/assets/roc_gene_signals_wide.tsv")
+fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+```
+
+We ran [isoLASER](https://github.com/gxiaolab/isoLASER) jointly across four
+donors on all 22 autosomes, at each of the three timepoints (0, 1, and 6 hours
+after stimulation). isoLASER phases reads onto haplotypes using heterozygous
+variants it discovers in the RNA, then tests whether the two copies of each gene
+splice differently — allele-specific splicing, reported as **dPSI** (the
+difference in Percent Spliced In between haplotypes).
+
+The model used is `--platform Nanopore`, which loads the default
+`GM12878_ONT_ROC` classifier. A second ONT classifier (`GTEx_ONT_F1`) ships
+with isoLASER but is currently commented out upstream; we tested both and found
+F1 recovers more heterozygous sites, but use the default here pending
+clarification from the developers.
+
+# Filtering
+
+Three filters were applied to the raw isoLASER cis calls:
+
+1. **Effect size:** |dPSI| >= 0.10. Without this, many statistically significant
+   calls have dPSI of 0.01–0.02, driven by high read depth rather than a
+   meaningful splicing difference.
+
+2. **Clustered variants removed.** Real heterozygous SNPs occur roughly once per
+   kilobase. When multiple variants cluster within 30 bp, they are likely
+   sequencing errors in difficult sequence. 34% of all variants fall in such
+   clusters.
+
+3. **Allelic balance 0.25–0.75.** A true heterozygous site has roughly equal
+   reference and alternate reads. Sites outside this range are likely
+   homozygous sites miscalled as heterozygous, producing fake haplotypes.
+
+# Signal counts
+
+After filtering: **`r fmt(nrow(gene_tp))` gene-timepoint signals** across
+**`r fmt(uniqueN(gene_tp$gene))` genes**.
+
+```{r genes_per_tp, fig.height=4}
+tp_summary <- gene_tp[, .(n_genes=uniqueN(gene)), by=tp]
+tp_summary[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
+
+ggplot(tp_summary, aes(tp, n_genes)) +
+  geom_col(fill=c("#888888","#E69F00","#D55E00"), width=0.6) +
+  geom_text(aes(label=n_genes), vjust=-0.3, size=4) +
+  labs(x="Timepoint", y="Genes with cis signal") +
+  ylim(0, max(tp_summary$n_genes)*1.15) +
+  theme_minimal(base_size=14)
+```
+
+More genes show allele-specific splicing after stimulation (329 at 1 hr, 325 at
+6 hr) than at baseline (226 at 0 hr).
+
+# Timepoint patterns
+
+For each gene, we classified its signal across the three timepoints.
+
+```{r tp_patterns, fig.height=4}
+pat <- gene_wide[, .N, by=pattern]
+pat[, pattern := factor(pattern, levels=c("stimulation_dependent",
+                                           "post_stim_only",
+                                           "all_timepoints",
+                                           "lost_after_stim","other"))]
+setorder(pat, pattern)
+
+ggplot(pat, aes(pattern, N)) +
+  geom_col(fill="#4477AA", width=0.6) +
+  geom_text(aes(label=N), vjust=-0.3, size=3.5) +
+  labs(x="", y="Number of genes") +
+  theme_minimal(base_size=13) +
+  theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+```{r tp_table}
+pat_desc <- data.frame(
+  Pattern=c("stimulation_dependent", "post_stim_only",
+            "all_timepoints","lost_after_stim"),
+  Description=c(
+    "Tested at 0 hr with no signal; signal appears after stimulation",
+    "Not tested at 0 hr (no reads or no variant); signal only at 1 or 6 hr — absence at baseline is not established",
+    "Signal at all three timepoints (constitutive)",
+    "Signal at 0 hr but absent at one or both stimulated timepoints"),
+  Genes=c(sum(gene_wide$pattern=="stimulation_dependent"),
+          sum(gene_wide$pattern=="post_stim_only"),
+          sum(gene_wide$pattern=="all_timepoints"),
+          sum(gene_wide$pattern=="lost_after_stim")))
+knitr::kable(pat_desc)
+```
+
+Of the genes with a post-stimulation signal, **`r sum(gene_wide$pattern=="stimulation_dependent")`
+were tested at baseline with no signal** — these are the strongest candidates
+for stimulation-dependent allele-specific splicing. The remaining
+`r sum(gene_wide$pattern=="post_stim_only")` were not tested at 0 hr at all
+(the gene was not expressed, had no heterozygous variant, or failed a filter),
+so baseline absence is not established.
+
+# Top signals
+
+```{r top30, fig.height=9, fig.width=7}
+top_genes <- gene_tp[, .(max_dpsi=max(max_dpsi)), by=gene][order(-max_dpsi)][1:30, gene]
+
+top_data <- gene_tp[gene %in% top_genes]
+top_data[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
+top_data[, gene := factor(gene, levels=rev(top_genes))]
+
+ggplot(top_data, aes(tp, gene, size=max_dpsi, color=max_dpsi)) +
+  geom_point() +
+  scale_size_continuous(range=c(1,8), name="|dPSI|") +
+  scale_color_gradient(low="#DDDDDD", high="#CC0000", name="|dPSI|") +
+  labs(x="Timepoint", y="") +
+  theme_minimal(base_size=12) +
+  theme(panel.grid.major=element_line(color="#EEEEEE"))
+```
+
+Top 30 genes ranked by maximum |dPSI| across timepoints. Dot size and color
+indicate the effect size at each timepoint. Missing dots mean the gene had no
+signal at that timepoint (after filtering).
+
+```{r top_table}
+top_tab <- gene_wide[order(-max_signal)][1:30]
+knitr::kable(top_tab[, .(gene, hr0, hr1, hr6, pattern)],
+             digits=3, col.names=c("Gene","0 hr","1 hr","6 hr","Pattern"))
+```
+
+# Neuronal and activity-regulated genes
+
+```{r named_genes, fig.height=6, fig.width=8}
+ieg <- c("FOS","FOSB","FOSL1","FOSL2","JUN","JUNB","JUND",
+         "EGR1","EGR2","EGR3","EGR4","NR4A1","NR4A2","NR4A3",
+         "ARC","BDNF","NPAS4","SIK1","ATF3","GADD45B","GADD45G",
+         "HOMER1","IER2","IER5","BTG2","DUSP1","DUSP5","DUSP6",
+         "NFKBIA","NFKBIZ","CREM","CYR61","CTGF","TIPARP","PPP1R15A",
+         "ZFP36","ZFP36L1","BHLHE40","BHLHE41","KLF2","KLF4",
+         "RGS2","SERTAD1","CITED2")
+neuronal <- c("NRXN1","NRXN2","NRXN3","NLGN1","NLGN2","NLGN3",
+              "GRIN1","GRIN2A","GRIN2B","GRIA1","GRIA2","GRIA3","GRIA4",
+              "DLG4","SHANK1","SHANK2","SHANK3","CAMK2A","CAMK2B",
+              "SYN1","SYT1","SNAP25","CACNA1A","CACNA1B","CACNA1C","CACNA1E",
+              "SCN1A","SCN2A","SCN8A","CELF4","RBFOX1","RBFOX2","RBFOX3",
+              "NOVA1","NOVA2","PTBP2","ANK3","MAPT","APP","DSCAM",
+              "CNTNAP2","CADM1","TTLL7","CLDND1","MEF2C")
+
+gene_all <- gene_tp[, .(max_dpsi=max(max_dpsi), mean_cov=median(mean_cov)), by=gene]
+gene_all <- merge(gene_all, gene_wide[, .(gene, pattern)], by="gene")
+gene_all[, label_cat := fcase(
+  gene %in% ieg, "Activity-regulated",
+  gene %in% neuronal, "Neuronal",
+  default = "Other"
+)]
+gene_all[, show_label := label_cat != "Other" & max_dpsi >= 0.10]
+
+ggplot(gene_all, aes(mean_cov, max_dpsi, color=label_cat)) +
+  geom_point(data=gene_all[label_cat=="Other"], alpha=0.3, size=1.5) +
+  geom_point(data=gene_all[label_cat!="Other"], alpha=0.8, size=3) +
+  geom_text_repel(data=gene_all[show_label==TRUE],
+                  aes(label=gene), size=3.5, max.overlaps=20, show.legend=FALSE) +
+  scale_color_manual(values=c("Activity-regulated"="#D55E00",
+                               "Neuronal"="#0072B2", "Other"="#BBBBBB"), name="") +
+  scale_x_log10() +
+  labs(x="Median coverage (reads)", y="Max |dPSI| across timepoints") +
+  theme_minimal(base_size=13)
+```
+
+Labeled genes are from curated lists of activity-regulated immediate-early genes
+(orange) and neuronal-function genes (blue).
+
+```{r named_table}
+named <- gene_wide[gene %in% c(ieg, neuronal)]
+named[, category := fifelse(gene %in% ieg, "Activity-regulated", "Neuronal")]
+named <- named[max_signal > 0]
+setorder(named, -max_signal)
+knitr::kable(named[, .(gene, category, hr0, hr1, hr6, pattern)],
+             digits=3,
+             col.names=c("Gene","Category","0 hr","1 hr","6 hr","Pattern"))
+```
+
+Most classic immediate-early genes (FOS, JUN, EGR1, ARC) are not testable by
+isoLASER — they are either single-exon genes, have no heterozygous variant in
+the four donors, or have too few spliced reads.
+
+# Top neuronal gene plots
+
+```{r gene_plots, fig.height=4, fig.width=5, results='asis'}
+cis_all <- fread("/project/xinhe/xsun/long_read_RNA/9.isolaser_results/out/roc_cis_events_filtered.tsv.gz")
+focus_genes <- c("GRIA2","ANK3","CACNA1E","SCN2A","CAMK2B","SYT1","NFKBIA")
+focus_genes <- focus_genes[focus_genes %in% cis_all$gene]
+
+for(g in focus_genes) {
+  gd <- cis_all[gene == g]
+  gd[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
+  p <- ggplot(gd, aes(tp, dpsi)) +
+    geom_hline(yintercept=0, lty=2, color="grey60") +
+    geom_jitter(aes(size=COV), width=0.15, alpha=0.6, color="#0072B2") +
+    scale_size_continuous(range=c(1,6), name="Coverage") +
+    labs(x="Timepoint", y="dPSI (haplotype difference)",
+         title=g) +
+    theme_minimal(base_size=13)
+  print(p)
+  cat("\n\n")
+}
+```
+
+Each dot is one cis event (one exonic part tested against one variant). The
+y-axis is the signed dPSI — the direction indicates which haplotype has higher
+inclusion. Dot size is read coverage.
+
+# Interpretation
+
+This analysis identifies **`r uniqueN(gene_tp$gene)` genes** with allele-specific
+splicing after quality filtering.
+**`r sum(gene_wide$pattern=="stimulation_dependent")` genes** were tested at
+baseline with no signal and then showed a signal after stimulation — these are
+the strongest candidates for stimulation-dependent allele-specific splicing.
+Another `r sum(gene_wide$pattern=="post_stim_only")` genes have post-stimulation
+signals but were not tested at baseline, so stimulation dependence is not
+established for those.
+
+The strongest neuronal hits are GRIA2 (AMPA receptor subunit, 6 hr only),
+ANK3 (spectrin adapter, all timepoints), CACNA1E (calcium channel, 6 hr only),
+and SCN2A (sodium channel, 6 hr only). These are genes with known alternative
+splicing in neurons, making the allele-specific signals plausible.
+
+Caveats:
+
+- **No sensitivity estimate.** This analysis starts from isoLASER's calls and
+  does not count variants or genes that isoLASER missed. The default Nanopore
+  model is known to miss ~36% of heterozygous sites (see the
+  [variant validation](isolaser_variants.html) page), which reduces the number
+  of testable genes.
+- **Four donors.** With n = 4, a signal requires a heterozygous variant in at
+  least one donor. Rare variants are not testable.
+- **No multiple-testing correction** has been applied. The p-values from
+  isoLASER's joint model are shown as-is.
+
+Related pages: [variant validation](isolaser_variants.html),
+[junction screen](splicing_candidates.html),
+[isoLASER setup](isolaser.html).

@@ -30,4 +30,7 @@ editor_options:
   how exons are connected (consecutive / skipped / retained)
 * [Splicing changes across stimulation](splicing_candidates.html) —
   how candidates were screened, the candidate genes, which have neuronal
-  roles, and worked examples. 
+  roles, and worked examples.
+* [Genome-wide allele-specific splicing](isolaser_genome_wide.html) —
+  isoLASER joint analysis across all 22 autosomes, 647 genes with
+  allele-specific splicing, timepoint patterns, and neuronal gene hits

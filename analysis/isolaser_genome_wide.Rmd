@@ -226,16 +226,17 @@ the percentage of transcripts including an exon. `NA` means no joint estimate
 was available. Nonpassing measured effects remain visible; the passing
 timepoints are listed separately.
 
-## Baseline-usable examples to follow up
+## Plots for all neuronal candidates
 
-The plots show the six strongest passing effects among the selected
-**detected-after-stimulation** candidates. No estimate is substituted for
-missing data. Read-level inspection and within-donor comparisons are the next
-steps for these examples.
+The plots show **all `r nrow(neuronal_selected)` genes in the table above**,
+using exactly the same selected variant–part combination and the same gene
+order. Candidates detected after stimulation with a usable baseline appear
+first; other detection patterns, including unavailable baselines, follow.
+No estimate is substituted for missing data. Read-level inspection and
+within-donor comparisons are the next steps for these examples.
 
-```{r example_trends, fig.height=6, fig.width=9}
-focus <- neuronal_selected[pattern=="detected_after_stim"][order(-max_passing_dpsi)]
-focus <- focus[seq_len(min(6,nrow(focus)))]
+```{r example_trends, fig.height=14, fig.width=9}
+focus <- copy(neuronal_selected)
 plot_data <- melt(focus,id.vars=c("gene","variant_qual","exonic_part"),
   measure.vars=list(dpsi=paste0("dpsi_",tp_levels),
     passes=paste0("passes_",tp_levels),usable=paste0("usable_",tp_levels)),

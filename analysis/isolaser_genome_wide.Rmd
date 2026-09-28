@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                       fig.width=7, fig.height=4)
 library(data.table)
 library(ggplot2)
+library(DT)
 gene_tp <- fread("docs/assets/roc_gene_tp_signals.tsv")
 gene_wide <- fread("docs/assets/roc_gene_signals_wide.tsv")
 events <- fread("docs/assets/roc_event_wide.tsv.gz")
@@ -34,6 +35,37 @@ effect_table <- function(d) {
     `6 hr`=round(100*abs(d$dpsi_6hr),1),
     `Passing timepoints (hr)`=pass_times(d),
     Pattern=unname(pattern_names[d$pattern]))
+}
+interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE,
+  filter="top", extensions="Buttons", options=list(
+    pageLength=10, lengthMenu=c(10,25,50,100), scrollX=TRUE,
+    order=list(), dom="Blfrtip", buttons=c("copy","csv")),
+  caption="Search, filter, or click a column heading to sort; export the filtered table as CSV.")
+neuronal_genes <- c("NRXN1","NRXN2","NRXN3","NLGN1","NLGN2","NLGN3",
+  "GRIN1","GRIN2A","GRIN2B","GRIA1","GRIA2","GRIA3","GRIA4",
+  "DLG4","SHANK1","SHANK2","SHANK3","CAMK2A","CAMK2B","SYN1","SYT1","SNAP25",
+  "CACNA1A","CACNA1B","CACNA1C","CACNA1E","SCN1A","SCN2A","SCN8A",
+  "CELF4","RBFOX1","RBFOX2","RBFOX3","NOVA1","NOVA2","PTBP2","ANK3","MAPT",
+  "APP","DSCAM","CNTNAP2","CADM1","TTLL7","MEF2C","DCLK1","DTNBP1","CADPS",
+  "DOCK7","DMXL2","SIGMAR1","TMEM106B","FNDC5","ELAVL4","PARK7")
+activity_genes <- c("FOS","FOSB","FOSL1","FOSL2","JUN","JUNB","JUND",
+  "EGR1","EGR2","EGR3","EGR4","NR4A1","NR4A2","NR4A3","ARC","BDNF","NPAS4",
+  "SIK1","ATF3","GADD45B","GADD45G","HOMER1","IER2","IER5","BTG2","DUSP1",
+  "DUSP5","DUSP6","NFKBIA","NFKBIZ","CREM","TIPARP","PPP1R15A","ZFP36",
+  "BHLHE40","BHLHE41","KLF2","KLF4","RGS2","SERTAD1","CITED2")
+neuronal_events <- copy(events[gene %in% c(neuronal_genes,activity_genes)])
+priority_patterns <- c("detected_after_stim","all_timepoints",
+  "detected_at_baseline_only","other","post_stim_only")
+neuronal_events[, priority := match(pattern,priority_patterns)]
+setorder(neuronal_events,priority,-max_passing_dpsi)
+neuronal_selected <- neuronal_events[, .SD[1], by=gene]
+setorder(neuronal_selected,priority,-max_passing_dpsi)
+candidate_table <- function(d) {
+  ans <- effect_table(d)
+  ans[, `Usable baseline` := ifelse(sig(d$usable_0hr),"Yes","No")]
+  ans[, Variant := d$variant_qual]
+  ans[, `Exonic part` := d$exonic_part]
+  ans
 }
 ```
 
@@ -93,12 +125,14 @@ than a simple sum of raw reads.
 knitr::kable(data.frame(
   Unit=c("Passing rows", "Distinct gene–variant–part combinations", "Genes"),
   Count=c(fmt(nrow(passing)), fmt(nrow(events)), fmt(nrow(gene_wide))),
-  Meaning=c("One association at one timepoint",
+  Meaning=c("One gene–variant–exonic-part association at one timepoint",
     "Associations combined across timepoints", "At least one passing association")))
 ```
 
 These units are not independent biological events: multiple variants or
 adjacent parts may describe the same underlying splicing change.
+For example, one gene–variant–part association passing at 0, 1, and 6 hours
+contributes **three passing rows**, but only **one distinct association**.
 
 ```{r genes_per_tp}
 tp_summary <- passing[, .(Genes=uniqueN(gene)), by=tp]
@@ -119,6 +153,27 @@ The following counts describe each gene's **selected representative event**.
 They describe filter outcomes, not a statistical test of whether stimulation
 changes the allelic effect.
 
+**Usable** means that this exact gene–variant–part combination has a joint
+output row at that timepoint, and at least one donor has alternate-allele
+fraction **0.25–0.75** with **depth ≥10** for the combination. Usable data
+can still fail the `cis` or effect-size criteria. **No usable baseline** can
+mean a missing output row, insufficient depth, or no donor meeting the
+allele-balance criterion; it does not establish that the gene is unexpressed.
+
+```{r detection_barplot, fig.height=4.5}
+detection_counts <- data.table(pattern=names(pattern_names))
+detection_counts[, Genes := vapply(pattern,function(p)sum(gene_wide$pattern==p),integer(1))]
+detection_counts[, Pattern := factor(unname(pattern_names[pattern]),
+  levels=rev(unname(pattern_names)))]
+ggplot(detection_counts,aes(Pattern,Genes,fill=pattern)) +
+  geom_col(width=0.65,show.legend=FALSE) +
+  geom_text(aes(label=Genes),hjust=-0.2,size=4) + coord_flip() +
+  scale_fill_manual(values=c(detected_after_stim="#0072B2",post_stim_only="#BBBBBB",
+    all_timepoints="#009E73",detected_at_baseline_only="#E69F00",other="#999999")) +
+  scale_y_continuous(expand=expansion(mult=c(0,0.12))) +
+  labs(x=NULL,y="Genes (selected representative event)") + theme_minimal(base_size=12)
+```
+
 ```{r detection_table}
 patterns <- names(pattern_names)
 descriptions <- c(
@@ -137,18 +192,33 @@ stimulation despite a usable, nonpassing baseline. They are a useful starting
 set for follow-up. For **`r sum(gene_wide$pattern=="post_stim_only")` genes**,
 baseline absence cannot be assessed.
 
-# Neuronal examples
+# Neuronal and activity-associated candidates
 
-These examples focus on neuronal genes, using one selected variant–part
-association per gene. SYT1 has a usable baseline; several other examples have
-no usable baseline and illustrate post-stimulation detection rather than
-an established response to stimulation.
+The table below expands the examples to **`r nrow(neuronal_selected)` genes**
+from a manually selected list of neuronal and activity-associated genes.
+**`r sum(neuronal_selected$pattern=="detected_after_stim")` have an association
+detected after stimulation with a usable, nonpassing baseline.** These appear
+first, followed by other baseline-usable patterns; candidates without a usable
+baseline appear last. Biological relevance helps prioritize examples but does
+not establish a stimulation-dependent allelic effect.
+
+For this section, we search **all passing associations**, rather than only the
+strongest event per gene. We select one association per gene by detection
+category, then by the largest passing effect within that category. This can
+select a different event from the genome-wide representative above. Each
+selected variant–part combination remains fixed across timepoints; the
+genome-wide counts and detection categories above are unchanged.
+
+The expanded candidates include genes involved in neuronal structure and
+secretion: [DCLK1 and dendritic cargo transport](https://pubmed.ncbi.nlm.nih.gov/26758546/),
+[CADPS and calcium-regulated vesicle secretion](https://www.ncbi.nlm.nih.gov/gene/8618/),
+and [DTNBP1 and synaptic function](https://pubmed.ncbi.nlm.nih.gov/27330059/).
 
 ```{r examples_table}
-focus_genes <- c("SYT1", "GRIA2", "ANK3", "CACNA1E", "SCN2A", "CAMK2B")
-focus <- gene_wide[gene %in% focus_genes]
-focus <- focus[order(match(gene, focus_genes))]
-knitr::kable(effect_table(focus))
+neuronal_table <- candidate_table(neuronal_selected)
+neuronal_table[, Category := ifelse(neuronal_selected$gene %in% activity_genes,
+  "Activity-associated","Neuronal")]
+interactive_table(neuronal_table)
 ```
 
 Table values are **absolute allelic differences in percentage points**, not
@@ -156,8 +226,21 @@ the percentage of transcripts including an exon. `NA` means no joint estimate
 was available. Nonpassing measured effects remain visible; the passing
 timepoints are listed separately.
 
+## Baseline-usable examples to follow up
+
+The plots show the six strongest passing effects among the selected
+**detected-after-stimulation** candidates. No estimate is substituted for
+missing data. Read-level inspection and within-donor comparisons are the next
+steps for these examples.
+
 ```{r example_trends, fig.height=6, fig.width=9}
-plot_data <- copy(gene_tp[gene %in% focus$gene])
+focus <- neuronal_selected[pattern=="detected_after_stim"][order(-max_passing_dpsi)]
+focus <- focus[seq_len(min(6,nrow(focus)))]
+plot_data <- melt(focus,id.vars=c("gene","variant_qual","exonic_part"),
+  measure.vars=list(dpsi=paste0("dpsi_",tp_levels),
+    passes=paste0("passes_",tp_levels),usable=paste0("usable_",tp_levels)),
+  variable.name="time_index")
+plot_data[, tp := tp_levels[as.integer(time_index)]]
 plot_data[, tp := factor(tp,levels=tp_levels)]
 plot_data[, gene := factor(gene,levels=focus$gene)]
 plot_data[, Status := fifelse(sig(passes), "Passes filters",
@@ -186,19 +269,27 @@ that donor-level allele-specific rates have been measured.
 knitr::kable(focus[,.(Gene=gene,Variant=variant_qual,`Exonic part`=exonic_part)])
 ```
 
+The gene lists used to select this section are available for review:
+
+```{r gene_list}
+knitr::kable(data.frame(Category=c("Activity-associated","Neuronal"),
+  `Genes searched`=c(paste(activity_genes,collapse=", "),
+    paste(neuronal_genes,collapse=", "))),check.names=FALSE)
+```
+
 Coordinates above follow the isoLASER output convention: variant positions
 are zero-based (add 1 to compare with a VCF position); part intervals are
 zero-based, with an exclusive end.
 
 # Other top candidates and full results
 
-The ten strongest representative associations across all genes are shown
-below, ranked by the largest **passing** absolute ΔPSI. Biological relevance
+All **`r nrow(gene_wide)` genes** are available in the interactive table below,
+initially ranked by the largest **passing** absolute ΔPSI. Biological relevance
 and read-level support should guide which candidates are investigated next.
 
 ```{r top_table}
-top <- gene_wide[order(-max_signal)][seq_len(min(10,nrow(gene_wide)))]
-knitr::kable(effect_table(top))
+top <- gene_wide[order(-max_signal)]
+interactive_table(candidate_table(top))
 ```
 
 All effect tables use percentage points. Download the

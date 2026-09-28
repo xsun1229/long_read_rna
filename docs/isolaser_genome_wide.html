@@ -428,10 +428,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -524,15 +524,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreef8a314f1fffe8d5b89c943ddc4a63fe5b32dd420targetblankf8a314fa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeaaf8c9a3c3cf138de59306d4c1b3d5d8241a42cctargetblankaaf8c9aa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/f8a314f1fffe8d5b89c943ddc4a63fe5b32dd420" target="_blank">f8a314f</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc" target="_blank">aaf8c9a</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreef8a314f1fffe8d5b89c943ddc4a63fe5b32dd420targetblankf8a314fa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeaaf8c9a3c3cf138de59306d4c1b3d5d8241a42cctargetblankaaf8c9aa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -542,7 +542,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/f8a314f1fffe8d5b89c943ddc4a63fe5b32dd420" target="_blank">f8a314f</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc" target="_blank">aaf8c9a</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -556,14 +556,8 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Ignored files:
-    Ignored:    analysis/figure/
-
-Untracked files:
-    Untracked:  analysis/isolaser_genome_wide.Rmd
-
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_genome_wide.Rmd
 
 </code></pre>
 <p>
@@ -578,10 +572,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/isolaser_genome_wide.Rmd</code>)
+and HTML (<code>docs/isolaser_genome_wide.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/analysis/isolaser_genome_wide.Rmd" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/isolaser_genome_wide.html" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -601,7 +659,7 @@ heterozygous sites, but use the default here pending clarification from
 the developers.</p>
 <div id="filtering" class="section level1">
 <h1>Filtering</h1>
-<p>Three filters were applied to the raw isoLASER cis calls:</p>
+<p>Four filters were applied to the raw isoLASER cis calls:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Effect size:</strong> |dPSI| &gt;= 0.10. Without this,
 many statistically significant calls have dPSI of 0.01–0.02, driven by
@@ -610,25 +668,105 @@ high read depth rather than a meaningful splicing difference.</p></li>
 SNPs occur roughly once per kilobase. When multiple variants cluster
 within 30 bp, they are likely sequencing errors in difficult sequence.
 34% of all variants fall in such clusters.</p></li>
-<li><p><strong>Allelic balance 0.25–0.75.</strong> A true heterozygous
-site has roughly equal reference and alternate reads. Sites outside this
-range are likely homozygous sites miscalled as heterozygous, producing
-fake haplotypes.</p></li>
+<li><p><strong>Per-donor allelic balance.</strong> At least one donor
+must have allelic balance 0.25–0.75 and read depth &gt;= 10 at the
+phasing variant. This is checked per donor, not averaged across donors —
+an average can hide a case where no individual donor is heterozygous
+(e.g., one reference-only and one alternate-only donor averaging to
+0.5).</p></li>
+<li><p><strong>Minimum exonic part length &gt;= 10 bp.</strong> The exon
+model splits overlapping annotations into non-overlapping parts, which
+can create fragments of 1–3 bp. Allelic balance measured over such short
+regions is unreliable.</p></li>
 </ol>
 </div>
 <div id="signal-counts" class="section level1">
 <h1>Signal counts</h1>
-<p>After filtering: <strong>880 gene-timepoint signals</strong> across
-<strong>647 genes</strong>.</p>
+<p>After filtering: <strong>1,156 genes</strong> with at least one
+allele-specific splicing event. Each gene is represented by its
+strongest (gene, variant, exonic part) combination, tracked as a fixed
+unit across all three timepoints.</p>
 <p><img src="figure/isolaser_genome_wide.Rmd/genes_per_tp-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
-<p>More genes show allele-specific splicing after stimulation (329 at 1
-hr, 325 at 6 hr) than at baseline (226 at 0 hr).</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-genes_per_tp-1">
+Past versions of genes_per_tp-1.png
+</button>
+</p>
+<div id="fig-genes_per_tp-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/genes_per_tp-1.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="timepoint-patterns" class="section level1">
 <h1>Timepoint patterns</h1>
 <p>For each gene, we classified its signal across the three
 timepoints.</p>
 <p><img src="figure/isolaser_genome_wide.Rmd/tp_patterns-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-tp_patterns-1">
+Past versions of tp_patterns-1.png
+</button>
+</p>
+<div id="fig-tp_patterns-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/tp_patterns-1.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <table>
 <colgroup>
 <col width="15%" />
@@ -647,30 +785,30 @@ timepoints.</p>
 <td align="left">stimulation_dependent</td>
 <td align="left">Tested at 0 hr with no signal; signal appears after
 stimulation</td>
-<td align="right">311</td>
+<td align="right">348</td>
 </tr>
 <tr class="even">
 <td align="left">post_stim_only</td>
 <td align="left">Not tested at 0 hr (no reads or no variant); signal
 only at 1 or 6 hr — absence at baseline is not established</td>
-<td align="right">110</td>
+<td align="right">450</td>
 </tr>
 <tr class="odd">
 <td align="left">all_timepoints</td>
 <td align="left">Signal at all three timepoints (constitutive)</td>
-<td align="right">58</td>
+<td align="right">54</td>
 </tr>
 <tr class="even">
 <td align="left">lost_after_stim</td>
 <td align="left">Signal at 0 hr but absent at one or both stimulated
 timepoints</td>
-<td align="right">168</td>
+<td align="right">304</td>
 </tr>
 </tbody>
 </table>
-<p>Of the genes with a post-stimulation signal, <strong>311 were tested
+<p>Of the genes with a post-stimulation signal, <strong>348 were tested
 at baseline with no signal</strong> — these are the strongest candidates
-for stimulation-dependent allele-specific splicing. The remaining 110
+for stimulation-dependent allele-specific splicing. The remaining 450
 were not tested at 0 hr at all (the gene was not expressed, had no
 heterozygous variant, or failed a filter), so baseline absence is not
 established.</p>
@@ -678,9 +816,47 @@ established.</p>
 <div id="top-signals" class="section level1">
 <h1>Top signals</h1>
 <p><img src="figure/isolaser_genome_wide.Rmd/top30-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
-<p>Top 30 genes ranked by maximum |dPSI| across timepoints. Dot size and
-color indicate the effect size at each timepoint. Missing dots mean the
-gene had no signal at that timepoint (after filtering).</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-top30-1">
+Past versions of top30-1.png
+</button>
+</p>
+<div id="fig-top30-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/top30-1.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Top 30 genes ranked by maximum |dPSI|. Each gene is represented by a
+single (variant, exonic part) combination tracked across all three
+timepoints. Missing dots mean that combination had no signal at that
+timepoint.</p>
 <table>
 <thead>
 <tr class="header">
@@ -704,21 +880,7 @@ gene had no signal at that timepoint (after filtering).</p>
 <td align="right">0.000</td>
 <td align="right">0.960</td>
 <td align="right">0.000</td>
-<td align="left">stimulation_dependent</td>
-</tr>
-<tr class="odd">
-<td align="left">ALDH3A2</td>
-<td align="right">0.000</td>
-<td align="right">0.937</td>
-<td align="right">0.000</td>
 <td align="left">post_stim_only</td>
-</tr>
-<tr class="even">
-<td align="left">MTMR7</td>
-<td align="right">0.000</td>
-<td align="right">0.863</td>
-<td align="right">0.000</td>
-<td align="left">stimulation_dependent</td>
 </tr>
 <tr class="odd">
 <td align="left">FERMT2</td>
@@ -742,116 +904,102 @@ gene had no signal at that timepoint (after filtering).</p>
 <td align="left">all_timepoints</td>
 </tr>
 <tr class="even">
-<td align="left">KHDC4</td>
-<td align="right">0.808</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="left">lost_after_stim</td>
-</tr>
-<tr class="odd">
 <td align="left">RHOC</td>
 <td align="right">0.788</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="left">lost_after_stim</td>
 </tr>
-<tr class="even">
-<td align="left">CDH12</td>
-<td align="right">0.000</td>
-<td align="right">0.769</td>
-<td align="right">0.000</td>
-<td align="left">post_stim_only</td>
-</tr>
 <tr class="odd">
 <td align="left">RPS14</td>
 <td align="right">0.762</td>
-<td align="right">0.738</td>
+<td align="right">0.737</td>
 <td align="right">0.000</td>
 <td align="left">lost_after_stim</td>
 </tr>
 <tr class="even">
 <td align="left">ASXL3</td>
-<td align="right">0.471</td>
+<td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.755</td>
-<td align="left">lost_after_stim</td>
-</tr>
-<tr class="odd">
-<td align="left">EHBP1</td>
-<td align="right">0.292</td>
-<td align="right">0.313</td>
-<td align="right">0.750</td>
-<td align="left">all_timepoints</td>
-</tr>
-<tr class="even">
-<td align="left">C11orf58</td>
-<td align="right">0.000</td>
-<td align="right">0.742</td>
-<td align="right">0.000</td>
 <td align="left">stimulation_dependent</td>
 </tr>
 <tr class="odd">
+<td align="left">C11orf58</td>
+<td align="right">0.487</td>
+<td align="right">0.742</td>
+<td align="right">0.000</td>
+<td align="left">lost_after_stim</td>
+</tr>
+<tr class="even">
 <td align="left">IFNAR2</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.727</td>
 <td align="left">post_stim_only</td>
 </tr>
-<tr class="even">
-<td align="left">PATJ</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">0.707</td>
-<td align="left">post_stim_only</td>
-</tr>
 <tr class="odd">
-<td align="left">TOR1AIP1</td>
+<td align="left">WWOX</td>
+<td align="right">0.702</td>
 <td align="right">0.000</td>
-<td align="right">0.332</td>
-<td align="right">0.704</td>
-<td align="left">post_stim_only</td>
+<td align="right">0.355</td>
+<td align="left">lost_after_stim</td>
 </tr>
 <tr class="even">
-<td align="left">F12</td>
+<td align="left">ZDHHC21</td>
 <td align="right">0.000</td>
-<td align="right">0.692</td>
-<td align="right">0.000</td>
+<td align="right">0.649</td>
+<td align="right">0.693</td>
 <td align="left">post_stim_only</td>
 </tr>
 <tr class="odd">
 <td align="left">FLOT1</td>
-<td align="right">0.000</td>
+<td align="right">0.672</td>
 <td align="right">0.685</td>
-<td align="right">0.000</td>
-<td align="left">stimulation_dependent</td>
+<td align="right">0.562</td>
+<td align="left">all_timepoints</td>
 </tr>
 <tr class="even">
+<td align="left">ZNF749</td>
+<td align="right">0.397</td>
+<td align="right">0.243</td>
+<td align="right">0.678</td>
+<td align="left">all_timepoints</td>
+</tr>
+<tr class="odd">
 <td align="left">TIMM10B</td>
 <td align="right">0.676</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="left">lost_after_stim</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ZNF302</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.667</td>
+<td align="left">post_stim_only</td>
+</tr>
+<tr class="odd">
+<td align="left">RPS27L</td>
+<td align="right">0.000</td>
+<td align="right">0.665</td>
+<td align="right">0.381</td>
 <td align="left">stimulation_dependent</td>
 </tr>
 <tr class="even">
-<td align="left">RPS27L</td>
-<td align="right">0.364</td>
-<td align="right">0.665</td>
-<td align="right">0.381</td>
-<td align="left">all_timepoints</td>
-</tr>
-<tr class="odd">
 <td align="left">UNC79</td>
-<td align="right">0.475</td>
+<td align="right">0.000</td>
 <td align="right">0.441</td>
 <td align="right">0.659</td>
-<td align="left">all_timepoints</td>
+<td align="left">stimulation_dependent</td>
+</tr>
+<tr class="odd">
+<td align="left">NAXE</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">0.658</td>
+<td align="left">post_stim_only</td>
 </tr>
 <tr class="even">
 <td align="left">CCDC186</td>
@@ -861,15 +1009,15 @@ gene had no signal at that timepoint (after filtering).</p>
 <td align="left">all_timepoints</td>
 </tr>
 <tr class="odd">
-<td align="left">ZNRD2</td>
-<td align="right">0.645</td>
+<td align="left">UBE2Q2P2</td>
+<td align="right">0.648</td>
 <td align="right">0.000</td>
-<td align="right">0.000</td>
+<td align="right">0.376</td>
 <td align="left">lost_after_stim</td>
 </tr>
 <tr class="even">
-<td align="left">ACER3</td>
-<td align="right">0.644</td>
+<td align="left">ZNRD2</td>
+<td align="right">0.645</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="left">lost_after_stim</td>
@@ -885,6 +1033,20 @@ gene had no signal at that timepoint (after filtering).</p>
 <td align="left">RPF1</td>
 <td align="right">0.413</td>
 <td align="right">0.644</td>
+<td align="right">0.363</td>
+<td align="left">all_timepoints</td>
+</tr>
+<tr class="odd">
+<td align="left">GNAI2</td>
+<td align="right">0.640</td>
+<td align="right">0.346</td>
+<td align="right">0.000</td>
+<td align="left">lost_after_stim</td>
+</tr>
+<tr class="even">
+<td align="left">SERBP1</td>
+<td align="right">0.631</td>
+<td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="left">lost_after_stim</td>
 </tr>
@@ -896,11 +1058,25 @@ gene had no signal at that timepoint (after filtering).</p>
 <td align="left">all_timepoints</td>
 </tr>
 <tr class="even">
-<td align="left">MARCHF7</td>
+<td align="left">PRKAR1B</td>
 <td align="right">0.000</td>
-<td align="right">0.607</td>
-<td align="right">0.393</td>
-<td align="left">stimulation_dependent</td>
+<td align="right">0.621</td>
+<td align="right">0.623</td>
+<td align="left">post_stim_only</td>
+</tr>
+<tr class="odd">
+<td align="left">GOLGA8A</td>
+<td align="right">0.619</td>
+<td align="right">0.310</td>
+<td align="right">0.000</td>
+<td align="left">lost_after_stim</td>
+</tr>
+<tr class="even">
+<td align="left">RPS17</td>
+<td align="right">0.609</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="left">lost_after_stim</td>
 </tr>
 </tbody>
 </table>
@@ -908,6 +1084,43 @@ gene had no signal at that timepoint (after filtering).</p>
 <div id="neuronal-and-activity-regulated-genes" class="section level1">
 <h1>Neuronal and activity-regulated genes</h1>
 <p><img src="figure/isolaser_genome_wide.Rmd/named_genes-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-named_genes-1">
+Past versions of named_genes-1.png
+</button>
+</p>
+<div id="fig-named_genes-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/named_genes-1.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Labeled genes are from curated lists of activity-regulated
 immediate-early genes (orange) and neuronal-function genes (blue).</p>
 <table>
@@ -931,57 +1144,81 @@ immediate-early genes (orange) and neuronal-function genes (blue).</p>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">NR4A1</td>
+<td align="left">Activity-regulated</td>
+<td align="right">0.000</td>
+<td align="right">0.597</td>
+<td align="right">0.000</td>
+<td align="left">post_stim_only</td>
+</tr>
+<tr class="even">
+<td align="left">MAPT</td>
+<td align="left">Neuronal</td>
+<td align="right">0.532</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="left">lost_after_stim</td>
+</tr>
+<tr class="odd">
 <td align="left">CACNA1E</td>
 <td align="left">Neuronal</td>
 <td align="right">0.000</td>
 <td align="right">0.488</td>
-<td align="right">0.347</td>
-<td align="left">stimulation_dependent</td>
-</tr>
-<tr class="even">
-<td align="left">GRIA2</td>
-<td align="left">Neuronal</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">0.429</td>
-<td align="left">stimulation_dependent</td>
-</tr>
-<tr class="odd">
-<td align="left">NFKBIA</td>
-<td align="left">Activity-regulated</td>
-<td align="right">0.373</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="left">lost_after_stim</td>
+<td align="right">0.405</td>
+<td align="left">post_stim_only</td>
 </tr>
 <tr class="even">
 <td align="left">ANK3</td>
 <td align="left">Neuronal</td>
-<td align="right">0.177</td>
-<td align="right">0.285</td>
 <td align="right">0.000</td>
-<td align="left">lost_after_stim</td>
+<td align="right">0.000</td>
+<td align="right">0.397</td>
+<td align="left">post_stim_only</td>
 </tr>
 <tr class="odd">
-<td align="left">CAMK2B</td>
+<td align="left">GRIA2</td>
 <td align="left">Neuronal</td>
-<td align="right">0.105</td>
 <td align="right">0.000</td>
-<td align="right">0.182</td>
-<td align="left">lost_after_stim</td>
+<td align="right">0.000</td>
+<td align="right">0.353</td>
+<td align="left">post_stim_only</td>
 </tr>
 <tr class="even">
 <td align="left">SCN2A</td>
 <td align="left">Neuronal</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.153</td>
+<td align="right">0.315</td>
+<td align="left">post_stim_only</td>
+</tr>
+<tr class="odd">
+<td align="left">BTG2</td>
+<td align="left">Activity-regulated</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">0.217</td>
+<td align="left">stimulation_dependent</td>
+</tr>
+<tr class="even">
+<td align="left">SYT1</td>
+<td align="left">Neuronal</td>
+<td align="right">0.000</td>
+<td align="right">0.198</td>
+<td align="right">0.000</td>
 <td align="left">stimulation_dependent</td>
 </tr>
 <tr class="odd">
-<td align="left">SYT1</td>
+<td align="left">CAMK2B</td>
 <td align="left">Neuronal</td>
-<td align="right">0.118</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">0.182</td>
+<td align="left">post_stim_only</td>
+</tr>
+<tr class="even">
+<td align="left">NRXN1</td>
+<td align="left">Neuronal</td>
+<td align="right">0.155</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="left">lost_after_stim</td>
@@ -995,26 +1232,251 @@ reads.</p>
 </div>
 <div id="top-neuronal-gene-plots" class="section level1">
 <h1>Top neuronal gene plots</h1>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-2.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-3.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-4.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-5.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-6.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-7.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p>Each dot is one cis event (one exonic part tested against one
-variant). The y-axis is the signed dPSI — the direction indicates which
-haplotype has higher inclusion. Dot size is read coverage.</p>
+<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gene_plots-1">
+Past versions of gene_plots-1.png
+</button>
+</p>
+<div id="fig-gene_plots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/gene_plots-1.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-2.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gene_plots-2">
+Past versions of gene_plots-2.png
+</button>
+</p>
+<div id="fig-gene_plots-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/gene_plots-2.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-3.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gene_plots-3">
+Past versions of gene_plots-3.png
+</button>
+</p>
+<div id="fig-gene_plots-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/gene_plots-3.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-4.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gene_plots-4">
+Past versions of gene_plots-4.png
+</button>
+</p>
+<div id="fig-gene_plots-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/gene_plots-4.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-5.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gene_plots-5">
+Past versions of gene_plots-5.png
+</button>
+</p>
+<div id="fig-gene_plots-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/gene_plots-5.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/isolaser_genome_wide.Rmd/gene_plots-6.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gene_plots-6">
+Past versions of gene_plots-6.png
+</button>
+</p>
+<div id="fig-gene_plots-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/aaf8c9a3c3cf138de59306d4c1b3d5d8241a42cc/docs/figure/isolaser_genome_wide.Rmd/gene_plots-6.png" target="_blank">aaf8c9a</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Each panel shows one (variant, exonic part) combination tracked
+across timepoints. The variant position and exonic part coordinates are
+in the facet label (variant position / part start-end). This ensures
+each panel represents a single splicing event, not a mixture.</p>
 </div>
 <div id="interpretation" class="section level1">
 <h1>Interpretation</h1>
-<p>This analysis identifies <strong>647 genes</strong> with
-allele-specific splicing after quality filtering. <strong>311
-genes</strong> were tested at baseline with no signal and then showed a
-signal after stimulation — these are the strongest candidates for
-stimulation-dependent allele-specific splicing. Another 110 genes have
-post-stimulation signals but were not tested at baseline, so stimulation
-dependence is not established for those.</p>
+<p>This analysis identifies <strong>1156 genes</strong> with
+allele-specific splicing after quality filtering. Each gene is
+represented by a fixed (variant, exonic part) combination tracked across
+all three timepoints, so the timepoint comparison is always between the
+same splicing event. <strong>348 genes</strong> were tested at baseline
+with no signal and then showed a signal after stimulation — these are
+the strongest candidates for stimulation-dependent allele-specific
+splicing. Another 450 genes have post-stimulation signals but were not
+tested at baseline, so stimulation dependence is not established for
+those.</p>
 <p>The strongest neuronal hits are GRIA2 (AMPA receptor subunit, 6 hr
 only), ANK3 (spectrin adapter, all timepoints), CACNA1E (calcium
 channel, 6 hr only), and SCN2A (sodium channel, 6 hr only). These are

@@ -35,7 +35,7 @@ clarification from the developers.
 
 # Filtering
 
-Three filters were applied to the raw isoLASER cis calls:
+Four filters were applied to the raw isoLASER cis calls:
 
 1. **Effect size:** |dPSI| >= 0.10. Without this, many statistically significant
    calls have dPSI of 0.01–0.02, driven by high read depth rather than a
@@ -46,17 +46,25 @@ Three filters were applied to the raw isoLASER cis calls:
    sequencing errors in difficult sequence. 34% of all variants fall in such
    clusters.
 
-3. **Allelic balance 0.25–0.75.** A true heterozygous site has roughly equal
-   reference and alternate reads. Sites outside this range are likely
-   homozygous sites miscalled as heterozygous, producing fake haplotypes.
+3. **Per-donor allelic balance.** At least one donor must have allelic balance
+   0.25–0.75 and read depth >= 10 at the phasing variant. This is checked
+   per donor, not averaged across donors — an average can hide a case where
+   no individual donor is heterozygous (e.g., one reference-only and one
+   alternate-only donor averaging to 0.5).
+
+4. **Minimum exonic part length >= 10 bp.** The exon model splits overlapping
+   annotations into non-overlapping parts, which can create fragments of 1–3 bp.
+   Allelic balance measured over such short regions is unreliable.
 
 # Signal counts
 
-After filtering: **`r fmt(nrow(gene_tp))` gene-timepoint signals** across
-**`r fmt(uniqueN(gene_tp$gene))` genes**.
+After filtering: **`r fmt(uniqueN(gene_wide$gene))` genes** with at least one
+allele-specific splicing event. Each gene is represented by its strongest
+(gene, variant, exonic part) combination, tracked as a fixed unit across all
+three timepoints.
 
 ```{r genes_per_tp, fig.height=4}
-tp_summary <- gene_tp[, .(n_genes=uniqueN(gene)), by=tp]
+tp_summary <- gene_tp[has_sig==TRUE, .(n_genes=uniqueN(gene)), by=tp]
 tp_summary[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
 
 ggplot(tp_summary, aes(tp, n_genes)) +
@@ -66,9 +74,6 @@ ggplot(tp_summary, aes(tp, n_genes)) +
   ylim(0, max(tp_summary$n_genes)*1.15) +
   theme_minimal(base_size=14)
 ```
-
-More genes show allele-specific splicing after stimulation (329 at 1 hr, 325 at
-6 hr) than at baseline (226 at 0 hr).
 
 # Timepoint patterns
 
@@ -116,13 +121,13 @@ so baseline absence is not established.
 # Top signals
 
 ```{r top30, fig.height=9, fig.width=7}
-top_genes <- gene_tp[, .(max_dpsi=max(max_dpsi)), by=gene][order(-max_dpsi)][1:30, gene]
+top_genes <- gene_wide[order(-max_signal)][1:30, gene]
 
-top_data <- gene_tp[gene %in% top_genes]
+top_data <- gene_tp[gene %in% top_genes & has_sig == TRUE]
 top_data[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
 top_data[, gene := factor(gene, levels=rev(top_genes))]
 
-ggplot(top_data, aes(tp, gene, size=max_dpsi, color=max_dpsi)) +
+ggplot(top_data, aes(tp, gene, size=abs_dpsi, color=abs_dpsi)) +
   geom_point() +
   scale_size_continuous(range=c(1,8), name="|dPSI|") +
   scale_color_gradient(low="#DDDDDD", high="#CC0000", name="|dPSI|") +
@@ -131,9 +136,9 @@ ggplot(top_data, aes(tp, gene, size=max_dpsi, color=max_dpsi)) +
   theme(panel.grid.major=element_line(color="#EEEEEE"))
 ```
 
-Top 30 genes ranked by maximum |dPSI| across timepoints. Dot size and color
-indicate the effect size at each timepoint. Missing dots mean the gene had no
-signal at that timepoint (after filtering).
+Top 30 genes ranked by maximum |dPSI|. Each gene is represented by a single
+(variant, exonic part) combination tracked across all three timepoints. Missing
+dots mean that combination had no signal at that timepoint.
 
 ```{r top_table}
 top_tab <- gene_wide[order(-max_signal)][1:30]
@@ -159,7 +164,7 @@ neuronal <- c("NRXN1","NRXN2","NRXN3","NLGN1","NLGN2","NLGN3",
               "NOVA1","NOVA2","PTBP2","ANK3","MAPT","APP","DSCAM",
               "CNTNAP2","CADM1","TTLL7","CLDND1","MEF2C")
 
-gene_all <- gene_tp[, .(max_dpsi=max(max_dpsi), mean_cov=median(mean_cov)), by=gene]
+gene_all <- gene_tp[has_sig==TRUE, .(max_dpsi=max(abs_dpsi), mean_cov=median(COV, na.rm=TRUE)), by=gene]
 gene_all <- merge(gene_all, gene_wide[, .(gene, pattern)], by="gene")
 gene_all[, label_cat := fcase(
   gene %in% ieg, "Activity-regulated",
@@ -199,34 +204,55 @@ the four donors, or have too few spliced reads.
 
 # Top neuronal gene plots
 
-```{r gene_plots, fig.height=4, fig.width=5, results='asis'}
-cis_all <- fread("/project/xinhe/xsun/long_read_RNA/9.isolaser_results/out/roc_cis_events_filtered.tsv.gz")
+```{r gene_plots, fig.height=4, fig.width=7, results='asis'}
+# Show each gene's selected (variant, exonic_part) across timepoints,
+# plus any other events faceted separately so they are not mixed.
+event_data <- fread("/project/xinhe/xsun/long_read_RNA/9.isolaser_results/out/roc_event_wide.tsv.gz")
 focus_genes <- c("GRIA2","ANK3","CACNA1E","SCN2A","CAMK2B","SYT1","NFKBIA")
-focus_genes <- focus_genes[focus_genes %in% cis_all$gene]
+focus_genes <- focus_genes[focus_genes %in% event_data$gene]
 
 for(g in focus_genes) {
-  gd <- cis_all[gene == g]
-  gd[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
-  p <- ggplot(gd, aes(tp, dpsi)) +
+  gd <- event_data[gene == g & pattern != "other"]
+  if(nrow(gd) == 0) next
+  # reshape to long
+  gd_long <- melt(gd, id.vars=c("gene","variant_qual","exonic_part","pattern"),
+                  measure.vars=c("dpsi_0hr","dpsi_1hr","dpsi_6hr"),
+                  variable.name="tp", value.name="dpsi")
+  gd_long[, tp := factor(sub("dpsi_","",tp), levels=c("0hr","1hr","6hr"))]
+  gd_long <- gd_long[!is.na(dpsi)]
+
+  # label each event
+  gd_long[, event_id := paste0(
+    sub(".*:(\\d+):.*","\\1", variant_qual), " / ",
+    sub("chr[0-9]+:(\\d+)-(\\d+):.*","\\1-\\2", exonic_part))]
+
+  # pick up to 6 strongest events
+  top_events <- gd[order(-max_abs_dpsi)][1:min(.N, 6), .(variant_qual, exonic_part)]
+  gd_long <- gd_long[top_events, on=.(variant_qual, exonic_part)]
+
+  p <- ggplot(gd_long, aes(tp, dpsi)) +
     geom_hline(yintercept=0, lty=2, color="grey60") +
-    geom_jitter(aes(size=COV), width=0.15, alpha=0.6, color="#0072B2") +
-    scale_size_continuous(range=c(1,6), name="Coverage") +
-    labs(x="Timepoint", y="dPSI (haplotype difference)",
-         title=g) +
-    theme_minimal(base_size=13)
+    geom_point(size=3, color="#0072B2") +
+    geom_line(aes(group=1), color="#0072B2", alpha=0.5) +
+    facet_wrap(~event_id, scales="free_y") +
+    labs(x="Timepoint", y="dPSI", title=g) +
+    theme_minimal(base_size=12)
   print(p)
   cat("\n\n")
 }
 ```
 
-Each dot is one cis event (one exonic part tested against one variant). The
-y-axis is the signed dPSI — the direction indicates which haplotype has higher
-inclusion. Dot size is read coverage.
+Each panel shows one (variant, exonic part) combination tracked across
+timepoints. The variant position and exonic part coordinates are in the facet
+label (variant position / part start-end). This ensures each panel represents a
+single splicing event, not a mixture.
 
 # Interpretation
 
-This analysis identifies **`r uniqueN(gene_tp$gene)` genes** with allele-specific
-splicing after quality filtering.
+This analysis identifies **`r nrow(gene_wide)` genes** with allele-specific
+splicing after quality filtering. Each gene is represented by a fixed
+(variant, exonic part) combination tracked across all three timepoints, so
+the timepoint comparison is always between the same splicing event.
 **`r sum(gene_wide$pattern=="stimulation_dependent")` genes** were tested at
 baseline with no signal and then showed a signal after stimulation — these are
 the strongest candidates for stimulation-dependent allele-specific splicing.

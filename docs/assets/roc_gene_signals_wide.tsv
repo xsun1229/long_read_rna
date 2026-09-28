@@ -1,648 +1,1157 @@
-gene	hr0	hr1	hr6	tested_0	tested_1	tested_6	pattern	max_signal
-ABCA7	0	0.291	0	1	1	1	stimulation_dependent	0.291
-ABCD4	0	0	0.364	0	1	1	post_stim_only	0.364
-ABCF2	0	0	0.121	0	1	1	post_stim_only	0.121
-ABHD12	0	0.143	0.203	1	1	1	stimulation_dependent	0.203
-ACAA1	0	0.134	0	0	1	1	post_stim_only	0.134
-ACD	0	0	0.106	0	1	1	post_stim_only	0.106
-ACER3	0.644	0	0	1	0	1	lost_after_stim	0.644
-ACSL3	0.129	0.125	0	1	1	1	lost_after_stim	0.129
-ACTB	0.443	0	0	1	1	1	lost_after_stim	0.443
-ADAL	0	0	0.188	1	1	1	stimulation_dependent	0.188
-ADAM22	0.472	0.54	0	1	1	1	lost_after_stim	0.54
-ADGRL3	0.416	0.23	0	1	1	1	lost_after_stim	0.416
-AFF3	0	0.133	0	1	1	0	stimulation_dependent	0.133
-AFG3L2	0.267	0	0.167	1	1	1	lost_after_stim	0.267
-AGL	0.17	0.139	0	1	1	1	lost_after_stim	0.17
-AGPS	0.346	0.5	0.26	1	1	1	all_timepoints	0.5
-AHI1	0.14	0.144	0.26	1	1	1	all_timepoints	0.26
-AKAP1	0	0.576	0.52	1	1	1	stimulation_dependent	0.576
-AKAP12	0	0	0.222	1	1	1	stimulation_dependent	0.222
-AKAP9	0.12	0	0	1	1	1	lost_after_stim	0.12
-AKR1A1	0	0.215	0	1	1	1	stimulation_dependent	0.215
-ALDH3A2	0	0.937	0	0	1	0	post_stim_only	0.937
-ALMS1	0	0.333	0	0	1	1	post_stim_only	0.333
-AMZ2	0	0.179	0	0	1	1	post_stim_only	0.179
-ANK2	0.3	0	0	1	1	1	lost_after_stim	0.3
-ANK3	0.177	0.285	0	1	1	1	lost_after_stim	0.285
-ANKRD17	0.348	0.123	0.195	1	1	1	all_timepoints	0.348
-ANKRD26	0	0.153	0.21	1	1	1	stimulation_dependent	0.21
-ANKRD36	0	0.146	0	1	1	1	stimulation_dependent	0.146
-ANKRD36B	0.48	0.3	0.361	1	1	1	all_timepoints	0.48
-ANKRD50	0.28	0.311	0.341	1	1	1	all_timepoints	0.341
-ANXA2	0	0.218	0	1	1	1	stimulation_dependent	0.218
-AP1B1	0	0	0.4	0	1	1	post_stim_only	0.4
-AP2A2	0.135	0	0	1	1	1	lost_after_stim	0.135
-AP4S1	0.562	0	0	1	1	1	lost_after_stim	0.562
-APBB2	0.351	0	0	1	1	1	lost_after_stim	0.351
-APEX1	0	0.115	0	1	1	1	stimulation_dependent	0.115
-APLP2	0.319	0	0	1	1	1	lost_after_stim	0.319
-APTR	0.284	0	0	1	1	1	lost_after_stim	0.284
-ARF1	0.222	0.204	0.201	1	1	1	all_timepoints	0.222
-ARFGAP2	0	0	0.194	1	1	1	stimulation_dependent	0.194
-ARHGAP12	0	0.115	0.136	1	1	1	stimulation_dependent	0.136
-ARHGAP22	0	0	0.231	1	1	1	stimulation_dependent	0.231
-ARHGEF40	0.6	0	0	1	0	0	lost_after_stim	0.6
-ARRB2	0	0	0.125	0	1	1	post_stim_only	0.125
-ASAH1	0.206	0.345	0.393	1	1	1	all_timepoints	0.393
-ASRGL1	0	0.305	0	1	1	1	stimulation_dependent	0.305
-ASXL3	0.471	0	0.755	1	1	1	lost_after_stim	0.755
-ATAD1	0	0.135	0	1	1	1	stimulation_dependent	0.135
-ATL1	0.293	0.34	0.33	1	1	1	all_timepoints	0.34
-ATM	0	0	0.182	1	1	1	stimulation_dependent	0.182
-ATP2C1	0	0.36	0	1	1	1	stimulation_dependent	0.36
-ATP5MG	0.137	0.144	0.106	1	1	1	all_timepoints	0.144
-ATP6V0A1	0	0.216	0	0	1	1	post_stim_only	0.216
-BACH1	0	0.116	0	1	1	1	stimulation_dependent	0.116
-BAIAP2	0	0	0.254	0	1	1	post_stim_only	0.254
-BAZ2B	0	0.253	0.144	1	1	1	stimulation_dependent	0.253
-BBS7	0	0.323	0	1	1	1	stimulation_dependent	0.323
-BIN1	0	0	0.147	0	1	1	post_stim_only	0.147
-BIRC6	0	0.117	0	1	1	1	stimulation_dependent	0.117
-BLTP1	0	0	0.24	1	1	1	stimulation_dependent	0.24
-BNIP3L	0.109	0	0	1	1	1	lost_after_stim	0.109
-BRD2	0.409	0	0.215	1	1	1	lost_after_stim	0.409
-BRSK2	0	0	0.364	0	1	1	post_stim_only	0.364
-BTBD10	0	0	0.121	1	1	1	stimulation_dependent	0.121
-C11orf58	0	0.742	0	1	1	1	stimulation_dependent	0.742
-C12orf43	0	0.196	0	1	1	1	stimulation_dependent	0.196
-C12orf57	0	0	0.327	0	1	1	post_stim_only	0.327
-C1orf43	0	0	0.129	1	1	1	stimulation_dependent	0.129
-C20orf96	0	0.423	0.268	1	1	1	stimulation_dependent	0.423
-C4orf33	0	0	0.103	1	1	1	stimulation_dependent	0.103
-CACNA1E	0	0.488	0.347	1	1	1	stimulation_dependent	0.488
-CADPS	0	0.368	0	1	1	1	stimulation_dependent	0.368
-CALD1	0	0.96	0	1	1	1	stimulation_dependent	0.96
-CAMK2B	0.105	0	0.182	1	1	1	lost_after_stim	0.182
-CANX	0.13	0	0	1	1	1	lost_after_stim	0.13
-CAP2	0	0	0.278	0	1	1	post_stim_only	0.278
-CAPNS1	1	0	0	1	1	1	lost_after_stim	1
-CAPRIN2	0	0	0.318	1	1	1	stimulation_dependent	0.318
-CAPZA2	0	0.516	0.644	1	1	1	stimulation_dependent	0.644
-CARS1	0	0.146	0	1	1	1	stimulation_dependent	0.146
-CASP3	0.3	0	0	1	1	1	lost_after_stim	0.3
-CCDC18-AS1	0	0.489	0.417	0	1	1	post_stim_only	0.489
-CCDC186	0.6	0.652	0.352	1	1	1	all_timepoints	0.652
-CCDC47	0	0	0.389	0	1	1	post_stim_only	0.389
-CCDC57	0	0.429	0	1	1	1	stimulation_dependent	0.429
-CCDC82	0	0.183	0	0	1	1	post_stim_only	0.183
-CCNL2	0.329	0	0	1	1	1	lost_after_stim	0.329
-CD200	0	0	0.162	1	1	1	stimulation_dependent	0.162
-CD46	0	0.215	0	1	1	1	stimulation_dependent	0.215
-CD59	0	0	0.143	1	1	1	stimulation_dependent	0.143
-CD9	0.523	0.424	0.606	1	1	1	all_timepoints	0.606
-CDC16	0	0	0.102	1	1	1	stimulation_dependent	0.102
-CDC42BPA	0.375	0	0	1	1	1	lost_after_stim	0.375
-CDH12	0	0.769	0	0	1	0	post_stim_only	0.769
-CDH2	0.205	0	0	1	1	1	lost_after_stim	0.205
-CDH7	0.182	0	0	1	1	1	lost_after_stim	0.182
-CDKL2	0	0	0.126	1	1	1	stimulation_dependent	0.126
-CEP170	0	0	0.375	1	1	1	stimulation_dependent	0.375
-CEP350	0.492	0.288	0.33	1	1	1	all_timepoints	0.492
-CEP57	0	0	0.222	1	1	1	stimulation_dependent	0.222
-CEP57L1	0	0	0.314	0	0	1	post_stim_only	0.314
-CEP63	0	0	0.356	1	1	1	stimulation_dependent	0.356
-CEP78	0	0	0.357	0	1	1	post_stim_only	0.357
-CEP85L	0	0	0.142	1	1	1	stimulation_dependent	0.142
-CERS4	0	0.164	0	1	1	0	stimulation_dependent	0.164
-CETN3	0	0.217	0	1	1	1	stimulation_dependent	0.217
-CFAP210	0.326	0	0.105	1	1	1	lost_after_stim	0.326
-CHD2	0	0.139	0	1	1	1	stimulation_dependent	0.139
-CHD4	0	0.162	0	1	1	1	stimulation_dependent	0.162
-CHD9	0.223	0.233	0.196	1	1	1	all_timepoints	0.233
-CHL1	0	0.13	0	1	1	1	stimulation_dependent	0.13
-CHORDC1	0.461	0.286	0	1	1	1	lost_after_stim	0.461
-CHTOP	0.498	0	0	1	1	0	lost_after_stim	0.498
-CHURC1	0.167	0	0	1	0	1	lost_after_stim	0.167
-CISD2	0	0.29	0	1	1	1	stimulation_dependent	0.29
-CLSTN3	0.429	0	0	1	1	1	lost_after_stim	0.429
-CMC2	0	0.287	0.248	1	1	1	stimulation_dependent	0.287
-CNBP	0.231	0	0	1	1	1	lost_after_stim	0.231
-CNDP2	0	0	0.154	1	1	1	stimulation_dependent	0.154
-CNOT1	0.119	0.123	0.164	1	1	1	all_timepoints	0.164
-CNPPD1	0.333	0	0	1	1	1	lost_after_stim	0.333
-CNTN1	0	0.163	0.157	1	1	1	stimulation_dependent	0.163
-CNTN4	0	0	0.389	0	1	1	post_stim_only	0.389
-COCH	0.152	0	0.19	1	1	1	lost_after_stim	0.19
-COL1A2	0	0	0.4	0	1	1	post_stim_only	0.4
-COL6A1	0.341	0	0	1	1	1	lost_after_stim	0.341
-COPA	0	0	0.129	1	1	1	stimulation_dependent	0.129
-COPB1	0.117	0	0	1	0	1	lost_after_stim	0.117
-COPS2	0.333	0	0	1	1	1	lost_after_stim	0.333
-CPSF6	0	0.153	0.142	1	1	1	stimulation_dependent	0.153
-CROT	0	0.266	0	1	1	0	stimulation_dependent	0.266
-CSNK2B	0	0.15	0.131	1	1	1	stimulation_dependent	0.15
-CST3	0.547	0.516	0.572	1	1	1	all_timepoints	0.572
-CTSB	0.186	0.163	0.179	1	1	1	all_timepoints	0.186
-CUL2	0.115	0.427	0	1	1	1	lost_after_stim	0.427
-CWC22	0	0.501	0	0	1	1	post_stim_only	0.501
-CYBA	0.562	0.426	0.591	1	1	1	all_timepoints	0.591
-CYRIB	0	0.24	0.155	1	1	1	stimulation_dependent	0.24
-CYTOR	0	0	0.32	1	1	1	stimulation_dependent	0.32
-DBN1	0	0.154	0	1	1	1	stimulation_dependent	0.154
-DCAF1	0	0	0.304	0	0	1	post_stim_only	0.304
-DCTN2	0	0.278	0	0	1	0	post_stim_only	0.278
-DDA1	0.161	0	0	1	1	1	lost_after_stim	0.161
-DDHD2	0.231	0.107	0.19	1	1	1	all_timepoints	0.231
-DDX1	0	0	0.103	1	1	1	stimulation_dependent	0.103
-DDX17	0.575	0.48	0	1	1	1	lost_after_stim	0.575
-DDX52	0	0	0.207	1	1	1	stimulation_dependent	0.207
-DELE1	0	0.5	0	0	1	0	post_stim_only	0.5
-DGKB	0	0	0.267	1	1	1	stimulation_dependent	0.267
-DHX36	0.414	0.252	0.193	1	1	1	all_timepoints	0.414
-DLX6-AS1	0	0.145	0	1	1	1	stimulation_dependent	0.145
-DMPK	0	0	0.333	0	0	1	post_stim_only	0.333
-DMXL2	0	0	0.322	1	1	1	stimulation_dependent	0.322
-DNAJB14	0	0	0.485	0	1	1	post_stim_only	0.485
-DNAJC10	0.268	0.189	0	1	1	1	lost_after_stim	0.268
-DNM1	0	0.239	0	1	1	1	stimulation_dependent	0.239
-DNTTIP1	0	0.231	0	1	1	1	stimulation_dependent	0.231
-DNTTIP2	0	0.505	0.471	1	1	1	stimulation_dependent	0.505
-DOCK7	0	0	0.355	1	0	1	stimulation_dependent	0.355
-DPAGT1	0.182	0	0.104	1	1	1	lost_after_stim	0.182
-DPH3	0	0	0.106	1	1	1	stimulation_dependent	0.106
-DPYSL2	0	0	0.104	1	1	1	stimulation_dependent	0.104
-DST	0.238	0	0	1	1	1	lost_after_stim	0.238
-DSTN	0.347	0	0	1	0	0	lost_after_stim	0.347
-DUSP11	0	0	0.141	1	1	1	stimulation_dependent	0.141
-ECI2	0.129	0	0	1	1	1	lost_after_stim	0.129
-EDEM3	0	0	0.125	1	1	1	stimulation_dependent	0.125
-EGLN2	0	0	0.295	0	1	1	post_stim_only	0.295
-EHBP1	0.292	0.313	0.75	1	1	1	all_timepoints	0.75
-EHD1	0	0	0.21	1	1	1	stimulation_dependent	0.21
-EIF1	0.144	0	0	1	0	0	lost_after_stim	0.144
-EIF2B5	0.45	0	0.25	1	1	1	lost_after_stim	0.45
-EIF3I	0.353	0.329	0.317	1	1	1	all_timepoints	0.353
-EIF3M	0.389	0	0	1	0	0	lost_after_stim	0.389
-EIF4E2	0.304	0	0	1	1	0	lost_after_stim	0.304
-EIF4G1	0	0	0.106	1	1	1	stimulation_dependent	0.106
-EIF4G3	0	0	0.522	0	1	1	post_stim_only	0.522
-EIF5A	0.443	0	0	1	0	0	lost_after_stim	0.443
-EIF5B	0	0.488	0	1	1	1	stimulation_dependent	0.488
-EIF6	0	0.148	0	1	1	1	stimulation_dependent	0.148
-ELAC2	0	0.164	0	1	1	1	stimulation_dependent	0.164
-ELF2	0	0.19	0.29	0	1	1	post_stim_only	0.29
-ELL2	0	0.108	0	0	1	0	post_stim_only	0.108
-ELP1	0	0	0.182	1	1	1	stimulation_dependent	0.182
-ELP2	0	0.14	0.15	1	1	1	stimulation_dependent	0.15
-ELP3	0	0.417	0	0	1	0	post_stim_only	0.417
-EMC10	0	0.15	0	1	1	1	stimulation_dependent	0.15
-EMSY	0	0.34	0.342	1	1	1	stimulation_dependent	0.342
-ENC1	0.139	0	0	1	1	1	lost_after_stim	0.139
-ENSG00000284707	0.525	0.453	0.441	1	1	1	all_timepoints	0.525
-ENSG00000290993	0	0.173	0	1	1	1	stimulation_dependent	0.173
-ENSG00000291073	0	0.214	0.127	1	1	1	stimulation_dependent	0.214
-ENSG00000291075	0	0.389	0	1	1	1	stimulation_dependent	0.389
-ENSG00000291078	0	0	0.179	0	1	1	post_stim_only	0.179
-ENSG00000291147	0.425	0	0.317	1	1	1	lost_after_stim	0.425
-ENSG00000291233	0	0	0.169	1	1	1	stimulation_dependent	0.169
-ENY2	0.235	0	0	1	0	0	lost_after_stim	0.235
-EPB41L1	0	0.167	0	1	1	1	stimulation_dependent	0.167
-ERAL1	0.25	0	0	1	1	1	lost_after_stim	0.25
-ERCC6L2	0	0	0.231	1	1	1	stimulation_dependent	0.231
-ERCC6L2-AS1	0.368	0	0	1	1	1	lost_after_stim	0.368
-ETNK1	0.242	0	0	1	1	1	lost_after_stim	0.242
-F12	0	0.692	0	0	1	0	post_stim_only	0.692
-FAM200B	0.593	0.343	0.358	1	1	1	all_timepoints	0.593
-FAM241B	0.128	0	0.105	1	1	1	lost_after_stim	0.128
-FAM27C	0.275	0.318	0.44	1	1	1	all_timepoints	0.44
-FBXL5	0.269	0.163	0.166	1	1	1	all_timepoints	0.269
-FBXO34	0	0.389	0	1	1	1	stimulation_dependent	0.389
-FBXO7	0	0	0.13	0	1	1	post_stim_only	0.13
-FBXW11	0.262	0	0	1	0	0	lost_after_stim	0.262
-FCF1	0.219	0.13	0	1	1	1	lost_after_stim	0.219
-FCHSD2	0	0.15	0	1	1	1	stimulation_dependent	0.15
-FERMT2	0.841	0	0	1	1	1	lost_after_stim	0.841
-FEZ2	0	0	0.357	1	1	1	stimulation_dependent	0.357
-FGD4	0.29	0.275	0	1	1	1	lost_after_stim	0.29
-FGFR1	0	0	0.134	0	0	1	post_stim_only	0.134
-FHOD3	0	0.36	0	0	1	0	post_stim_only	0.36
-FIGNL1	0	0.312	0	0	1	0	post_stim_only	0.312
-FIP1L1	0.241	0	0.302	1	1	1	lost_after_stim	0.302
-FKBP1A	0.319	0	0	1	1	1	lost_after_stim	0.319
-FLII	0.174	0	0	1	1	1	lost_after_stim	0.174
-FLOT1	0	0.685	0	1	1	1	stimulation_dependent	0.685
-FMN1	0	0	0.335	0	0	1	post_stim_only	0.335
-FNBP1	0	0	0.129	0	1	1	post_stim_only	0.129
-FNDC5	0	0.425	0	1	1	1	stimulation_dependent	0.425
-FRA10AC1	0.136	0	0	1	1	1	lost_after_stim	0.136
-FRY	0	0.27	0	1	1	1	stimulation_dependent	0.27
-GABARAPL1	0	0	0.134	1	1	1	stimulation_dependent	0.134
-GABBR1	0	0	0.191	1	1	1	stimulation_dependent	0.191
-GAD1	0	0	0.137	1	1	1	stimulation_dependent	0.137
-GARRE1	0	0.459	0.471	1	1	1	stimulation_dependent	0.471
-GDAP1	0.137	0	0	1	1	1	lost_after_stim	0.137
-GFM1	0	0.114	0	1	1	1	stimulation_dependent	0.114
-GFM2	0	0.278	0	1	1	1	stimulation_dependent	0.278
-GGCT	0	0.136	0	1	1	1	stimulation_dependent	0.136
-GNAI2	0	0.346	0.396	1	1	1	stimulation_dependent	0.396
-GNAS	0	0	0.128	1	1	1	stimulation_dependent	0.128
-GNL3	0.195	0	0	1	1	1	lost_after_stim	0.195
-GOLGA8A	0.577	0.451	0.36	1	1	1	all_timepoints	0.577
-GOLGA8B	0	0.412	0.444	1	1	1	stimulation_dependent	0.444
-GOLT1B	0	0.202	0	1	1	1	stimulation_dependent	0.202
-GOPC	0.229	0.239	0	1	1	1	lost_after_stim	0.239
-GP6-AS1	0	0	0.436	0	0	1	post_stim_only	0.436
-GPM6A	0	0	0.145	1	1	1	stimulation_dependent	0.145
-GRIA2	0	0	0.429	1	1	1	stimulation_dependent	0.429
-GRIK2	0	0	0.188	0	1	1	post_stim_only	0.188
-GSTO1	0	0.248	0	1	1	1	stimulation_dependent	0.248
-GTF2IRD1	0	0	0.25	0	1	1	post_stim_only	0.25
-GTPBP10	0.337	0	0	1	1	1	lost_after_stim	0.337
-HACD3	0.369	0	0	1	1	1	lost_after_stim	0.369
-HIBCH	0	0	0.145	1	1	1	stimulation_dependent	0.145
-HIF1A	0	0	0.175	1	1	1	stimulation_dependent	0.175
-HLA-A	0.206	0.229	0.274	1	1	1	all_timepoints	0.274
-HLA-B	0.205	0	0.223	1	1	1	lost_after_stim	0.223
-HLA-C	0.116	0	0	1	1	1	lost_after_stim	0.116
-HLA-DQB1	0	0	0.367	1	1	1	stimulation_dependent	0.367
-HM13	0.142	0	0	1	1	1	lost_after_stim	0.142
-HMGN1	0	0	0.131	1	1	1	stimulation_dependent	0.131
-HNRNPK	0.126	0	0.104	1	1	1	lost_after_stim	0.126
-HOTAIRM1	0.521	0.423	0.402	1	1	1	all_timepoints	0.521
-HPS4	0.333	0.338	0.5	1	1	1	all_timepoints	0.5
-HSD17B4	0	0.229	0	1	1	1	stimulation_dependent	0.229
-HSF2	0.514	0	0	1	1	1	lost_after_stim	0.514
-HSPH1	0.121	0	0.181	1	1	1	lost_after_stim	0.181
-HYOU1	0.136	0.152	0.226	1	1	1	all_timepoints	0.226
-IARS1	0	0	0.1	1	1	1	stimulation_dependent	0.1
-ICA1L	0	0.58	0.534	0	1	1	post_stim_only	0.58
-IDI1	0	0	0.258	0	1	1	post_stim_only	0.258
-IFNAR2	0	0	0.727	0	1	1	post_stim_only	0.727
-IFRD1	0	0.334	0.134	1	1	1	stimulation_dependent	0.334
-ILK	0.507	0	0	1	1	1	lost_after_stim	0.507
-ILVBL	0	0.134	0	1	1	1	stimulation_dependent	0.134
-IMMT	0.149	0	0.16	1	1	1	lost_after_stim	0.16
-INPP5F	0	0.164	0	1	1	1	stimulation_dependent	0.164
-INTS8	0	0	0.144	0	1	1	post_stim_only	0.144
-IQCK	0	0.549	0.3	0	1	1	post_stim_only	0.549
-IRAK1BP1	0	0.498	0	1	1	1	stimulation_dependent	0.498
-ITCH	0	0.126	0.255	1	1	1	stimulation_dependent	0.255
-IVNS1ABP	0	0	0.486	0	1	1	post_stim_only	0.486
-JKAMP	0.157	0	0.141	1	1	1	lost_after_stim	0.157
-JMJD1C	0	0.128	0	1	1	1	stimulation_dependent	0.128
-KALRN	0	0	0.345	1	1	1	stimulation_dependent	0.345
-KANSL1	0.403	0.259	0.296	1	1	1	all_timepoints	0.403
-KBTBD3	0	0.438	0	0	1	0	post_stim_only	0.438
-KC6	0	0.52	0	1	1	0	stimulation_dependent	0.52
-KCNB2	0.236	0.24	0.283	1	1	1	all_timepoints	0.283
-KDM4B	0	0	0.25	0	1	1	post_stim_only	0.25
-KDM5B	0.123	0.204	0	1	1	1	lost_after_stim	0.204
-KHDC4	0.808	0	0	1	1	1	lost_after_stim	0.808
-KIAA0408	0	0	0.398	1	1	1	stimulation_dependent	0.398
-KPNA2	0.175	0	0.1	1	1	1	lost_after_stim	0.175
-KRT8	0	0.226	0.266	1	1	1	stimulation_dependent	0.266
-LAMTOR4	0.143	0.11	0	1	1	1	lost_after_stim	0.143
-LARP1B	0	0.151	0.471	1	1	1	stimulation_dependent	0.471
-LDAF1	0.263	0	0	1	0	0	lost_after_stim	0.263
-LEPROT	0	0	0.338	1	1	1	stimulation_dependent	0.338
-LGALS8	0	0	0.359	1	1	1	stimulation_dependent	0.359
-LGMN	0.101	0	0	1	1	1	lost_after_stim	0.101
-LIG1	0	0.3	0	0	1	1	post_stim_only	0.3
-LIG3	0.248	0	0	1	1	1	lost_after_stim	0.248
-LINC00205	0	0	0.173	1	1	1	stimulation_dependent	0.173
-LINC00667	0.5	0.433	0	1	1	1	lost_after_stim	0.5
-LINC00888	0.248	0	0.211	1	1	1	lost_after_stim	0.248
-LINC02315	0	0.308	0	1	1	0	stimulation_dependent	0.308
-LINC03000	0	0	0.309	0	0	1	post_stim_only	0.309
-LINC03011	0	0.304	0	0	1	0	post_stim_only	0.304
-LINS1	0	0.107	0	1	1	1	stimulation_dependent	0.107
-LMBRD1	0.769	0	0.838	1	0	1	lost_after_stim	0.838
-LSG1	0	0.107	0	1	1	1	stimulation_dependent	0.107
-LSM1	0	0	0.114	1	1	1	stimulation_dependent	0.114
-LSM5	0	0	0.202	1	1	1	stimulation_dependent	0.202
-LUC7L3	0.103	0.163	0.135	1	1	1	all_timepoints	0.163
-LYRM2	0.19	0	0	1	1	1	lost_after_stim	0.19
-LZIC	0.503	0.293	0.56	1	1	1	all_timepoints	0.56
-LZTR1	0	0.222	0	1	1	1	stimulation_dependent	0.222
-MACF1	0	0.507	0	1	1	1	stimulation_dependent	0.507
-MADD	0	0.226	0.218	0	1	1	post_stim_only	0.226
-MAEA	0	0	0.111	0	1	1	post_stim_only	0.111
-MAN1B1	0	0	0.286	0	1	1	post_stim_only	0.286
-MAP2K4	0	0.167	0	0	1	0	post_stim_only	0.167
-MAP3K4	0	0	0.46	0	1	1	post_stim_only	0.46
-MAP4K5	0	0.37	0	0	1	1	post_stim_only	0.37
-MARCHF7	0	0.607	0.393	1	1	1	stimulation_dependent	0.607
-MARK1	0.44	0	0.122	1	1	1	lost_after_stim	0.44
-MARK3	0	0.107	0	1	1	1	stimulation_dependent	0.107
-MCPH1	0.25	0	0.122	1	1	1	lost_after_stim	0.25
-MDM2	0	0	0.509	1	1	1	stimulation_dependent	0.509
-MED24	0	0.148	0	1	1	1	stimulation_dependent	0.148
-MEG3	0.297	0.278	0	1	1	1	lost_after_stim	0.297
-METTL16	0	0.462	0	1	1	1	stimulation_dependent	0.462
-METTL8	0	0.522	0	1	1	1	stimulation_dependent	0.522
-MFHAS1	0.115	0	0	1	1	1	lost_after_stim	0.115
-MGA	0	0	0.226	1	1	1	stimulation_dependent	0.226
-MIAT	0	0	0.261	1	1	1	stimulation_dependent	0.261
-MICU2	0	0.217	0	1	1	1	stimulation_dependent	0.217
-MIX23	0.543	0.453	0.522	1	1	1	all_timepoints	0.543
-MLF2	0	0.112	0	1	1	1	stimulation_dependent	0.112
-MLLT10	0	0.178	0	1	1	1	stimulation_dependent	0.178
-MPHOSPH10	0	0	0.131	1	1	1	stimulation_dependent	0.131
-MPV17L2	0	0	0.176	1	1	1	stimulation_dependent	0.176
-MRNIP	0	0	0.216	1	1	1	stimulation_dependent	0.216
-MRPL17	0	0	0.127	1	1	1	stimulation_dependent	0.127
-MRPL18	0	0.132	0	1	1	1	stimulation_dependent	0.132
-MRPL28	0	0	0.157	1	1	1	stimulation_dependent	0.157
-MRPL4	0	0	0.126	1	1	1	stimulation_dependent	0.126
-MSH3	0	0	0.128	1	1	1	stimulation_dependent	0.128
-MTDH	0	0.32	0	1	1	1	stimulation_dependent	0.32
-MTMR7	0	0.863	0	1	1	1	stimulation_dependent	0.863
-MTOR	0	0	0.411	0	0	1	post_stim_only	0.411
-MVD	0	0	0.182	1	1	1	stimulation_dependent	0.182
-MYO1B	0	0	0.497	0	1	1	post_stim_only	0.497
-MYT1L	0	0.154	0	1	1	1	stimulation_dependent	0.154
-N4BP2L2	0	0.583	0	0	1	1	post_stim_only	0.583
-NAA16	0.5	0	0	1	1	0	lost_after_stim	0.5
-NAMPT	0	0.25	0	0	1	1	post_stim_only	0.25
-NAP1L1	0	0.181	0	1	1	1	stimulation_dependent	0.181
-NARF	0	0.435	0	1	1	1	stimulation_dependent	0.435
-NASP	0.308	0.136	0.236	1	1	1	all_timepoints	0.308
-NBN	0.143	0	0.143	1	1	1	lost_after_stim	0.143
-NBPF9	0.583	0.549	0.398	1	1	1	all_timepoints	0.583
-NCS1	0	0.226	0.223	1	1	1	stimulation_dependent	0.226
-NDRG4	0	0.136	0	1	1	1	stimulation_dependent	0.136
-NDUFA10	0	0	0.238	1	1	1	stimulation_dependent	0.238
-NDUFA2	0	0.176	0	1	1	1	stimulation_dependent	0.176
-NDUFB1	0.444	0	0	1	1	1	lost_after_stim	0.444
-NDUFS2	0.168	0	0	1	1	1	lost_after_stim	0.168
-NEO1	0	0.457	0.206	1	1	1	stimulation_dependent	0.457
-NFKBIA	0.373	0	0	1	1	1	lost_after_stim	0.373
-NGDN	0	0.228	0	1	1	1	stimulation_dependent	0.228
-NIPSNAP3A	0	0.147	0	1	1	1	stimulation_dependent	0.147
-NIT1	0.323	0	0	1	0	0	lost_after_stim	0.323
-NKAPD1	0	0.289	0	1	1	1	stimulation_dependent	0.289
-NKTR	0.231	0	0	1	1	1	lost_after_stim	0.231
-NLN	0	0.347	0	1	1	1	stimulation_dependent	0.347
-NME2	0	0	0.162	1	1	1	stimulation_dependent	0.162
-NME6	0	0.364	0	0	1	0	post_stim_only	0.364
-NME7	0.18	0	0	1	1	1	lost_after_stim	0.18
-NNT	0	0.58	0.24	1	1	1	stimulation_dependent	0.58
-NOC2L	0	0.105	0	1	1	1	stimulation_dependent	0.105
-NOL8	0.211	0	0	1	1	0	lost_after_stim	0.211
-NQO1	0	0	0.526	0	1	1	post_stim_only	0.526
-NSUN6	0	0	0.293	1	1	1	stimulation_dependent	0.293
-NT5C2	0.354	0	0	1	1	1	lost_after_stim	0.354
-NT5C3A	0	0.155	0	1	1	1	stimulation_dependent	0.155
-NUB1	0	0.489	0.35	0	1	1	post_stim_only	0.489
-NUP54	0	0.328	0.176	1	1	1	stimulation_dependent	0.328
-NUP58	0	0	0.408	0	1	1	post_stim_only	0.408
-NUP88	0	0.154	0.364	1	1	1	stimulation_dependent	0.364
-ODF2L	0	0.12	0.233	1	1	1	stimulation_dependent	0.233
-OIP5-AS1	0	0.239	0.264	1	1	1	stimulation_dependent	0.264
-OPA1	0.146	0	0	1	1	1	lost_after_stim	0.146
-ORC4	0	0.123	0	1	1	1	stimulation_dependent	0.123
-P4HA1	0	0	0.239	0	0	1	post_stim_only	0.239
-P4HB	0	0.178	0.103	1	1	1	stimulation_dependent	0.178
-PABPC4	0	0	0.175	1	1	1	stimulation_dependent	0.175
-PABPN1	0	0	0.231	0	0	1	post_stim_only	0.231
-PACSIN2	0	0.138	0	1	1	1	stimulation_dependent	0.138
-PARP1	0.313	0	0.146	1	1	1	lost_after_stim	0.313
-PATJ	0	0	0.707	0	1	1	post_stim_only	0.707
-PBRM1	0	0.316	0	1	1	1	stimulation_dependent	0.316
-PBX1	0.17	0	0	1	1	1	lost_after_stim	0.17
-PCDH17	0	0	0.478	0	0	1	post_stim_only	0.478
-PCNP	0.316	0	0	1	0	1	lost_after_stim	0.316
-PCOLCE	0	0.158	0	1	1	1	stimulation_dependent	0.158
-PDE4DIP	0	0.224	0	1	1	1	stimulation_dependent	0.224
-PDIA6	0.331	0.163	0.288	1	1	1	all_timepoints	0.331
-PDLIM5	0.4	0	0	1	1	0	lost_after_stim	0.4
-PDPK1	0	0	0.251	1	1	1	stimulation_dependent	0.251
-PDS5B	0.294	0	0	1	1	1	lost_after_stim	0.294
-PEA15	0.238	0.262	0	1	1	0	lost_after_stim	0.262
-PEMT	0.118	0	0	1	1	1	lost_after_stim	0.118
-PEPD	0	0	0.188	1	1	1	stimulation_dependent	0.188
-PFDN1	0	0.255	0	1	1	1	stimulation_dependent	0.255
-PFKP	0.284	0.234	0.206	1	1	1	all_timepoints	0.284
-PHLDA3	0	0	0.463	1	1	1	stimulation_dependent	0.463
-PHYHIPL	0.127	0	0	1	1	1	lost_after_stim	0.127
-PIBF1	0.267	0	0	1	1	1	lost_after_stim	0.267
-PIEZO2	0	0	0.222	1	1	1	stimulation_dependent	0.222
-PIK3R1	0	0	0.2	0	1	1	post_stim_only	0.2
-PITRM1	0	0.333	0.155	1	1	1	stimulation_dependent	0.333
-PKIB	0	0.112	0	1	1	1	stimulation_dependent	0.112
-PKM	0	0	0.256	1	1	1	stimulation_dependent	0.256
-PLD3	0	0.105	0.119	1	1	1	stimulation_dependent	0.119
-PLEKHA5	0	0	0.154	1	1	1	stimulation_dependent	0.154
-PLEKHA6	0.2	0	0	1	1	1	lost_after_stim	0.2
-PLOD2	0	0	0.135	0	0	1	post_stim_only	0.135
-PMAIP1	0	0	0.355	0	0	1	post_stim_only	0.355
-PNISR	0.187	0	0.136	1	1	1	lost_after_stim	0.187
-PNRC2	0	0.156	0	1	1	1	stimulation_dependent	0.156
-POC5	0	0.136	0	1	1	1	stimulation_dependent	0.136
-POLR2E	0	0.105	0	1	1	1	stimulation_dependent	0.105
-POLR3D	0	0	0.206	1	1	1	stimulation_dependent	0.206
-PPP2R3C	0	0.198	0	1	1	1	stimulation_dependent	0.198
-PPP6R2	0	0.156	0	1	1	1	stimulation_dependent	0.156
-PPWD1	0	0.118	0	1	1	1	stimulation_dependent	0.118
-PRKAG2-AS1	0.235	0	0	1	1	1	lost_after_stim	0.235
-PRMT7	0.267	0.182	0	1	1	1	lost_after_stim	0.267
-PRPF40A	0	0.25	0	1	1	1	stimulation_dependent	0.25
-PRR14L	0	0.291	0	1	1	1	stimulation_dependent	0.291
-PRR5	0	0.512	0	0	1	0	post_stim_only	0.512
-PRRC2C	0.115	0	0.167	1	1	1	lost_after_stim	0.167
-PSEN2	0	0.235	0	0	1	0	post_stim_only	0.235
-PSMC2	0.158	0	0	1	0	0	lost_after_stim	0.158
-PSMC5	0.144	0	0	1	1	1	lost_after_stim	0.144
-PSMD13	0.101	0	0	1	1	1	lost_after_stim	0.101
-PTPRO	0	0	0.124	1	1	1	stimulation_dependent	0.124
-PTPRR	0.425	0	0	1	1	0	lost_after_stim	0.425
-PTPRS	0	0.489	0	1	1	1	stimulation_dependent	0.489
-R3HCC1L	0	0	0.147	1	1	1	stimulation_dependent	0.147
-RAB3GAP2	0	0.145	0.119	1	1	1	stimulation_dependent	0.145
-RACK1	0.168	0	0	1	1	1	lost_after_stim	0.168
-RARS2	0	0	0.149	1	1	1	stimulation_dependent	0.149
-RASA1	0	0	0.341	1	0	1	stimulation_dependent	0.341
-RB1	0	0	0.398	0	1	1	post_stim_only	0.398
-RBL2	0	0	0.414	0	1	1	post_stim_only	0.414
-RBMS1	0	0.188	0	1	1	1	stimulation_dependent	0.188
-RCOR3	0	0	0.182	1	1	1	stimulation_dependent	0.182
-REXO2	0.263	0.511	0.305	1	1	1	all_timepoints	0.511
-RHOA	0.574	0	0	1	1	1	lost_after_stim	0.574
-RHOC	0.788	0	0	1	1	0	lost_after_stim	0.788
-RIMS1	0	0	0.258	0	0	1	post_stim_only	0.258
-RIMS2	0	0.239	0.242	1	1	1	stimulation_dependent	0.242
-RNF10	0	0	0.118	0	1	1	post_stim_only	0.118
-RNF123	0.306	0	0	1	1	1	lost_after_stim	0.306
-RNF130	0	0.185	0	1	1	1	stimulation_dependent	0.185
-RNF167	0	0	0.137	1	1	1	stimulation_dependent	0.137
-RNF19A	0	0.473	0	1	1	1	stimulation_dependent	0.473
-RNPC3	0	0	0.171	1	1	1	stimulation_dependent	0.171
-ROGDI	0	0.158	0	1	1	1	stimulation_dependent	0.158
-RPF1	0.413	0.644	0	1	1	1	lost_after_stim	0.644
-RPL11	0.403	0	0	1	0	0	lost_after_stim	0.403
-RPL13	0	0.357	0	1	1	1	stimulation_dependent	0.357
-RPL14	0	0.255	0.342	1	1	1	stimulation_dependent	0.342
-RPL19	0.161	0	0	1	0	0	lost_after_stim	0.161
-RPL28	0	0	0.278	1	1	1	stimulation_dependent	0.278
-RPL3	0	0	0.113	1	1	1	stimulation_dependent	0.113
-RPL37A	0.122	0.131	0.121	1	1	1	all_timepoints	0.131
-RPLP0	0.451	0.484	0.458	1	1	1	all_timepoints	0.484
-RPP21	0.134	0	0	1	1	1	lost_after_stim	0.134
-RPS11	0.132	0	0	1	1	1	lost_after_stim	0.132
-RPS14	0.762	0.738	0	1	1	1	lost_after_stim	0.762
-RPS27L	0.364	0.665	0.381	1	1	1	all_timepoints	0.665
-RPS28	0	0	0.233	1	1	1	stimulation_dependent	0.233
-RPS5	0	0.538	0.502	1	1	1	stimulation_dependent	0.538
-RPS6KC1	0.117	0	0	1	1	1	lost_after_stim	0.117
-RPS7	0	0.471	0.359	0	1	1	post_stim_only	0.471
-RPS8	0.139	0.151	0.156	1	1	1	all_timepoints	0.156
-RRP15	0.142	0	0	1	1	1	lost_after_stim	0.142
-RSRP1	0.345	0	0	1	1	1	lost_after_stim	0.345
-RTF2	0	0.111	0	1	1	1	stimulation_dependent	0.111
-RTN4	0	0.196	0	1	1	1	stimulation_dependent	0.196
-RWDD1	0.321	0	0	1	1	1	lost_after_stim	0.321
-S100Z	0	0.262	0	0	1	1	post_stim_only	0.262
-SACM1L	0	0.262	0	1	1	1	stimulation_dependent	0.262
-SBF1	0	0.178	0.182	1	1	1	stimulation_dependent	0.182
-SCAMP1	0	0	0.113	1	1	1	stimulation_dependent	0.113
-SCFD1	0	0	0.231	1	1	1	stimulation_dependent	0.231
-SCN2A	0	0	0.153	1	1	1	stimulation_dependent	0.153
-SEC22B	0	0.117	0	0	1	1	post_stim_only	0.117
-SEC23IP	0	0.304	0	1	1	1	stimulation_dependent	0.304
-SECISBP2	0.114	0	0	1	1	1	lost_after_stim	0.114
-SEPTIN2	0	0.159	0.14	1	1	1	stimulation_dependent	0.159
-SERPINB8	0	0.25	0	0	1	1	post_stim_only	0.25
-SESTD1	0	0.101	0	1	1	1	stimulation_dependent	0.101
-SF3B1	0	0.181	0	1	1	1	stimulation_dependent	0.181
-SFT2D1	0	0	0.278	1	0	1	stimulation_dependent	0.278
-SFXN4	0	0.269	0	1	1	1	stimulation_dependent	0.269
-SGIP1	0	0.264	0	1	1	1	stimulation_dependent	0.264
-SHISA4	0.182	0	0	1	1	1	lost_after_stim	0.182
-SIRT2	0	0	0.3	0	0	1	post_stim_only	0.3
-SKIC3	0	0.181	0.24	1	1	1	stimulation_dependent	0.24
-SLC20A2	0.45	0	0	1	0	0	lost_after_stim	0.45
-SLC25A12	0	0	0.187	1	1	1	stimulation_dependent	0.187
-SLC25A24	0	0.345	0	1	1	0	stimulation_dependent	0.345
-SLC25A36	0.352	0	0.222	1	0	1	lost_after_stim	0.352
-SLC25A4	0.379	0	0	1	1	1	lost_after_stim	0.379
-SLC4A1AP	0	0	0.238	1	1	1	stimulation_dependent	0.238
-SMARCAD1	0	0	0.233	1	1	1	stimulation_dependent	0.233
-SMARCB1	0.127	0.137	0.133	1	1	1	all_timepoints	0.137
-SMARCE1	0.266	0.263	0.229	1	1	1	all_timepoints	0.266
-SMC2	0	0.158	0.198	1	1	1	stimulation_dependent	0.198
-SMC3	0.288	0.286	0.381	1	1	1	all_timepoints	0.381
-SMCHD1	0	0.176	0	1	1	1	stimulation_dependent	0.176
-SNAP47	0	0	0.25	0	1	1	post_stim_only	0.25
-SNHG1	0.363	0	0	1	1	1	lost_after_stim	0.363
-SNHG14	0	0	0.143	1	1	1	stimulation_dependent	0.143
-SNHG16	0	0.154	0	1	1	1	stimulation_dependent	0.154
-SNHG5	0.371	0.273	0.265	1	1	1	all_timepoints	0.371
-SNRPN	0.273	0.151	0	1	1	1	lost_after_stim	0.273
-SPAST	0.26	0.179	0	1	1	1	lost_after_stim	0.26
-SPATA7	0	0	0.234	1	1	1	stimulation_dependent	0.234
-SPATS2	0	0.208	0	0	1	1	post_stim_only	0.208
-SPCS1	0.299	0.315	0	1	1	1	lost_after_stim	0.315
-SPDL1	0	0.333	0	1	1	0	stimulation_dependent	0.333
-SPG7	0	0	0.143	0	1	1	post_stim_only	0.143
-SPOCK3	0.157	0.333	0.165	1	1	1	all_timepoints	0.333
-SPPL3	0.105	0	0	1	1	1	lost_after_stim	0.105
-SRA1	0	0.111	0	1	1	1	stimulation_dependent	0.111
-SRD5A3	0	0.477	0	1	1	0	stimulation_dependent	0.477
-SRP54	0	0.278	0	1	1	1	stimulation_dependent	0.278
-SRRM1	0	0.133	0	1	1	1	stimulation_dependent	0.133
-SRRM2	0	0.114	0	1	1	1	stimulation_dependent	0.114
-SRSF3	0.1	0	0	1	1	1	lost_after_stim	0.1
-SSR1	0	0	0.209	1	1	1	stimulation_dependent	0.209
-STAG1	0	0.206	0.209	0	1	1	post_stim_only	0.209
-STAG3L5P	0	0	0.409	1	1	1	stimulation_dependent	0.409
-STAMBP	0	0.386	0	1	1	1	stimulation_dependent	0.386
-STAT2	0	0.143	0	1	1	0	stimulation_dependent	0.143
-STK25	0	0	0.212	1	1	1	stimulation_dependent	0.212
-STK33	0	0.253	0	1	1	1	stimulation_dependent	0.253
-STMN3	0	0.232	0	1	1	1	stimulation_dependent	0.232
-STX2	0	0	0.158	0	1	1	post_stim_only	0.158
-STXBP3	0	0	0.15	0	0	1	post_stim_only	0.15
-SUCO	0.304	0	0.3	1	1	1	lost_after_stim	0.304
-SUN1	0	0	0.237	1	1	1	stimulation_dependent	0.237
-SUPT5H	0	0.13	0	1	1	1	stimulation_dependent	0.13
-SYT1	0.118	0	0	1	1	1	lost_after_stim	0.118
-SYT14	0.29	0.132	0	1	1	1	lost_after_stim	0.29
-SYT5	0	0.125	0	1	1	1	stimulation_dependent	0.125
-TAF1B	0	0.27	0	1	1	1	stimulation_dependent	0.27
-TAMM41	0.182	0	0	1	1	1	lost_after_stim	0.182
-TANC2	0	0.158	0	0	1	1	post_stim_only	0.158
-TAOK1	0	0.279	0	1	1	1	stimulation_dependent	0.279
-TBC1D32	0	0.27	0	1	1	1	stimulation_dependent	0.27
-TBCA	0	0.12	0	1	1	1	stimulation_dependent	0.12
-TBCB	0	0.145	0.165	1	1	1	stimulation_dependent	0.165
-TEFM	0.583	0	0.433	1	1	1	lost_after_stim	0.583
-TES	0	0.348	0.214	1	1	1	stimulation_dependent	0.348
-TFB1M	0	0.312	0	1	1	0	stimulation_dependent	0.312
-TFDP2	0	0	0.212	0	0	1	post_stim_only	0.212
-TGS1	0	0.197	0	1	1	1	stimulation_dependent	0.197
-THEM4	0	0.267	0	1	1	1	stimulation_dependent	0.267
-THRAP3	0.107	0.3	0.179	1	1	1	all_timepoints	0.3
-TIMM10B	0.676	0	0	1	1	1	lost_after_stim	0.676
-TIMP2	0	0.16	0	1	1	1	stimulation_dependent	0.16
-TMCO1	0.469	0.306	0.473	1	1	1	all_timepoints	0.473
-TMCO3	0	0.241	0	1	1	1	stimulation_dependent	0.241
-TMEM167B	0	0	0.335	1	0	1	stimulation_dependent	0.335
-TMEM176B	0	0.302	0	1	1	1	stimulation_dependent	0.302
-TMEM25	0	0.111	0	1	1	1	stimulation_dependent	0.111
-TMEM39A	0.25	0	0.484	1	0	1	lost_after_stim	0.484
-TNKS	0	0.128	0	1	1	1	stimulation_dependent	0.128
-TNRC6B	0.169	0	0.213	1	1	1	lost_after_stim	0.213
-TOR1AIP1	0	0.332	0.704	0	1	1	post_stim_only	0.704
-TPM4	0	0	0.2	0	0	1	post_stim_only	0.2
-TRAPPC11	0	0.455	0	0	1	0	post_stim_only	0.455
-TRAPPC12	0	0.108	0.2	1	1	1	stimulation_dependent	0.2
-TRDMT1	0.1	0	0	1	1	1	lost_after_stim	0.1
-TRIM2	0	0.118	0	1	1	1	stimulation_dependent	0.118
-TRIM37	0	0	0.186	1	1	1	stimulation_dependent	0.186
-TRIO	0	0.481	0	0	1	1	post_stim_only	0.481
-TRPC1	0	0.385	0	0	1	0	post_stim_only	0.385
-TSC2	0	0.25	0	1	1	0	stimulation_dependent	0.25
-TSTD2	0	0.182	0	1	1	1	stimulation_dependent	0.182
-TSTD3	0.4	0	0	1	0	0	lost_after_stim	0.4
-TTC21B	0	0	0.217	1	1	1	stimulation_dependent	0.217
-TXNRD1	0	0	0.315	1	1	1	stimulation_dependent	0.315
-UBAP2	0	0.489	0	1	1	1	stimulation_dependent	0.489
-UBAP2L	0.205	0.226	0.136	1	1	1	all_timepoints	0.226
-UBE2D1	0	0.232	0	0	1	0	post_stim_only	0.232
-UBE2V2	0.156	0.17	0.25	1	1	1	all_timepoints	0.25
-UBXN1	0.198	0	0	1	0	0	lost_after_stim	0.198
-UFSP2	0.294	0.18	0	1	1	1	lost_after_stim	0.294
-UNC79	0.475	0.441	0.659	1	1	1	all_timepoints	0.659
-UROS	0	0	0.13	0	0	1	post_stim_only	0.13
-USP22	0	0.114	0.336	1	1	1	stimulation_dependent	0.336
-USP24	0	0.233	0	0	1	0	post_stim_only	0.233
-USP33	0	0	0.114	1	1	1	stimulation_dependent	0.114
-USP46	0	0.172	0	1	1	1	stimulation_dependent	0.172
-USP7	0	0.157	0	1	1	1	stimulation_dependent	0.157
-VPS28	0	0.169	0	1	1	1	stimulation_dependent	0.169
-VPS4B	0	0	0.122	1	1	1	stimulation_dependent	0.122
-VPS50	0	0	0.137	1	1	1	stimulation_dependent	0.137
-VPS53	0	0.137	0.167	1	1	1	stimulation_dependent	0.167
-VPS8	0	0.381	0	1	1	1	stimulation_dependent	0.381
-WAPL	0	0	0.2	0	1	1	post_stim_only	0.2
-WASF1	0	0	0.214	1	1	1	stimulation_dependent	0.214
-WASHC2A	0	0.214	0	1	1	1	stimulation_dependent	0.214
-WDR45B	0.277	0.185	0.18	1	1	1	all_timepoints	0.277
-WDR47	0	0.195	0	0	1	1	post_stim_only	0.195
-WNK1	0.318	0	0	1	1	1	lost_after_stim	0.318
-WSB1	0	0	0.395	1	1	1	stimulation_dependent	0.395
-XPA	0	0.307	0.311	1	1	1	stimulation_dependent	0.311
-YEATS4	0.198	0.175	0	1	1	1	lost_after_stim	0.198
-YME1L1	0.163	0	0	1	1	1	lost_after_stim	0.163
-YPEL5	0	0	0.131	1	1	1	stimulation_dependent	0.131
-YWHAH	0	0	0.273	1	1	1	stimulation_dependent	0.273
-ZC3H7A	0	0.205	0	0	1	1	post_stim_only	0.205
-ZCCHC17	0	0	0.4	1	1	1	stimulation_dependent	0.4
-ZFAND2A	0	0	0.204	1	1	1	stimulation_dependent	0.204
-ZFAS1	0.303	0.625	0.55	1	1	1	all_timepoints	0.625
-ZMPSTE24	0	0.188	0	0	1	0	post_stim_only	0.188
-ZNF138	0.383	0	0	1	1	1	lost_after_stim	0.383
-ZNF250	0	0.186	0	1	1	1	stimulation_dependent	0.186
-ZNF252P	0.136	0	0.113	1	1	1	lost_after_stim	0.136
-ZNF302	0	0	0.667	1	1	1	stimulation_dependent	0.667
-ZNF521	0	0	0.25	0	0	1	post_stim_only	0.25
-ZNF667-AS1	0.316	0.16	0.196	1	1	1	all_timepoints	0.316
-ZNF749	0.397	0.243	0	1	1	1	lost_after_stim	0.397
-ZNF83	0	0.139	0	1	1	1	stimulation_dependent	0.139
-ZNF84	0	0	0.228	1	1	1	stimulation_dependent	0.228
-ZNF892	0	0.294	0.376	1	1	1	stimulation_dependent	0.376
-ZNG1E	0.832	0.826	0.706	1	1	1	all_timepoints	0.832
-ZNHIT3	0	0	0.34	0	1	1	post_stim_only	0.34
-ZNRD2	0.645	0	0	1	1	0	lost_after_stim	0.645
-ZSCAN26	0	0.437	0	1	1	0	stimulation_dependent	0.437
+gene	hr0	hr1	hr6	pattern	variant_qual	exonic_part	max_signal	tested_0	tested_1	tested_6
+ABCA7	0	0.291	0	post_stim_only	chr19:1065563:G>C	chr19:1054569-1054694:+	0.291	1	1	1
+ABCD4	0	0	0.364	post_stim_only	chr14:74299648:A>G	chr14:74296449-74297638:-	0.364	0	1	1
+ABCF2	0	0	0.121	post_stim_only	chr7:151224863:A>G	chr7:151226288-151226304:-	0.121	0	1	1
+ABHD12	0	0	0.203	stimulation_dependent	chr20:25302307:A>G	chr20:25300428-25300698:-	0.203	1	1	1
+ABHD16A	0	0	0.186	stimulation_dependent	chr6:31689635:T>C	chr6:31702611-31702984:-	0.186	1	1	1
+ACAA1	0	0.134	0	post_stim_only	chr3:38125603:A>G	chr3:38126161-38126341:-	0.134	0	1	1
+ACADM	0	0.286	0	stimulation_dependent	chr1:75732723:T>C	chr1:75733050-75733149:+	0.286	1	1	1
+ACAT1	0.201	0	0	lost_after_stim	chr11:108138932:C>A	chr11:108121592-108121678:+	0.201	1	1	1
+ACD	0	0	0.172	post_stim_only	chr16:67657611:C>A	chr16:67659876-67659902:-	0.172	0	1	1
+ACO2	0	0.2	0	post_stim_only	chr22:41515520:C>T	chr22:41517631-41517942:+	0.2	0	1	0
+ACSL3	0.169	0	0	lost_after_stim	chr2:222930716:C>A	chr2:222933505-222933693:+	0.169	1	1	1
+ACTB	0.443	0	0	lost_after_stim	chr7:5529549:C>G	chr7:5530604-5530627:-	0.443	1	1	1
+ACTR3	0.14	0	0	lost_after_stim	chr2:113951841:G>A	chr2:113890597-113890778:+	0.14	1	1	1
+ACYP1	0	0.204	0.178	stimulation_dependent	chr14:75053361:T>C	chr14:75061683-75061762:-	0.204	1	1	1
+ADAL	0	0	0.188	stimulation_dependent	chr15:43333419:G>A	chr15:43349045-43349077:+	0.188	1	1	1
+ADAM22	0.472	0.54	0	lost_after_stim	chr7:87935181:C>G	chr7:87935186-87935340:+	0.54	1	1	1
+ADCYAP1	0	0	0.11	stimulation_dependent	chr18:909559:A>G	chr18:909029-909165:+	0.11	1	1	1
+ADD2	0	0.1	0	post_stim_only	chr2:70768100:G>A	chr2:70767603-70767715:-	0.1	1	1	1
+ADGRL3	0.416	0.23	0.259	all_timepoints	chr4:61497171:C>T	chr4:62068183-62068217:+	0.416	1	1	1
+ADK	0	0.217	0	stimulation_dependent	chr10:74176852:C>T	chr10:74339144-74339240:+	0.217	1	1	1
+AFF3	0	0.133	0	post_stim_only	chr2:99582980:A>T	chr2:99580600-99580728:-	0.133	1	1	0
+AFG3L2	0.267	0	0	lost_after_stim	chr18:12351342:C>T	chr18:12363781-12363856:-	0.267	1	1	1
+AGL	0.17	0.139	0	lost_after_stim	chr1:99851032:A>G	chr1:99851124-99851649:+	0.17	1	1	1
+AGPS	0	0.5	0	post_stim_only	chr2:177513846:G>A	chr2:177543592-177543765:+	0.5	1	1	1
+AGTPBP1	0	0.13	0	stimulation_dependent	chr9:85741827:A>G	chr9:85655200-85655215:-	0.13	1	1	1
+AHI1	0.277	0	0	lost_after_stim	chr6:135497758:C>A	chr6:135495813-135495898:-	0.277	1	1	1
+AHSA1	0	0	0.103	stimulation_dependent	chr14:77462181:A>G	chr14:77468589-77468689:+	0.103	1	1	1
+AIMP1	0.114	0	0	lost_after_stim	chr4:106328238:G>A	chr4:106318378-106318523:+	0.114	1	1	1
+AIMP2	0	0	0.125	post_stim_only	chr7:6023651:C>T	chr7:6015145-6015251:+	0.125	0	0	1
+AKAP1	0	0.576	0.52	post_stim_only	chr17:57120552:G>C	chr17:57096577-57096590:+	0.576	1	1	1
+AKAP12	0	0	0.222	post_stim_only	chr6:151349761:T>C	chr6:151325856-151325885:+	0.222	1	1	1
+AKAP9	0	0	0.23	stimulation_dependent	chr7:92084657:C>T	chr7:91973710-91973786:+	0.23	1	1	1
+AKR1A1	0	0.215	0	stimulation_dependent	chr1:45566638:A>G	chr1:45552435-45552563:+	0.215	1	1	1
+AKR1C2	0	0.145	0	stimulation_dependent	chr10:5000591:G>A	chr10:5003922-5004014:-	0.145	1	1	1
+ALCAM	0.158	0	0	lost_after_stim	chr3:105547429:T>C	chr3:105552143-105552182:+	0.158	1	1	1
+ALDH3A2	0	0.458	0	post_stim_only	chr17:19675559:A>T	chr17:19648850-19648877:+	0.458	0	1	0
+ALDH7A1	0	0.134	0	stimulation_dependent	chr5:126544896:T>C	chr5:126594107-126594138:-	0.134	1	1	0
+ALG6	0.356	0	0	lost_after_stim	chr1:63370946:G>A	chr1:63371059-63371089:+	0.356	1	1	0
+ALMS1	0	0.167	0	post_stim_only	chr2:73602244:C>T	chr2:73599400-73599450:+	0.167	0	1	1
+AMZ2	0	0.179	0	post_stim_only	chr17:68256953:T>A	chr17:68249199-68250017:+	0.179	0	1	1
+ANAPC4	0	0.39	0	post_stim_only	chr4:25417660:T>C	chr4:25413742-25413871:+	0.39	0	1	1
+ANK2	0	0.153	0	post_stim_only	chr4:113373151:T>C	chr4:112861064-112861077:+	0.153	1	1	1
+ANK3	0	0	0.397	post_stim_only	chr10:60029513:G>A	chr10:60145967-60146021:-	0.397	1	1	1
+ANKRD17	0.348	0	0	lost_after_stim	chr4:73098380:G>T	chr4:73102547-73102779:-	0.348	1	1	1
+ANKRD26	0	0.129	0.21	stimulation_dependent	chr10:27092443:C>T	chr10:27092957-27093081:-	0.21	1	1	1
+ANKRD36	0	0	0.149	stimulation_dependent	chr2:97118093:C>T	chr2:97250178-97250199:+	0.149	1	1	1
+ANKRD36B	0.48	0.247	0.335	all_timepoints	chr2:97547720:C>G	chr2:97550103-97550166:-	0.48	1	1	1
+ANKRD36C	0	0	0.365	post_stim_only	chr2:95904764:T>C	chr2:95894212-95894275:-	0.365	1	1	1
+ANKRD49	0	0.236	0	stimulation_dependent	chr11:94496891:G>A	chr11:94497056-94497077:+	0.236	1	1	1
+ANKRD50	0.28	0.311	0.341	all_timepoints	chr4:124667424:G>T	chr4:124709999-124710517:-	0.341	1	1	1
+ANXA2	0	0.218	0	stimulation_dependent	chr15:60347334:C>T	chr15:60398114-60398157:-	0.218	1	1	1
+ANXA5	0.478	0.317	0	lost_after_stim	chr4:121696589:G>A	chr4:121678351-121678414:-	0.478	1	1	1
+ANXA6	0	0	0.154	stimulation_dependent	chr5:151138697:C>T	chr5:151138791-151139352:-	0.154	1	1	1
+AP1AR	0	0	0.125	post_stim_only	chr4:112260829:C>A	chr4:112254773-112254894:+	0.125	0	0	1
+AP1G1	0	0	0.318	stimulation_dependent	chr16:71771184:G>T	chr16:71808504-71808671:-	0.318	1	1	1
+AP2A2	0.21	0	0	lost_after_stim	chr11:1010875:C>T	chr11:1003236-1003721:+	0.21	1	1	1
+AP4S1	0.562	0	0	lost_after_stim	chr14:31072973:GT>AGTG	chr14:31072977-31073185:+	0.562	1	1	1
+APBB1	0.218	0	0	lost_after_stim	chr11:6395619:G>A	chr11:6404744-6404784:-	0.218	1	1	0
+APBB2	0.351	0	0	lost_after_stim	chr4:41214531:C>T	chr4:41100463-41100638:-	0.351	1	1	1
+APEX1	0	0.115	0	stimulation_dependent	chr14:20456994:T>G	chr14:20455328-20455338:+	0.115	1	1	1
+APLP2	0.319	0.361	0.344	all_timepoints	chr11:130143671:T>C	chr11:130069852-130069890:+	0.361	1	1	1
+APTR	0.284	0	0	lost_after_stim	chr7:77685326:G>A	chr7:77684784-77685201:-	0.284	1	1	1
+ARCN1	0	0	0.166	post_stim_only	chr11:118590359:G>A	chr11:118581245-118581401:+	0.166	0	0	1
+ARF1	0.222	0.204	0.201	all_timepoints	chr1:228098261:G>A	chr1:228082790-228082850:+	0.222	1	1	1
+ARFGAP2	0	0	0.194	stimulation_dependent	chr11:47171508:C>T	chr11:47172709-47172751:-	0.194	1	1	1
+ARHGAP12	0	0	0.196	stimulation_dependent	chr10:31928793:C>A	chr10:31854065-31854180:-	0.196	1	1	1
+ARHGAP22	0	0.302	0	post_stim_only	chr10:48446549:C>T	chr10:48479635-48479764:-	0.302	1	1	1
+ARHGEF40	0.6	0	0	lost_after_stim	chr14:21088835:G>T	chr14:21087463-21087752:+	0.6	1	0	0
+ARID4B	0	0.286	0	stimulation_dependent	chr1:235257177:G>A	chr1:235213768-235213876:-	0.286	1	1	1
+ARIH2	0	0.273	0	post_stim_only	chr3:48927506:GAG>A	chr3:48921479-48921576:+	0.273	1	1	0
+ARMH4	0	0.145	0	post_stim_only	chr14:58131638:C>T	chr14:58116123-58116507:-	0.145	1	1	1
+ARPC1B	0	0	0.569	post_stim_only	chr7:99386730:G>C	chr7:99377357-99377439:+	0.569	1	1	1
+ASAH1	0	0	0.393	post_stim_only	chr8:18069817:T>C	chr8:18084461-18084586:-	0.393	1	1	1
+ASB3	0	0	0.277	post_stim_only	chr2:53670316:T>TTC	chr2:53786820-53786849:-	0.277	1	1	1
+ASRGL1	0	0.305	0.384	stimulation_dependent	chr11:62337968:T>C	chr11:62337889-62337966:+	0.384	1	1	1
+ASXL3	0	0	0.755	stimulation_dependent	chr18:33607676:GTC>AA	chr18:33607676-33608074:+	0.755	1	1	1
+ATAD1	0	0.126	0	post_stim_only	chr10:87790352:C>T	chr10:87770951-87771041:-	0.126	1	1	1
+ATF2	0.349	0.255	0.23	all_timepoints	chr2:175151087:T>C	chr2:175150914-175151059:-	0.349	1	1	1
+ATL1	0.293	0.34	0.33	all_timepoints	chr14:50632326:G>A	chr14:50629950-50629994:+	0.34	1	1	1
+ATM	0	0	0.182	stimulation_dependent	chr11:108223105:G>A	chr11:108235669-108235743:+	0.182	1	1	1
+ATP1B1	0	0.248	0	stimulation_dependent	chr1:169124977:G>A	chr1:169132722-169135009:+	0.248	1	1	1
+ATP2B2	0	0	0.235	post_stim_only	chr3:10402142:G>C	chr3:10331910-10331982:-	0.235	0	1	1
+ATP2C1	0	0.36	0	stimulation_dependent	chr3:130999627:G>A	chr3:130893990-130894014:+	0.36	1	1	1
+ATP5MG	0.137	0.144	0.106	all_timepoints	chr11:118401604:T>G	chr11:118407097-118408999:+	0.144	1	1	1
+ATP5MJ	0	0.1	0	stimulation_dependent	chr14:103915164:T>C	chr14:103914478-103914633:-	0.1	1	1	1
+ATP6V0A1	0	0.216	0	post_stim_only	chr17:42461422:T>C	chr17:42502793-42502868:+	0.216	0	1	1
+ATP6V0D1	0.128	0	0	lost_after_stim	chr16:67438052:G>A	chr16:67439351-67439818:-	0.128	1	1	1
+ATP8A1	0	0.212	0	stimulation_dependent	chr4:42657010:T>C	chr4:42590810-42590884:-	0.212	1	1	1
+ATP8A2	0	0	0.207	stimulation_dependent	chr13:26019966:G>A	chr13:25530561-25530571:+	0.207	1	1	1
+ATP9B	0	0	0.384	post_stim_only	chr18:79110396:G>A	chr18:79253541-79255271:+	0.384	1	1	1
+AZI2	0.354	0	0	lost_after_stim	chr3:28340395:A>T	chr3:28340086-28340401:-	0.354	1	1	1
+AZIN1	0	0	0.204	stimulation_dependent	chr8:102864096:G>A	chr8:102849998-102850144:-	0.204	1	1	1
+B4GALNT1	0	0.336	0	post_stim_only	chr12:57632029:G>C	chr12:57632540-57632581:-	0.336	0	1	1
+BACH1	0	0.116	0.146	stimulation_dependent	chr21:29326248:G>A	chr21:29299313-29299415:+	0.146	1	1	1
+BAIAP2	0	0	0.254	post_stim_only	chr17:81109061:G>A	chr17:81105085-81106077:+	0.254	0	1	1
+BAZ2B	0	0	0.144	stimulation_dependent	chr2:159325790:C>T	chr2:159321857-159322027:-	0.144	1	1	1
+BBS7	0	0.323	0	stimulation_dependent	chr4:121870445:G>C	chr4:121857797-121858602:-	0.323	1	1	1
+BDP1	0	0.222	0	post_stim_only	chr5:71502713:A>G	chr5:71494464-71495249:+	0.222	1	1	1
+BID	0	0	0.117	stimulation_dependent	chr22:17735428:A>T	chr22:17743802-17744013:-	0.117	1	0	1
+BIN1	0	0	0.147	post_stim_only	chr2:127059055:G>A	chr2:127057472-127057601:-	0.147	0	1	1
+BIRC6	0	0	0.283	post_stim_only	chr2:32545814:C>T	chr2:32542801-32543240:+	0.283	1	1	1
+BLTP1	0	0.246	0	post_stim_only	chr4:122272192:T>C	chr4:122325684-122325784:+	0.246	1	1	1
+BMERB1	0	0	0.12	post_stim_only	chr16:15587753:C>T	chr16:15502265-15502376:+	0.12	0	0	1
+BNIP3L	0.109	0	0	lost_after_stim	chr8:26408094:T>C	chr8:26408376-26408891:+	0.109	1	1	1
+BRD2	0.409	0	0	lost_after_stim	chr6:32976245:C>T	chr6:32976169-32976249:+	0.409	1	1	1
+BRD3	0	0	0.481	stimulation_dependent	chr9:134053539:C>A	chr9:134051880-134052305:-	0.481	1	1	1
+BRSK2	0	0	0.364	post_stim_only	chr11:1461489:C>T	chr11:1459191-1459236:+	0.364	0	1	1
+BTBD10	0	0	0.121	stimulation_dependent	chr11:13421702:C>T	chr11:13445023-13445164:-	0.121	1	1	1
+BTBD7	0	0	0.213	post_stim_only	chr14:93332874:G>A	chr14:93294852-93294937:-	0.213	0	1	1
+BTG2	0	0	0.217	stimulation_dependent	chr1:203307377:C>A	chr1:203307688-203309137:+	0.217	1	1	1
+BTN2A1	0.178	0	0	lost_after_stim	chr6:26463431:G>A	chr6:26467718-26467947:+	0.178	1	1	1
+C11orf58	0.487	0.742	0	lost_after_stim	chr11:16755046:C>A	chr11:16755067-16755346:+	0.742	1	1	1
+C12orf43	0	0.196	0	stimulation_dependent	chr12:121016344:C>T	chr12:121005060-121005093:-	0.196	1	1	1
+C12orf57	0	0	0.327	post_stim_only	chr12:6943921:A>G	chr12:6944565-6944652:+	0.327	0	1	1
+C1orf43	0	0	0.129	stimulation_dependent	chr1:154206723:A>T	chr1:154213892-154213946:-	0.129	1	1	1
+C1orf52	0.273	0	0	lost_after_stim	chr1:85258644:C>T	chr1:85258213-85258523:-	0.273	1	1	1
+C20orf96	0	0.423	0.268	stimulation_dependent	chr20:279176:G>A	chr20:279330-279488:-	0.423	1	1	1
+C2CD3	0	0	0.253	post_stim_only	chr11:74170802:A>G	chr11:74161398-74161433:-	0.253	0	0	1
+C7orf50	0	0	0.231	post_stim_only	chr7:997162:G>A	chr7:1028257-1028339:-	0.231	1	1	1
+C9orf72	0	0	0.172	stimulation_dependent	chr9:27567146:C>T	chr9:27573494-27573506:-	0.172	1	1	1
+CACNA1E	0	0.488	0.405	post_stim_only	chr1:181483500:C>CT	chr1:181793667-181793793:+	0.488	1	1	1
+CADPS	0	0.368	0	stimulation_dependent	chr3:62651049:C>T	chr3:62481722-62481855:-	0.368	1	1	1
+CALD1	0	0.96	0	post_stim_only	chr7:134933926:G>A	chr7:134933390-134933895:+	0.96	1	1	1
+CALM3	0.235	0	0	lost_after_stim	chr19:46609390:T>C	chr19:46607961-46608196:+	0.235	1	1	1
+CAMK2B	0	0	0.182	post_stim_only	chr7:44220271:C>T	chr7:44217735-44217765:-	0.182	1	1	1
+CANX	0.13	0	0	lost_after_stim	chr5:179729447:T>C	chr5:179699574-179699770:+	0.13	1	1	1
+CAP2	0	0	0.278	post_stim_only	chr6:17543070:A>G	chr6:17507640-17507726:+	0.278	0	1	1
+CAPN7	0	0	0.411	post_stim_only	chr3:15217515:T>C	chr3:15210801-15210922:+	0.411	1	1	1
+CAPNS1	1	0	0	lost_after_stim	chr19:36142305:G>T	chr19:36140967-36140996:+	1	1	1	1
+CAPRIN2	0	0.458	0	post_stim_only	chr12:30754805:T>G	chr12:30754688-30754725:-	0.458	1	1	1
+CAPZA2	0	0.516	0.644	stimulation_dependent	chr7:116888185:C>T	chr7:116888190-116888699:+	0.644	1	1	1
+CAPZB	0.111	0	0	lost_after_stim	chr1:19338962:A>C	chr1:19344357-19344434:-	0.111	1	1	0
+CARS1	0	0.146	0	stimulation_dependent	chr11:3006909:G>A	chr11:3040984-3041031:-	0.146	1	1	1
+CARS2	0.234	0	0	lost_after_stim	chr13:110641567:T>G	chr13:110646090-110646278:-	0.234	1	1	1
+CASP3	0.3	0	0	lost_after_stim	chr4:184649398:T>C	chr4:184631036-184631157:-	0.3	1	1	1
+CCDC106	0	0	0.364	stimulation_dependent	chr19:55651409:C>T	chr19:55648945-55649001:+	0.364	1	1	1
+CCDC126	0	0.381	0	stimulation_dependent	chr7:23611334:G>A	chr7:23611553-23612165:+	0.381	1	1	0
+CCDC171	0	0.202	0	post_stim_only	chr9:15571631:T>A	chr9:15553042-15553290:+	0.202	1	1	0
+CCDC186	0.6	0.652	0.352	all_timepoints	chr10:114127463:G>T	chr10:114125885-114126105:-	0.652	1	1	1
+CCDC47	0	0	0.389	post_stim_only	chr17:63746380:A>G	chr17:63772776-63772863:-	0.389	0	1	1
+CCDC82	0	0.183	0	post_stim_only	chr11:96384202:C>T	chr11:96385936-96385965:-	0.183	0	1	1
+CCDC90B	0	0	0.151	stimulation_dependent	chr11:83261812:T>C	chr11:83286085-83286099:-	0.151	1	1	1
+CCM2	0	0	0.1	post_stim_only	chr7:45038378:G>A	chr7:45000299-45000363:+	0.1	0	1	1
+CCNH	0.1	0	0	lost_after_stim	chr5:87412822:C>A	chr5:87404843-87404950:-	0.1	1	1	1
+CCNL2	0.329	0	0	lost_after_stim	chr1:1390333:C>T	chr1:1391575-1391649:-	0.329	1	1	1
+CCS	0	0.365	0	post_stim_only	chr11:66605833:G>A	chr11:66605153-66605298:+	0.365	0	1	1
+CCSER2	0	0.256	0	stimulation_dependent	chr10:84371302:A>G	chr10:84499874-84499959:+	0.256	1	1	1
+CCT3	0.179	0.14	0	lost_after_stim	chr1:156320863:A>T	chr1:156337078-156337240:-	0.179	1	1	1
+CCT5	0.104	0	0	lost_after_stim	chr5:10264849:A>G	chr5:10250538-10250893:+	0.104	1	1	1
+CCT6A	0.12	0	0	lost_after_stim	chr7:56058666:T>C	chr7:56058702-56059010:+	0.12	1	1	1
+CD200	0	0	0.162	stimulation_dependent	chr3:112345002:C>A	chr3:112362132-112362654:+	0.162	1	1	1
+CD46	0	0.215	0	stimulation_dependent	chr1:207752052:C>G	chr1:207790252-207790345:+	0.215	1	1	1
+CD63	0.145	0.104	0.13	all_timepoints	chr12:55726217:A>G	chr12:55729393-55729575:-	0.145	1	1	1
+CD9	0.467	0.424	0.592	all_timepoints	chr12:6225509:AATAATA>C	chr12:6200384-6200399:+	0.592	1	1	1
+CDC16	0	0	0.102	stimulation_dependent	chr13:114265238:T>C	chr13:114239309-114239349:+	0.102	1	1	1
+CDC25B	0	0.358	0	post_stim_only	chr20:3787025:G>T	chr20:3787686-3788161:+	0.358	0	1	0
+CDC34	0	0	0.129	post_stim_only	chr19:541684:C>T	chr19:537651-540192:+	0.129	0	1	1
+CDC42	0.143	0	0	lost_after_stim	chr1:22090471:T>A	chr1:22052759-22052864:+	0.143	1	0	0
+CDC42BPA	0.375	0	0	lost_after_stim	chr1:227317092:T>C	chr1:227051880-227051985:-	0.375	1	1	1
+CDH2	0.271	0	0	lost_after_stim	chr18:27963422:G>A	chr18:28036469-28036585:-	0.271	1	1	1
+CDH7	0.182	0	0	lost_after_stim	chr18:65862779:A>G	chr18:65862917-65864125:+	0.182	1	1	1
+CDK5RAP3	0	0	0.208	stimulation_dependent	chr17:47981743:C>T	chr17:47981106-47981162:+	0.208	1	1	1
+CDKL2	0	0	0.126	stimulation_dependent	chr4:75614404:C>T	chr4:75625790-75625820:-	0.126	1	1	1
+CELF1	0	0.42	0	post_stim_only	chr11:47478937:G>A	chr11:47470889-47471997:-	0.42	0	1	1
+CEMIP2	0	0	0.288	post_stim_only	chr9:71690103:C>T	chr9:71730704-71730738:-	0.288	0	0	1
+CEP164	0	0	0.279	stimulation_dependent	chr11:117351875:G>A	chr11:117335604-117335680:+	0.279	1	1	1
+CEP170	0	0	0.145	stimulation_dependent	chr1:243199086:C>T	chr1:243185778-243186072:-	0.145	1	1	1
+CEP290	0	0.215	0	stimulation_dependent	chr12:88111300:T>C	chr12:88054339-88054402:-	0.215	1	1	1
+CEP350	0.492	0	0	lost_after_stim	chr1:180024556:G>A	chr1:180073785-180073908:+	0.492	1	1	1
+CEP57	0	0	0.222	post_stim_only	chr11:95831176:G>A	chr11:95790532-95790658:+	0.222	1	1	1
+CEP57L1	0	0	0.314	post_stim_only	chr6:109146932:A>G	chr6:109155877-109155974:+	0.314	0	0	1
+CEP63	0	0	0.356	post_stim_only	chr3:134507126:T>C	chr3:134559149-134559305:+	0.356	1	1	1
+CEP78	0	0	0.357	post_stim_only	chr9:78236433:G>C	chr9:78236603-78236659:+	0.357	0	1	1
+CEP85L	0	0.364	0	post_stim_only	chr6:118632406:C>T	chr6:118491631-118491685:-	0.364	1	1	1
+CERS4	0	0.164	0	post_stim_only	chr19:8262276:A>G	chr19:8250525-8251043:+	0.164	1	1	0
+CETN3	0	0.217	0	stimulation_dependent	chr5:90405715:C>G	chr5:90396492-90396564:-	0.217	1	1	1
+CFAP210	0.326	0	0	lost_after_stim	chr2:169694328:A>G	chr2:169688855-169688948:-	0.326	1	1	1
+CFAP410	0	0	0.127	post_stim_only	chr21:44330205:C>T	chr21:44336823-44336920:-	0.127	1	1	1
+CFDP1	0.132	0	0	lost_after_stim	chr16:75294017:A>G	chr16:75306386-75306545:-	0.132	1	1	1
+CHD2	0	0	0.247	post_stim_only	chr15:93002201:T>C	chr15:92998148-92998261:+	0.247	1	1	1
+CHD4	0	0.162	0	stimulation_dependent	chr12:6601980:C>A	chr12:6602154-6602175:-	0.162	1	1	1
+CHD9	0.194	0.22	0.185	all_timepoints	chr16:53226393:G>A	chr16:53207988-53208031:+	0.22	1	1	1
+CHL1	0	0.373	0	post_stim_only	chr3:319824:C>T	chr3:197289-197368:+	0.373	1	1	1
+CHORDC1	0.446	0.44	0.496	all_timepoints	chr11:90223037:G>A	chr11:90210594-90210765:-	0.496	1	1	1
+CHRNA5	0	0.118	0	post_stim_only	chr15:78590582:G>A	chr15:78590506-78590636:+	0.118	0	1	0
+CHTOP	0.498	0	0	lost_after_stim	chr1:153634079:G>T	chr1:153637662-153638083:+	0.498	1	1	0
+CIBAR1	0	0	0.121	stimulation_dependent	chr8:93726400:G>A	chr8:93724509-93724595:+	0.121	1	1	1
+CINP	0	0	0.186	post_stim_only	chr14:102348704:C>T	chr14:102362573-102362714:-	0.186	0	0	1
+CIRBP	0.103	0	0	lost_after_stim	chr19:1272040:T>C	chr19:1271246-1271328:+	0.103	1	1	1
+CISD2	0	0.29	0	post_stim_only	chr4:102888487:T>G	chr4:102869321-102869335:+	0.29	1	1	1
+CKMT1A	0	0	0.297	stimulation_dependent	chr15:43696326:G>A	chr15:43693858-43693870:+	0.297	1	1	1
+CLASP1	0	0.326	0	post_stim_only	chr2:121458842:A>G	chr2:121402594-121402663:-	0.326	1	1	1
+CLIP1	0	0.251	0	stimulation_dependent	chr12:122380481:T>C	chr12:122351110-122351143:-	0.251	1	1	1
+CLPTM1	0	0	0.192	post_stim_only	chr19:44987311:A>G	chr19:44955380-44955467:+	0.192	1	1	1
+CLSTN3	0.429	0	0	lost_after_stim	chr12:7158931:G>A	chr12:7132385-7132904:+	0.429	1	1	1
+CLTC	0.105	0	0	lost_after_stim	chr17:59681657:G>A	chr17:59620173-59620294:+	0.105	1	1	1
+CMC2	0	0.153	0	stimulation_dependent	chr16:80976175:C>T	chr16:80980769-80980788:-	0.153	1	1	1
+CMPK1	0.118	0	0	lost_after_stim	chr1:47333966:G>C	chr1:47373107-47373443:+	0.118	1	1	1
+CMSS1	0	0.362	0	stimulation_dependent	chr3:100167817:G>A	chr3:100010130-100010180:+	0.362	1	1	1
+CNBP	0.231	0	0	lost_after_stim	chr3:129170458:T>A	chr3:129171633-129171651:-	0.231	1	1	1
+CNDP2	0	0	0.154	post_stim_only	chr18:74501372:G>A	chr18:74508928-74509138:+	0.154	1	1	1
+CNGB1	0	0.101	0	post_stim_only	chr16:57923213:C>T	chr16:57931715-57931764:-	0.101	1	1	1
+CNOT1	0.119	0.123	0.164	all_timepoints	chr16:58599271:C>T	chr16:58599009-58599235:-	0.164	1	1	1
+CNOT2	0	0	0.135	post_stim_only	chr12:70243438:T>C	chr12:70294236-70294294:+	0.135	1	1	1
+CNPPD1	0.333	0	0	lost_after_stim	chr2:219173033:A>G	chr2:219171975-219172173:-	0.333	1	1	1
+CNTN1	0.325	0	0	lost_after_stim	chr12:41070200:G>A	chr12:40910072-40910105:+	0.325	1	1	1
+CNTN4	0	0	0.389	post_stim_only	chr3:2925768:G>A	chr3:2511349-2511468:+	0.389	0	1	1
+COA1	0	0	0.13	stimulation_dependent	chr7:43639397:T>C	chr7:43665657-43665722:-	0.13	1	1	1
+COCH	0	0	0.19	stimulation_dependent	chr14:30885889:C>G	chr14:30874972-30875055:+	0.19	1	1	1
+COL1A2	0	0	0.4	post_stim_only	chr7:94420407:C>T	chr7:94421952-94422040:+	0.4	0	1	1
+COL6A1	0.341	0	0	lost_after_stim	chr21:46003474:G>A	chr21:46001196-46001252:+	0.341	1	1	1
+COL6A2	0	0	0.312	post_stim_only	chr21:46112482:C>G	chr21:46129195-46129801:+	0.312	1	1	1
+COMT	0	0	0.144	stimulation_dependent	chr22:19964280:G>A	chr22:19966625-19966718:+	0.144	1	1	1
+COPA	0	0	0.129	stimulation_dependent	chr1:160289880:C>G	chr1:160333602-160333679:-	0.129	1	1	1
+COPB1	0.117	0	0	lost_after_stim	chr11:14499807:C>A	chr11:14499608-14499666:-	0.117	1	0	1
+COPS2	0.333	0	0	lost_after_stim	chr15:49129530:C>G	chr15:49144226-49144304:-	0.333	1	1	1
+COX10	0	0	0.143	stimulation_dependent	chr17:14069637:C>T	chr17:14102117-14102242:+	0.143	1	1	1
+CPEB4	0	0	0.237	post_stim_only	chr5:173956190:C>A	chr5:173918215-173918254:+	0.237	0	0	1
+CPSF6	0	0.153	0	stimulation_dependent	chr12:69253133:G>A	chr12:69255001-69255160:+	0.153	1	1	1
+CRMP1	0	0	0.119	stimulation_dependent	chr4:5836785:C>G	chr4:5887388-5887813:-	0.119	1	1	1
+CROT	0	0.266	0	stimulation_dependent	chr7:87359322:G>A	chr7:87359330-87360116:+	0.266	1	1	0
+CRYZL1	0	0	0.484	post_stim_only	chr21:33641701:G>A	chr21:33641178-33641305:-	0.484	0	1	1
+CSNK2B	0	0.15	0.129	stimulation_dependent	chr6:31667932:T>C	chr6:31668692-31668830:+	0.15	1	1	1
+CST3	0.547	0.515	0.572	all_timepoints	chr20:23637789:C>T	chr20:23637945-23637955:-	0.572	1	1	1
+CTSB	0.186	0	0	lost_after_stim	chr8:11853378:G>C	chr8:11861405-11861479:-	0.186	1	1	1
+CTSL	0	0.299	0	stimulation_dependent	chr9:87728589:G>A	chr9:87727395-87727468:+	0.299	1	1	1
+CTU2	0	0	0.1	post_stim_only	chr16:88715205:G>C	chr16:88715106-88715181:+	0.1	1	1	1
+CUL2	0	0.247	0	stimulation_dependent	chr10:35090463:C>T	chr10:35031619-35031643:-	0.247	1	1	1
+CWC22	0	0.501	0	post_stim_only	chr2:179945619:C>T	chr2:180006866-180007069:-	0.501	0	1	1
+CXXC4	0	0	0.203	stimulation_dependent	chr4:104472203:A>G	chr4:104475087-104475258:-	0.203	1	1	1
+CYB5A	0	0.169	0	post_stim_only	chr18:74291839:G>A	chr18:74260914-74260944:-	0.169	0	1	1
+CYB5B	0	0.163	0	stimulation_dependent	chr16:69462454:A>G	chr16:69456164-69456295:+	0.163	1	1	1
+CYB5R4	0	0.171	0	post_stim_only	chr6:83864296:C>A	chr6:83859666-83859688:+	0.171	0	1	0
+CYBA	0.525	0.426	0.547	all_timepoints	chr16:88643419:A>G	chr16:88643289-88643312:-	0.547	1	1	1
+CYLD	0.239	0	0	lost_after_stim	chr16:50749895:G>A	chr16:50784451-50786781:+	0.239	1	1	1
+CYP51A1	0	0	0.154	post_stim_only	chr7:92113835:A>G	chr7:92134477-92134503:-	0.154	1	1	1
+CYRIB	0	0.24	0	stimulation_dependent	chr8:129852209:A>G	chr8:130016453-130016463:-	0.24	1	1	1
+CYTOR	0	0	0.32	post_stim_only	chr2:87521508:G>A	chr2:87480222-87480362:+	0.32	1	1	1
+DALRD3	0	0.406	0	post_stim_only	chr3:49017258:T>C	chr3:49015872-49015972:-	0.406	0	1	1
+DAP3	0.344	0	0	lost_after_stim	chr1:155689148:T>G	chr1:155709824-155710157:+	0.344	1	1	1
+DBN1	0	0.174	0.133	stimulation_dependent	chr5:177467754:C>T	chr5:177459602-177459740:-	0.174	1	1	1
+DCAF1	0	0	0.304	post_stim_only	chr3:51470982:C>T	chr3:51492388-51492488:-	0.304	0	0	1
+DCAF13	0	0	0.303	post_stim_only	chr8:103420402:T>C	chr8:103427252-103427430:+	0.303	0	1	1
+DCAF17	0.463	0	0	lost_after_stim	chr2:171435105:C>T	chr2:171473865-171473975:+	0.463	1	0	0
+DCBLD2	0	0.474	0	post_stim_only	chr3:98819211:C>T	chr3:98901326-98901639:-	0.474	1	1	1
+DCLK1	0	0	0.488	stimulation_dependent	chr13:35771678:C>T	chr13:35855509-35855642:-	0.488	1	1	1
+DCTN2	0	0.278	0	post_stim_only	chr12:57530266:A>G	chr12:57535154-57535476:-	0.278	0	1	0
+DCXR	0	0.143	0	stimulation_dependent	chr17:82036723:C>T	chr17:82037449-82037541:-	0.143	1	1	1
+DDA1	0.161	0	0	lost_after_stim	chr19:17320105:G>A	chr19:17315933-17315995:+	0.161	1	1	1
+DDHD1	0	0	0.3	post_stim_only	chr14:53152962:C>T	chr14:53103030-53103051:-	0.3	0	0	1
+DDHD2	0	0	0.19	stimulation_dependent	chr8:38237578:G>A	chr8:38238209-38239058:+	0.19	1	1	1
+DDX1	0	0	0.103	stimulation_dependent	chr2:15607268:C>T	chr2:15603787-15603813:+	0.103	1	1	1
+DDX17	0.575	0.48	0	lost_after_stim	chr22:38494088:G>T	chr22:38490436-38492055:-	0.575	1	1	1
+DDX42	0	0.259	0	post_stim_only	chr17:63792563:CA>ATG	chr17:63775107-63775178:+	0.259	1	1	1
+DDX52	0.21	0	0	lost_after_stim	chr17:37621239:A>G	chr17:37639453-37639568:-	0.21	1	1	1
+DEF8	0	0	0.217	post_stim_only	chr16:89948792:A>G	chr16:89954242-89954288:+	0.217	1	0	1
+DEK	0.155	0	0	lost_after_stim	chr6:18264426:G>A	chr6:18244507-18244603:-	0.155	1	1	1
+DERL1	0	0	0.262	post_stim_only	chr8:123019253:T>C	chr8:123013704-123013778:-	0.262	0	1	1
+DHX36	0.414	0.252	0.177	all_timepoints	chr3:154280584:C>T	chr3:154319080-154319284:-	0.414	1	1	1
+DIS3	0	0	0.414	post_stim_only	chr13:72775940:T>C	chr13:72781288-72781356:-	0.414	1	1	1
+DLG1	0	0	0.34	post_stim_only	chr3:197226305:A>G	chr3:197193824-197193986:-	0.34	0	1	1
+DLX6-AS1	0	0.145	0	stimulation_dependent	chr7:96969055:G>A	chr7:97003508-97003554:-	0.145	1	1	1
+DMPK	0	0	0.333	post_stim_only	chr19:45775181:C>T	chr19:45780506-45780541:-	0.333	0	0	1
+DMXL2	0	0	0.322	stimulation_dependent	chr15:51622580:T>G	chr15:51575974-51576055:-	0.322	1	1	1
+DNAJB11	0	0	0.153	stimulation_dependent	chr3:186570775:A>G	chr3:186579880-186580104:+	0.153	1	1	1
+DNAJB14	0	0	0.485	post_stim_only	chr4:99900516:C>T	chr4:99924759-99924790:-	0.485	0	1	1
+DNAJC10	0.268	0	0	lost_after_stim	chr2:182720027:G>A	chr2:182743597-182743657:+	0.268	1	1	1
+DNAJC6	0	0.42	0	post_stim_only	chr1:65379498:A>C	chr1:65309542-65309938:+	0.42	0	1	1
+DNM1L	0	0	0.202	post_stim_only	chr12:32722471:A>G	chr12:32706689-32706814:+	0.202	1	1	1
+DNTTIP1	0	0.231	0	post_stim_only	chr20:45791997:G>A	chr20:45795443-45796404:+	0.231	1	1	1
+DNTTIP2	0	0.505	0.471	post_stim_only	chr1:93877466:A>G	chr1:93875644-93875665:-	0.505	1	1	1
+DOCK7	0	0	0.355	stimulation_dependent	chr1:62636542:C>T	chr1:62584104-62584402:-	0.355	1	0	1
+DPAGT1	0	0.194	0	stimulation_dependent	chr11:119096580:A>G	chr11:119098043-119098073:-	0.194	1	1	1
+DPCD	0	0.186	0	stimulation_dependent	chr10:101601330:C>T	chr10:101605139-101605212:+	0.186	1	1	1
+DPF1	0	0.374	0	post_stim_only	chr19:38212309:G>A	chr19:38224113-38224222:-	0.374	1	1	1
+DPH3	0	0	0.106	stimulation_dependent	chr3:16264166:C>G	chr3:16263649-16264154:-	0.106	1	1	1
+DPP7	0	0	0.236	post_stim_only	chr9:137114297:G>C	chr9:137114576-137114646:-	0.236	1	1	1
+DPYSL2	0	0	0.242	stimulation_dependent	chr8:26583960:G>A	chr8:26577842-26578293:+	0.242	1	1	1
+DST	0	0	0.444	stimulation_dependent	chr6:56487227:T>C	chr6:56601442-56601676:-	0.444	1	1	1
+DSTN	0.347	0	0	lost_after_stim	chr20:17604617:A>G	chr20:17591931-17592063:+	0.347	1	0	0
+DTNBP1	0	0	0.387	stimulation_dependent	chr6:15522869:T>C	chr6:15585718-15586015:-	0.387	1	1	1
+DUSP11	0	0	0.141	stimulation_dependent	chr2:73780008:T>C	chr2:73767418-73768952:-	0.141	1	1	1
+DYNC1H1	0	0.189	0	stimulation_dependent	chr14:101997069:A>G	chr14:102018450-102018511:+	0.189	1	1	1
+EBNA1BP2	0.209	0	0	lost_after_stim	chr1:43172260:T>C	chr1:43172268-43172279:-	0.209	1	1	0
+ECI2	0.129	0	0	lost_after_stim	chr6:4116027:G>A	chr6:4130178-4130249:-	0.129	1	1	1
+EDEM3	0	0	0.125	stimulation_dependent	chr1:184706679:G>A	chr1:184692145-184693365:-	0.125	1	1	1
+EGLN2	0	0	0.295	post_stim_only	chr19:40800456:G>A	chr19:40799709-40799724:+	0.295	0	1	1
+EHBP1	0	0	0.606	post_stim_only	chr2:62864892:G>A	chr2:62705651-62705704:+	0.606	1	1	1
+EHD1	0	0	0.21	stimulation_dependent	chr11:64855417:C>T	chr11:64855486-64855882:-	0.21	1	1	1
+EHMT2	0	0	0.248	post_stim_only	chr6:31896769:G>T	chr6:31896989-31897202:-	0.248	0	0	1
+EIF1	0.144	0	0	lost_after_stim	chr17:41690888:C>G	chr17:41689265-41689777:+	0.144	1	0	0
+EIF2AK1	0	0.199	0	post_stim_only	chr7:6046116:A>TTTTTTT	chr7:6058147-6058242:-	0.199	1	1	1
+EIF2B5	0.45	0	0.25	lost_after_stim	chr3:184143454:A>G	chr3:184143142-184143430:+	0.45	1	1	1
+EIF3B	0	0	0.2	post_stim_only	chr7:2366415:C>T	chr7:2367045-2367119:+	0.2	1	1	1
+EIF3I	0.272	0.329	0	lost_after_stim	chr1:32224428:C>T	chr1:32221522-32221583:+	0.329	1	1	1
+EIF4E2	0.304	0	0	lost_after_stim	chr2:232567145:A>T	chr2:232568944-232569178:+	0.304	1	1	0
+EIF4G1	0.315	0	0	lost_after_stim	chr3:184328681:C>T	chr3:184315407-184315488:+	0.315	1	1	1
+EIF4G3	0	0	0.522	post_stim_only	chr1:20806477:C>T	chr1:20941490-20942330:-	0.522	0	1	1
+EIF5A	0.443	0	0	lost_after_stim	chr17:7311591:T>C	chr17:7307480-7307539:+	0.443	1	0	0
+EIF6	0	0.148	0	stimulation_dependent	chr20:35278949:G>C	chr20:35280653-35280697:-	0.148	1	1	1
+ELAC2	0	0.164	0	post_stim_only	chr17:12992611:G>A	chr17:13003574-13003786:-	0.164	1	1	1
+ELAVL2	0	0.112	0	stimulation_dependent	chr9:23762177:G>A	chr9:23821226-23821275:-	0.112	1	1	1
+ELAVL4	0.352	0	0	lost_after_stim	chr1:50201233:C>T	chr1:50108965-50109065:+	0.352	1	1	1
+ELF2	0	0.481	0.29	post_stim_only	chr4:139071872:C>T	chr4:139084496-139084521:-	0.481	0	1	1
+ELL2	0	0.108	0	post_stim_only	chr5:95942974:G>A	chr5:95942917-95943001:-	0.108	0	1	0
+ELP1	0	0	0.182	post_stim_only	chr9:108897202:T>G	chr9:108875632-108875735:-	0.182	1	1	1
+ELP2	0	0	0.171	stimulation_dependent	chr18:36170082:C>T	chr18:36146249-36146376:+	0.171	1	1	1
+ELP3	0	0.417	0	post_stim_only	chr8:28093152:C>T	chr8:28113173-28113396:+	0.417	0	1	0
+EMC10	0	0.15	0	stimulation_dependent	chr19:50480672:C>T	chr19:50482148-50482165:+	0.15	1	1	1
+EMSY	0	0.34	0.342	stimulation_dependent	chr11:76451921:G>A	chr11:76453388-76453931:+	0.342	1	1	1
+ENC1	0.139	0	0	lost_after_stim	chr5:74635420:T>C	chr5:74637493-74637564:-	0.139	1	1	1
+ENSG00000274253	0.126	0	0	lost_after_stim	chr15:22757902:G>A	chr15:22758062-22758108:+	0.126	1	1	1
+ENSG00000284707	0.525	0.453	0.441	all_timepoints	chr7:97972258:G>A	chr7:97970372-97970545:-	0.525	1	1	1
+ENSG00000290993	0	0.173	0	stimulation_dependent	chr3:129399198:T>A	chr3:129396216-129396293:-	0.173	1	1	1
+ENSG00000291015	0	0	0.212	post_stim_only	chr22:38361448:A>G	chr22:38361139-38361398:-	0.212	0	1	1
+ENSG00000291073	0	0.214	0	post_stim_only	chr16:21479570:T>C	chr16:21502260-21502281:-	0.214	1	1	1
+ENSG00000291075	0	0.389	0	post_stim_only	chr9:41011646:T>C	chr9:41008880-41008919:+	0.389	1	1	1
+ENSG00000291078	0	0	0.179	post_stim_only	chr3:10017751:T>C	chr3:10023559-10023581:-	0.179	0	1	1
+ENSG00000291079	0	0	0.605	stimulation_dependent	chr5:1633954:C>T	chr5:1628699-1628754:-	0.605	1	1	1
+ENSG00000291100	0	0.12	0	stimulation_dependent	chr20:28602649:C>A	chr20:28585917-28586298:-	0.12	1	1	1
+ENSG00000291147	0	0	0.244	stimulation_dependent	chr2:242114703:G>A	chr2:242116330-242116372:+	0.244	1	1	1
+ENSG00000291178	0	0.214	0	post_stim_only	chr7:100328898:A>G	chr7:100332441-100332509:-	0.214	0	1	0
+ENSG00000291203	0	0.238	0	post_stim_only	chr4:119454874:C>G	chr4:119462979-119463641:+	0.238	0	1	1
+ENSG00000291233	0	0	0.169	post_stim_only	chr1:149198375:C>G	chr1:149285453-149286062:-	0.169	1	1	1
+ENY2	0.235	0	0	lost_after_stim	chr8:109334334:T>G	chr8:109334406-109334474:+	0.235	1	0	0
+EPB41L1	0	0.167	0	post_stim_only	chr20:36232724:C>T	chr20:36125422-36125527:+	0.167	1	1	1
+ERAL1	0.25	0	0	lost_after_stim	chr17:28860770:C>T	chr17:28860959-28861009:+	0.25	1	1	1
+ERC1	0	0.223	0	stimulation_dependent	chr12:1028050:A>G	chr12:1410388-1410453:+	0.223	1	1	1
+ERCC1	0.1	0	0	lost_after_stim	chr19:45420394:A>G	chr19:45416490-45416820:-	0.1	1	1	1
+ERCC6L2	0	0	0.231	post_stim_only	chr9:95972387:C>T	chr9:95967318-95967458:+	0.231	1	1	1
+ERCC6L2-AS1	0.368	0	0	lost_after_stim	chr9:95875147:C>T	chr9:95874548-95874622:-	0.368	1	1	1
+ERICH1	0.181	0	0	lost_after_stim	chr8:673905:C>T	chr8:731224-731325:-	0.181	1	1	1
+ETFA	0.103	0	0	lost_after_stim	chr15:76286420:G>A	chr15:76227137-76227230:-	0.103	1	1	1
+ETNK1	0.242	0	0	lost_after_stim	chr12:22661101:A>G	chr12:22661205-22661228:+	0.242	1	1	1
+EXOC1	0.299	0	0	lost_after_stim	chr4:55904922:G>A	chr4:55888887-55888932:+	0.299	1	1	1
+EXT2	0	0.295	0	post_stim_only	chr11:44095821:C>G	chr11:44244366-44244464:+	0.295	1	1	0
+EXTL3	0	0	0.6	post_stim_only	chr8:28715695:G>A	chr8:28701454-28701488:+	0.6	0	0	1
+FAM104A	0	0	0.353	post_stim_only	chr17:73232090:A>G	chr17:73212677-73212740:-	0.353	1	1	1
+FAM200B	0.593	0.305	0.358	all_timepoints	chr4:15687141:G>A	chr4:15687358-15687460:+	0.593	1	1	1
+FAM228B	0	0.154	0	post_stim_only	chr2:24169455:G>T	chr2:24124162-24124329:+	0.154	0	1	0
+FAM241B	0.128	0	0	lost_after_stim	chr10:69632800:C>T	chr10:69631479-69631547:+	0.128	1	1	1
+FAM27C	0	0	0.44	post_stim_only	chr9:61917580:T>C	chr9:61975790-61975912:+	0.44	1	1	1
+FAT1	0	0	0.159	post_stim_only	chr4:186709834:C>A	chr4:186723663-186723856:-	0.159	0	1	1
+FBXL5	0.269	0.163	0.166	all_timepoints	chr4:15638634:C>T	chr4:15630627-15630665:-	0.269	1	1	1
+FBXO25	0.185	0	0	lost_after_stim	chr8:431343:C>G	chr8:406807-406912:+	0.185	1	1	1
+FBXO34	0	0.389	0	post_stim_only	chr14:55271446:T>C	chr14:55354500-55354585:+	0.389	1	1	1
+FBXO7	0	0	0.317	post_stim_only	chr22:32491162:C>T	chr22:32487828-32491085:+	0.317	0	1	1
+FCF1	0.219	0.111	0	lost_after_stim	chr14:74716091:T>C	chr14:74715820-74715950:+	0.219	1	1	1
+FCHSD2	0	0.15	0	post_stim_only	chr11:72989025:C>T	chr11:73141220-73141344:-	0.15	1	1	1
+FDFT1	0.153	0	0	lost_after_stim	chr8:11831609:G>C	chr8:11802910-11802931:+	0.153	1	1	1
+FERMT2	0.841	0	0	lost_after_stim	chr14:52893422:G>T	chr14:52951035-52951050:-	0.841	1	1	1
+FEZ1	0	0.139	0	post_stim_only	chr11:125496271:G>C	chr11:125496122-125496218:-	0.139	0	1	0
+FEZ2	0	0	0.357	post_stim_only	chr2:36555742:G>A	chr2:36555976-36556060:-	0.357	1	1	1
+FGD4	0.29	0	0	lost_after_stim	chr12:32576399:G>A	chr12:32576449-32576509:+	0.29	1	1	1
+FGFR1	0	0	0.134	post_stim_only	chr8:38412855:C>T	chr8:38428093-38428345:-	0.134	0	0	1
+FIP1L1	0	0	0.302	stimulation_dependent	chr4:53377737:T>C	chr4:53414633-53414722:+	0.302	1	1	1
+FKBP1A	0.319	0	0	lost_after_stim	chr20:1392867:G>C	chr20:1371147-1372075:-	0.319	1	1	1
+FLII	0.174	0	0	lost_after_stim	chr17:18245170:G>A	chr17:18245272-18245350:-	0.174	1	1	1
+FLOT1	0.672	0.685	0.562	all_timepoints	chr6:30741177:C>T	chr6:30740834-30740853:-	0.685	1	1	1
+FMN1	0	0	0.335	post_stim_only	chr15:33065060:A>G	chr15:33119248-33119381:-	0.335	0	0	1
+FNBP1	0	0	0.129	post_stim_only	chr9:129900506:C>T	chr9:129919158-129919242:-	0.129	0	1	1
+FNDC3A	0	0	0.177	stimulation_dependent	chr13:49191101:G>A	chr13:49191109-49191120:+	0.177	1	1	1
+FNDC5	0	0.425	0	stimulation_dependent	chr1:32864455:C>T	chr1:32870652-32870746:-	0.425	1	1	1
+FNTA	0	0	0.2	stimulation_dependent	chr8:43056531:C>G	chr8:43085458-43085506:+	0.2	1	1	1
+FRA10AC1	0.136	0	0	lost_after_stim	chr10:93698383:A>G	chr10:93702580-93702592:-	0.136	1	1	1
+FRMD4A	0	0.111	0	stimulation_dependent	chr10:13666216:G>T	chr10:13684035-13684864:-	0.111	1	1	1
+FRY	0	0.27	0	stimulation_dependent	chr13:32101976:A>G	chr13:31945825-31946008:+	0.27	1	1	1
+FUS	0.2	0	0	lost_after_stim	chr16:31182620:C>A	chr16:31182664-31183350:+	0.2	1	1	1
+GAA	0	0.364	0	post_stim_only	chr17:80119749:G>T	chr17:80112844-80112875:+	0.364	1	1	1
+GABARAPL1	0	0	0.108	stimulation_dependent	chr12:10212974:C>G	chr12:10212882-10212892:+	0.108	1	1	1
+GABBR1	0	0	0.191	stimulation_dependent	chr6:29608615:A>G	chr6:29632385-29632459:-	0.191	1	1	1
+GABRG2	0	0.316	0	post_stim_only	chr5:162093881:A>G	chr5:162102553-162102673:+	0.316	0	1	1
+GAD1	0	0	0.137	post_stim_only	chr2:170822114:T>C	chr2:170836883-170837716:+	0.137	1	1	1
+GAK	0	0	0.281	post_stim_only	chr4:849395:G>A	chr4:851673-851749:-	0.281	1	1	1
+GALNT8	0	0	0.239	post_stim_only	chr12:4814586:A>G	chr12:4839262-4839296:+	0.239	1	1	1
+GAPVD1	0	0.305	0	post_stim_only	chr9:125363036:C>A	chr9:125345889-125346818:+	0.305	1	1	1
+GARRE1	0	0.459	0	post_stim_only	chr19:34299851:G>A	chr19:34300567-34300754:+	0.459	1	1	1
+GCA	0	0	0.1	post_stim_only	chr2:162352382:T>G	chr2:162344134-162344158:+	0.1	0	1	1
+GCAT	0	0	0.525	stimulation_dependent	chr22:37816754:A>G	chr22:37809948-37810026:+	0.525	1	1	1
+GDAP1	0	0	0.246	stimulation_dependent	chr8:74361905:T>G	chr8:74366876-74368060:+	0.246	1	1	1
+GFM1	0	0.27	0	stimulation_dependent	chr3:158691472:C>T	chr3:158650004-158650061:+	0.27	1	1	1
+GFM2	0	0.278	0	post_stim_only	chr5:74750638:C>T	chr5:74738501-74738642:-	0.278	1	1	1
+GGCT	0	0.136	0	stimulation_dependent	chr7:30504743:G>A	chr7:30500535-30500680:-	0.136	1	1	1
+GGH	0	0	0.114	stimulation_dependent	chr8:63038677:C>T	chr8:63023508-63023739:-	0.114	1	1	1
+GGNBP2	0	0.241	0	post_stim_only	chr17:36586164:G>A	chr17:36585450-36585839:+	0.241	1	1	1
+GHITM	0.215	0	0	lost_after_stim	chr10:84139590:G>T	chr10:84139666-84139742:+	0.215	1	1	0
+GIGYF2	0	0.448	0	post_stim_only	chr2:232844095:A>G	chr2:232734416-232734486:+	0.448	1	1	1
+GLOD4	0	0	0.115	post_stim_only	chr17:769949:T>A	chr17:778694-778744:-	0.115	0	1	1
+GLRX3	0	0.184	0	post_stim_only	chr10:130136389:C>G	chr10:130179608-130179672:+	0.184	1	1	1
+GLS	0.442	0	0	lost_after_stim	chr2:190963161:G>A	chr2:190895603-190895619:+	0.442	1	1	1
+GLT8D1	0	0.263	0	post_stim_only	chr3:52705619:T>G	chr3:52704812-52704948:-	0.263	1	1	1
+GMFB	0	0	0.272	post_stim_only	chr14:54488958:A>T	chr14:54481325-54481394:-	0.272	0	1	1
+GMPR2	0	0	0.217	post_stim_only	chr14:24238272:G>A	chr14:24238405-24238588:+	0.217	1	0	1
+GNAI1	0	0	0.155	stimulation_dependent	chr7:80212840:T>C	chr7:80134376-80134399:+	0.155	1	1	1
+GNAI2	0.64	0.346	0	lost_after_stim	chr3:50252474:C>T	chr3:50236203-50236453:+	0.64	1	1	1
+GNAO1	0	0	0.28	post_stim_only	chr16:56356329:T>A	chr16:56355081-56355132:+	0.28	1	1	1
+GNAS	0	0	0.128	stimulation_dependent	chr20:58903751:C>T	chr20:58889159-58889170:+	0.128	1	1	1
+GNG4	0.141	0	0	lost_after_stim	chr1:235552222:A>G	chr1:235595479-235595511:-	0.141	1	1	1
+GNG8	0	0	0.188	stimulation_dependent	chr19:46634714:G>A	chr19:46634725-46635023:-	0.188	1	1	1
+GNL3	0.195	0	0	lost_after_stim	chr3:52687288:G>A	chr3:52688192-52688206:+	0.195	1	1	1
+GNPAT	0	0	0.276	post_stim_only	chr1:231260710:G>A	chr1:231260719-231260992:+	0.276	1	1	1
+GNPDA1	0.354	0	0	lost_after_stim	chr5:142002072:C>T	chr5:142012339-142012377:-	0.354	1	1	0
+GNPDA2	0.422	0	0	lost_after_stim	chr4:44717152:G>T	chr4:44702787-44703142:-	0.422	1	0	0
+GOLGA8A	0.619	0.31	0	lost_after_stim	chr15:34553036:A>G	chr15:34406046-34406673:-	0.619	1	1	1
+GOLGA8B	0	0.412	0.444	post_stim_only	chr15:34552979:T>C	chr15:34583665-34583708:-	0.444	1	1	1
+GOLGB1	0	0.45	0	post_stim_only	chr3:121664449:G>A	chr3:121690669-121690730:-	0.45	1	1	1
+GOLT1B	0	0.202	0	stimulation_dependent	chr12:21501896:G>T	chr12:21507116-21507151:+	0.202	1	1	1
+GP6-AS1	0	0	0.436	post_stim_only	chr19:55043110:G>A	chr19:55006289-55006299:+	0.436	0	0	1
+GPANK1	0	0.388	0	stimulation_dependent	chr6:31664356:C>A	chr6:31665399-31665442:-	0.388	1	1	1
+GPM6A	0	0.192	0	post_stim_only	chr4:175634535:C>T	chr4:175787335-175787387:-	0.192	1	1	1
+GPR162	0	0	0.182	post_stim_only	chr12:6824437:C>T	chr12:6824765-6825172:+	0.182	1	1	1
+GRHPR	0.127	0	0	lost_after_stim	chr9:37436757:G>A	chr9:37428483-37428537:+	0.127	1	0	1
+GRIA2	0	0	0.353	post_stim_only	chr4:157360141:A>G	chr4:157220729-157220806:+	0.353	1	1	1
+GRIK2	0	0	0.188	post_stim_only	chr6:101676729:G>A	chr6:101686330-101686353:+	0.188	0	1	1
+GSTO1	0	0.248	0	stimulation_dependent	chr10:104263030:C>A	chr10:104254709-104254891:+	0.248	1	1	1
+GTF2IRD1	0	0	0.25	post_stim_only	chr7:74602590:G>A	chr7:74555392-74555437:+	0.25	0	1	1
+GTF3A	0	0.122	0.115	stimulation_dependent	chr13:27424631:T>C	chr13:27432745-27432804:+	0.122	1	1	1
+GTPBP10	0.337	0	0	lost_after_stim	chr7:90352817:T>C	chr7:90353009-90353232:+	0.337	1	1	1
+HACD1	0	0.143	0	post_stim_only	chr10:17617149:C>T	chr10:17602905-17603559:-	0.143	1	1	1
+HAUS1	0	0.384	0	post_stim_only	chr18:46104398:G>C	chr18:46105368-46105408:+	0.384	0	1	1
+HDHD2	0	0.352	0	post_stim_only	chr18:47108761:C>T	chr18:47136301-47136338:-	0.352	0	1	0
+HEATR5B	0.223	0	0	lost_after_stim	chr2:37084271:G>C	chr2:37081600-37081755:-	0.223	1	1	1
+HEPACAM2	0	0	0.1	post_stim_only	chr7:93189189:A>C	chr7:93205512-93205647:-	0.1	0	1	1
+HIBCH	0	0	0.145	post_stim_only	chr2:190296895:T>C	chr2:190319826-190319890:-	0.145	1	1	1
+HK1	0	0.151	0	stimulation_dependent	chr10:69343840:C>G	chr10:69398594-69398828:+	0.151	1	1	1
+HLA-A	0.35	0.391	0.534	all_timepoints	chr6:29942546:G>C	chr6:29944616-29944634:+	0.534	1	1	1
+HLA-B	0.207	0	0	lost_after_stim	chr6:31354248:C>A	chr6:31355223-31355316:-	0.207	1	1	1
+HLA-C	0.513	0.342	0.281	all_timepoints	chr6:31269346:T>C	chr6:31272105-31272130:-	0.513	1	1	1
+HLTF	0	0	0.152	post_stim_only	chr3:149041537:T>C	chr3:149041668-149041680:-	0.152	1	1	1
+HM13	0.142	0	0	lost_after_stim	chr20:31569222:A>G	chr20:31548964-31549026:+	0.142	1	1	1
+HMGN1	0.213	0	0	lost_after_stim	chr21:39348567:C>T	chr21:39347516-39347915:-	0.213	1	1	1
+HMOX2	0	0.184	0	post_stim_only	chr16:4506909:G>A	chr16:4476487-4476665:+	0.184	0	1	1
+HNRNPA2B1	0	0.311	0	post_stim_only	chr7:26192448:A>G	chr7:26190460-26190483:-	0.311	1	1	1
+HNRNPAB	0.284	0	0.211	lost_after_stim	chr5:178210880:G>A	chr5:178210131-178210272:+	0.284	1	0	1
+HNRNPC	0.115	0	0	lost_after_stim	chr14:21213053:C>T	chr14:21263666-21263829:-	0.115	1	1	1
+HNRNPF	0	0	0.141	post_stim_only	chr10:43396544:G>A	chr10:43397278-43397346:-	0.141	0	1	1
+HNRNPH3	0.213	0	0	lost_after_stim	chr10:68332165:T>C	chr10:68332216-68332235:+	0.213	1	1	1
+HNRNPK	0.126	0	0.362	lost_after_stim	chr9:83980154:C>T	chr9:83980118-83980152:-	0.362	1	1	1
+HNRNPL	0	0.55	0	post_stim_only	chr19:38836397:A>T	chr19:38841612-38841682:-	0.55	0	1	0
+HNRNPU	0	0.153	0	post_stim_only	chr1:244855997:A>T	chr1:244860334-244860352:-	0.153	1	1	1
+HOTAIRM1	0.521	0	0.383	lost_after_stim	chr7:27099209:G>A	chr7:27098838-27099006:+	0.521	1	1	1
+HPS4	0.333	0.338	0.5	all_timepoints	chr22:26481801:C>T	chr22:26476618-26476992:-	0.5	1	1	1
+HRAS	0	0	0.163	stimulation_dependent	chr11:534241:A>G	chr11:535256-535339:-	0.163	1	1	1
+HS2ST1	0	0.198	0.118	post_stim_only	chr1:86914947:C>T	chr1:86974911-86975043:+	0.198	0	1	1
+HSBP1	0	0.202	0	stimulation_dependent	chr16:83812435:A>G	chr16:83807977-83807988:+	0.202	1	1	1
+HSD17B12	0	0.178	0	post_stim_only	chr11:43856383:C>A	chr11:43852046-43854714:+	0.178	1	1	1
+HSD17B4	0	0.229	0	stimulation_dependent	chr5:119475837:G>A	chr5:119452752-119452765:+	0.229	1	1	1
+HSD17B7	0	0.152	0	stimulation_dependent	chr1:162805476:C>T	chr1:162791518-162791700:+	0.152	1	1	1
+HSF2	0.514	0	0	lost_after_stim	chr6:122399660:G>A	chr6:122427902-122427956:+	0.514	1	1	1
+HSPA8	0.114	0	0	lost_after_stim	chr11:123062068:G>A	chr11:123062207-123062312:-	0.114	1	1	1
+HSPA9	0.239	0	0	lost_after_stim	chr5:138555419:C>G	chr5:138575137-138575166:-	0.239	1	1	1
+HSPD1	0.157	0	0	lost_after_stim	chr2:197498779:A>G	chr2:197499941-197499998:-	0.157	1	1	1
+HSPH1	0	0	0.181	stimulation_dependent	chr13:31137181:C>T	chr13:31161904-31161927:-	0.181	1	1	1
+HYOU1	0	0	0.181	stimulation_dependent	chr11:119055530:C>T	chr11:119057050-119057066:-	0.181	1	1	1
+IARS1	0.111	0	0.1	lost_after_stim	chr9:92210683:A>G	chr9:92240642-92240691:-	0.111	1	1	1
+ID1	0.4	0	0	lost_after_stim	chr20:31605573:A>G	chr20:31605813-31606052:+	0.4	1	1	1
+IDI1	0	0	0.258	post_stim_only	chr10:1043675:T>C	chr10:1043393-1043998:-	0.258	0	1	1
+IFNAR2	0	0	0.727	post_stim_only	chr21:33241949:T>G	chr21:33262757-33262792:+	0.727	0	1	1
+IFNGR1	0	0	0.171	post_stim_only	chr6:137197989:C>T	chr6:137218027-137218060:-	0.171	1	1	1
+IFRD1	0	0.334	0	post_stim_only	chr7:112475602:C>T	chr7:112450459-112450507:+	0.334	1	1	1
+IFT22	0.174	0	0	lost_after_stim	chr7:101314988:T>C	chr7:101318123-101318213:-	0.174	1	1	1
+IFT74	0	0	0.26	stimulation_dependent	chr9:26978260:A>G	chr9:26956478-26956516:+	0.26	1	1	1
+IGSF8	0	0.289	0	stimulation_dependent	chr1:160091593:C>T	chr1:160098798-160098828:-	0.289	1	1	1
+IL17RD	0	0.1	0	post_stim_only	chr3:57165321:C>A	chr3:57165160-57165178:-	0.1	1	1	0
+ILK	0.507	0	0	lost_after_stim	chr11:6608773:G>T	chr11:6603822-6604179:+	0.507	1	1	1
+ILVBL	0	0.134	0	stimulation_dependent	chr19:15116158:G>A	chr19:15124924-15125069:-	0.134	1	1	1
+IMMT	0	0	0.16	stimulation_dependent	chr2:86159628:C>T	chr2:86171312-86171345:-	0.16	1	1	1
+IMP4	0.214	0	0	lost_after_stim	chr2:130346061:C>T	chr2:130346112-130346200:+	0.214	1	1	1
+IMPA1	0	0.248	0	post_stim_only	chr8:81676239:A>T	chr8:81670939-81670977:-	0.248	0	1	1
+INPP5F	0	0.164	0	stimulation_dependent	chr10:119791641:G>A	chr10:119792036-119792156:+	0.164	1	1	1
+INTS11	0	0	0.183	post_stim_only	chr1:1312113:T>C	chr1:1313124-1313508:-	0.183	0	1	1
+INTS8	0	0	0.144	post_stim_only	chr8:94876078:C>T	chr8:94867196-94867275:+	0.144	0	1	1
+IQCK	0	0.549	0.3	post_stim_only	chr16:19735435:G>A	chr16:19763847-19763900:+	0.549	0	1	1
+IRAK1BP1	0	0.498	0	post_stim_only	chr6:78885379:A>G	chr6:78903110-78903502:+	0.498	1	1	1
+ISOC2	0	0	0.215	stimulation_dependent	chr19:55456480:C>T	chr19:55455331-55455378:-	0.215	1	1	1
+ITCH	0	0	0.255	post_stim_only	chr20:34369409:G>A	chr20:34510417-34510737:+	0.255	1	1	1
+ITGB1	0	0	0.171	stimulation_dependent	chr10:32925873:A>G	chr10:32907062-32907143:-	0.171	1	1	1
+ITPA	0.111	0	0	lost_after_stim	chr20:3223437:G>A	chr20:3221752-3221840:+	0.111	1	1	1
+IVNS1ABP	0	0	0.486	post_stim_only	chr1:185297981:A>G	chr1:185306500-185306625:-	0.486	0	1	1
+JAK1	0.242	0	0	lost_after_stim	chr1:64869378:A>G	chr1:64956933-64957017:-	0.242	1	1	1
+JAKMIP2	0	0	0.41	post_stim_only	chr5:147644912:C>A	chr5:147601740-147601811:-	0.41	1	1	1
+JKAMP	0.348	0	0	lost_after_stim	chr14:59504320:T>G	chr14:59486712-59486730:+	0.348	1	1	1
+JMJD1C	0	0	0.243	stimulation_dependent	chr10:63168062:C>G	chr10:63168566-63169519:-	0.243	1	1	1
+KANSL1	0.403	0.259	0.296	all_timepoints	chr17:46171991:C>T	chr17:46170276-46170854:-	0.403	1	1	1
+KARS1	0	0	0.114	stimulation_dependent	chr16:75641710:T>C	chr16:75639781-75640183:-	0.114	1	1	1
+KAT6B	0	0.22	0	post_stim_only	chr10:74842910:G>A	chr10:74960078-74960578:+	0.22	0	1	0
+KC6	0	0.52	0	stimulation_dependent	chr18:41521399:C>T	chr18:41594345-41594468:-	0.52	1	1	0
+KCNB2	0.236	0.24	0.283	all_timepoints	chr8:72568169:G>A	chr8:72568313-72568454:+	0.283	1	1	1
+KCNMA1	0.171	0	0	lost_after_stim	chr10:76970036:G>T	chr10:76970067-76970999:-	0.171	1	1	1
+KDM4B	0	0	0.25	post_stim_only	chr19:5151893:G>A	chr19:5070617-5071009:+	0.25	0	1	1
+KDM5B	0	0.204	0	stimulation_dependent	chr1:202735503:C>T	chr1:202735171-202735428:-	0.204	1	1	1
+KIAA0408	0	0	0.398	stimulation_dependent	chr6:127447536:C>T	chr6:127451216-127451281:-	0.398	1	1	1
+KIF1B	0.369	0	0	lost_after_stim	chr1:10376833:A>AAC	chr1:10355369-10355396:+	0.369	1	1	1
+KIF2A	0	0.118	0	stimulation_dependent	chr5:62306222:C>T	chr5:62353375-62354314:+	0.118	1	1	1
+KIF5A	0	0	0.119	post_stim_only	chr12:57569597:G>A	chr12:57563438-57563526:+	0.119	0	1	1
+KLF6	0	0.214	0	stimulation_dependent	chr10:3779313:G>A	chr10:3781640-3781794:-	0.214	1	1	1
+KLHL7	0	0.119	0	stimulation_dependent	chr7:23125081:C>T	chr7:23144025-23144947:+	0.119	1	1	1
+KMT2C	0	0.133	0	post_stim_only	chr7:152202994:A>T	chr7:152202859-152202933:-	0.133	0	1	1
+KNOP1	0.231	0	0	lost_after_stim	chr16:19714252:G>A	chr16:19717350-19717485:-	0.231	1	1	1
+KPNA2	0.175	0	0	lost_after_stim	chr17:68035783:T>C	chr17:68045925-68046503:+	0.175	1	1	1
+KPNA5	0	0	0.19	post_stim_only	chr6:116689435:C>A	chr6:116692054-116692156:+	0.19	0	1	1
+KRAS	0	0	0.176	post_stim_only	chr12:25209184:C>T	chr12:25228774-25228891:-	0.176	1	1	1
+KRT8	0	0.208	0.195	stimulation_dependent	chr12:52905050:T>G	chr12:52905052-52905076:-	0.208	1	1	1
+KTN1	0	0	0.105	stimulation_dependent	chr14:55630012:A>G	chr14:55663954-55664041:+	0.105	1	1	1
+LAMTOR1	0.141	0	0	lost_after_stim	chr11:72103234:G>C	chr11:72097914-72098288:-	0.141	1	1	1
+LAMTOR4	0.143	0.11	0	lost_after_stim	chr7:100149506:G>A	chr7:100148993-100149053:+	0.143	1	1	1
+LARP1B	0	0	0.471	stimulation_dependent	chr4:128091025:G>A	chr4:128062131-128062219:+	0.471	1	1	1
+LARS1	0.279	0	0	lost_after_stim	chr5:146120432:C>T	chr5:146149621-146149657:-	0.279	1	1	1
+LEPROT	0	0.241	0.338	stimulation_dependent	chr1:65420714:T>C	chr1:65421327-65421459:+	0.338	1	1	1
+LEPROTL1	0.187	0	0	lost_after_stim	chr8:30095418:T>G	chr8:30108000-30108524:+	0.187	1	0	0
+LGALS8	0	0	0.285	post_stim_only	chr1:236548022:T>C	chr1:236540563-236540683:+	0.285	1	1	1
+LGMN	0.101	0	0	lost_after_stim	chr14:92704647:C>T	chr14:92704639-92704707:-	0.101	1	1	1
+LIG1	0	0.3	0	post_stim_only	chr19:48119169:A>G	chr19:48151231-48151296:-	0.3	0	1	1
+LIG3	0.248	0	0	lost_after_stim	chr17:34980566:G>A	chr17:34989663-34989880:+	0.248	1	1	1
+LINC-PINT	0	0.1	0	post_stim_only	chr7:131052078:T>C	chr7:131088319-131088474:-	0.1	0	1	1
+LINC00205	0	0	0.173	stimulation_dependent	chr21:45290616:G>A	chr21:45293522-45294777:+	0.173	1	1	1
+LINC00621	0	0.165	0	post_stim_only	chr13:22915780:C>T	chr13:22896360-22896477:-	0.165	0	1	0
+LINC00667	0	0.433	0	post_stim_only	chr18:5238942:C>G	chr18:5239196-5239213:+	0.433	1	1	1
+LINC00888	0.308	0	0	lost_after_stim	chr3:183455513:G>A	chr3:183452077-183452351:+	0.308	1	1	1
+LINC02987	0	0	0.229	post_stim_only	chr19:27798246:A>G	chr19:27794681-27794697:+	0.229	0	1	1
+LINC03000	0	0	0.348	post_stim_only	chr5:164354184:T>A	chr5:164354224-164354750:+	0.348	0	0	1
+LINC03011	0	0.304	0	post_stim_only	chr7:66495269:G>C	chr7:66494025-66494212:+	0.304	0	1	0
+LINS1	0	0.107	0.227	stimulation_dependent	chr15:100580757:T>C	chr15:100574815-100574986:-	0.227	1	1	1
+LMBRD1	0.769	0	0.838	lost_after_stim	chr6:69675816:G>A	chr6:69796597-69796608:-	0.838	1	0	1
+LMNA	0.381	0	0	lost_after_stim	chr1:156137742:C>T	chr1:156114669-156114710:+	0.381	1	1	1
+LNPK	0.295	0	0	lost_after_stim	chr2:175964388:G>C	chr2:175940987-175941080:-	0.295	1	1	1
+LRPPRC	0	0	0.195	post_stim_only	chr2:43995991:C>T	chr2:43958985-43959107:-	0.195	1	1	1
+LRRFIP2	0	0.325	0.324	post_stim_only	chr3:37083646:C>T	chr3:37066223-37066325:-	0.325	0	1	1
+LSG1	0	0.107	0	stimulation_dependent	chr3:194666570:C>T	chr3:194660741-194660886:-	0.107	1	1	1
+LSM1	0	0	0.114	stimulation_dependent	chr8:38176470:G>C	chr8:38169801-38169917:-	0.114	1	1	1
+LSM5	0	0	0.202	stimulation_dependent	chr7:32490323:G>C	chr7:32490130-32490319:-	0.202	1	1	1
+LTN1	0	0	0.328	stimulation_dependent	chr21:28984841:G>T	chr21:28961316-28961533:-	0.328	1	1	1
+LUC7L3	0.103	0.163	0.135	all_timepoints	chr17:50741683:G>A	chr17:50737286-50737360:+	0.163	1	1	1
+LUZP1	0	0	0.376	post_stim_only	chr1:23093442:G>T	chr1:23109584-23109650:-	0.376	0	1	1
+LYRM2	0.19	0	0	lost_after_stim	chr6:89637791:T>C	chr6:89636175-89636637:-	0.19	1	1	1
+LYST	0	0.302	0	post_stim_only	chr1:235791849:G>A	chr1:235791572-235791698:-	0.302	1	1	1
+LZIC	0.476	0.293	0.56	all_timepoints	chr1:9930408:G>T	chr1:9926292-9929719:-	0.56	1	1	1
+LZTR1	0	0.222	0	post_stim_only	chr22:20987410:G>A	chr22:20987320-20987410:+	0.222	1	1	1
+MACF1	0	0.507	0	post_stim_only	chr1:39284389:G>A	chr1:39083362-39083417:+	0.507	1	1	1
+MACROH2A1	0	0.11	0	stimulation_dependent	chr5:135388931:T>C	chr5:135339427-135339575:-	0.11	1	1	1
+MADD	0	0.226	0	post_stim_only	chr11:47290794:G>A	chr11:47326737-47326807:+	0.226	0	1	1
+MAEA	0	0	0.111	post_stim_only	chr4:1336970:T>C	chr4:1309442-1309466:+	0.111	0	1	1
+MALAT1	0.254	0	0	lost_after_stim	chr11:65503658:A>G	chr11:65505503-65505590:+	0.254	1	1	1
+MAP1B	0	0	0.173	stimulation_dependent	chr5:72107445:T>C	chr5:72194081-72195181:+	0.173	1	1	1
+MAP1LC3B	0	0	0.135	stimulation_dependent	chr16:87403500:G>A	chr16:87392467-87393319:+	0.135	1	0	1
+MAP2	0.323	0	0	lost_after_stim	chr2:209692655:C>T	chr2:209579438-209579608:+	0.323	1	1	1
+MAP2K4	0	0.167	0	post_stim_only	chr17:12110401:G>A	chr17:12081355-12081530:+	0.167	0	1	0
+MAP3K4	0	0	0.46	post_stim_only	chr6:161117217:G>A	chr6:161098277-161098427:+	0.46	0	1	1
+MAP3K9-DT	0	0	0.192	post_stim_only	chr14:70815332:G>A	chr14:70810291-70810323:+	0.192	0	1	1
+MAP4K3-DT	0	0.177	0	stimulation_dependent	chr2:39453844:A>G	chr2:39557981-39558046:+	0.177	1	1	1
+MAP4K5	0	0.37	0	post_stim_only	chr14:50532462:C>T	chr14:50532399-50532447:-	0.37	0	1	1
+MAPK6	0	0.337	0	post_stim_only	chr15:52061300:C>G	chr15:52019218-52019228:+	0.337	1	1	1
+MAPK8	0.343	0	0	lost_after_stim	chr10:48306707:C>G	chr10:48325896-48325965:+	0.343	1	1	1
+MAPT	0.532	0	0	lost_after_stim	chr17:46024407:TATTT>AA	chr17:46025701-46025848:+	0.532	1	1	1
+MARCHF7	0.351	0.607	0.393	all_timepoints	chr2:159747851:G>A	chr2:159712606-159712661:+	0.607	1	1	1
+MARK1	0.44	0	0	lost_after_stim	chr1:220650612:C>T	chr1:220647961-220650619:+	0.44	1	1	1
+MARK3	0.253	0	0	lost_after_stim	chr14:103385826:C>G	chr14:103457141-103457176:+	0.253	1	1	1
+MBP	0	0.552	0	post_stim_only	chr18:77066358:A>G	chr18:77012778-77016831:-	0.552	1	1	1
+MCPH1	0.25	0	0	lost_after_stim	chr8:6436153:C>A	chr8:6447164-6447419:+	0.25	1	1	1
+MCUR1	0	0	0.335	post_stim_only	chr6:13801382:T>C	chr6:13803729-13804315:-	0.335	0	0	1
+MDGA2	0	0	0.261	post_stim_only	chr14:46841644:A>G	chr14:47343097-47343116:-	0.261	0	1	1
+MDM2	0	0	0.509	post_stim_only	chr12:68824646:G>A	chr12:68809023-68809086:+	0.509	1	1	1
+MDM4	0	0	0.5	post_stim_only	chr1:204532254:C>T	chr1:204532246-204532650:+	0.5	0	0	1
+ME2	0.1	0	0	lost_after_stim	chr18:50932291:G>A	chr18:50921073-50921187:+	0.1	1	1	1
+MEAF6	0.282	0	0	lost_after_stim	chr1:37493211:C>G	chr1:37496706-37496736:-	0.282	1	1	1
+MED17	0	0	0.503	post_stim_only	chr11:93812396:T>C	chr11:93801548-93801834:+	0.503	1	1	1
+MED24	0.323	0	0	lost_after_stim	chr17:40019612:G>A	chr17:40036120-40036154:-	0.323	1	1	1
+MEG3	0.297	0	0	lost_after_stim	chr14:100861020:C>A	chr14:100829749-100829787:+	0.297	1	1	1
+MESD	0.184	0	0	lost_after_stim	chr15:80989802:C>G	chr15:80975751-80978765:-	0.184	1	1	1
+METTL16	0	0.462	0	stimulation_dependent	chr17:2473563:C>T	chr17:2436673-2436840:-	0.462	1	1	1
+METTL4	0	0.438	0	post_stim_only	chr18:2571370:G>A	chr18:2544194-2544286:-	0.438	1	1	1
+METTL8	0	0.522	0	post_stim_only	chr2:171360457:C>T	chr2:171434123-171434138:-	0.522	1	1	1
+MFF	0.127	0	0	lost_after_stim	chr2:227357008:A>G	chr2:227350935-227350968:+	0.127	1	1	1
+MFHAS1	0.115	0	0	lost_after_stim	chr8:8797387:C>T	chr8:8859989-8860031:-	0.115	1	1	1
+MFSD4B	0	0	0.1	post_stim_only	chr6:111259530:C>T	chr6:111259550-111259612:+	0.1	0	0	1
+MGA	0	0	0.226	post_stim_only	chr15:41762203:G>A	chr15:41736368-41736698:+	0.226	1	1	1
+MIA2	0	0	0.453	post_stim_only	chr14:39279492:G>A	chr14:39267099-39267123:+	0.453	0	1	1
+MIAT	0	0	0.261	stimulation_dependent	chr22:26666220:C>A	chr22:26663398-26663477:+	0.261	1	1	1
+MICU1	0	0	0.573	post_stim_only	chr10:72508250:C>T	chr10:72531459-72531690:-	0.573	1	1	1
+MICU2	0	0.217	0	stimulation_dependent	chr13:21604118:C>T	chr13:21520567-21521244:-	0.217	1	1	1
+MINDY3	0.285	0	0	lost_after_stim	chr10:15860303:A>G	chr10:15846725-15847638:-	0.285	1	1	1
+MIR7-3HG	0.126	0	0	lost_after_stim	chr19:4772189:A>C	chr19:4770282-4770347:+	0.126	1	1	1
+MIX23	0.543	0.453	0.522	all_timepoints	chr3:122363003:C>G	chr3:122383147-122383173:-	0.543	1	1	1
+MLF2	0	0.112	0	stimulation_dependent	chr12:6753092:G>C	chr12:6748571-6748720:-	0.112	1	1	1
+MLLT10	0	0.178	0	stimulation_dependent	chr10:21673695:G>A	chr10:21611030-21611141:+	0.178	1	1	1
+MOCS2	0	0.109	0	post_stim_only	chr5:53101480:T>C	chr5:53101125-53101358:-	0.109	0	1	0
+MON2	0	0.267	0	post_stim_only	chr12:62467013:G>A	chr12:62588855-62588916:+	0.267	1	1	1
+MORF4L1	0.103	0	0	lost_after_stim	chr15:78893555:C>A	chr15:78873118-78873218:+	0.103	1	1	1
+MPHOSPH10	0	0	0.131	stimulation_dependent	chr2:71133151:G>A	chr2:71130754-71130845:+	0.131	1	1	1
+MPRIP	0	0	0.324	post_stim_only	chr17:17185111:C>T	chr17:17180606-17180669:+	0.324	0	0	1
+MPV17L2	0	0	0.176	stimulation_dependent	chr19:18196179:G>C	chr19:18194776-18194853:+	0.176	1	1	1
+MRNIP	0	0	0.216	stimulation_dependent	chr5:179858751:G>A	chr5:179853196-179853276:-	0.216	1	1	1
+MRPL17	0	0	0.127	stimulation_dependent	chr11:6682102:A>G	chr11:6682815-6683122:-	0.127	1	1	1
+MRPL18	0	0.157	0.114	stimulation_dependent	chr6:159790603:G>A	chr6:159790466-159790516:+	0.157	1	1	1
+MRPL22	0.21	0	0	lost_after_stim	chr5:154966764:G>A	chr5:154959050-154959175:+	0.21	1	1	1
+MRPL28	0	0	0.157	stimulation_dependent	chr16:369091:A>G	chr16:370484-370498:-	0.157	1	1	1
+MRPL4	0	0	0.126	stimulation_dependent	chr19:10259977:A>G	chr19:10259171-10259616:+	0.126	1	1	1
+MRPL52	0	0.433	0	stimulation_dependent	chr14:22829925:G>T	chr14:22829948-22830048:+	0.433	1	1	1
+MRPS22	0.12	0.146	0	lost_after_stim	chr3:139346905:A>G	chr3:139352792-139355681:+	0.146	1	1	1
+MRPS34	0.146	0.11	0.103	all_timepoints	chr16:1772157:T>C	chr16:1772646-1772698:-	0.146	1	1	1
+MSH3	0.134	0	0	lost_after_stim	chr5:80654961:A>G	chr5:80741463-80741548:+	0.134	1	1	1
+MSH6	0.193	0	0	lost_after_stim	chr2:47790941:A>G	chr2:47796073-47798423:+	0.193	1	1	1
+MT1F	0.177	0	0	lost_after_stim	chr16:56657980:G>T	chr16:56658086-56658674:+	0.177	1	0	0
+MTDH	0	0.32	0	stimulation_dependent	chr8:97724826:G>A	chr8:97699753-97699852:+	0.32	1	1	1
+MTERF4	0	0	0.346	stimulation_dependent	chr2:241097381:A>G	chr2:241096392-241096438:-	0.346	1	1	1
+MTIF3	0.295	0	0.216	lost_after_stim	chr13:27435713:G>A	chr13:27441016-27441077:-	0.295	1	1	1
+MTOR	0	0	0.411	post_stim_only	chr1:11262507:C>G	chr1:11127806-11128003:-	0.411	0	0	1
+MTREX	0	0	0.155	stimulation_dependent	chr5:55307993:T>C	chr5:55322725-55322795:+	0.155	1	1	1
+MTX1	0	0.192	0	stimulation_dependent	chr1:155212197:G>A	chr1:155210415-155210435:+	0.192	1	1	1
+MVD	0	0.366	0	post_stim_only	chr16:88662102:A>G	chr16:88662711-88662781:-	0.366	1	1	1
+MXRA7	0	0	0.19	post_stim_only	chr17:76679727:G>A	chr17:76688176-76688669:-	0.19	0	0	1
+MYCBP2	0	0	0.211	post_stim_only	chr13:77158072:G>A	chr13:77103208-77103310:-	0.211	1	1	1
+MYO1B	0	0	0.497	post_stim_only	chr2:191245492:C>T	chr2:191400748-191400835:+	0.497	0	1	1
+MYO5A	0	0	0.311	post_stim_only	chr15:52319253:A>G	chr15:52379294-52379451:-	0.311	1	1	1
+MYO9A	0	0.379	0	post_stim_only	chr15:71880541:G>C	chr15:71892964-71893177:-	0.379	0	1	1
+MYT1L	0	0.154	0	post_stim_only	chr2:1917319:C>T	chr2:1887058-1887121:-	0.154	1	1	1
+N4BP2L2	0	0.583	0	post_stim_only	chr13:32443866:C>T	chr13:32527407-32527457:-	0.583	0	1	1
+NAA16	0.5	0	0	lost_after_stim	chr13:41369210:G>A	chr13:41362159-41362454:+	0.5	1	1	0
+NAA38	0	0.366	0	post_stim_only	chr17:7857385:A>G	chr17:7857198-7857263:-	0.366	0	1	0
+NAGK	0	0.105	0	stimulation_dependent	chr2:71070564:T>C	chr2:71072825-71073131:+	0.105	1	1	1
+NAMPT	0	0.25	0	post_stim_only	chr7:106263457:T>C	chr7:106277022-106277083:-	0.25	0	1	1
+NAP1L1	0	0.181	0	stimulation_dependent	chr12:76084685:A>C	chr12:76068908-76068993:-	0.181	1	1	1
+NARF	0	0.167	0	post_stim_only	chr17:82458213:C>G	chr17:82464286-82464430:+	0.167	1	1	1
+NASP	0.308	0	0	lost_after_stim	chr1:45613211:C>T	chr1:45610553-45610995:+	0.308	1	1	1
+NAXE	0	0	0.658	post_stim_only	chr1:156591858:G>C	chr1:156599350-156599383:+	0.658	1	1	1
+NBEA	0	0	0.158	post_stim_only	chr13:35668375:C>A	chr13:35668519-35668600:+	0.158	1	1	1
+NBEAL1	0	0.266	0	stimulation_dependent	chr2:203016268:T>C	chr2:203084569-203085271:+	0.266	1	1	1
+NBN	0.143	0	0	lost_after_stim	chr8:89978250:C>G	chr8:89953075-89953243:-	0.143	1	1	1
+NBPF15	0.583	0	0	lost_after_stim	chr1:144459496:G>A	chr1:144450771-144450802:-	0.583	1	1	1
+NCAM1	0.173	0	0	lost_after_stim	chr11:113275310:C>T	chr11:113273048-113273748:+	0.173	1	1	1
+NCBP3	0	0	0.252	post_stim_only	chr17:3826099:C>T	chr17:3845745-3845971:-	0.252	0	1	1
+NCS1	0	0.226	0.223	stimulation_dependent	chr9:130233333:G>A	chr9:130200431-130200611:+	0.226	1	1	1
+NDFIP2	0.247	0	0	lost_after_stim	chr13:79520894:C>T	chr13:79553183-79553195:+	0.247	1	1	1
+NDRG4	0	0.136	0	stimulation_dependent	chr16:58511521:A>G	chr16:58503705-58503743:+	0.136	1	1	1
+NDUFA10	0	0	0.238	stimulation_dependent	chr2:240007348:T>C	chr2:240014694-240014738:-	0.238	1	1	1
+NDUFA2	0.23	0.176	0.183	all_timepoints	chr5:140647630:T>C	chr5:140645678-140645725:-	0.23	1	1	1
+NDUFB1	0.444	0	0	lost_after_stim	chr14:92121193:A>G	chr14:92121195-92121211:-	0.444	1	1	1
+NDUFS2	0.168	0	0	lost_after_stim	chr1:161214306:A>G	chr1:161199314-161199523:+	0.168	1	1	1
+NEDD4L	0	0	0.154	post_stim_only	chr18:58383301:C>A	chr18:58227829-58227888:+	0.154	1	1	1
+NELL2	0	0	0.238	post_stim_only	chr12:44875919:A>T	chr12:44876355-44876431:-	0.238	1	1	1
+NEMF	0	0	0.182	post_stim_only	chr14:49784952:C>T	chr14:49786750-49787174:-	0.182	1	1	1
+NEO1	0	0.457	0	post_stim_only	chr15:73249171:A>G	chr15:73274691-73274724:+	0.457	1	1	1
+NFE2L1	0.105	0	0	lost_after_stim	chr17:48050881:A>T	chr17:48049131-48049160:+	0.105	1	1	1
+NGDN	0.37	0	0	lost_after_stim	chr14:23478164:G>A	chr14:23477560-23477598:+	0.37	1	1	1
+NIPSNAP3A	0	0.147	0	stimulation_dependent	chr9:104752932:G>A	chr9:104753064-104753241:+	0.147	1	1	1
+NIT1	0.323	0	0	lost_after_stim	chr1:161119518:C>A	chr1:161119100-161119133:+	0.323	1	0	0
+NKAIN4	0	0.364	0	post_stim_only	chr20:63240855:G>C	chr20:63242538-63242623:-	0.364	1	1	1
+NKAPD1	0	0	0.423	stimulation_dependent	chr11:112082018:G>C	chr11:112075650-112075684:+	0.423	1	1	1
+NKTR	0.231	0.169	0	lost_after_stim	chr3:42637000:G>A	chr3:42633208-42633579:+	0.231	1	1	1
+NLN	0	0.347	0	post_stim_only	chr5:65722298:C>G	chr5:65792655-65793649:+	0.347	1	1	1
+NLRP1	0.301	0	0	lost_after_stim	chr17:5499636:A>G	chr17:5533303-5533384:-	0.301	1	1	1
+NME2	0	0	0.162	stimulation_dependent	chr17:51171706:A>G	chr17:51165814-51165904:+	0.162	1	1	1
+NME6	0	0.364	0	post_stim_only	chr3:48294317:T>C	chr3:48301278-48301295:-	0.364	0	1	0
+NME7	0.18	0	0	lost_after_stim	chr1:169324482:G>A	chr1:169324194-169324392:-	0.18	1	1	1
+NNT	0	0.58	0	post_stim_only	chr5:43615974:G>A	chr5:43603152-43603162:+	0.58	1	1	1
+NOL4	0	0	0.417	post_stim_only	chr18:34129856:C>T	chr18:34129846-34129870:-	0.417	0	0	1
+NOL8	0	0.26	0	stimulation_dependent	chr9:92305763:C>T	chr9:92311145-92311259:-	0.26	1	1	0
+NOP56	0.218	0	0	lost_after_stim	chr20:2658335:C>G	chr20:2657225-2657372:+	0.218	1	1	1
+NOP58	0	0	0.199	stimulation_dependent	chr2:202265908:G>C	chr2:202284481-202284712:+	0.199	1	1	1
+NPDC1	0.141	0	0	lost_after_stim	chr9:137040829:G>A	chr9:137043073-137044092:-	0.141	1	1	1
+NPR2	0	0.236	0	post_stim_only	chr9:35809710:A>G	chr9:35808508-35808683:+	0.236	0	1	0
+NPTN	0	0	0.362	post_stim_only	chr15:73633378:G>C	chr15:73597021-73597369:-	0.362	1	0	1
+NQO1	0	0	0.526	post_stim_only	chr16:69715050:A>G	chr16:69726432-69726500:-	0.526	0	1	1
+NQO2	0	0	0.193	stimulation_dependent	chr6:3010063:A>G	chr6:3018192-3018560:+	0.193	1	1	1
+NR4A1	0	0.597	0	post_stim_only	chr12:52059497:T>C	chr12:52037714-52038749:+	0.597	0	1	1
+NRCAM	0	0	0.14	stimulation_dependent	chr7:108149481:T>C	chr7:108175321-108175357:-	0.14	1	1	1
+NREP	0	0.251	0	post_stim_only	chr5:111730999:T>C	chr5:111757179-111757194:-	0.251	1	1	1
+NRSN2	0	0	0.406	post_stim_only	chr20:349763:C>G	chr20:347433-347506:+	0.406	1	1	1
+NRXN1	0.155	0	0	lost_after_stim	chr2:49921833:C>T	chr2:50185541-50185650:-	0.155	1	1	1
+NSF	0	0.279	0	post_stim_only	chr17:46751564:G>A	chr17:46591020-46591247:+	0.279	0	1	1
+NSFL1C	0.156	0	0	lost_after_stim	chr20:1445747:C>T	chr20:1464328-1464426:-	0.156	1	1	1
+NSMCE1	0	0	0.234	stimulation_dependent	chr16:27235295:T>C	chr16:27241352-27241484:-	0.234	1	1	1
+NSUN6	0	0	0.293	stimulation_dependent	chr10:18651227:C>A	chr10:18648047-18648489:-	0.293	1	1	1
+NT5C2	0	0.148	0.367	stimulation_dependent	chr10:103174951:T>C	chr10:103139190-103139405:-	0.367	1	1	1
+NT5C3A	0	0.155	0	stimulation_dependent	chr7:33021333:A>G	chr7:33035933-33035983:-	0.155	1	1	1
+NTPCR	0.392	0	0.5	lost_after_stim	chr1:232950647:C>G	chr1:232955556-232955657:+	0.5	1	1	1
+NUB1	0	0.489	0	post_stim_only	chr7:151341810:C>G	chr7:151374201-151374243:+	0.489	0	1	1
+NUCB1	0	0	0.1	post_stim_only	chr19:48922841:G>A	chr19:48921325-48921826:+	0.1	1	1	1
+NUCB2	0	0.172	0	stimulation_dependent	chr11:17276817:G>C	chr11:17276697-17276730:+	0.172	1	1	1
+NUP42	0	0.148	0	stimulation_dependent	chr7:23185114:A>G	chr7:23188032-23188219:+	0.148	1	1	1
+NUP54	0	0.328	0	post_stim_only	chr4:76134289:C>T	chr4:76131229-76131284:-	0.328	1	1	1
+NUP58	0	0	0.408	post_stim_only	chr13:25301872:G>A	chr13:25331558-25336212:+	0.408	0	1	1
+NUP88	0	0	0.135	stimulation_dependent	chr17:5388941:C>T	chr17:5404098-5404246:-	0.135	1	1	1
+NUTM2A-AS1	0	0.293	0	post_stim_only	chr10:87326663:C>T	chr10:87208170-87208185:-	0.293	1	1	1
+NXPE3	0	0.243	0	post_stim_only	chr3:101782135:A>C	chr3:101816794-101817001:+	0.243	1	1	0
+OCIAD1	0.15	0	0.174	lost_after_stim	chr4:48861171:T>C	chr4:48831065-48831081:+	0.174	1	1	1
+ODF2L	0	0	0.585	post_stim_only	chr1:86358801:A>T	chr1:86358343-86358786:-	0.585	1	1	1
+OGDH	0	0	0.361	post_stim_only	chr7:44624381:A>C	chr7:44645518-44645937:+	0.361	1	1	1
+OIP5-AS1	0	0	0.258	stimulation_dependent	chr15:41286260:G>A	chr15:41286434-41287080:+	0.258	1	1	1
+OPA1	0.146	0	0	lost_after_stim	chr3:193694882:A>G	chr3:193645552-193645611:+	0.146	1	1	1
+OPTN	0.132	0	0	lost_after_stim	chr10:13100152:T>C	chr10:13118887-13118905:+	0.132	1	1	1
+ORC2	0	0.1	0	post_stim_only	chr2:200963641:C>G	chr2:200958029-200958133:-	0.1	0	1	1
+ORC4	0	0.123	0	stimulation_dependent	chr2:147958858:T>C	chr2:147975901-147975975:-	0.123	1	1	1
+OSBPL6	0	0	0.293	post_stim_only	chr2:178285021:A>G	chr2:178324176-178324269:+	0.293	1	1	1
+OSCP1	0	0.297	0	stimulation_dependent	chr1:36432465:T>C	chr1:36444003-36444033:-	0.297	1	1	0
+P4HA1	0	0	0.239	post_stim_only	chr10:73051130:C>T	chr10:73043886-73043957:-	0.239	0	0	1
+P4HA2	0	0	0.228	post_stim_only	chr5:132209267:C>T	chr5:132227221-132227258:-	0.228	0	0	1
+P4HB	0	0.178	0	post_stim_only	chr17:81860383:G>T	chr17:81846629-81846946:-	0.178	1	1	1
+PABPC1	0	0.189	0	post_stim_only	chr8:100713092:T>C	chr8:100712789-100713086:-	0.189	1	1	0
+PABPC4	0.211	0	0	lost_after_stim	chr1:39568914:C>T	chr1:39568697-39568801:-	0.211	1	1	1
+PABPN1	0	0	0.231	post_stim_only	chr14:23325363:G>A	chr14:23322021-23322036:+	0.231	0	0	1
+PACSIN2	0	0.138	0	stimulation_dependent	chr22:42893466:G>A	chr22:42946896-42947041:-	0.138	1	1	1
+PAICS	0	0	0.281	post_stim_only	chr4:56448738:A>C	chr4:56450702-56451191:+	0.281	0	1	1
+PARK7	0.206	0.283	0.194	all_timepoints	chr1:7961717:T>C	chr1:7961747-7961793:+	0.283	1	1	1
+PARL	0	0	0.146	stimulation_dependent	chr3:183842406:A>G	chr3:183833723-183833767:-	0.146	1	1	1
+PARP1	0.125	0	0	lost_after_stim	chr1:226360852:A>G	chr1:226366052-226366954:-	0.125	1	1	1
+PATJ	0	0	0.212	post_stim_only	chr1:61990341:G>A	chr1:61952074-61952311:+	0.212	0	1	1
+PBRM1	0	0.146	0	post_stim_only	chr3:52627278:C>T	chr3:52554723-52554782:-	0.146	1	1	1
+PBX1	0.17	0	0	lost_after_stim	chr1:164563301:G>A	chr1:164563380-164563477:+	0.17	1	1	1
+PCBP4	0	0.3	0	stimulation_dependent	chr3:51957958:C>T	chr3:51961940-51962079:-	0.3	1	1	1
+PCNP	0.316	0	0	lost_after_stim	chr3:101585495:T>C	chr3:101579588-101579647:+	0.316	1	0	1
+PCNX4	0	0	0.214	post_stim_only	chr14:60107820:A>G	chr14:60108327-60111157:+	0.214	1	1	1
+PCOLCE	0	0.158	0	post_stim_only	chr7:100605097:A>G	chr7:100605504-100605552:+	0.158	1	1	1
+PDE10A	0	0	0.284	post_stim_only	chr6:165949455:T>G	chr6:165948463-165948608:-	0.284	0	0	1
+PDE4DIP	0	0.224	0	post_stim_only	chr1:148974517:C>T	chr1:149031943-149031999:+	0.224	1	1	1
+PDHX	0	0.185	0	post_stim_only	chr11:34916651:C>G	chr11:34932321-34933026:+	0.185	1	1	1
+PDIA6	0.331	0	0	lost_after_stim	chr2:10793122:C>T	chr2:10820770-10820864:-	0.331	1	1	1
+PDK1	0	0	0.26	post_stim_only	chr2:172558787:G>A	chr2:172562740-172562800:+	0.26	0	0	1
+PDLIM5	0.4	0	0	lost_after_stim	chr4:94455341:G>C	chr4:94455384-94455542:+	0.4	1	1	0
+PDPK1	0	0	0.251	post_stim_only	chr16:2565613:A>G	chr16:2538163-2538501:+	0.251	1	1	1
+PDS5B	0.294	0	0	lost_after_stim	chr13:32586567:C>A	chr13:32652007-32652605:+	0.294	1	1	1
+PEA15	0.211	0.262	0	lost_after_stim	chr1:160213167:T>G	chr1:160211286-160211314:+	0.262	1	1	0
+PEMT	0.202	0	0	lost_after_stim	chr17:17506245:C>T	chr17:17591530-17591596:-	0.202	1	1	1
+PEPD	0	0	0.188	stimulation_dependent	chr19:33387132:A>G	chr19:33486902-33487075:-	0.188	1	1	1
+PFKL	0	0	0.361	post_stim_only	chr21:44326911:C>T	chr21:44325731-44325960:+	0.361	0	1	1
+PFKM	0	0.139	0	stimulation_dependent	chr12:48145698:T>G	chr12:48119786-48119929:+	0.139	1	1	1
+PFKP	0	0	0.328	post_stim_only	chr10:3113505:C>T	chr10:3068485-3068502:+	0.328	1	1	1
+PGLS	0.111	0	0	lost_after_stim	chr19:17511927:G>A	chr19:17516370-17516474:+	0.111	1	1	1
+PHACTR4	0.444	0	0	lost_after_stim	chr1:28407481:G>T	chr1:28408132-28408572:+	0.444	1	1	1
+PHLDA3	0	0	0.463	post_stim_only	chr1:201468609:C>T	chr1:201468948-201468994:-	0.463	1	1	1
+PHTF2	0	0	0.365	post_stim_only	chr7:77901795:T>C	chr7:77940302-77940459:+	0.365	0	1	1
+PHYHIPL	0.127	0	0	lost_after_stim	chr10:59234463:G>A	chr10:59206753-59206791:+	0.127	1	1	1
+PI4KA	0.116	0	0	lost_after_stim	chr22:20707979:G>T	chr22:20711461-20711477:-	0.116	1	1	1
+PIBF1	0.267	0	0	lost_after_stim	chr13:72795503:A>G	chr13:72973675-72974251:+	0.267	1	1	1
+PICALM	0	0	0.208	stimulation_dependent	chr11:86014943:T>C	chr11:85990258-85990378:-	0.208	1	1	1
+PIEZO2	0	0	0.324	stimulation_dependent	chr18:10787127:A>G	chr18:10708274-10708439:-	0.324	1	1	1
+PIGG	0	0.37	0	stimulation_dependent	chr4:533887:T>C	chr4:533631-533817:+	0.37	1	1	1
+PIGH	0.16	0	0	lost_after_stim	chr14:67593752:G>C	chr14:67593253-67593727:-	0.16	1	1	1
+PIK3C2A	0	0	0.219	post_stim_only	chr11:17169556:C>T	chr11:17204306-17204375:-	0.219	1	1	1
+PILRB	0.21	0	0	lost_after_stim	chr7:100367661:T>C	chr7:100358689-100358898:+	0.21	1	1	1
+PITRM1	0.156	0	0	lost_after_stim	chr10:3137918:C>T	chr10:3142516-3142869:-	0.156	1	1	1
+PKIB	0	0.112	0	post_stim_only	chr6:122725686:G>A	chr6:122717561-122717661:+	0.112	1	1	1
+PKM	0	0	0.256	post_stim_only	chr15:72202611:A>T	chr15:72209844-72209859:-	0.256	1	1	1
+PKN2	0	0	0.105	stimulation_dependent	chr1:88760292:T>C	chr1:88741288-88741337:+	0.105	1	1	1
+PLD3	0	0	0.119	stimulation_dependent	chr19:40365893:T>A	chr19:40365661-40365717:+	0.119	1	1	1
+PLEKHA5	0.346	0	0	lost_after_stim	chr12:19376133:T>C	chr12:19346971-19346993:+	0.346	1	1	1
+PLEKHA6	0.2	0	0	lost_after_stim	chr1:204273709:A>C	chr1:204274339-204274728:-	0.2	1	1	1
+PLEKHB2	0	0.196	0	post_stim_only	chr2:131147722:A>G	chr2:131118890-131118978:+	0.196	0	1	1
+PLOD2	0	0	0.135	post_stim_only	chr3:146070679:T>C	chr3:146073352-146073657:-	0.135	0	0	1
+PLPPR1	0.211	0	0	lost_after_stim	chr9:101028937:C>T	chr9:101185679-101185870:+	0.211	1	1	1
+PMAIP1	0	0	0.355	post_stim_only	chr18:59903537:G>A	chr18:59900427-59900578:+	0.355	0	0	1
+PMPCA	0	0	0.125	stimulation_dependent	chr9:136417018:C>T	chr9:136412892-136412965:+	0.125	1	1	1
+PMS1	0	0.162	0	stimulation_dependent	chr2:189784589:G>C	chr2:189805651-189805754:+	0.162	1	1	1
+PNISR	0.187	0	0	lost_after_stim	chr6:99408145:C>T	chr6:99400311-99400543:-	0.187	1	1	1
+PNRC2	0	0.156	0	stimulation_dependent	chr1:23961586:G>A	chr1:23959827-23959998:+	0.156	1	1	1
+POC5	0	0.136	0	post_stim_only	chr5:75707852:T>C	chr5:75712853-75712951:-	0.136	1	1	1
+POLR1D	0.279	0	0	lost_after_stim	chr13:27665802:G>C	chr13:27650041-27650241:+	0.279	1	1	1
+POLR2B	0	0	0.111	post_stim_only	chr4:56978924:C>T	chr4:56977791-56977808:+	0.111	1	1	1
+POLR2E	0	0.105	0	stimulation_dependent	chr19:1088318:C>T	chr19:1093903-1094078:-	0.105	1	1	1
+POLR3D	0	0	0.206	stimulation_dependent	chr8:22247988:T>C	chr8:22248008-22248153:+	0.206	1	1	1
+POP5	0	0	0.261	post_stim_only	chr12:120581058:C>T	chr12:120580995-120581114:-	0.261	1	1	1
+PPFIA1	0	0.188	0	post_stim_only	chr11:70343809:C>T	chr11:70338434-70338453:+	0.188	1	1	1
+PPIP5K2	0	0.174	0	post_stim_only	chr5:103201583:A>G	chr5:103186319-103186439:+	0.174	1	1	1
+PPM1K	0	0.192	0	stimulation_dependent	chr4:88284507:G>T	chr4:88276695-88277142:-	0.192	1	1	1
+PPP1CC	0	0.271	0	post_stim_only	chr12:110720883:C>T	chr12:110724764-110726679:-	0.271	0	1	0
+PPP1R11	0.2	0	0	lost_after_stim	chr6:30069239:G>A	chr6:30067542-30067575:+	0.2	1	1	1
+PPP1R21	0.187	0	0	lost_after_stim	chr2:48454728:C>G	chr2:48440768-48441010:+	0.187	1	1	1
+PPP2R3C	0	0.198	0	stimulation_dependent	chr14:35121967:T>C	chr14:35107647-35108094:-	0.198	1	1	1
+PPP6R2	0	0.156	0	stimulation_dependent	chr22:50372082:G>A	chr22:50388985-50389111:+	0.156	1	1	1
+PRKAG2-AS1	0.235	0	0	lost_after_stim	chr7:151879025:A>G	chr7:151878561-151878814:+	0.235	1	1	1
+PRKAR1A	0	0	0.185	post_stim_only	chr17:68551267:G>C	chr17:68530276-68530319:+	0.185	0	1	1
+PRKAR1B	0	0.621	0.623	post_stim_only	chr7:579300:A>G	chr7:578436-578853:-	0.623	0	1	1
+PRMT7	0	0.388	0	stimulation_dependent	chr16:68355868:C>T	chr16:68312041-68312176:+	0.388	1	1	1
+PRPF40A	0.143	0	0	lost_after_stim	chr2:152676673:A>C	chr2:152717445-152717457:-	0.143	1	1	1
+PRPSAP2	0.439	0	0	lost_after_stim	chr17:18858194:G>A	chr17:18867281-18867334:+	0.439	1	0	1
+PRR14L	0	0.291	0	stimulation_dependent	chr22:31717033:C>T	chr22:31749474-31749992:-	0.291	1	1	1
+PRRC2A	0	0.547	0	post_stim_only	chr6:31636577:C>A	chr6:31622689-31622726:+	0.547	1	1	1
+PRRC2C	0	0.217	0	post_stim_only	chr1:171557430:G>A	chr1:171568246-171568339:+	0.217	1	1	1
+PSEN2	0	0.186	0	post_stim_only	chr1:226895848:C>T	chr1:226871053-226871261:+	0.186	0	1	0
+PSMA4	0	0	0.166	stimulation_dependent	chr15:78540489:T>C	chr15:78542219-78542375:+	0.166	1	1	1
+PSMA6	0	0.139	0	stimulation_dependent	chr14:35292468:C>G	chr14:35292316-35292333:+	0.139	1	1	1
+PSMB10	0	0.235	0.216	post_stim_only	chr16:67935627:A>G	chr16:67935478-67935548:-	0.235	0	1	1
+PSMC2	0.158	0	0	lost_after_stim	chr7:103363348:A>G	chr7:103362088-103362467:+	0.158	1	0	0
+PSMC5	0.144	0	0	lost_after_stim	chr17:63830910:C>T	chr17:63827684-63827702:+	0.144	1	1	1
+PSMD1	0	0	0.335	post_stim_only	chr2:231056871:G>C	chr2:231170565-231170578:+	0.335	1	1	1
+PSMD11	0	0.205	0	post_stim_only	chr17:32477555:G>A	chr17:32476679-32477520:+	0.205	1	1	1
+PSMD13	0.101	0	0	lost_after_stim	chr11:237086:A>G	chr11:244216-244425:+	0.101	1	1	1
+PSMD6	0.452	0	0	lost_after_stim	chr3:64010585:C>T	chr3:64023478-64023492:-	0.452	1	1	1
+PSMD8	0.124	0	0	lost_after_stim	chr19:38380981:C>T	chr19:38374570-38374690:+	0.124	1	1	1
+PSMF1	0	0.21	0	stimulation_dependent	chr20:1165403:C>T	chr20:1118609-1118635:+	0.21	1	1	1
+PTGR1	0	0	0.477	post_stim_only	chr9:111599378:G>C	chr9:111592366-111592690:-	0.477	1	1	1
+PTPRF	0	0.309	0	post_stim_only	chr1:43622075:G>A	chr1:43612767-43612800:+	0.309	1	1	1
+PTPRO	0	0	0.124	stimulation_dependent	chr12:15497327:G>A	chr12:15595057-15595640:+	0.124	1	1	1
+PTPRR	0.317	0	0	lost_after_stim	chr12:70684137:C>T	chr12:70754301-70754415:-	0.317	1	1	0
+PTPRS	0	0.489	0	post_stim_only	chr19:5273559:T>G	chr19:5222688-5223297:-	0.489	1	1	1
+PUF60	0	0.226	0	post_stim_only	chr8:143829321:T>G	chr8:143818534-143818958:-	0.226	1	1	1
+PXDN	0	0.188	0	stimulation_dependent	chr2:1744464:C>T	chr2:1687631-1687703:-	0.188	1	1	1
+PXYLP1	0	0.509	0	post_stim_only	chr3:141278477:C>T	chr3:141262242-141262340:+	0.509	0	1	0
+QRSL1	0	0.1	0	stimulation_dependent	chr6:106629626:G>A	chr6:106640100-106640206:+	0.1	1	1	1
+R3HCC1L	0	0	0.147	stimulation_dependent	chr10:98208270:G>A	chr10:98162882-98162975:+	0.147	1	1	1
+R3HDM2	0	0	0.413	post_stim_only	chr12:57310376:C>T	chr12:57342168-57342479:-	0.413	0	1	1
+RAB18	0	0	0.252	post_stim_only	chr10:27538328:A>T	chr10:27531528-27531615:+	0.252	0	1	1
+RAB3C	0	0	0.286	post_stim_only	chr5:58618107:T>A	chr5:58618118-58618299:+	0.286	0	1	1
+RAB3GAP2	0	0	0.202	post_stim_only	chr1:220157329:C>T	chr1:220162268-220162705:-	0.202	1	1	1
+RACK1	0.133	0.159	0.193	all_timepoints	chr5:181236940:G>GT	chr5:181241639-181241880:-	0.193	1	1	1
+RAD17	0	0	0.319	stimulation_dependent	chr5:69374650:G>A	chr5:69371034-69371083:+	0.319	1	1	1
+RALGAPA1	0	0.251	0	post_stim_only	chr14:35809097:C>T	chr14:35700161-35700302:-	0.251	1	1	1
+RANBP2	0.331	0	0	lost_after_stim	chr2:108719561:C>T	chr2:108762100-108762195:+	0.331	1	1	1
+RANBP6	0	0.39	0	post_stim_only	chr9:6014010:C>T	chr9:6014356-6015412:-	0.39	0	1	0
+RAP1A	0	0	0.338	post_stim_only	chr1:111712490:TAAA>CT	chr1:111619788-111619909:+	0.338	0	1	1
+RARS1	0	0	0.196	stimulation_dependent	chr5:168492819:G>A	chr5:168492847-168493187:+	0.196	1	1	1
+RARS2	0	0	0.149	stimulation_dependent	chr6:87514445:T>C	chr6:87524652-87524674:-	0.149	1	1	1
+RASA1	0	0	0.341	stimulation_dependent	chr5:87386863:C>T	chr5:87366350-87366495:+	0.341	1	0	1
+RB1	0	0	0.398	post_stim_only	chr13:48456230:G>A	chr13:48479978-48479997:+	0.398	0	1	1
+RBL2	0	0	0.414	post_stim_only	chr16:53470808:T>C	chr16:53445780-53445929:+	0.414	0	1	1
+RBM12B	0.143	0	0	lost_after_stim	chr8:93737336:C>T	chr8:93740144-93740628:-	0.143	1	1	0
+RBM28	0.306	0	0	lost_after_stim	chr7:128339317:T>G	chr7:128341117-128341219:-	0.306	1	1	1
+RBM33	0	0.104	0	stimulation_dependent	chr7:155644804:G>C	chr7:155672915-155673328:+	0.104	1	1	1
+RBM34	0.176	0	0	lost_after_stim	chr1:235161229:T>A	chr1:235152487-235152705:-	0.176	1	0	1
+RBMS1	0	0.188	0	post_stim_only	chr2:160318181:C>T	chr2:160284260-160284774:-	0.188	1	1	1
+RCN1	0	0.328	0	post_stim_only	chr11:32098357:G>A	chr11:32096533-32097143:+	0.328	1	1	1
+RCOR3	0	0	0.182	post_stim_only	chr1:211279301:GAAGCC>AAA	chr1:211271527-211271570:+	0.182	1	1	1
+RDX	0	0.319	0	post_stim_only	chr11:110236134:C>T	chr11:110231550-110231837:-	0.319	1	1	1
+RETREG1	0	0	0.462	post_stim_only	chr5:16616989:A>G	chr5:16481093-16482996:-	0.462	1	1	1
+REXO2	0	0.511	0.481	stimulation_dependent	chr11:114443914:T>C	chr11:114444154-114444194:+	0.511	1	1	1
+RHOA	0.574	0	0	lost_after_stim	chr3:49362552:A>G	chr3:49411976-49411994:-	0.574	1	1	1
+RHOC	0.788	0	0	lost_after_stim	chr1:112707081:C>T	chr1:112705168-112705201:-	0.788	1	1	0
+RHOQ	0	0	0.143	post_stim_only	chr2:46581028:C>T	chr2:46580283-46580724:+	0.143	0	0	1
+RHOT1	0	0	0.195	post_stim_only	chr17:32206950:A>G	chr17:32203859-32203889:+	0.195	0	1	1
+RIC3	0	0	0.144	post_stim_only	chr11:8138344:G>T	chr11:8138347-8138425:-	0.144	1	1	1
+RIMS1	0	0	0.258	post_stim_only	chr6:72179768:A>G	chr6:72260767-72264004:+	0.258	0	0	1
+RIMS2	0	0.239	0	post_stim_only	chr8:104251750:C>T	chr8:104031679-104031769:+	0.239	1	1	1
+RMDN1	0	0.278	0	stimulation_dependent	chr8:86507085:T>G	chr8:86474914-86474928:-	0.278	1	1	0
+RMND1	0	0.259	0	stimulation_dependent	chr6:151452070:C>G	chr6:151429782-151429935:-	0.259	1	1	1
+RNASET2	0	0	0.284	stimulation_dependent	chr6:166931094:A>G	chr6:166955494-166955627:-	0.284	1	1	1
+RNF10	0	0	0.118	post_stim_only	chr12:120534592:C>T	chr12:120553070-120553929:+	0.118	0	1	1
+RNF123	0.306	0	0	lost_after_stim	chr3:49721330:A>G	chr3:49720894-49721019:+	0.306	1	1	1
+RNF130	0	0.185	0	stimulation_dependent	chr5:180071594:C>T	chr5:179955452-179955479:-	0.185	1	1	1
+RNF167	0	0	0.137	stimulation_dependent	chr17:4945154:A>G	chr17:4940486-4940642:+	0.137	1	1	1
+RNF4	0	0.132	0	post_stim_only	chr4:2469164:C>G	chr4:2490336-2490411:+	0.132	0	1	1
+RNH1	0.422	0	0	lost_after_stim	chr11:499058:C>T	chr11:504823-504888:-	0.422	1	1	1
+RNPC3	0	0	0.171	stimulation_dependent	chr1:103534801:G>A	chr1:103553343-103553605:+	0.171	1	1	1
+RNPS1	0	0	0.192	stimulation_dependent	chr16:2253494:G>A	chr16:2264572-2264760:-	0.192	1	1	1
+ROGDI	0	0.158	0	stimulation_dependent	chr16:4797315:C>T	chr16:4797840-4797861:-	0.158	1	1	1
+RPF1	0.413	0.644	0.363	all_timepoints	chr1:84480988:G>A	chr1:84482995-84483330:+	0.644	1	1	1
+RPL11	0.403	0	0	lost_after_stim	chr1:23696351:G>C	chr1:23694791-23695797:+	0.403	1	0	0
+RPL13	0	0.357	0.259	stimulation_dependent	chr16:89561051:T>G	chr16:89561063-89561226:+	0.357	1	1	1
+RPL14	0	0.255	0.342	stimulation_dependent	chr3:40462317:G>A	chr3:40457363-40457474:+	0.342	1	1	1
+RPL17	0.303	0	0	lost_after_stim	chr18:49492392:G>C	chr18:49491735-49491745:-	0.303	1	1	1
+RPL19	0.131	0	0	lost_after_stim	chr17:39204181:C>A	chr17:39202448-39202988:+	0.131	1	0	0
+RPL21	0	0.124	0	stimulation_dependent	chr13:27251536:G>T	chr13:27254467-27254943:+	0.124	1	1	0
+RPL27	0.115	0	0	lost_after_stim	chr17:43002951:G>A	chr17:42999185-42999279:+	0.115	1	1	1
+RPL28	0	0	0.278	stimulation_dependent	chr19:55385958:A>G	chr19:55392085-55392100:+	0.278	1	1	1
+RPL3	0	0	0.113	stimulation_dependent	chr22:39318484:C>T	chr22:39319625-39319649:-	0.113	1	1	1
+RPL37A	0.122	0.131	0.121	all_timepoints	chr2:216501462:C>A	chr2:216499831-216499866:+	0.131	1	1	1
+RPL7L1	0	0	0.114	stimulation_dependent	chr6:42886862:G>A	chr6:42880860-42880966:+	0.114	1	1	1
+RPL9	0.205	0.37	0.184	all_timepoints	chr4:39456430:A>G	chr4:39458441-39458598:-	0.37	1	1	1
+RPLP0	0.451	0.484	0.458	all_timepoints	chr12:120200811:A>G	chr12:120200832-120200852:-	0.484	1	1	1
+RPP21	0.134	0	0	lost_after_stim	chr6:30346829:A>G	chr6:30345398-30345466:+	0.134	1	1	1
+RPP40	0	0.265	0	post_stim_only	chr6:4998776:A>G	chr6:5003585-5003658:-	0.265	0	1	0
+RPS11	0.132	0	0	lost_after_stim	chr19:49497575:T>C	chr19:49497325-49497519:+	0.132	1	1	1
+RPS14	0.762	0.737	0	lost_after_stim	chr5:150447721:T>G	chr5:150449436-150449485:-	0.762	1	1	1
+RPS17	0.609	0	0	lost_after_stim	chr15:82540114:T>C	chr15:82540142-82540419:-	0.609	1	0	0
+RPS2	0.113	0	0	lost_after_stim	chr16:1964526:G>A	chr16:1962909-1962949:-	0.113	1	1	1
+RPS20	0.101	0	0	lost_after_stim	chr8:56073081:T>C	chr8:56074356-56074380:-	0.101	1	1	1
+RPS23	0	0.162	0.191	stimulation_dependent	chr5:82276076:A>G	chr5:82275113-82275208:-	0.191	1	1	1
+RPS26	0	0	0.21	post_stim_only	chr12:56042135:C>G	chr12:56042064-56042132:+	0.21	0	0	1
+RPS27A	0.228	0.19	0.215	all_timepoints	chr2:55232713:T>G	chr2:55232708-55232794:+	0.228	1	1	1
+RPS27L	0	0.665	0.381	stimulation_dependent	chr15:63157480:C>G	chr15:63152782-63153852:-	0.665	1	1	1
+RPS28	0	0	0.233	stimulation_dependent	chr19:8322322:G>A	chr19:8321703-8321952:+	0.233	1	1	1
+RPS5	0.463	0.538	0.502	all_timepoints	chr19:58394795:T>C	chr19:58388417-58388480:+	0.538	1	1	1
+RPS6KC1	0.117	0	0	lost_after_stim	chr1:213051376:T>C	chr1:213071041-213071084:+	0.117	1	1	1
+RPS6KL1	0	0.175	0	stimulation_dependent	chr14:74922370:G>A	chr14:74921773-74921977:-	0.175	1	1	1
+RPS7	0	0.471	0.359	post_stim_only	chr2:3575323:T>G	chr2:3575556-3575591:+	0.471	0	1	1
+RPS8	0.139	0.148	0.156	all_timepoints	chr1:44778094:C>T	chr1:44775600-44775635:+	0.156	1	1	1
+RRP15	0.142	0	0	lost_after_stim	chr1:218302520:G>A	chr1:218302559-218302671:+	0.142	1	1	1
+RSRP1	0.345	0	0	lost_after_stim	chr1:25244058:A>ATT	chr1:25244224-25244453:-	0.345	1	1	1
+RSU1	0	0	0.237	post_stim_only	chr10:16817335:C>G	chr10:16816972-16817084:-	0.237	1	1	1
+RTCA	0.136	0	0	lost_after_stim	chr1:100266263:G>AA	chr1:100266624-100266929:+	0.136	1	1	1
+RTF2	0	0.111	0	stimulation_dependent	chr20:56518844:A>G	chr20:56516934-56516989:+	0.111	1	1	1
+RTN4	0	0.196	0	stimulation_dependent	chr2:55050504:C>G	chr2:55028163-55028220:-	0.196	1	1	1
+RUVBL2	0	0.596	0.3	post_stim_only	chr19:48993897:A>G	chr19:49004206-49004276:+	0.596	1	1	1
+RWDD1	0.321	0	0	lost_after_stim	chr6:116590940:T>C	chr6:116572857-116572985:+	0.321	1	1	1
+S100Z	0	0.262	0	post_stim_only	chr5:76877819:G>A	chr5:76874910-76875300:+	0.262	0	1	1
+SACM1L	0	0.262	0	stimulation_dependent	chr3:45706807:G>A	chr3:45735234-45735245:+	0.262	1	1	1
+SAP30BP	0	0	0.142	stimulation_dependent	chr17:75706054:G>A	chr17:75703319-75703371:+	0.142	1	1	1
+SBDS	0	0	0.13	stimulation_dependent	chr7:66994268:T>C	chr7:66987761-66987792:-	0.13	1	0	1
+SBF1	0	0	0.154	stimulation_dependent	chr22:50447345:A>G	chr22:50474996-50475006:-	0.154	1	1	1
+SCAI	0	0.351	0	post_stim_only	chr9:125055996:C>T	chr9:125065989-125066058:-	0.351	1	1	1
+SCAMP1	0	0	0.113	stimulation_dependent	chr5:78360577:G>C	chr5:78388914-78389171:+	0.113	1	1	1
+SCAMP3	0	0.127	0	stimulation_dependent	chr1:155262135:C>T	chr1:155261945-155262085:-	0.127	1	1	1
+SCAPER	0	0.321	0	post_stim_only	chr15:76733345:C>T	chr15:76771723-76771741:-	0.321	1	1	1
+SCFD1	0	0	0.231	post_stim_only	chr14:30622317:C>G	chr14:30722493-30722559:+	0.231	1	1	1
+SCN2A	0	0	0.315	post_stim_only	chr2:165388719:T>A	chr2:165328403-165328538:+	0.315	1	1	1
+SCN7A	0	0	0.331	post_stim_only	chr2:166406428:A>G	chr2:166486855-166486968:-	0.331	1	1	1
+SDHA	0	0.203	0	post_stim_only	chr5:230995:T>C	chr5:251468-251864:+	0.203	1	1	1
+SEC14L1	0	0	0.37	post_stim_only	chr17:77190912:C>G	chr17:77140931-77140968:+	0.37	1	1	1
+SEC22B	0	0.117	0	post_stim_only	chr1:120168928:T>C	chr1:120168347-120168839:-	0.117	0	1	1
+SEC61A2	0	0	0.281	post_stim_only	chr10:12149933:C>T	chr10:12142432-12142565:+	0.281	0	1	1
+SECISBP2	0	0	0.58	post_stim_only	chr9:89320341:T>C	chr9:89320340-89320380:+	0.58	1	1	1
+SEPTIN11	0	0	0.438	post_stim_only	chr4:76949862:T>G	chr4:77034496-77034667:+	0.438	1	1	1
+SEPTIN2	0	0.159	0	stimulation_dependent	chr2:241315962:G>A	chr2:241336784-241336926:+	0.159	1	1	1
+SERBP1	0.631	0	0	lost_after_stim	chr1:67424267:A>C	chr1:67424284-67424322:-	0.631	1	1	1
+SERPINB8	0	0.25	0	post_stim_only	chr18:63983630:G>A	chr18:63986962-63987396:+	0.25	0	1	1
+SESTD1	0	0.101	0	stimulation_dependent	chr2:179183180:T>C	chr2:179182526-179183079:-	0.101	1	1	1
+SEZ6L2	0.311	0	0	lost_after_stim	chr16:29899132:C>TTAA	chr16:29872704-29872743:-	0.311	1	1	1
+SF1	0	0.269	0	stimulation_dependent	chr11:64778633:C>T	chr11:64776045-64776497:-	0.269	1	1	1
+SF3B1	0	0.125	0	stimulation_dependent	chr2:197418580:T>C	chr2:197418588-197418795:-	0.125	1	1	1
+SFT2D1	0.328	0	0	lost_after_stim	chr6:166342421:C>T	chr6:166324516-166324536:-	0.328	1	0	1
+SFXN4	0	0.269	0	post_stim_only	chr10:119140918:C>T	chr10:119165201-119165536:-	0.269	1	1	1
+SGIP1	0	0.288	0	post_stim_only	chr1:66743404:G>A	chr1:66534186-66534212:+	0.288	1	1	1
+SHC2	0.284	0	0	lost_after_stim	chr19:416663:C>T	chr19:419056-419879:-	0.284	1	1	0
+SHISA4	0.182	0	0	lost_after_stim	chr1:201891497:A>G	chr1:201888897-201888933:+	0.182	1	1	1
+SIGMAR1	0	0	0.263	stimulation_dependent	chr9:34637692:T>G	chr9:34636373-34636750:-	0.263	1	1	1
+SIRT2	0	0	0.3	post_stim_only	chr19:38898796:C>T	chr19:38898793-38898914:-	0.3	0	0	1
+SIVA1	0.162	0	0	lost_after_stim	chr14:104759556:G>A	chr14:104755629-104755824:+	0.162	1	1	1
+SKIC3	0.252	0	0	lost_after_stim	chr5:95525413:G>C	chr5:95520715-95520818:-	0.252	1	1	1
+SKIC8	0	0	0.495	post_stim_only	chr15:78295432:AA>G	chr15:78295725-78295793:-	0.495	0	0	1
+SLC16A3	0	0	0.305	post_stim_only	chr17:82239392:G>A	chr17:82229067-82229092:+	0.305	0	0	1
+SLC25A12	0	0	0.187	stimulation_dependent	chr2:171868790:A>G	chr2:171868011-171868680:-	0.187	1	1	1
+SLC25A24	0	0.345	0	post_stim_only	chr1:108157568:C>T	chr1:108155084-108155135:-	0.345	1	1	0
+SLC25A26	0	0.112	0.199	stimulation_dependent	chr3:66369531:C>T	chr3:66346363-66346408:+	0.199	1	1	1
+SLC25A36	0.352	0	0.222	lost_after_stim	chr3:140963243:T>C	chr3:140963471-140966211:+	0.352	1	0	1
+SLC25A4	0.379	0	0	lost_after_stim	chr4:185143455:C>G	chr4:185145354-185145758:+	0.379	1	1	1
+SLC39A7	0.115	0	0	lost_after_stim	chr6:33202117:C>G	chr6:33201657-33201744:+	0.115	1	1	1
+SLC4A1AP	0	0	0.238	stimulation_dependent	chr2:27669307:G>A	chr2:27675531-27675607:+	0.238	1	1	1
+SLC4A7	0	0	0.385	stimulation_dependent	chr3:27484197:C>T	chr3:27409355-27409530:-	0.385	1	1	1
+SLC52A2	0.139	0	0	lost_after_stim	chr8:144361070:A>G	chr8:144359065-144359183:+	0.139	1	1	0
+SMAD5	0.357	0	0	lost_after_stim	chr5:136153891:G>A	chr5:136152674-136152758:+	0.357	1	0	1
+SMARCAD1	0	0	0.233	stimulation_dependent	chr4:94276368:C>T	chr4:94208083-94208242:+	0.233	1	1	1
+SMARCAL1	0	0.442	0	post_stim_only	chr2:216482989:G>A	chr2:216412767-216412798:+	0.442	0	1	0
+SMARCB1	0	0.137	0.132	stimulation_dependent	chr22:23791876:C>A	chr22:23801135-23801298:+	0.137	1	1	1
+SMARCE1	0.266	0.263	0.229	all_timepoints	chr17:40645455:C>T	chr17:40645619-40645795:-	0.266	1	1	1
+SMC2	0	0.158	0.198	stimulation_dependent	chr9:104102182:G>A	chr9:104094477-104094563:+	0.198	1	1	1
+SMC3	0.288	0.286	0.381	all_timepoints	chr10:110589681:G>A	chr10:110591132-110592199:+	0.381	1	1	1
+SMC6	0.349	0	0	lost_after_stim	chr2:17703227:C>T	chr2:17752977-17753001:-	0.349	1	1	1
+SMCHD1	0	0	0.46	stimulation_dependent	chr18:2772305:G>A	chr18:2778168-2778239:+	0.46	1	1	1
+SMG1	0	0	0.415	post_stim_only	chr16:18860675:C>T	chr16:18896053-18896207:-	0.415	1	1	1
+SNAP47	0	0	0.25	post_stim_only	chr1:227747742:A>G	chr1:227767083-227768248:+	0.25	0	1	1
+SNAP91	0	0	0.257	post_stim_only	chr6:83656775:A>G	chr6:83708718-83708772:-	0.257	1	1	1
+SNHG14	0	0.533	0	post_stim_only	chr15:25106138:C>T	chr15:25105256-25105699:+	0.533	1	1	1
+SNHG16	0	0.154	0	stimulation_dependent	chr17:76563204:T>C	chr17:76557969-76558279:+	0.154	1	1	1
+SNHG5	0	0.314	0.265	stimulation_dependent	chr6:85678169:G>T	chr6:85678188-85678205:-	0.314	1	1	1
+SNRNP70	0	0.218	0	stimulation_dependent	chr19:49108061:C>T	chr19:49102185-49102410:+	0.218	1	1	1
+SNRPN	0.273	0	0	lost_after_stim	chr15:24856690:A>G	chr15:24912362-24912530:+	0.273	1	1	1
+SNX17	0	0.174	0	post_stim_only	chr2:27373275:G>A	chr2:27373039-27373113:+	0.174	1	1	1
+SNX6	0	0.11	0	stimulation_dependent	chr14:34597624:A>T	chr14:34629954-34630109:-	0.11	1	1	1
+SOBP	0	0	0.255	post_stim_only	chr6:107506723:G>A	chr6:107502914-107503656:+	0.255	0	0	1
+SORBS2	0.142	0.106	0	lost_after_stim	chr4:185956231:G>A	chr4:185925409-185925530:-	0.142	1	1	1
+SPAST	0	0.179	0	stimulation_dependent	chr2:32115760:G>A	chr2:32126947-32127022:+	0.179	1	1	1
+SPATA6	0	0.106	0	stimulation_dependent	chr1:48399566:C>T	chr1:48451551-48451586:-	0.106	1	1	0
+SPATS2	0	0.208	0	post_stim_only	chr12:49490724:G>A	chr12:49371227-49371290:+	0.208	0	1	1
+SPCS1	0	0.322	0.216	stimulation_dependent	chr3:52708015:T>C	chr3:52704954-52705158:+	0.322	1	1	1
+SPCS3	0.152	0.134	0.249	all_timepoints	chr4:176319984:C>T	chr4:176320219-176322169:+	0.249	1	1	1
+SPDL1	0	0.333	0	post_stim_only	chr5:169594605:C>T	chr5:169595609-169596080:+	0.333	1	1	0
+SPG7	0	0	0.143	post_stim_only	chr16:89513214:T>G	chr16:89529579-89530247:+	0.143	0	1	1
+SPICE1	0	0.353	0	post_stim_only	chr3:113503188:G>A	chr3:113514896-113514906:-	0.353	1	1	0
+SPNS1	0.105	0	0	lost_after_stim	chr16:28983823:C>T	chr16:28979154-28979244:+	0.105	1	1	1
+SPOCK3	0	0	0.159	stimulation_dependent	chr4:166734709:C>T	chr4:167234449-167234491:-	0.159	1	1	1
+SPPL3	0.105	0	0	lost_after_stim	chr12:120764558:T>C	chr12:120769059-120770137:-	0.105	1	1	1
+SPTAN1	0	0.171	0	stimulation_dependent	chr9:128598470:C>T	chr9:128555348-128555399:+	0.171	1	1	1
+SQLE	0	0	0.149	stimulation_dependent	chr8:125022167:A>G	chr8:124998605-124998646:+	0.149	1	1	1
+SRA1	0	0.323	0	post_stim_only	chr5:140557239:G>C	chr5:140551169-140551981:-	0.323	1	1	1
+SRD5A3	0	0.477	0	stimulation_dependent	chr4:55370160:C>T	chr4:55351096-55351214:+	0.477	1	1	0
+SRI	0	0.141	0	stimulation_dependent	chr7:88205854:C>T	chr7:88209432-88209452:-	0.141	1	1	1
+SRP72	0.193	0	0	lost_after_stim	chr4:56467655:G>T	chr4:56478378-56478503:+	0.193	1	1	1
+SRP9	0	0.158	0	stimulation_dependent	chr1:225790265:C>T	chr1:225786861-225786969:+	0.158	1	1	1
+SRRM2	0	0.114	0	post_stim_only	chr16:2758517:G>A	chr16:2756333-2756478:+	0.114	1	1	1
+SRSF3	0.1	0	0	lost_after_stim	chr6:36602588:T>C	chr6:36602471-36602564:+	0.1	1	1	1
+SSBP3	0	0	0.224	post_stim_only	chr1:54226682:AA>TTTAG	chr1:54356414-54356818:-	0.224	1	1	1
+SSR1	0	0	0.209	stimulation_dependent	chr6:7310025:A>G	chr6:7281142-7287569:-	0.209	1	1	1
+STAG1	0	0.113	0.209	post_stim_only	chr3:136623173:C>T	chr3:136586801-136586926:-	0.209	0	1	1
+STAG3L5P	0	0	0.409	stimulation_dependent	chr7:100338803:T>C	chr7:100338990-100339650:+	0.409	1	1	1
+STAMBP	0	0.386	0	post_stim_only	chr2:73829436:A>G	chr2:73862945-73867152:+	0.386	1	1	1
+STAT2	0	0.143	0	stimulation_dependent	chr12:56355745:C>T	chr12:56348623-56348751:-	0.143	1	1	0
+STAU2	0	0.209	0	stimulation_dependent	chr8:73615760:C>T	chr8:73549785-73550546:-	0.209	1	1	1
+STK25	0	0	0.212	stimulation_dependent	chr2:241495393:G>T	chr2:241508442-241508504:-	0.212	1	1	1
+STK33	0.364	0.128	0	lost_after_stim	chr11:8474721:C>T	chr11:8475066-8475824:-	0.364	1	1	1
+STMN3	0	0.232	0	stimulation_dependent	chr20:63641057:G>A	chr20:63652572-63652766:-	0.232	1	1	1
+STX2	0	0	0.158	post_stim_only	chr12:130821768:C>G	chr12:130804304-130804543:-	0.158	0	1	1
+STX6	0.154	0	0	lost_after_stim	chr1:180993375:C>T	chr1:181002605-181002700:-	0.154	1	1	1
+STXBP1	0	0.15	0	stimulation_dependent	chr9:127691033:G>A	chr9:127612360-127612403:+	0.15	1	1	1
+STXBP3	0	0	0.15	post_stim_only	chr1:108746730:C>G	chr1:108756766-108757005:+	0.15	0	0	1
+SUCLA2	0.131	0	0	lost_after_stim	chr13:47943042:T>C	chr13:47965577-47965640:-	0.131	1	1	1
+SUCO	0	0	0.245	stimulation_dependent	chr1:172569135:G>A	chr1:172533117-172533149:+	0.245	1	1	1
+SUMO3	0	0	0.231	post_stim_only	chr21:44806870:A>G	chr21:44818064-44818105:-	0.231	0	1	1
+SUN1	0.388	0.234	0	lost_after_stim	chr7:838954:A>G	chr7:843818-843834:+	0.388	1	1	1
+SUPT5H	0	0.13	0	stimulation_dependent	chr19:39453441:C>T	chr19:39457932-39457949:+	0.13	1	1	1
+SUSD4	0	0.197	0	post_stim_only	chr1:223268607:T>G	chr1:223234914-223235051:-	0.197	0	1	1
+SV2C	0	0	0.165	post_stim_only	chr5:76132109:G>A	chr5:76132330-76132461:+	0.165	1	1	1
+SYS1	0.252	0	0	lost_after_stim	chr20:45367432:G>A	chr20:45365546-45365618:+	0.252	1	1	0
+SYT1	0	0.198	0	stimulation_dependent	chr12:79448928:G>T	chr12:78868771-78868911:+	0.198	1	1	1
+SYT14	0.29	0.132	0	lost_after_stim	chr1:210100362:G>A	chr1:210100461-210100546:+	0.29	1	1	1
+SYT5	0	0.125	0	post_stim_only	chr19:55180049:G>C	chr19:55179963-55180030:-	0.125	1	1	1
+TACC2	0	0.274	0	stimulation_dependent	chr10:122254088:C>A	chr10:122088591-122088738:+	0.274	1	1	1
+TAF1B	0	0.27	0	post_stim_only	chr2:9933946:G>A	chr2:9918084-9919040:+	0.27	1	1	1
+TAF2	0	0.3	0	post_stim_only	chr8:119801931:G>A	chr8:119732186-119732800:-	0.3	0	1	1
+TAGLN3	0	0	0.215	post_stim_only	chr3:111998903:C>T	chr3:111999246-111999325:+	0.215	1	1	1
+TAMM41	0.182	0.234	0	lost_after_stim	chr3:11846784:C>G	chr3:11844907-11845096:-	0.234	1	1	1
+TARS1	0	0	0.169	stimulation_dependent	chr5:33461928:G>A	chr5:33448540-33448730:+	0.169	1	1	1
+TAX1BP1	0	0.52	0	post_stim_only	chr7:27740145:G>A	chr7:27816394-27816520:+	0.52	0	1	0
+TBC1D20	0	0	0.389	post_stim_only	chr20:448051:C>T	chr20:444547-445049:-	0.389	0	0	1
+TBC1D32	0	0.27	0	stimulation_dependent	chr6:121317569:C>T	chr6:121170404-121170527:-	0.27	1	1	1
+TBCA	0.133	0.12	0	lost_after_stim	chr5:77776296:G>C	chr5:77691498-77693265:-	0.133	1	1	1
+TBCB	0	0.145	0.165	stimulation_dependent	chr19:36125941:G>A	chr19:36124249-36124363:+	0.165	1	1	1
+TBCD	0	0	0.353	post_stim_only	chr17:82938056:A>G	chr17:82890696-82891713:+	0.353	1	1	1
+TBRG1	0	0.513	0	post_stim_only	chr11:124632363:A>G	chr11:124626472-124626609:+	0.513	1	1	1
+TCF25	0	0.184	0	post_stim_only	chr16:89911336:C>T	chr16:89908965-89909083:+	0.184	1	1	1
+TCP11L1	0	0	0.308	post_stim_only	chr11:33054644:T>C	chr11:33040014-33040027:+	0.308	1	1	1
+TDG	0	0	0.167	stimulation_dependent	chr12:103979980:G>A	chr12:103982798-103982810:+	0.167	1	1	1
+TEFM	0.593	0.309	0.404	all_timepoints	chr17:30904132:C>T	chr17:30906167-30906190:-	0.593	1	1	1
+TERF1	0	0.406	0	post_stim_only	chr8:73008862:C>G	chr8:73039115-73039219:+	0.406	0	1	0
+TES	0	0	0.459	post_stim_only	chr7:116234584:G>A	chr7:116249272-116249577:+	0.459	1	1	1
+TEX264	0.109	0	0	lost_after_stim	chr3:51704239:A>G	chr3:51684412-51684467:+	0.109	1	1	1
+TFB1M	0	0.312	0	post_stim_only	chr6:155257873:C>T	chr6:155257687-155257771:-	0.312	1	1	0
+TGS1	0	0.197	0	stimulation_dependent	chr8:55786275:G>A	chr8:55810880-55811097:+	0.197	1	1	1
+THRA	0	0	0.404	post_stim_only	chr17:40076899:G>A	chr17:40093019-40093136:+	0.404	0	0	1
+THRAP3	0	0.3	0	post_stim_only	chr1:36301637:G>A	chr1:36304148-36304473:+	0.3	1	1	1
+THSD7B	0	0	0.217	stimulation_dependent	chr2:136765567:G>T	chr2:136882429-136882621:+	0.217	1	1	1
+TIA1	0	0.14	0	post_stim_only	chr2:70229276:C>T	chr2:70236078-70236175:-	0.14	0	1	0
+TIMM10B	0.676	0	0	lost_after_stim	chr11:6481797:C>G	chr11:6482289-6482798:+	0.676	1	1	1
+TIMP2	0	0.16	0	stimulation_dependent	chr17:78870904:G>T	chr17:78855963-78856164:-	0.16	1	1	1
+TLE5	0	0	0.314	post_stim_only	chr19:3053327:T>G	chr19:3062173-3062190:-	0.314	0	1	1
+TLN1	0.219	0	0	lost_after_stim	chr9:35732084:T>C	chr9:35723103-35723951:-	0.219	1	1	1
+TM2D2	0.134	0	0	lost_after_stim	chr8:38996463:C>A	chr8:38996212-38996418:-	0.134	1	1	1
+TM7SF2	0.121	0	0	lost_after_stim	chr11:65116174:A>C	chr11:65113219-65113368:+	0.121	1	1	1
+TMBIM4	0.118	0	0	lost_after_stim	chr12:66153446:G>A	chr12:66153410-66153448:-	0.118	1	1	1
+TMCO1	0.469	0.483	0.473	all_timepoints	chr1:165759531:C>T	chr1:165754892-165754990:-	0.483	1	1	1
+TMCO3	0	0.45	0	stimulation_dependent	chr13:113495723:A>G	chr13:113520615-113520661:+	0.45	1	1	1
+TMEM106B	0	0	0.351	stimulation_dependent	chr7:12229790:C>G	chr7:12214808-12214848:+	0.351	1	1	1
+TMEM167B	0	0	0.335	post_stim_only	chr1:109094606:C>G	chr1:109093021-109093082:+	0.335	1	0	1
+TMEM176B	0	0.302	0	post_stim_only	chr7:150793995:T>G	chr7:150800021-150800167:-	0.302	1	1	1
+TMEM183A	0.107	0	0	lost_after_stim	chr1:203008790:G>A	chr1:203007574-203007773:+	0.107	1	1	1
+TMEM25	0	0.111	0	stimulation_dependent	chr11:118534088:G>A	chr11:118531234-118531357:+	0.111	1	1	1
+TMEM256	0.2	0	0	lost_after_stim	chr17:7403669:G>A	chr17:7403612-7403626:-	0.2	1	1	1
+TMEM33	0	0.351	0	post_stim_only	chr4:41935176:T>C	chr4:41935310-41935383:+	0.351	1	1	1
+TMEM39A	0	0	0.484	post_stim_only	chr3:119461955:C>T	chr3:119460750-119461574:-	0.484	1	0	1
+TMEM53	0	0.397	0	post_stim_only	chr1:44654506:G>A	chr1:44660295-44660349:-	0.397	0	1	0
+TNFRSF12A	0	0.207	0	post_stim_only	chr16:3021224:C>A	chr16:3021188-3021207:+	0.207	1	1	0
+TNKS	0	0	0.148	post_stim_only	chr8:9556538:G>A	chr8:9556612-9558831:+	0.148	1	1	1
+TNRC6A	0	0.468	0	post_stim_only	chr16:24777227:G>A	chr16:24804704-24804851:+	0.468	1	1	1
+TNRC6B	0.267	0	0	lost_after_stim	chr22:40246080:G>A	chr22:40177879-40177924:+	0.267	1	1	1
+TOLLIP	0	0	0.115	post_stim_only	chr11:1288725:C>T	chr11:1302583-1302790:-	0.115	0	0	1
+TOP1	0	0.238	0	post_stim_only	chr20:41098223:A>G	chr20:41091577-41091699:+	0.238	0	1	1
+TOP2B	0.211	0	0	lost_after_stim	chr3:25598357:A>G	chr3:25624803-25625911:-	0.211	1	1	1
+TOX4	0	0.135	0	stimulation_dependent	chr14:21477255:A>G	chr14:21477564-21477592:+	0.135	1	1	1
+TPGS2	0	0	0.116	post_stim_only	chr18:36818950:C>T	chr18:36805373-36805397:-	0.116	1	1	1
+TPM1	0.179	0	0	lost_after_stim	chr15:63048505:C>T	chr15:63070173-63070278:+	0.179	1	1	1
+TPM4	0	0	0.2	post_stim_only	chr19:16102173:A>C	chr19:16086293-16086422:+	0.2	0	0	1
+TRAPPC11	0	0.455	0	post_stim_only	chr4:183694693:G>A	chr4:183664029-183664071:+	0.455	0	1	0
+TRAPPC12	0	0	0.2	stimulation_dependent	chr2:3465691:G>C	chr2:3477694-3477714:+	0.2	1	1	1
+TRAPPC4	0.347	0	0	lost_after_stim	chr11:119018757:T>G	chr11:119018970-119019142:+	0.347	1	1	1
+TRAPPC5	0.346	0.408	0.358	all_timepoints	chr19:7682406:T>G	chr19:7680878-7681026:+	0.408	1	1	1
+TRDMT1	0.1	0	0	lost_after_stim	chr10:17174556:C>T	chr10:17169419-17169539:-	0.1	1	1	1
+TRIM2	0	0	0.401	post_stim_only	chr4:153276081:T>G	chr4:153204468-153204560:+	0.401	1	1	1
+TRIM23	0	0.547	0	post_stim_only	chr5:65614197:A>G	chr5:65613726-65613855:-	0.547	0	1	0
+TRIM37	0	0	0.186	stimulation_dependent	chr17:59088306:C>T	chr17:59104292-59104394:-	0.186	1	1	1
+TRIO	0	0.481	0	post_stim_only	chr5:14397128:T>C	chr5:14183797-14183959:+	0.481	0	1	1
+TRPC1	0	0.385	0	post_stim_only	chr3:142748433:C>A	chr3:142743484-142743586:+	0.385	0	1	0
+TRPT1	0	0	0.22	stimulation_dependent	chr11:64224328:T>C	chr11:64224099-64224162:-	0.22	1	1	1
+TSC2	0	0.25	0	stimulation_dependent	chr16:2050473:G>A	chr16:2053452-2053542:+	0.25	1	1	0
+TSEN34	0	0	0.24	post_stim_only	chr19:54193223:T>C	chr19:54190371-54190450:+	0.24	1	1	1
+TSPAN4	0	0	0.436	stimulation_dependent	chr11:866793:A>G	chr11:842940-843050:+	0.436	1	1	1
+TSTD2	0	0.182	0	stimulation_dependent	chr9:97627421:C>T	chr9:97627115-97627305:-	0.182	1	1	1
+TSTD3	0.4	0	0	lost_after_stim	chr6:99521044:G>A	chr6:99526109-99526228:+	0.4	1	0	0
+TTC21B	0	0	0.217	post_stim_only	chr2:165941135:C>T	chr2:165874832-165875209:-	0.217	1	1	1
+TUBB	0	0	0.108	stimulation_dependent	chr6:30725343:A>G	chr6:30722262-30722536:+	0.108	1	1	1
+TUBGCP2	0.162	0	0	lost_after_stim	chr10:133299435:C>T	chr10:133285084-133285213:-	0.162	1	1	1
+TUT4	0	0	0.116	stimulation_dependent	chr1:52525965:C>T	chr1:52481422-52481635:-	0.116	1	1	1
+TWF2	0	0	0.1	post_stim_only	chr3:52239093:G>A	chr3:52229660-52229782:-	0.1	0	0	1
+TXNDC15	0.173	0	0	lost_after_stim	chr5:134887902:A>G	chr5:134874483-134874530:+	0.173	1	1	1
+TXNDC16	0	0	0.124	post_stim_only	chr14:52470536:C>T	chr14:52462811-52462970:-	0.124	1	1	1
+TXNRD1	0	0	0.315	stimulation_dependent	chr12:104319490:G>A	chr12:104286681-104286880:+	0.315	1	1	1
+TYW1	0	0	0.271	stimulation_dependent	chr7:66998950:G>A	chr7:67009684-67009749:+	0.271	1	1	1
+UBA6-DT	0	0.541	0	post_stim_only	chr4:67728621:C>T	chr4:67732345-67732596:+	0.541	0	1	1
+UBAP2	0	0.489	0	stimulation_dependent	chr9:33989066:G>T	chr9:34048909-34048938:-	0.489	1	1	1
+UBAP2L	0.205	0.226	0	lost_after_stim	chr1:154234674:G>A	chr1:154234738-154234759:+	0.226	1	1	1
+UBE2D1	0	0.232	0	post_stim_only	chr10:58368011:G>A	chr10:58361494-58361526:+	0.232	0	1	0
+UBE2H	0	0	0.156	stimulation_dependent	chr7:129839297:T>C	chr7:129951277-129951327:-	0.156	1	1	1
+UBE2K	0	0.318	0	post_stim_only	chr4:39737514:C>AGG	chr4:39777681-39777810:+	0.318	0	1	1
+UBE2Q2P2	0.648	0	0.376	lost_after_stim	chr15:82404653:A>G	chr15:82395232-82395301:+	0.648	1	1	1
+UBE2V2	0.156	0.17	0.25	all_timepoints	chr8:48008429:C>G	chr8:48034865-48035061:+	0.25	1	1	1
+UBXN1	0.198	0	0	lost_after_stim	chr11:62678896:A>G	chr11:62676639-62676812:-	0.198	1	0	0
+UBXN2B	0	0.236	0	post_stim_only	chr8:58416878:A>G	chr8:58413298-58413371:+	0.236	0	1	1
+UCHL3	0.126	0	0	lost_after_stim	chr13:75605905:T>G	chr13:75604526-75604768:+	0.126	1	1	1
+UFSP2	0.294	0.18	0	lost_after_stim	chr4:185418480:C>T	chr4:185418513-185418586:-	0.294	1	1	1
+UGP2	0.238	0	0.125	lost_after_stim	chr2:63841143:G>C	chr2:63842538-63842599:+	0.238	1	1	1
+UNC79	0	0.441	0.659	stimulation_dependent	chr14:93618347:G>A	chr14:93620891-93621041:+	0.659	1	1	1
+UQCC6	0.112	0	0	lost_after_stim	chr12:103951474:A>G	chr12:103957190-103957213:-	0.112	1	1	1
+UROS	0	0	0.13	post_stim_only	chr10:125823220:G>T	chr10:125793857-125794021:-	0.13	0	0	1
+USP22	0	0	0.336	post_stim_only	chr17:21021209:G>A	chr17:21042664-21042926:-	0.336	1	1	1
+USP24	0	0.233	0	post_stim_only	chr1:55072788:C>T	chr1:55072861-55072992:-	0.233	0	1	0
+USP32	0	0.282	0	post_stim_only	chr17:60294750:C>T	chr17:60249057-60249753:-	0.282	0	1	0
+USP33	0	0.275	0.114	stimulation_dependent	chr1:77718639:A>G	chr1:77717539-77717644:-	0.275	1	1	1
+USP4	0	0	0.149	post_stim_only	chr3:49278155:G>T	chr3:49311654-49311784:-	0.149	0	0	1
+USP46	0	0.172	0	stimulation_dependent	chr4:52626145:G>T	chr4:52656295-52656452:-	0.172	1	1	1
+USP7	0	0.157	0	stimulation_dependent	chr16:8915260:C>T	chr16:8949553-8949653:-	0.157	1	1	1
+USP8	0	0	0.214	stimulation_dependent	chr15:50424435:G>C	chr15:50432337-50432499:+	0.214	1	1	1
+VDAC2	0.277	0	0	lost_after_stim	chr10:75219274:G>A	chr10:75219215-75219303:+	0.277	1	1	1
+VEZT	0	0	0.268	stimulation_dependent	chr12:95300334:T>G	chr12:95270038-95270050:+	0.268	1	1	1
+VPS26A	0	0.166	0	stimulation_dependent	chr10:69133034:C>T	chr10:69168532-69168628:+	0.166	1	1	1
+VPS4B	0	0.154	0.122	stimulation_dependent	chr18:63407453:C>T	chr18:63407375-63407431:-	0.154	1	1	1
+VPS50	0	0	0.137	stimulation_dependent	chr7:93294602:G>A	chr7:93320375-93320852:+	0.137	1	1	1
+VPS53	0	0.239	0	post_stim_only	chr17:562534:G>A	chr17:685036-685130:-	0.239	1	1	1
+VTI1B	0	0.202	0	stimulation_dependent	chr14:67656428:C>T	chr14:67662476-67662535:-	0.202	1	1	0
+WAPL	0	0	0.2	post_stim_only	chr10:86467340:C>T	chr10:86451966-86452131:-	0.2	0	1	1
+WASF1	0	0	0.214	stimulation_dependent	chr6:110107129:C>T	chr6:110179709-110179840:-	0.214	1	1	1
+WASHC2A	0	0.214	0	stimulation_dependent	chr10:50132964:T>G	chr10:50092161-50092233:+	0.214	1	1	1
+WASHC4	0	0.156	0	stimulation_dependent	chr12:105152393:G>A	chr12:105149473-105149614:+	0.156	1	1	1
+WDR1	0	0.186	0.212	stimulation_dependent	chr4:10075235:G>A	chr4:10093908-10094128:-	0.212	1	1	1
+WDR45B	0.277	0.185	0.134	all_timepoints	chr17:82643963:C>T	chr17:82619094-82619128:-	0.277	1	1	1
+WLS	0	0	0.149	post_stim_only	chr1:68194165:G>A	chr1:68125359-68125491:-	0.149	1	1	1
+WNK1	0	0.259	0	stimulation_dependent	chr12:859322:T>C	chr12:901560-901632:+	0.259	1	1	1
+WSB1	0	0	0.395	post_stim_only	chr17:27308206:G>A	chr17:27302434-27303319:+	0.395	1	1	1
+WWOX	0.702	0	0.355	lost_after_stim	chr16:78108469:G>A	chr16:78278602-78278696:+	0.702	1	1	1
+XPA	0.317	0.307	0.311	all_timepoints	chr9:97697295:T>C	chr9:97682199-97682430:-	0.317	1	1	1
+XPO1	0	0.163	0	stimulation_dependent	chr2:61537938:G>A	chr2:61492748-61492914:-	0.163	1	1	1
+XPR1	0	0.201	0	stimulation_dependent	chr1:180806180:G>A	chr1:180836521-180836651:+	0.201	1	1	1
+XRN1	0	0	0.433	post_stim_only	chr3:142421027:C>T	chr3:142418418-142418503:-	0.433	0	1	1
+YEATS4	0.198	0.119	0	lost_after_stim	chr12:69362843:G>A	chr12:69361316-69361433:+	0.198	1	1	1
+YME1L1	0.163	0	0	lost_after_stim	chr10:27149034:T>C	chr10:27148158-27148647:-	0.163	1	1	1
+YPEL5	0	0	0.131	stimulation_dependent	chr2:30158638:T>C	chr2:30147965-30148091:+	0.131	1	1	1
+YTHDC2	0	0.297	0	post_stim_only	chr5:113532995:C>A	chr5:113561185-113561196:+	0.297	1	1	1
+YWHAH	0	0.317	0.273	stimulation_dependent	chr22:31956281:G>A	chr22:31945499-31945556:+	0.317	1	1	1
+ZC3H11A	0	0.155	0	post_stim_only	chr1:203852185:G>A	chr1:203850494-203850514:+	0.155	0	1	1
+ZC3H13	0	0.294	0	stimulation_dependent	chr13:46052746:G>T	chr13:46051931-46051989:-	0.294	1	1	1
+ZC3H18	0	0.226	0	stimulation_dependent	chr16:88577224:C>T	chr16:88587541-88587613:+	0.226	1	1	1
+ZC3H7A	0	0.205	0	post_stim_only	chr16:11779215:C>T	chr16:11782388-11782552:-	0.205	0	1	1
+ZCCHC17	0	0	0.4	post_stim_only	chr1:31364835:C>A	chr1:31337174-31337275:+	0.4	1	1	1
+ZDHHC21	0	0.649	0.693	post_stim_only	chr9:14680111:A>G	chr9:14683570-14683729:-	0.693	1	1	1
+ZDHHC6	0	0	0.203	post_stim_only	chr10:112445630:G>A	chr10:112430304-112430723:-	0.203	0	1	1
+ZFAND2A	0.544	0.37	0.424	all_timepoints	chr7:1159995:T>C	chr7:1153224-1153241:-	0.544	1	1	1
+ZFAS1	0.303	0.625	0.55	all_timepoints	chr20:49278704:A>G	chr20:49278716-49278738:+	0.625	1	1	1
+ZFR	0.487	0.105	0	lost_after_stim	chr5:32404064:A>T	chr5:32406726-32406773:-	0.487	1	1	1
+ZFR2	0	0.218	0	post_stim_only	chr19:3852281:T>C	chr19:3855559-3855590:-	0.218	0	1	1
+ZMPSTE24	0	0.188	0	post_stim_only	chr1:40290879:A>T	chr1:40290644-40290853:+	0.188	0	1	0
+ZNF138	0.383	0	0	lost_after_stim	chr7:64794412:G>T	chr7:64830939-64831076:+	0.383	1	1	1
+ZNF250	0	0.186	0	stimulation_dependent	chr8:144889981:A>G	chr8:144882654-144882759:-	0.186	1	1	1
+ZNF252P	0.136	0	0	lost_after_stim	chr8:144996456:C>T	chr8:145002531-145002784:-	0.136	1	1	1
+ZNF302	0	0	0.667	post_stim_only	chr19:34684170:T>TAC	chr19:34677835-34677856:+	0.667	1	1	1
+ZNF385D	0	0	0.38	post_stim_only	chr3:21751109:G>C	chr3:21511621-21511757:-	0.38	1	1	1
+ZNF521	0	0	0.25	post_stim_only	chr18:25062436:A>G	chr18:25224035-25224115:-	0.25	0	0	1
+ZNF638	0	0.205	0	post_stim_only	chr2:71427044:G>A	chr2:71407238-71408121:+	0.205	1	1	1
+ZNF649	0.487	0	0	lost_after_stim	chr19:51900262:T>C	chr19:51899991-51900092:-	0.487	1	1	1
+ZNF667-AS1	0.316	0	0	lost_after_stim	chr19:56495351:G>C	chr19:56478293-56478377:+	0.316	1	1	1
+ZNF721	0.284	0	0	lost_after_stim	chr4:474106:G>C	chr4:471583-472057:-	0.284	1	1	1
+ZNF749	0.397	0.243	0.678	all_timepoints	chr19:57435555:G>C	chr19:57438101-57438456:+	0.678	1	1	1
+ZNF83	0	0.139	0	stimulation_dependent	chr19:52660834:A>G	chr19:52652357-52652431:-	0.139	1	1	1
+ZNF84	0.262	0	0.19	lost_after_stim	chr12:133041404:G>A	chr12:133041558-133041728:+	0.262	1	1	1
+ZNF892	0	0.294	0.376	stimulation_dependent	chr2:95208694:G>A	chr2:95208736-95209054:+	0.376	1	1	1
+ZNF91	0.11	0	0	lost_after_stim	chr19:23374699:G>A	chr19:23374008-23374637:-	0.11	1	1	1
+ZNG1E	0.832	0.826	0.706	all_timepoints	chr9:65682027:G>A	chr9:65677127-65677225:+	0.832	1	1	1
+ZNHIT3	0	0	0.34	post_stim_only	chr17:36486676:G>A	chr17:36486934-36486966:+	0.34	0	1	1
+ZNRD2	0.645	0	0	lost_after_stim	chr11:65570902:C>T	chr11:65570510-65570602:+	0.645	1	1	0
+ZRANB2	0	0.135	0	stimulation_dependent	chr1:71065079:C>T	chr1:71065752-71066775:-	0.135	1	1	1
+ZSCAN26	0	0.418	0	post_stim_only	chr6:28272690:C>A	chr6:28272340-28272669:+	0.418	1	1	0

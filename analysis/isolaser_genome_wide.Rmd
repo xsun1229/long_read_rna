@@ -10,307 +10,220 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
-                      fig.width=7, fig.height=5)
+                      fig.width=7, fig.height=4)
 library(data.table)
 library(ggplot2)
-library(ggrepel)
-
 gene_tp <- fread("docs/assets/roc_gene_tp_signals.tsv")
 gene_wide <- fread("docs/assets/roc_gene_signals_wide.tsv")
-fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+events <- fread("docs/assets/roc_event_wide.tsv.gz")
+passing <- fread("docs/assets/roc_cis_events_filtered.tsv.gz")
 sig <- function(x) !is.na(x) & x == TRUE
-```
-
-We ran [isoLASER](https://github.com/gxiaolab/isoLASER) jointly across four
-donors on all 22 autosomes, at each of the three timepoints (0, 1, and 6 hours
-after stimulation). isoLASER phases reads onto haplotypes using heterozygous
-variants it discovers in the RNA, then tests whether the two copies of each gene
-splice differently — allele-specific splicing, reported as **dPSI** (the
-difference in Percent Spliced In between haplotypes). The dPSI reported here
-is from the joint model across donors; per-donor allele-specific rates have not
-been examined separately.
-
-The model used is `--platform Nanopore`, which loads the default
-`GM12878_ONT_ROC` classifier. A second ONT classifier (`GTEx_ONT_F1`) ships
-with isoLASER but is currently commented out upstream; we tested both and found
-F1 recovers more heterozygous sites, but use the default here pending
-clarification from the developers.
-
-# Filtering
-
-Four filters were applied to the raw isoLASER cis calls:
-
-1. **Effect size:** |dPSI| >= 0.10. Without this, many statistically significant
-   calls have dPSI of 0.01–0.02, driven by high read depth rather than a
-   meaningful splicing difference.
-
-2. **Clustered variants excluded (conservative heuristic).** When multiple
-   variants cluster within 30 bp, they may reflect sequencing errors in
-   difficult sequence context. This is a conservative exclusion — some real
-   variants in complex regions will also be removed. 34% of all variants fall
-   in such clusters.
-
-3. **Per-donor allelic balance.** At least one donor must have allelic balance
-   0.25–0.75 and read depth >= 10 at the phasing variant. This is checked
-   per donor, not averaged across donors — an average can hide a case where
-   no individual donor is heterozygous (e.g., one reference-only and one
-   alternate-only donor averaging to 0.5). This confirms phasing eligibility
-   in at least one donor but does not verify within-donor allele-specific
-   splicing.
-
-4. **Minimum exonic part length >= 10 bp.** The exon model splits overlapping
-   annotations into non-overlapping parts, which can create fragments of 1–3 bp.
-   Splicing measured over such short regions is unreliable.
-
-# Signal counts
-
-After filtering: **`r fmt(uniqueN(gene_wide$gene))` genes** with at least one
-event passing all filters. Each gene is represented by its strongest
-(gene, variant, exonic part) combination, tracked as a fixed unit across all
-three timepoints.
-
-The bar chart below counts genes whose **selected representative event** passes
-at each timepoint. Counts of genes with **any** passing event are higher (445,
-576, and 626 at 0, 1, and 6 hours respectively).
-
-```{r genes_per_tp, fig.height=4}
-tp_summary <- gene_tp[sig(passes), .(n_genes=uniqueN(gene)), by=tp]
-tp_summary[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
-
-ggplot(tp_summary, aes(tp, n_genes)) +
-  geom_col(fill=c("#888888","#E69F00","#D55E00"), width=0.6) +
-  geom_text(aes(label=n_genes), vjust=-0.3, size=4) +
-  labs(x="Timepoint", y="Genes (selected event passes)") +
-  ylim(0, max(tp_summary$n_genes)*1.15) +
-  theme_minimal(base_size=14)
-```
-
-# Timepoint patterns
-
-For each gene's selected event, we classified its detection across the three
-timepoints. The classification requires a **usable** baseline (at least one
-heterozygous donor with sufficient depth at 0 hr for that event) before
-comparing timepoints.
-
-```{r tp_patterns, fig.height=4}
-pat <- gene_wide[, .N, by=pattern]
-pat[, pattern := factor(pattern, levels=c("detected_after_stim",
-                                           "post_stim_only",
-                                           "all_timepoints",
-                                           "detected_at_baseline_only","other"))]
-setorder(pat, pattern)
-
-ggplot(pat, aes(pattern, N)) +
-  geom_col(fill="#4477AA", width=0.6) +
-  geom_text(aes(label=N), vjust=-0.3, size=3.5) +
-  labs(x="", y="Number of genes") +
-  theme_minimal(base_size=13) +
-  theme(axis.text.x=element_text(angle=30, hjust=1))
-```
-
-```{r tp_table}
-pat_desc <- data.frame(
-  Pattern=c("detected_after_stim", "post_stim_only",
-            "all_timepoints", "detected_at_baseline_only", "other"),
-  Description=c(
-    "Usable at 0 hr (het donor present) with no passing signal; passes after stimulation",
-    "No usable baseline (no het donor at 0 hr); signal only at 1 or 6 hr — absence at baseline is not established",
-    "Passes at all three timepoints (constitutive)",
-    "Passes at 0 hr but not after stimulation, with usable data at the later timepoints",
-    "Does not fit the above categories"),
-  Genes=c(sum(gene_wide$pattern=="detected_after_stim"),
-          sum(gene_wide$pattern=="post_stim_only"),
-          sum(gene_wide$pattern=="all_timepoints"),
-          sum(gene_wide$pattern=="detected_at_baseline_only"),
-          sum(gene_wide$pattern=="other")))
-knitr::kable(pat_desc)
-```
-
-**`r sum(gene_wide$pattern=="detected_after_stim")` genes** had a usable
-baseline with no passing signal, then passed filters after stimulation. These
-are differences in signal detection between timepoints; establishing that the
-underlying allele-specific effect itself changes with stimulation would require
-comparing allele-specific splicing rates within individual heterozygous donors
-at each timepoint.
-
-The remaining `r sum(gene_wide$pattern=="post_stim_only")` genes had no usable
-baseline data for the selected event (no heterozygous donor at 0 hr), so
-baseline absence cannot be assessed.
-
-# Top signals
-
-The table shows measured |dPSI| at each timepoint. NA means the event was not
-present in the data; values below the 0.10 threshold or failing other filters
-are shown as measured (not zeroed out). The "passes" column indicates which
-timepoints passed all filters.
-
-```{r top_table}
-top_tab <- gene_wide[order(-max_signal)][1:30]
-top_tab[, passes := paste0(
-  fifelse(sig(passes_0hr), "0", ""),
-  fifelse(sig(passes_1hr), "1", ""),
-  fifelse(sig(passes_6hr), "6", ""))]
-knitr::kable(top_tab[, .(gene,
-                          dpsi_0hr=round(abs(dpsi_0hr),3),
-                          dpsi_1hr=round(abs(dpsi_1hr),3),
-                          dpsi_6hr=round(abs(dpsi_6hr),3),
-                          passes, pattern)],
-             col.names=c("Gene","|dPSI| 0 hr","|dPSI| 1 hr","|dPSI| 6 hr",
-                          "Passes (hr)","Pattern"))
-```
-
-```{r top30, fig.height=9, fig.width=7}
-top_genes <- gene_wide[order(-max_signal)][1:30, gene]
-
-top_data <- gene_tp[gene %in% top_genes & sig(passes)]
-top_data[, tp := factor(tp, levels=c("0hr","1hr","6hr"))]
-top_data[, gene := factor(gene, levels=rev(top_genes))]
-
-ggplot(top_data, aes(tp, gene, size=abs_dpsi, color=abs_dpsi)) +
-  geom_point() +
-  scale_size_continuous(range=c(1,8), name="|dPSI|") +
-  scale_color_gradient(low="#DDDDDD", high="#CC0000", name="|dPSI|") +
-  labs(x="Timepoint", y="") +
-  theme_minimal(base_size=12) +
-  theme(panel.grid.major=element_line(color="#EEEEEE"))
-```
-
-# Neuronal and activity-regulated genes
-
-```{r named_genes, fig.height=6, fig.width=8}
-ieg <- c("FOS","FOSB","FOSL1","FOSL2","JUN","JUNB","JUND",
-         "EGR1","EGR2","EGR3","EGR4","NR4A1","NR4A2","NR4A3",
-         "ARC","BDNF","NPAS4","SIK1","ATF3","GADD45B","GADD45G",
-         "HOMER1","IER2","IER5","BTG2","DUSP1","DUSP5","DUSP6",
-         "NFKBIA","NFKBIZ","CREM","CYR61","CTGF","TIPARP","PPP1R15A",
-         "ZFP36","ZFP36L1","BHLHE40","BHLHE41","KLF2","KLF4",
-         "RGS2","SERTAD1","CITED2")
-neuronal <- c("NRXN1","NRXN2","NRXN3","NLGN1","NLGN2","NLGN3",
-              "GRIN1","GRIN2A","GRIN2B","GRIA1","GRIA2","GRIA3","GRIA4",
-              "DLG4","SHANK1","SHANK2","SHANK3","CAMK2A","CAMK2B",
-              "SYN1","SYT1","SNAP25","CACNA1A","CACNA1B","CACNA1C","CACNA1E",
-              "SCN1A","SCN2A","SCN8A","CELF4","RBFOX1","RBFOX2","RBFOX3",
-              "NOVA1","NOVA2","PTBP2","ANK3","MAPT","APP","DSCAM",
-              "CNTNAP2","CADM1","TTLL7","CLDND1","MEF2C")
-
-gene_all <- gene_tp[sig(passes), .(max_dpsi=max(abs_dpsi), mean_cov=median(COV, na.rm=TRUE)), by=gene]
-gene_all <- merge(gene_all, gene_wide[, .(gene, pattern)], by="gene")
-gene_all[, label_cat := fcase(
-  gene %in% ieg, "Activity-regulated",
-  gene %in% neuronal, "Neuronal",
-  default = "Other"
-)]
-gene_all[, show_label := label_cat != "Other" & max_dpsi >= 0.10]
-
-ggplot(gene_all, aes(mean_cov, max_dpsi, color=label_cat)) +
-  geom_point(data=gene_all[label_cat=="Other"], alpha=0.3, size=1.5) +
-  geom_point(data=gene_all[label_cat!="Other"], alpha=0.8, size=3) +
-  geom_text_repel(data=gene_all[show_label==TRUE],
-                  aes(label=gene), size=3.5, max.overlaps=20, show.legend=FALSE) +
-  scale_color_manual(values=c("Activity-regulated"="#D55E00",
-                               "Neuronal"="#0072B2", "Other"="#BBBBBB"), name="") +
-  scale_x_log10() +
-  labs(x="Median coverage (reads)", y="Max |dPSI| across timepoints") +
-  theme_minimal(base_size=13)
-```
-
-Labeled genes are from curated lists of activity-regulated immediate-early genes
-(orange) and neuronal-function genes (blue).
-
-```{r named_table}
-named <- gene_wide[gene %in% c(ieg, neuronal)]
-named[, category := fifelse(gene %in% ieg, "Activity-regulated", "Neuronal")]
-named <- named[max_signal > 0]
-setorder(named, -max_signal)
-named[, passes := paste0(
-  fifelse(sig(passes_0hr), "0", ""),
-  fifelse(sig(passes_1hr), "1", ""),
-  fifelse(sig(passes_6hr), "6", ""))]
-knitr::kable(named[, .(gene, category,
-                        dpsi_0hr=round(abs(dpsi_0hr),3),
-                        dpsi_1hr=round(abs(dpsi_1hr),3),
-                        dpsi_6hr=round(abs(dpsi_6hr),3),
-                        passes, pattern)],
-             col.names=c("Gene","Category","|dPSI| 0 hr","|dPSI| 1 hr",
-                          "|dPSI| 6 hr","Passes (hr)","Pattern"))
-```
-
-Many classic immediate-early genes (JUN, JUNB, JUND, IER2) are single-exon
-genes with no splicing to test. Others (e.g., FOS) have isoLASER output
-rows but do not pass the effect-size or quality filters at any timepoint.
-
-# Top neuronal gene plots
-
-```{r gene_plots, fig.height=4, fig.width=7, results='asis'}
-event_data <- fread("/project/xinhe/xsun/long_read_RNA/9.isolaser_results/out/roc_event_wide.tsv.gz")
-focus_genes <- c("GRIA2","ANK3","CACNA1E","SCN2A","CAMK2B","SYT1","NFKBIA")
-focus_genes <- focus_genes[focus_genes %in% event_data$gene]
-
-for(g in focus_genes) {
-  gd <- event_data[gene == g & pattern != "other"]
-  if(nrow(gd) == 0) next
-  gd_long <- melt(gd, id.vars=c("gene","variant_qual","exonic_part","pattern"),
-                  measure.vars=c("dpsi_0hr","dpsi_1hr","dpsi_6hr"),
-                  variable.name="tp", value.name="dpsi")
-  gd_long[, tp := factor(sub("dpsi_","",tp), levels=c("0hr","1hr","6hr"))]
-  gd_long <- gd_long[!is.na(dpsi)]
-
-  gd_long[, event_id := paste0(
-    sub(".*:(\\d+):.*","\\1", variant_qual), " / ",
-    sub("chr[0-9]+:(\\d+)-(\\d+):.*","\\1-\\2", exonic_part))]
-
-  top_events <- gd[order(-max_passing_dpsi)][1:min(.N, 6), .(variant_qual, exonic_part)]
-  gd_long <- gd_long[top_events, on=.(variant_qual, exonic_part)]
-
-  p <- ggplot(gd_long, aes(tp, dpsi)) +
-    geom_hline(yintercept=0, lty=2, color="grey60") +
-    geom_point(size=3, color="#0072B2") +
-    geom_line(aes(group=1), color="#0072B2", alpha=0.5) +
-    facet_wrap(~event_id, scales="free_y") +
-    labs(x="Timepoint", y="dPSI", title=g) +
-    theme_minimal(base_size=12)
-  print(p)
-  cat("\n\n")
+fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+tp_levels <- c("0hr", "1hr", "6hr")
+pattern_names <- c(detected_after_stim="Detected after stimulation",
+  post_stim_only="Baseline unavailable", all_timepoints="All three timepoints",
+  detected_at_baseline_only="Baseline only", other="Other detection patterns")
+pass_times <- function(d) vapply(seq_len(nrow(d)), function(i) {
+  keep <- sig(unlist(d[i, .(passes_0hr, passes_1hr, passes_6hr)]))
+  paste(c("0", "1", "6")[keep], collapse=", ")
+}, character(1))
+effect_table <- function(d) {
+  data.table(Gene=d$gene,
+    `0 hr`=round(100*abs(d$dpsi_0hr),1),
+    `1 hr`=round(100*abs(d$dpsi_1hr),1),
+    `6 hr`=round(100*abs(d$dpsi_6hr),1),
+    `Passing timepoints (hr)`=pass_times(d),
+    Pattern=unname(pattern_names[d$pattern]))
 }
 ```
 
-Each panel shows one (variant, exonic part) combination tracked across
-timepoints. The variant position and exonic part coordinates are in the facet
-label (variant position / part start-end). These are joint dPSI values across
-donors; per-donor allele-specific rates would be needed to confirm the signal
-in individual heterozygous donors.
+We screened **22 autosomes, four donors, and three timepoints (0, 1, and
+6 hours)** using isoLASER's default Nanopore model (`GM12878_ONT_ROC`).
+The filtered joint analysis identifies **`r fmt(nrow(gene_wide))` genes** with
+candidate allele-associated splicing signals. These are candidates for
+follow-up; within-donor allele-specific splicing and stimulation dependence
+have not yet been confirmed.
 
-# Interpretation
+# How the screen works
 
-This analysis identifies **`r nrow(gene_wide)` genes** with at least one event
-passing quality filters. Each gene is represented by a fixed (variant, exonic
-part) combination tracked across all three timepoints.
+At each timepoint, isoLASER jointly evaluates associations between a variant
+and an **exonic part**, a segment of the gene's exon structure. We retain its
+`cis` calls using these filters:
 
-**`r sum(gene_wide$pattern=="detected_after_stim")` genes** had usable data at
-baseline (a heterozygous donor present) with no passing signal, and then passed
-filters after stimulation. These are differences in signal detection between
-timepoints. Whether the underlying allele-specific splicing effect itself
-changes with stimulation — as opposed to changes in power, expression level,
-or isoform composition — would require comparing reference-versus-alternate
-splicing rates within individual heterozygous donors at each timepoint.
+| Filter | Requirement | Purpose |
+|:--|:--|:--|
+| Allelic difference | \(\lvert\Delta\mathrm{PSI}\rvert \geq 0.10\) | At least a 10 percentage-point difference |
+| Donor eligibility | At least one donor with alternate-allele fraction 0.25–0.75 and depth ≥10 | Require reads from both alleles in an individual donor |
+| Part length | ≥10 bases | Exclude very short fragments |
+| Variant spacing | No other tested variant within 30 bases | Conservative exclusion of clustered calls; real variants can also be removed |
 
-Another `r sum(gene_wide$pattern=="post_stim_only")` genes had no usable
-baseline data for the selected event, so baseline absence cannot be assessed.
+For timepoint comparisons, we keep the **same gene, variant, and exonic part**.
+The representative event for each gene is the one with the largest effect
+that passes these filters. A usable timepoint has an output row and at least
+one donor meeting the allele-balance and depth criteria; the eligible donor
+need not be the same at different timepoints.
 
-Caveats:
+## What the numbers mean
 
-- **Joint model only.** The dPSI values are from isoLASER's joint analysis
-  across donors. Within-donor allele-specific splicing rates have not been
-  examined.
-- **Concordance, not sensitivity.** The
-  [variant validation](isolaser_variants.html) page measures agreement between
-  isoLASER calls and the genotype panel; it does not estimate what fraction of
-  true variants isoLASER detects, because it starts from isoLASER's calls.
-- **Four donors.** With n = 4, a signal requires a heterozygous variant in at
-  least one donor. Variants absent from these donors cannot be tested.
-- **No multiple-testing correction** has been applied. The p-values from
-  isoLASER's joint model are shown as-is.
+For a given part, an allele-specific inclusion rate is:
+
+\[
+\mathrm{PSI}_{\mathrm{REF}}=
+\frac{\text{reference-allele reads including the part}}
+{\text{reference-allele reads including or excluding the part}},
+\qquad
+\Delta\mathrm{PSI}=\mathrm{PSI}_{\mathrm{REF}}-\mathrm{PSI}_{\mathrm{ALT}}.
+\]
+
+For example, 16/20 reference reads versus 6/20 alternate reads gives
+80% versus 30%, or an inclusion difference of **50 percentage points**.
+This is an illustration, not a measured result from this dataset.
+
+**Sign convention in these outputs:** the installed joint implementation
+computes its signed `delta_psi(ref-alt)` from the first count category, which
+is the part's **exclusion** category. Thus the reported joint difference is
+reference exclusion rate minus alternate exclusion rate; the inclusion
+difference has the opposite sign. The absolute effect is unchanged. The
+joint calculation uses coverage-normalized counts across donors, rather
+than a simple sum of raw reads.
+
+# How many signals were found?
+
+```{r count_table}
+knitr::kable(data.frame(
+  Unit=c("Passing rows", "Distinct gene–variant–part combinations", "Genes"),
+  Count=c(fmt(nrow(passing)), fmt(nrow(events)), fmt(nrow(gene_wide))),
+  Meaning=c("One association at one timepoint",
+    "Associations combined across timepoints", "At least one passing association")))
+```
+
+These units are not independent biological events: multiple variants or
+adjacent parts may describe the same underlying splicing change.
+
+```{r genes_per_tp}
+tp_summary <- passing[, .(Genes=uniqueN(gene)), by=tp]
+tp_summary[, tp := factor(tp, levels=tp_levels)]
+ggplot(tp_summary, aes(tp, Genes, fill=tp)) +
+  geom_col(width=0.6, show.legend=FALSE) +
+  geom_text(aes(label=Genes), vjust=-0.4, size=4) +
+  scale_fill_manual(values=c("0hr"="#888888", "1hr"="#E69F00", "6hr"="#D55E00")) +
+  scale_x_discrete(labels=c("0 hr", "1 hr", "6 hr")) +
+  scale_y_continuous(expand=expansion(mult=c(0,0.12))) +
+  labs(x=NULL, y="Genes with any passing association") +
+  theme_minimal(base_size=13)
+```
+
+## Detection across timepoints
+
+The following counts describe each gene's **selected representative event**.
+They describe filter outcomes, not a statistical test of whether stimulation
+changes the allelic effect.
+
+```{r detection_table}
+patterns <- names(pattern_names)
+descriptions <- c(
+  "Usable baseline does not pass; passes at 1 or 6 hr",
+  "No usable baseline; passes at 1 or 6 hr",
+  "Passes at 0, 1, and 6 hr",
+  "Passes at 0 hr; usable at 1 and 6 hr but passes at neither",
+  "Mixed detection or incomplete usable timepoints")
+knitr::kable(data.frame(Pattern=unname(pattern_names),
+  Genes=vapply(patterns,function(p)sum(gene_wide$pattern==p),integer(1)),
+  Definition=descriptions), row.names=FALSE)
+```
+
+**`r sum(gene_wide$pattern=="detected_after_stim")` genes** pass after
+stimulation despite a usable, nonpassing baseline. They are a useful starting
+set for follow-up. For **`r sum(gene_wide$pattern=="post_stim_only")` genes**,
+baseline absence cannot be assessed.
+
+# Neuronal examples
+
+These examples focus on neuronal genes, using one selected variant–part
+association per gene. SYT1 has a usable baseline; several other examples have
+no usable baseline and illustrate post-stimulation detection rather than
+an established response to stimulation.
+
+```{r examples_table}
+focus_genes <- c("SYT1", "GRIA2", "ANK3", "CACNA1E", "SCN2A", "CAMK2B")
+focus <- gene_wide[gene %in% focus_genes]
+focus <- focus[order(match(gene, focus_genes))]
+knitr::kable(effect_table(focus))
+```
+
+Table values are **absolute allelic differences in percentage points**, not
+the percentage of transcripts including an exon. `NA` means no joint estimate
+was available. Nonpassing measured effects remain visible; the passing
+timepoints are listed separately.
+
+```{r example_trends, fig.height=6, fig.width=9}
+plot_data <- copy(gene_tp[gene %in% focus$gene])
+plot_data[, tp := factor(tp,levels=tp_levels)]
+plot_data[, gene := factor(gene,levels=focus$gene)]
+plot_data[, Status := fifelse(sig(passes), "Passes filters",
+  fifelse(sig(usable), "Usable; does not pass", "Does not meet donor eligibility"))]
+plot_data <- plot_data[!is.na(dpsi)]
+ggplot(plot_data,aes(tp,100*dpsi)) +
+  geom_hline(yintercept=0,linetype=2,color="grey65") +
+  geom_point(aes(shape=Status,color=Status),size=3) +
+  facet_wrap(~gene,ncol=3) +
+  scale_shape_manual(values=c("Passes filters"=16,"Usable; does not pass"=1,
+    "Does not meet donor eligibility"=4)) +
+  scale_color_manual(values=c("Passes filters"="#0072B2",
+    "Usable; does not pass"="#777777","Does not meet donor eligibility"="#BBBBBB")) +
+  scale_x_discrete(labels=c("0 hr","1 hr","6 hr"),drop=FALSE) +
+  labs(x=NULL,y="Joint exclusion difference (REF − ALT, percentage points)",
+    shape=NULL,color=NULL) +
+  theme_minimal(base_size=12) + theme(legend.position="bottom")
+```
+
+Each panel follows the same association across timepoints on a common vertical
+scale; a positive value means more exclusion on the reference allele.
+Missing points are missing estimates, and the plot does not imply
+that donor-level allele-specific rates have been measured.
+
+```{r example_coordinates}
+knitr::kable(focus[,.(Gene=gene,Variant=variant_qual,`Exonic part`=exonic_part)])
+```
+
+Coordinates above follow the isoLASER output convention: variant positions
+are zero-based (add 1 to compare with a VCF position); part intervals are
+zero-based, with an exclusive end.
+
+# Other top candidates and full results
+
+The ten strongest representative associations across all genes are shown
+below, ranked by the largest **passing** absolute ΔPSI. Biological relevance
+and read-level support should guide which candidates are investigated next.
+
+```{r top_table}
+top <- gene_wide[order(-max_signal)][seq_len(min(10,nrow(gene_wide)))]
+knitr::kable(effect_table(top))
+```
+
+All effect tables use percentage points. Download the
+[complete gene summary](assets/roc_gene_signals_wide.tsv),
+[selected events by timepoint](assets/roc_gene_tp_signals.tsv),
+[all passing rows](assets/roc_cis_events_filtered.tsv.gz), and
+[all associations across timepoints](assets/roc_event_wide.tsv.gz).
+
+# Interpretation and next step
+
+This screen provides candidates for allele-associated splicing. To determine
+whether stimulation changes an allelic effect, compare reference- and
+alternate-allele inclusion rates within the **same heterozygous donors** across
+timepoints, show the supporting read counts, and inspect the top alignments.
+
+The joint estimates have not yet been validated within donors, and no
+multiple-testing correction has been applied. Detection can change with read
+depth or donor composition. Variants absent from these four donors cannot be
+tested. The [variant validation](isolaser_variants.html) measures concordance
+among called sites; it does not estimate sensitivity.
+
+The earlier GTEx ONT model analysis and model comparison are preliminary;
+this page summarizes the default Nanopore model only. The current results are
+generated by `9.isolaser_results/5.prepare_roc_results.R`.
 
 Related pages: [variant validation](isolaser_variants.html),
-[junction screen](splicing_candidates.html),
+[junction screen and sashimi plots](splicing_candidates.html),
 [isoLASER setup](isolaser.html).

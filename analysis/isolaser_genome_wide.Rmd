@@ -236,7 +236,7 @@ knitr::kable(named[, .(gene, category,
 ```
 
 Many classic immediate-early genes (JUN, JUNB, JUND, IER2) are single-exon
-genes with no splicing to test. Others (e.g., FOS, EGR1) have isoLASER output
+genes with no splicing to test. Others (e.g., FOS) have isoLASER output
 rows but do not pass the effect-size or quality filters at any timepoint.
 
 # Top neuronal gene plots
@@ -259,7 +259,7 @@ for(g in focus_genes) {
     sub(".*:(\\d+):.*","\\1", variant_qual), " / ",
     sub("chr[0-9]+:(\\d+)-(\\d+):.*","\\1-\\2", exonic_part))]
 
-  top_events <- gd[order(-max_abs_dpsi)][1:min(.N, 6), .(variant_qual, exonic_part)]
+  top_events <- gd[order(-max_passing_dpsi)][1:min(.N, 6), .(variant_qual, exonic_part)]
   gd_long <- gd_long[top_events, on=.(variant_qual, exonic_part)]
 
   p <- ggplot(gd_long, aes(tp, dpsi)) +
@@ -307,7 +307,7 @@ Caveats:
   isoLASER calls and the genotype panel; it does not estimate what fraction of
   true variants isoLASER detects, because it starts from isoLASER's calls.
 - **Four donors.** With n = 4, a signal requires a heterozygous variant in at
-  least one donor. Rare variants are not testable.
+  least one donor. Variants absent from these donors cannot be tested.
 - **No multiple-testing correction** has been applied. The p-values from
   isoLASER's joint model are shown as-is.
 

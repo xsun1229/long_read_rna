@@ -8,29 +8,51 @@ editor_options:
   chunk_output_type: console
 ---
 
+Oxford Nanopore single-nucleus RNA-seq of hiPSC-derived neurons from four
+donors, at 0, 1 and 6 hours after stimulation. The project has two aims:
+
+1. **Splicing changes during the stimulation response.**
+2. **Genetic variants associated with splicing.**
+
+The first two sections describe the data and what the reads contain; they
+apply to both aims.
 
 # Data
 
-* [Data summary — 21-0/21-1/21-6](data_summary.html)
+* [Data summary](data_summary.html) —
+  libraries, read counts, where reads fall in the genome, donor assignment
+  and processing for the three timepoints
 
-# Results
+# Annotation and read structure
 
-* [isoLASER per donor + joint — chr21 test run](isolaser_per_donor.html) —
-  splitting by donor, per-donor yields, and the joint analysis across 4 donors
-* [Checking isoLASER's variant calls against our genotypes](isolaser_variants.html) —
-  how many chr1 and chr10 calls the 100-line panel confirms, and why the
-  heterozygous-versus-homozygous calls need a depth filter
-* [Read structure — exon/intron assignment and per-read exon patterns](read_structure.html) —
-  where reads fall, which exons each read supports, and the 3' bias measured directly
 * [The IsoQuant annotation, classified with SQANTI3](annotation_sqanti3.html) —
-  how many transcripts/genes/exons, how many are genuinely novel, and which
-  categories are trustworthy
+  what the transcript annotation contains, how much of it is novel, and which
+  novel categories are trustworthy
+* [Read structure](read_structure.html) —
+  chr21: exon, intron and intergenic reads, which exons each read supports,
+  and the 3' bias
 * [Exon structure of reads](exon_structure.html) —
-  how exon information is extracted from the GTF, and the three-level summary of
-  how exons are connected (consecutive / skipped / retained)
-* [Splicing changes across stimulation](splicing_candidates.html) —
-  how candidates were screened, the candidate genes, which have neuronal
-  roles, and worked examples.
+  genome-wide: how exons are extracted from the annotation, and whether each
+  read's exons are consecutive, skipped or retained
+
+# Splicing changes during stimulation
+
+* [Junction screen and neuronal examples](splicing_candidates.html) —
+  changes in splice-junction usage across 0, 1 and 6 hours, the candidate
+  genes, and worked examples (CREM, TTLL7, BDNF)
+
+# Genetic variants associated with splicing (isoLASER)
+
+* [isoLASER setup and running notes](isolaser.html) —
+  what the method does, installation, and how it is run; written before the
+  first run
+* [Per-donor and joint pilot on chr21](isolaser_per_donor.html) —
+  why the data are split by donor, and how many events are testable at
+  per-donor depth
+* [Checking isoLASER variant calls against donor genotypes](isolaser_variants.html) —
+  chr1 and chr10 calls compared with the imputed genotype panel, including
+  heterozygous sites called homozygous at low depth
 * [Genome-wide allele-specific splicing](isolaser_genome_wide.html) —
-  isoLASER joint analysis across all 22 autosomes, 647 genes with
-  allele-specific splicing, timepoint patterns, and neuronal gene hits
+  joint analysis across chr1–22 at all three timepoints: filters, candidate
+  genes, timepoint patterns and neuronal candidates; within-donor effects not
+  yet confirmed

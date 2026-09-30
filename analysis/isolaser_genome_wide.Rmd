@@ -85,7 +85,7 @@ and an **exonic part**, a segment of the gene's exon structure. We retain its
 | Filter | Requirement | Purpose |
 |:--|:--|:--|
 | Allelic difference | \(\lvert\Delta\mathrm{PSI}\rvert \geq 0.10\) | At least a 10 percentage-point difference |
-| Donor eligibility | At least one donor with alternate-allele fraction 0.25–0.75 and depth ≥10 | Require reads from both alleles in an individual donor |
+| Donor eligibility | At least one donor with alternate-allele fraction 0.25–0.75 and depth ≥20 | Require reads from both alleles in an individual donor, at a depth where genotype calls are more reliable |
 | Part length | ≥10 bases | Exclude very short fragments |
 | Variant spacing | No other tested variant within 30 bases | Conservative exclusion of clustered calls; real variants can also be removed |
 
@@ -94,6 +94,12 @@ The representative event for each gene is the one with the largest effect
 that passes these filters. A usable timepoint has an output row and at least
 one donor meeting the allele-balance and depth criteria; the eligible donor
 need not be the same at different timepoints.
+
+The depth threshold uses only isoLASER's own read counts. We set it at 20
+because the [variant validation](isolaser_variants.html) found genotype calls
+least reliable below that depth: 90% of panel heterozygotes at 10–14 reads and
+72% at 15–19 reads were called homozygous. Raising the threshold from 10 to 20
+reduces the candidate genes from 1,156 to 1,031.
 
 ## What the numbers mean
 
@@ -155,7 +161,7 @@ changes the allelic effect.
 
 **Usable** means that this exact gene–variant–part combination has a joint
 output row at that timepoint, and at least one donor has alternate-allele
-fraction **0.25–0.75** with **depth ≥10** for the combination. Usable data
+fraction **0.25–0.75** with **depth ≥20** for the combination. Usable data
 can still fail the `cis` or effect-size criteria. **No usable baseline** can
 mean a missing output row, insufficient depth, or no donor meeting the
 allele-balance criterion; it does not establish that the gene is unexpressed.

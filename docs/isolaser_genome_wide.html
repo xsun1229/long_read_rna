@@ -541,15 +541,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreec48a1aa0da16bc576212ad8e39c74c7335cc39fctargetblankc48a1aaa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree995a3a591afe3b823c30bcc29d70c329258721cctargetblank995a3a5a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/c48a1aa0da16bc576212ad8e39c74c7335cc39fc" target="_blank">c48a1aa</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/995a3a591afe3b823c30bcc29d70c329258721cc" target="_blank">995a3a5</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreec48a1aa0da16bc576212ad8e39c74c7335cc39fctargetblankc48a1aaa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree995a3a591afe3b823c30bcc29d70c329258721cctargetblank995a3a5a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -559,7 +559,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/c48a1aa0da16bc576212ad8e39c74c7335cc39fc" target="_blank">c48a1aa</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/995a3a591afe3b823c30bcc29d70c329258721cc" target="_blank">995a3a5</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -620,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/995a3a591afe3b823c30bcc29d70c329258721cc/analysis/isolaser_genome_wide.Rmd" target="_blank">995a3a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/995a3a591afe3b823c30bcc29d70c329258721cc/docs/isolaser_genome_wide.html" target="_blank">995a3a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1024,60 +1058,30 @@ removes shallow donors, whose estimates are noisier, and keeps about 85%
 of the associations and genes found at 20 reads. <a
 href="#effect-of-the-depth-cutoff">Effect of the depth cutoff</a>
 compares the results at other cutoffs.</p>
-<div id="effect-of-using-heterozygous-donors-only"
-class="section level2">
-<h2>Effect of using heterozygous donors only</h2>
-<p>Applying the same filters to isoLASER’s original pooled values and to
-the heterozygous-donor values:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Method</th>
-<th align="left">Passing rows</th>
-<th align="left">Associations</th>
-<th align="left">Genes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">isoLASER joint (all donors)</td>
-<td align="left">3,230</td>
-<td align="left">2,728</td>
-<td align="left">829</td>
-</tr>
-<tr class="even">
-<td align="left">het donors only</td>
-<td align="left">2,054</td>
-<td align="left">1,666</td>
-<td align="left">561</td>
-</tr>
-<tr class="odd">
-<td align="left">both</td>
-<td align="left">1,437</td>
-<td align="left">1,126</td>
-<td align="left">394</td>
-</tr>
-</tbody>
-</table>
-<p>Of the rows that pass with isoLASER’s pooling but not with
-heterozygous donors only, 1,711 are no longer <code>cis</code>, 24 have
-fewer than 10 heterozygous-donor reads on one allele, and 58 fall below
-the effect-size cutoff. A smaller pooled table has less power, so some
-of these losses are real associations that can no longer be detected,
-not artifacts. The change works in both directions:</p>
-<ul>
-<li><strong>SCN2A, 1 hr:</strong> one heterozygous donor and three
-homozygous-reference donors. The pooled difference is 12.0 points and
-<code>cis</code>; the heterozygous donor alone gives 6.5 points and is
-not <code>cis</code>.</li>
-<li><strong>RPL8, 0 hr:</strong> one heterozygous donor and three
-homozygous donors, which dilute the effect. The pooled difference is 0.3
-points and not <code>cis</code>; the heterozygous donor alone gives 47.9
-points and is <code>cis</code>.</li>
-<li><strong>RHOC, 0 hr:</strong> all four donors are heterozygous, and
-both calculations give 78.8 points.</li>
-</ul>
-</div>
+<!-- ## Effect of using heterozygous donors only -->
+<!-- Applying the same filters to isoLASER's original pooled values and to the -->
+<!-- heterozygous-donor values: -->
+<!-- ```{r joint_vs_het} -->
+<!-- knitr::kable(data.frame(Method=joint_vs_het$method, `Passing rows`=fmt(joint_vs_het$rows), -->
+<!--   Associations=fmt(joint_vs_het$associations), Genes=fmt(joint_vs_het$genes), -->
+<!--   check.names=FALSE)) -->
+<!-- ``` -->
+<!-- Of the rows that pass with isoLASER's pooling but not with heterozygous donors -->
+<!-- only, 1,711 are no longer -->
+<!-- `cis`, 24 -->
+<!-- have fewer than 10 heterozygous-donor reads on one allele, and -->
+<!-- 58 fall below the -->
+<!-- effect-size cutoff. A smaller pooled table has less power, so some of these -->
+<!-- losses are real associations that can no longer be detected, not artifacts. -->
+<!-- The change works in both directions: -->
+<!-- - **SCN2A, 1 hr:** one heterozygous donor and three homozygous-reference -->
+<!--   donors. The pooled difference is 12.0 points and `cis`; the heterozygous -->
+<!--   donor alone gives 6.5 points and is not `cis`. -->
+<!-- - **RPL8, 0 hr:** one heterozygous donor and three homozygous donors, which -->
+<!--   dilute the effect. The pooled difference is 0.3 points and not `cis`; the -->
+<!--   heterozygous donor alone gives 47.9 points and is `cis`. -->
+<!-- - **RHOC, 0 hr:** all four donors are heterozygous, and both calculations give -->
+<!--   78.8 points. -->
 <div id="what-the-numbers-mean" class="section level2">
 <h2>What the numbers mean</h2>
 <p>For a given part, an allele-specific inclusion rate is:</p>
@@ -1164,6 +1168,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/995a3a591afe3b823c30bcc29d70c329258721cc/docs/figure/isolaser_genome_wide.Rmd/genes_per_tp-1.png" target="_blank">995a3a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/long_read_rna/blob/c48a1aa0da16bc576212ad8e39c74c7335cc39fc/docs/figure/isolaser_genome_wide.Rmd/genes_per_tp-1.png" target="_blank">c48a1aa</a>
@@ -1383,7 +1398,11 @@ regardless. With fewer reads, only larger differences reach the
 effects, so associations that rely on shallow donors are less
 certain.</p>
 <p><strong>350 genes</strong> pass at every cutoff; these are the
-candidates least sensitive to the choice. The <a
+candidates least sensitive to the choice. This is the overlap of all
+four screens, so it is smaller than any “Genes kept” value in the first
+table, which compares only two screens at a time. For example, 354 genes
+pass at both 30 and 50 reads, and 4 of them fail at a lower cutoff,
+where shallower donors join the pool. The <a
 href="assets/depth_gene_status.tsv">gene status table</a> marks the
 screens in which each gene passes. Scripts:
 <code>9.isolaser_results/6.het_only_stats.py</code> (run once per
@@ -1432,6 +1451,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/995a3a591afe3b823c30bcc29d70c329258721cc/docs/figure/isolaser_genome_wide.Rmd/detection_barplot-1.png" target="_blank">995a3a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/long_read_rna/blob/c48a1aa0da16bc576212ad8e39c74c7335cc39fc/docs/figure/isolaser_genome_wide.Rmd/detection_barplot-1.png" target="_blank">c48a1aa</a>
@@ -1583,6 +1613,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/995a3a591afe3b823c30bcc29d70c329258721cc/docs/figure/isolaser_genome_wide.Rmd/example_trends-1.png" target="_blank">995a3a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/long_read_rna/blob/c48a1aa0da16bc576212ad8e39c74c7335cc39fc/docs/figure/isolaser_genome_wide.Rmd/example_trends-1.png" target="_blank">c48a1aa</a>
@@ -1760,6 +1801,108 @@ PARK7</td>
 <p>Coordinates above follow the isoLASER output convention: variant
 positions are zero-based (add 1 to compare with a VCF position); part
 intervals are zero-based, with an exclusive end.</p>
+</div>
+</div>
+<div id="highlighted-candidates" class="section level1">
+<h1>Highlighted candidates</h1>
+<p>Two candidates have the strongest support in this screen. Each
+association:</p>
+<ul>
+<li>passes at every depth cutoff (10, 20, 30 and 50 reads);</li>
+<li>has at least two heterozygous donors, and every one shows the same
+direction;</li>
+<li>uses a variant that GTEx v8 reports as a significant brain sQTL for
+the same gene, with the same direction at the junction that ends at the
+exonic part.</li>
+</ul>
+<p>Both genes also have known roles in neurons: <a
+href="https://www.ncbi.nlm.nih.gov/gene/3190">HNRNPK</a> is an
+RNA-binding protein that regulates RNA processing; mutations cause
+Au-Kline syndrome, a developmental disorder with intellectual
+disability, and loss of HNRNPK impairs synaptic plasticity in
+hippocampal neurons (<a
+href="https://pubmed.ncbi.nlm.nih.gov/24990929/">Folci et al. 2014</a>).
+<a href="https://www.ncbi.nlm.nih.gov/gene/11315">PARK7</a> (DJ-1) is a
+Parkinson’s disease gene that protects neurons against oxidative
+stress.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="left">Variant</th>
+<th align="left">Exonic part</th>
+<th align="left">Passing timepoints</th>
+<th align="left">Plotted</th>
+<th align="left">Inclusion of the part, REF vs ALT, per donor</th>
+<th align="right">GTEx brain tissues</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HNRNPK</td>
+<td align="left">chr9:83980154:C&gt;T</td>
+<td align="left">chr9:83980118-83980152:-</td>
+<td align="left">0, 1, 6 hr</td>
+<td align="left">6 hr</td>
+<td align="left">CD_21: 26% vs 5%; CD_36: 30% vs 7%</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">PARK7</td>
+<td align="left">chr1:7961717:T&gt;C</td>
+<td align="left">chr1:7961747-7961793:+</td>
+<td align="left">1 hr</td>
+<td align="left">1 hr</td>
+<td align="left">CD_21: 72% vs 52%; CD_48: 71% vs 57%</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<p>Inclusion is calculated from isoLASER’s per-donor read counts at the
+plotted timepoint, for heterozygous donors with at least 30 reads. GTEx
+brain tissues counts the brain tissues where the variant is a
+significant sQTL for the gene with a matching direction.</p>
+<div id="sashimi-plots" class="section level2">
+<h2>Sashimi plots</h2>
+<p>Each plot pools the reads of the heterozygous donors at the plotted
+timepoint and splits them by the allele they carry at the variant: the
+reference allele (top) and the alternative allele (middle). Bars show
+read coverage, arcs show splice junctions with at least 3 reads, and
+numbers give the junction read counts. The bottom panel shows annotated
+transcripts, with the exonic part shaded orange.</p>
+<p><strong>HNRNPK, 6 hours.</strong> The 34-base part lies between two
+alternative splice sites at the end of an exon. Reads carrying the
+reference allele use both sites (58 and 129 junction reads), while reads
+carrying the alternative allele use only one (135), so the part is
+rarely included. The variant lies 3 bases outside the part, in the exon
+next to the splice site that both alleles use.</p>
+<p><img src="assets/sashimi/HNRNPK.png" /></p>
+<p><strong>PARK7, 1 hour.</strong> The 46-base part again lies between
+two alternative splice sites. Both alleles use both sites, but reads
+carrying the reference allele use the longer exon more often (477 of 788
+junction reads, 61%) than reads carrying the alternative allele (177 of
+394, 45%).</p>
+<p><img src="assets/sashimi/PARK7.png" /></p>
+<p>Junction counts in the plots and the inclusion values in the table
+differ slightly, because isoLASER assigns each read to a transcript
+rather than counting the junction it spans. The plots were made with
+isoLASER’s <code>nigiri_split</code> and <code>nigiri_plot</code>. The
+installed <code>nigiri_plot</code> fails on this annotation, so we used
+a copy with minimal bug fixes
+(<code>9.isolaser_results/nigiri_plot_patched.py</code>); the scripts
+are <code>8.sashimi_candidates.R</code> and
+<code>8.sashimi_plots.sh</code>. MAPT was also plotted but is not shown:
+it rests on one heterozygous donor, and its part reflects where
+transcripts end rather than a splice junction.</p>
 </div>
 </div>
 <div id="other-top-candidates-and-full-results" class="section level1">

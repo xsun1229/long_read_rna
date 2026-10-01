@@ -128,34 +128,34 @@ cutoff therefore mainly removes shallow donors, whose estimates are noisier,
 and keeps about 85% of the associations and genes found at 20 reads. [Effect of the depth cutoff](#effect-of-the-depth-cutoff) compares
 the results at other cutoffs.
 
-## Effect of using heterozygous donors only
+<!-- ## Effect of using heterozygous donors only -->
 
-Applying the same filters to isoLASER's original pooled values and to the
-heterozygous-donor values:
+<!-- Applying the same filters to isoLASER's original pooled values and to the -->
+<!-- heterozygous-donor values: -->
 
-```{r joint_vs_het}
-knitr::kable(data.frame(Method=joint_vs_het$method, `Passing rows`=fmt(joint_vs_het$rows),
-  Associations=fmt(joint_vs_het$associations), Genes=fmt(joint_vs_het$genes),
-  check.names=FALSE))
-```
+<!-- ```{r joint_vs_het} -->
+<!-- knitr::kable(data.frame(Method=joint_vs_het$method, `Passing rows`=fmt(joint_vs_het$rows), -->
+<!--   Associations=fmt(joint_vs_het$associations), Genes=fmt(joint_vs_het$genes), -->
+<!--   check.names=FALSE)) -->
+<!-- ``` -->
 
-Of the rows that pass with isoLASER's pooling but not with heterozygous donors
-only, `r fmt(joint_vs_het_lost[reason=="no longer cis", N])` are no longer
-`cis`, `r fmt(joint_vs_het_lost[reason=="too few het reads (<10 per allele)", N])`
-have fewer than 10 heterozygous-donor reads on one allele, and
-`r fmt(joint_vs_het_lost[reason=="|dPSI| below 0.10", N])` fall below the
-effect-size cutoff. A smaller pooled table has less power, so some of these
-losses are real associations that can no longer be detected, not artifacts.
-The change works in both directions:
+<!-- Of the rows that pass with isoLASER's pooling but not with heterozygous donors -->
+<!-- only, `r fmt(joint_vs_het_lost[reason=="no longer cis", N])` are no longer -->
+<!-- `cis`, `r fmt(joint_vs_het_lost[reason=="too few het reads (<10 per allele)", N])` -->
+<!-- have fewer than 10 heterozygous-donor reads on one allele, and -->
+<!-- `r fmt(joint_vs_het_lost[reason=="|dPSI| below 0.10", N])` fall below the -->
+<!-- effect-size cutoff. A smaller pooled table has less power, so some of these -->
+<!-- losses are real associations that can no longer be detected, not artifacts. -->
+<!-- The change works in both directions: -->
 
-- **SCN2A, 1 hr:** one heterozygous donor and three homozygous-reference
-  donors. The pooled difference is 12.0 points and `cis`; the heterozygous
-  donor alone gives 6.5 points and is not `cis`.
-- **RPL8, 0 hr:** one heterozygous donor and three homozygous donors, which
-  dilute the effect. The pooled difference is 0.3 points and not `cis`; the
-  heterozygous donor alone gives 47.9 points and is `cis`.
-- **RHOC, 0 hr:** all four donors are heterozygous, and both calculations give
-  78.8 points.
+<!-- - **SCN2A, 1 hr:** one heterozygous donor and three homozygous-reference -->
+<!--   donors. The pooled difference is 12.0 points and `cis`; the heterozygous -->
+<!--   donor alone gives 6.5 points and is not `cis`. -->
+<!-- - **RPL8, 0 hr:** one heterozygous donor and three homozygous donors, which -->
+<!--   dilute the effect. The pooled difference is 0.3 points and not `cis`; the -->
+<!--   heterozygous donor alone gives 47.9 points and is `cis`. -->
+<!-- - **RHOC, 0 hr:** all four donors are heterozygous, and both calculations give -->
+<!--   78.8 points. -->
 
 ## What the numbers mean
 
@@ -286,7 +286,12 @@ samples also tend to overestimate effects, so associations that rely on
 shallow donors are less certain.
 
 **`r fmt(depth_genes[, sum(dp10 & dp20 & dp30 & dp50)])` genes** pass at every
-cutoff; these are the candidates least sensitive to the choice. The
+cutoff; these are the candidates least sensitive to the choice. This is the
+overlap of all four screens, so it is smaller than any "Genes kept" value in
+the first table, which compares only two screens at a time. For example,
+`r fmt(depth_genes[, sum(dp30 & dp50)])` genes pass at both 30 and 50 reads,
+and `r fmt(depth_genes[, sum(dp30 & dp50 & !(dp10 & dp20))])` of them fail at
+a lower cutoff, where shallower donors join the pool. The
 [gene status table](assets/depth_gene_status.tsv) marks the screens in which
 each gene passes. Scripts: `9.isolaser_results/6.het_only_stats.py` (run once
 per cutoff), `5.prepare_roc_results.R` (for this page,
@@ -437,6 +442,68 @@ knitr::kable(data.frame(Category=c("Activity-associated","Neuronal"),
 Coordinates above follow the isoLASER output convention: variant positions
 are zero-based (add 1 to compare with a VCF position); part intervals are
 zero-based, with an exclusive end.
+
+# Highlighted candidates
+
+Two candidates have the strongest support in this screen. Each association:
+
+- passes at every depth cutoff (10, 20, 30 and 50 reads);
+- has at least two heterozygous donors, and every one shows the same direction;
+- uses a variant that GTEx v8 reports as a significant brain sQTL for the same
+  gene, with the same direction at the junction that ends at the exonic part.
+
+Both genes also have known roles in neurons:
+[HNRNPK](https://www.ncbi.nlm.nih.gov/gene/3190) is an RNA-binding protein
+that regulates RNA processing; mutations cause Au-Kline syndrome, a
+developmental disorder with intellectual disability, and loss of HNRNPK impairs
+synaptic plasticity in hippocampal neurons
+([Folci et al. 2014](https://pubmed.ncbi.nlm.nih.gov/24990929/)).
+[PARK7](https://www.ncbi.nlm.nih.gov/gene/11315) (DJ-1) is a Parkinson's
+disease gene that protects neurons against oxidative stress.
+
+| Gene | Variant | Exonic part | Passing timepoints | Plotted | Inclusion of the part, REF vs ALT, per donor | GTEx brain tissues |
+|:--|:--|:--|:--|:--|:--|--:|
+| HNRNPK | chr9:83980154:C>T | chr9:83980118-83980152:- | 0, 1, 6 hr | 6 hr | CD_21: 26% vs 5%; CD_36: 30% vs 7% | 13 |
+| PARK7 | chr1:7961717:T>C | chr1:7961747-7961793:+ | 1 hr | 1 hr | CD_21: 72% vs 52%; CD_48: 71% vs 57% | 4 |
+
+Inclusion is calculated from isoLASER's per-donor read counts at the plotted
+timepoint, for heterozygous donors with at least 30 reads. GTEx brain tissues
+counts the brain tissues where the variant is a significant sQTL for the gene
+with a matching direction.
+
+## Sashimi plots
+
+Each plot pools the reads of the heterozygous donors at the plotted timepoint
+and splits them by the allele they carry at the variant: the reference allele
+(top) and the alternative allele (middle). Bars show read coverage, arcs show
+splice junctions with at least 3 reads, and numbers give the junction read
+counts. The bottom panel shows annotated transcripts, with the exonic part
+shaded orange.
+
+**HNRNPK, 6 hours.** The 34-base part lies between two alternative splice
+sites at the end of an exon. Reads carrying the reference allele use both sites
+(58 and 129 junction reads), while reads carrying the alternative allele use
+only one (135), so the part is rarely included. The variant lies 3 bases
+outside the part, in the exon next to the splice site that both alleles use.
+
+![](assets/sashimi/HNRNPK.png)
+
+**PARK7, 1 hour.** The 46-base part again lies between two alternative splice
+sites. Both alleles use both sites, but reads carrying the reference allele
+use the longer exon more often (477 of 788 junction reads, 61%) than reads
+carrying the alternative allele (177 of 394, 45%).
+
+![](assets/sashimi/PARK7.png)
+
+Junction counts in the plots and the inclusion values in the table differ
+slightly, because isoLASER assigns each read to a transcript rather than
+counting the junction it spans. The plots were made with isoLASER's
+`nigiri_split` and `nigiri_plot`. The installed `nigiri_plot` fails on this
+annotation, so we used a copy with minimal bug fixes
+(`9.isolaser_results/nigiri_plot_patched.py`); the scripts are
+`8.sashimi_candidates.R` and `8.sashimi_plots.sh`. MAPT was also plotted but
+is not shown: it rests on one heterozygous donor, and its part reflects where
+transcripts end rather than a splice junction.
 
 # Other top candidates and full results
 

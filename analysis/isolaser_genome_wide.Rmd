@@ -68,7 +68,6 @@ neuronal_selected <- neuronal_events[, .SD[1], by=gene]
 setorder(neuronal_selected,priority,-max_passing_dpsi)
 candidate_table <- function(d) {
   ans <- effect_table(d)
-  ans[, `Usable baseline` := ifelse(sig(d$usable_0hr),"Yes","No")]
   ans[, Variant := d$variant_qual]
   ans[, `Exonic part` := d$exonic_part]
   ans
@@ -106,7 +105,7 @@ We retain associations that meet all of these criteria:
 
 | Filter | Requirement | Purpose |
 |:--|:--|:--|
-| Heterozygous donors | Alternate-allele fraction 0.25–0.75 and ≥20 reads; only these donors are pooled, and at least one is required | Compare the two alleles within the same people |
+| Heterozygous donors | Alternate-allele fraction 0.25–0.75 and ≥30 reads; only these donors are pooled, and at least one is required | Compare the two alleles within the same people |
 | Association | isoLASER's `cis` label, recalculated on the heterozygous-donor table (each allele needs ≥10 reads) | Association above isoLASER's null threshold |
 | Allelic difference | \(\lvert\Delta\mathrm{PSI}\rvert \geq 0.10\) | At least a 10 percentage-point difference |
 | Part length | ≥10 bases | Exclude very short fragments |
@@ -115,16 +114,18 @@ We retain associations that meet all of these criteria:
 For timepoint comparisons, we keep the **same gene, variant, and exonic part**.
 The representative event for each gene is the one with the largest effect
 that passes these filters. A usable timepoint has an output row and at least
-one heterozygous donor with ≥20 reads; the heterozygous donors need not be the
+one heterozygous donor with ≥30 reads; the heterozygous donors need not be the
 same at different timepoints.
 
-isoLASER itself requires 10 reads per pooled donor; 20 is a conservative
-choice. isoLASER's heterozygous/homozygous genotype labels are unreliable at
-low depth (see [variant validation](isolaser_variants.html)), but these
-calculations count each read by the allele it carries and do not use those
-labels. Allele balance alone identified panel heterozygotes correctly in
-90–95% of calls at every depth from 10 reads (calculated from the validation
-call table). [Effect of the depth cutoff](#effect-of-the-depth-cutoff) compares
+isoLASER itself requires 10 reads per pooled donor; we use 30 as a
+conservative choice. In the [variant validation](isolaser_variants.html),
+isoLASER labels panel heterozygotes as homozygous less often at 30 or more
+reads (21% of calls) than at 20 or more (29%). These calculations count each
+read by the allele it carries and do not use those labels, and allele balance
+alone identified panel heterozygotes correctly in 90–95% of calls at every
+depth from 10 reads (calculated from the validation call table). The 30-read
+cutoff therefore mainly removes shallow donors, whose estimates are noisier,
+and keeps about 85% of the associations and genes found at 20 reads. [Effect of the depth cutoff](#effect-of-the-depth-cutoff) compares
 the results at other cutoffs.
 
 ## Effect of using heterozygous donors only
@@ -150,9 +151,9 @@ The change works in both directions:
 - **SCN2A, 1 hr:** one heterozygous donor and three homozygous-reference
   donors. The pooled difference is 12.0 points and `cis`; the heterozygous
   donor alone gives 6.5 points and is not `cis`.
-- **ANK3, 0 hr:** two homozygous-reference donors dilute the effect. The
-  pooled difference is 17.7 points; the heterozygous donor alone gives
-  40.0 points.
+- **RPL8, 0 hr:** one heterozygous donor and three homozygous donors, which
+  dilute the effect. The pooled difference is 0.3 points and not `cis`; the
+  heterozygous donor alone gives 47.9 points and is `cis`.
 - **RHOC, 0 hr:** all four donors are heterozygous, and both calculations give
   78.8 points.
 
@@ -213,23 +214,30 @@ ggplot(tp_summary, aes(tp, Genes, fill=tp)) +
 The depth cutoff applies to each donor separately: a heterozygous donor is
 pooled only if it has at least that many reads covering both the variant and
 the exonic part. We reran the heterozygous-donor screen at 10 reads (isoLASER's
-own minimum), 20 (used throughout this page), 30 and 50. A fifth screen keeps
-20 reads and also requires at least 50 reads at the variant site in the donor's
-own variant calls; it counts only isoLASER-passing single-base variants, so
-insertions and deletions never qualify under that rule.
+own minimum), 20, 30 (used throughout this page) and 50.
 
 ```{r depth_table}
-depth_order <- c(dp10="10 reads", dp20="20 reads (this page)", dp30="30 reads",
-  dp50="50 reads", dp20_vdp50="20 reads + 50 at the variant site")
+depth_order <- c(dp10="10 reads", dp20="20 reads", dp30="30 reads (this page)",
+  dp50="50 reads")
 ds <- depth_summary[match(names(depth_order), screen)]
-vs20 <- function(x) ifelse(ds$screen == "dp20", "–", fmt(x))
+vs_base <- function(x) ifelse(ds$screen == "dp30", "–", fmt(x))
 knitr::kable(data.frame(Cutoff=unname(depth_order), `Passing rows`=fmt(ds$rows),
   Associations=fmt(ds$associations), Genes=fmt(ds$genes),
-  `Genes kept`=vs20(ds$genes_kept), `Genes lost`=vs20(ds$genes_lost),
-  `Genes gained`=vs20(ds$genes_gained), check.names=FALSE), align="lrrrrrr")
+  `Genes kept`=vs_base(ds$genes_kept), `Genes lost`=vs_base(ds$genes_lost),
+  `Genes gained`=vs_base(ds$genes_gained), check.names=FALSE), align="lrrrrrr")
 ```
 
-Kept, lost and gained are relative to the 20-read screen.
+**Column guide**
+
+- **Passing rows:** gene–variant–exonic-part associations that pass all
+  filters at one timepoint. An association passing at 0, 1 and 6 hours counts
+  three times.
+- **Associations:** distinct gene–variant–exonic-part combinations that pass
+  at one or more timepoints, so each counts once.
+- **Genes:** genes with at least one passing association.
+- **Genes kept / lost / gained:** compared with the 30-read screen. Kept genes
+  pass in both screens, lost genes pass only at 30 reads, and gained genes pass
+  only at the other cutoff.
 
 ```{r depth_reason_values}
 reason_pct <- function(s, ch, r) {
@@ -238,23 +246,31 @@ reason_pct <- function(s, ch, r) {
 }
 ```
 
-- **Raising the cutoff** mostly removes associations in which no heterozygous
-  donor reaches the new depth:
-  `r reason_pct("dp30", "lost", "no het donor meets the cutoff")`% of the rows
-  lost at 30 reads and `r reason_pct("dp50", "lost", "no het donor meets the cutoff")`%
-  at 50 reads. Most of the rest are no longer `cis`.
-- **Associations gained at a higher cutoff** were not `cis` at 20 reads.
-  Removing a shallow donor from the pool changes the pooled table enough for
-  the association to pass.
-- **Lowering the cutoff to 10 reads** gains associations supported by donors
-  with 10–19 reads, and loses a few that pass only without those donors.
+- **Lowering the cutoff to 10 or 20 reads** adds associations supported by
+  shallower donors. Of the rows gained,
+  `r reason_pct("dp10", "gained", "no het donor meets the cutoff")`% (10 reads)
+  and `r reason_pct("dp20", "gained", "no het donor meets the cutoff")`% (20 reads)
+  have no heterozygous donor with 30 reads; most of the rest are not `cis`
+  once the shallow donors are removed. A few associations are lost, because
+  adding shallow donors to the pool dilutes them.
+- **Raising the cutoff to 50 reads** mostly removes associations in which no
+  heterozygous donor reaches 50 reads
+  (`r reason_pct("dp50", "lost", "no het donor meets the cutoff")`% of the rows
+  lost); most of the rest are no longer `cis`. The few gained rows were not
+  `cis` at 30 reads and pass once a shallower donor is removed.
 
-Associations that depend on shallower donors have larger effects. At 30 and 50
-reads these are the lost associations; at 10 reads they are the gained ones.
+The next table asks whether the associations that change with the cutoff
+differ in effect size. For each cutoff, associations are split into three
+groups compared with the 30-read screen: **kept** (pass in both screens),
+**lost** (pass only at 30 reads) and **gained** (pass only at the other
+cutoff). Each cell shows the median, across the group, of each association's
+largest passing |ΔPSI| in percentage points, with the number of associations
+in parentheses. Kept and lost effects are measured at 30 reads; gained effects
+at the other cutoff.
 
 ```{r depth_effect_table}
 de <- dcast(depth_effect, screen ~ status, value.var=c("median_abs_dpsi", "n"))
-de <- de[match(setdiff(names(depth_order), "dp20"), screen)]
+de <- de[match(setdiff(names(depth_order), "dp30"), screen)]
 cell <- function(m, n) paste0(round(100 * m, 1), " (", fmt(n), ")")
 knitr::kable(data.frame(Cutoff=unname(depth_order[de$screen]),
   Kept=cell(de$median_abs_dpsi_kept, de$n_kept),
@@ -263,24 +279,18 @@ knitr::kable(data.frame(Cutoff=unname(depth_order[de$screen]),
   align="lrrr")
 ```
 
-Values are the median largest passing |ΔPSI| in percentage points, with the
-number of associations in parentheses. Kept and lost effects are measured at
-20 reads; gained effects at the new cutoff. With fewer reads, only larger
-differences reach the `cis` threshold, and small samples also tend to
-overestimate effects, so associations that rely on shallow donors are less
-certain.
+The associations that depend on shallower donors (gained at 10 and 20 reads,
+lost at 50 reads) have larger effects than those that pass regardless.
+With fewer reads, only larger differences reach the `cis` threshold, and small
+samples also tend to overestimate effects, so associations that rely on
+shallow donors are less certain.
 
-**`r fmt(depth_genes[, sum(dp10 & dp20 & dp30 & dp50 & dp20_vdp50)])` genes**
-pass at every cutoff; these are the candidates least sensitive to the choice.
-The [gene status table](assets/depth_gene_status.tsv) marks the screens in
-which each gene passes. Higher cutoffs mainly remove genes with fewer reads,
-and isoLASER's genotype labels, which are unreliable at low depth, are not used
-in these calculations, so this page keeps 20 reads. Results for the
-variant-site screen are available as a
-[gene summary](assets/roc_vdp50_gene_signals_wide.tsv),
-[associations across timepoints](assets/roc_vdp50_event_wide.tsv.gz) and
-[passing rows](assets/roc_vdp50_cis_events_filtered.tsv.gz). Scripts:
-`9.isolaser_results/6.het_only_stats.py`, `5.prepare_roc_results.R` and
+**`r fmt(depth_genes[, sum(dp10 & dp20 & dp30 & dp50)])` genes** pass at every
+cutoff; these are the candidates least sensitive to the choice. The
+[gene status table](assets/depth_gene_status.tsv) marks the screens in which
+each gene passes. Scripts: `9.isolaser_results/6.het_only_stats.py` (run once
+per cutoff), `5.prepare_roc_results.R` (for this page,
+`Rscript 5.prepare_roc_results.R 30 out/dp30 0`) and
 `7.compare_depth_thresholds.R`.
 
 ## Detection across timepoints
@@ -291,11 +301,16 @@ changes the allelic effect.
 
 **Usable** means that this exact gene–variant–part combination has a joint
 output row at that timepoint, and at least one heterozygous donor
-(alternate-allele fraction **0.25–0.75**, **≥20 reads**) for the combination.
+(alternate-allele fraction **0.25–0.75**, **≥30 reads**) for the combination.
 Usable data can still fail: the heterozygous-donor table may have fewer than
 10 reads on one allele, or miss the `cis` or effect-size criteria. **No usable
 baseline** can mean a missing output row, insufficient depth, or no
 heterozygous donor; it does not establish that the gene is unexpressed.
+
+The pattern **Baseline unavailable** is exactly this case: the association
+passes at 1 or 6 hours, but 0 hours has no usable data, so we cannot tell
+whether the association was already present before stimulation. Every other
+pattern has a usable baseline.
 
 ```{r detection_barplot, fig.height=4.5}
 detection_counts <- data.table(pattern=names(pattern_names))
@@ -346,10 +361,14 @@ select a different event from the genome-wide representative above. Each
 selected variant–part combination remains fixed across timepoints; the
 genome-wide counts and detection categories above are unchanged.
 
-The expanded candidates include genes involved in neuronal structure and
-secretion: [DCLK1 and dendritic cargo transport](https://pubmed.ncbi.nlm.nih.gov/26758546/),
-[CADPS and calcium-regulated vesicle secretion](https://www.ncbi.nlm.nih.gov/gene/8618/),
-and [DTNBP1 and synaptic function](https://pubmed.ncbi.nlm.nih.gov/27330059/).
+The candidates include [PARK7](https://www.ncbi.nlm.nih.gov/gene/11315), a
+Parkinson's disease gene; [MAPT](https://www.ncbi.nlm.nih.gov/gene/4137),
+which encodes tau; [APP](https://www.ncbi.nlm.nih.gov/gene/351);
+[SYT1](https://www.ncbi.nlm.nih.gov/gene/6857), a calcium sensor for
+neurotransmitter release; and the activity-induced gene
+[NR4A1](https://www.ncbi.nlm.nih.gov/gene/3164). Several of these rest on a
+single heterozygous donor, so they are not yet replicated across donors. The
+**Pattern** column uses the detection categories defined above.
 
 ```{r examples_table}
 neuronal_table <- candidate_table(neuronal_selected)

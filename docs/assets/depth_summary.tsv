@@ -1,6 +1,5 @@
 screen	label	rows	associations	genes	assoc_kept	assoc_lost	assoc_gained	genes_kept	genes_lost	genes_gained
-dp10	Part depth >=10 (isoLASER default)	2657	2201	731	1942	44	259	651	7	80
-dp20	Part depth >=20 (current)	2417	1986	658	1986	0	0	658	0	0
-dp30	Part depth >=30	2054	1666	561	1600	386	66	539	119	22
-dp50	Part depth >=50	1408	1137	369	1069	917	68	351	307	18
-dp20_vdp50	Part depth >=20 + variant-site depth >=50	1597	1288	403	1213	773	75	384	274	19
+dp10	Het-only, part depth >=10	2657	2201	731	1590	76	611	540	21	191
+dp20	Het-only, part depth >=20	2417	1986	658	1600	66	386	539	22	119
+dp30	Het-only, part depth >=30 (reference)	2054	1666	561	1666	0	0	561	0	0
+dp50	Het-only, part depth >=50	1408	1137	369	1074	592	63	354	207	15

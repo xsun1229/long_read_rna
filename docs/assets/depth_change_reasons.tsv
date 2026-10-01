@@ -1,23 +1,18 @@
 screen	change	reason	N	pct
-dp10	lost	not cis	47	97.9
-dp10	lost	|dPSI| below 0.10 or other filter	1	2.1
-dp10	gained	no het donor meets the cutoff	80	27.8
-dp10	gained	not cis	137	47.6
-dp10	gained	<10 reads on one allele	71	24.7
-dp30	lost	not cis	209	47.3
-dp30	lost	no het donor meets the cutoff	218	49.3
-dp30	lost	<10 reads on one allele	13	2.9
-dp30	lost	|dPSI| below 0.10 or other filter	2	0.5
-dp30	gained	not cis	76	96.2
-dp30	gained	|dPSI| below 0.10 or other filter	3	3.8
-dp50	lost	no het donor meets the cutoff	901	82.7
-dp50	lost	not cis	184	16.9
-dp50	lost	|dPSI| below 0.10 or other filter	4	0.4
-dp50	gained	not cis	73	91.2
-dp50	gained	|dPSI| below 0.10 or other filter	7	8.8
-dp20_vdp50	lost	no het donor meets the cutoff	722	79.2
-dp20_vdp50	lost	not cis	183	20.1
-dp20_vdp50	lost	|dPSI| below 0.10 or other filter	4	0.4
-dp20_vdp50	lost	<10 reads on one allele	3	0.3
-dp20_vdp50	gained	not cis	86	93.5
-dp20_vdp50	gained	|dPSI| below 0.10 or other filter	6	6.5
+dp10	lost	not cis	83	96.5
+dp10	lost	|dPSI| below 0.10 or other filter	3	3.5
+dp10	gained	not cis	280	40.6
+dp10	gained	no het donor meets the cutoff	392	56.9
+dp10	gained	<10 reads on one allele	15	2.2
+dp10	gained	|dPSI| below 0.10 or other filter	2	0.3
+dp20	lost	not cis	76	96.2
+dp20	lost	|dPSI| below 0.10 or other filter	3	3.8
+dp20	gained	not cis	209	47.3
+dp20	gained	no het donor meets the cutoff	218	49.3
+dp20	gained	<10 reads on one allele	13	2.9
+dp20	gained	|dPSI| below 0.10 or other filter	2	0.5
+dp50	lost	no het donor meets the cutoff	554	77.3
+dp50	lost	not cis	158	22
+dp50	lost	|dPSI| below 0.10 or other filter	5	0.7
+dp50	gained	not cis	65	91.5
+dp50	gained	|dPSI| below 0.10 or other filter	6	8.5

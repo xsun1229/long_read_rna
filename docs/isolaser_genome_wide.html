@@ -541,15 +541,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree995a3a591afe3b823c30bcc29d70c329258721cctargetblank995a3a5a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree7ea2b94b81fefa8329fe9ed0a777475f43ede3e9targetblank7ea2b94a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/995a3a591afe3b823c30bcc29d70c329258721cc" target="_blank">995a3a5</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/7ea2b94b81fefa8329fe9ed0a777475f43ede3e9" target="_blank">7ea2b94</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree995a3a591afe3b823c30bcc29d70c329258721cctargetblank995a3a5a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree7ea2b94b81fefa8329fe9ed0a777475f43ede3e9targetblank7ea2b94a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -559,7 +559,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/995a3a591afe3b823c30bcc29d70c329258721cc" target="_blank">995a3a5</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/7ea2b94b81fefa8329fe9ed0a777475f43ede3e9" target="_blank">7ea2b94</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -620,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/7ea2b94b81fefa8329fe9ed0a777475f43ede3e9/analysis/isolaser_genome_wide.Rmd" target="_blank">7ea2b94</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/7ea2b94b81fefa8329fe9ed0a777475f43ede3e9/docs/isolaser_genome_wide.html" target="_blank">7ea2b94</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1802,6 +1836,54 @@ PARK7</td>
 positions are zero-based (add 1 to compare with a VCF position); part
 intervals are zero-based, with an exclusive end.</p>
 </div>
+</div>
+<div id="comparison-with-gtex-brain-sqtls" class="section level1">
+<h1>Comparison with GTEx brain sQTLs</h1>
+<p>To check whether the allelic effects agree with known splicing QTLs,
+we followed the right panel of Fig. 3e in the <a
+href="https://www.nature.com/articles/s41467-025-64605-6">isoLASER
+paper</a>, which correlates isoLASER’s ΔPSI with the GTEx sQTL effect
+size (beta).</p>
+<p><strong>Matching.</strong> We used the significant variant–intron
+pairs from GTEx v8 for all 13 brain tissues. Of the 1,626 passing
+associations with a single-base variant, <strong>254 (78 genes)</strong>
+use a variant that GTEx reports as a significant brain sQTL for the same
+gene, matched by exact position and alleles.</p>
+<p><strong>Comparable events.</strong> GTEx measures splicing as each
+intron’s share of reads within a cluster of overlapping introns
+(LeafCutter), not as the PSI of an exonic part. As in the paper, we kept
+only simple events: exon skipping and alternative splice sites. Each
+GTEx intron was classified against the annotation:</p>
+<ul>
+<li><strong>Junction skipping the part:</strong> the intron spans the
+part, and no other annotated exon lies inside it, which excludes
+multi-exon skipping. For these events the skipping junction is the
+longest one, and its usage moves opposite to the part’s inclusion. This
+is the comparison in the paper.</li>
+<li><strong>Junction ending at the part:</strong> one end of the intron
+is at a boundary of the part, so its usage moves with the part’s
+inclusion.</li>
+</ul>
+<p>isoLASER’s ΔPSI (ref − alt) is a difference in exclusion, and GTEx’s
+beta is the effect of the alternative allele. A shared effect should
+therefore give a <strong>negative</strong> correlation for skipping
+junctions and a <strong>positive</strong> one for junctions ending at
+the part. Each point is one association, using the brain tissue where
+that junction is most significant.</p>
+<p><img src="assets/gtex/isolaser_vs_gtex_beta.png" /></p>
+<p>Both correlations have the expected sign: r = -0.667 (p = 0.025, 11
+associations) for skipping junctions, and r = 0.708 (p = 0.0007, 19
+associations) for junctions ending at the part. 8 of 11 and 16 of 19
+associations have the expected direction.</p>
+<p>The numbers are small, for three reasons: GTEx lists only significant
+pairs, most matched introns belong to more complex clusters, and our
+screen is limited to variants heterozygous in four donors. GTEx also
+profiles adult post-mortem brain rather than hiPSC-derived neurons. The
+comparison therefore supports the direction of the effects for the
+matched subset, but cannot test variants that are absent from, or not
+significant in, GTEx. Data: <a
+href="assets/gtex/isolaser_vs_gtex_beta.tsv">plotted points</a>; script:
+<code>9.isolaser_results/9.gtex_effect_comparison.R</code>.</p>
 </div>
 <div id="highlighted-candidates" class="section level1">
 <h1>Highlighted candidates</h1>

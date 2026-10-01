@@ -1,0 +1,3 @@
+role	n	genes	r	p	expected	sign_agree
+inclusion	19	13	0.708	0.000699	positive	16
+skipping	11	10	-0.667	0.0249	negative	8

@@ -24,6 +24,8 @@ depth_summary <- fread("docs/assets/depth_summary.tsv")
 depth_reasons <- fread("docs/assets/depth_change_reasons.tsv")
 depth_effect <- fread("docs/assets/depth_effect.tsv")
 depth_genes <- fread("docs/assets/depth_gene_status.tsv")
+gtex_stats <- fread("docs/assets/gtex/isolaser_vs_gtex_stats.tsv")
+gtex_overlap <- fread("docs/assets/gtex/isolaser_gtex_overlap.tsv")
 sig <- function(x) !is.na(x) & x == TRUE
 fmt <- function(n) format(n, big.mark=",", trim=TRUE)
 tp_levels <- c("0hr", "1hr", "6hr")
@@ -442,6 +444,64 @@ knitr::kable(data.frame(Category=c("Activity-associated","Neuronal"),
 Coordinates above follow the isoLASER output convention: variant positions
 are zero-based (add 1 to compare with a VCF position); part intervals are
 zero-based, with an exclusive end.
+
+# Comparison with GTEx brain sQTLs
+
+To check whether the allelic effects agree with known splicing QTLs, we
+followed the right panel of Fig. 3e in the
+[isoLASER paper](https://www.nature.com/articles/s41467-025-64605-6), which
+correlates isoLASER's ΔPSI with the GTEx sQTL effect size (beta).
+
+```{r gtex_values}
+gs <- function(event, col) gtex_stats[role == event][[col]]
+```
+
+**Matching.** We used the significant variant–intron pairs from GTEx v8 for
+all 13 brain tissues. Of the `r fmt(gtex_overlap$passing_snv_associations)`
+passing associations with a single-base variant,
+**`r fmt(gtex_overlap$gtex_matched_associations)`
+(`r fmt(gtex_overlap$gtex_matched_genes)` genes)** use a variant that GTEx
+reports as a significant brain sQTL for the same gene, matched by exact
+position and alleles.
+
+**Comparable events.** GTEx measures splicing as each intron's share of reads
+within a cluster of overlapping introns (LeafCutter), not as the PSI of an
+exonic part. As in the paper, we kept only simple events: exon skipping and
+alternative splice sites. Each GTEx intron was classified against the
+annotation:
+
+- **Junction skipping the part:** the intron spans the part, and no other
+  annotated exon lies inside it, which excludes multi-exon skipping. For these
+  events the skipping junction is the longest one, and its usage moves
+  opposite to the part's inclusion. This is the comparison in the paper.
+- **Junction ending at the part:** one end of the intron is at a boundary of
+  the part, so its usage moves with the part's inclusion.
+
+isoLASER's ΔPSI (ref − alt) is a difference in exclusion, and GTEx's beta is
+the effect of the alternative allele. A shared effect should therefore give a
+**negative** correlation for skipping junctions and a **positive** one for
+junctions ending at the part. Each point is one association, using the brain
+tissue where that junction is most significant.
+
+![](assets/gtex/isolaser_vs_gtex_beta.png)
+
+Both correlations have the expected sign: r =
+`r gs("skipping", "r")` (p = `r format(signif(gs("skipping", "p"), 2), scientific=FALSE)`,
+`r gs("skipping", "n")` associations) for skipping junctions, and r =
+`r gs("inclusion", "r")` (p = `r format(signif(gs("inclusion", "p"), 2), scientific=FALSE)`,
+`r gs("inclusion", "n")` associations) for junctions ending at the part.
+`r gs("skipping", "sign_agree")` of `r gs("skipping", "n")` and
+`r gs("inclusion", "sign_agree")` of `r gs("inclusion", "n")` associations
+have the expected direction.
+
+The numbers are small, for three reasons: GTEx lists only significant pairs,
+most matched introns belong to more complex clusters, and our screen is limited
+to variants heterozygous in four donors. GTEx also profiles adult post-mortem
+brain rather than hiPSC-derived neurons. The comparison therefore supports the
+direction of the effects for the matched subset, but cannot test variants that
+are absent from, or not significant in, GTEx. Data:
+[plotted points](assets/gtex/isolaser_vs_gtex_beta.tsv); script:
+`9.isolaser_results/9.gtex_effect_comparison.R`.
 
 # Highlighted candidates
 

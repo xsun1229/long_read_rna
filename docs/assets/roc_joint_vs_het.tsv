@@ -1,0 +1,4 @@
+method	rows	associations	genes
+isoLASER joint (all donors)	4004	3421	1029
+het donors only	2417	1986	658
+both	1721	1364	482

@@ -311,7 +311,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-09-30
+<strong>Last updated:</strong> 2026-10-02
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -361,15 +361,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeda9f09d4c3772558338db3bbf3c00c9ab4937251targetblankda9f09da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree84fe5e67ccb948969eee47a60be821132466c6a7targetblank84fe5e6a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/da9f09d4c3772558338db3bbf3c00c9ab4937251" target="_blank">da9f09d</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/84fe5e67ccb948969eee47a60be821132466c6a7" target="_blank">84fe5e6</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeda9f09d4c3772558338db3bbf3c00c9ab4937251targetblankda9f09da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree84fe5e67ccb948969eee47a60be821132466c6a7targetblank84fe5e6a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -379,7 +379,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/da9f09d4c3772558338db3bbf3c00c9ab4937251" target="_blank">da9f09d</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/84fe5e67ccb948969eee47a60be821132466c6a7" target="_blank">84fe5e6</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -395,7 +395,6 @@ were generated:
 <pre><code>
 Unstaged changes:
     Modified:   analysis/index.Rmd
-    Modified:   analysis/isolaser_genome_wide.Rmd
 
 </code></pre>
 <p>
@@ -440,6 +439,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/c510c234cf829c9f3f96f3e2011944cf644a8b99/analysis/index.Rmd" target="_blank">c510c23</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-30
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/c510c234cf829c9f3f96f3e2011944cf644a8b99/docs/index.html" target="_blank">c510c23</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-30
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -805,15 +838,12 @@ Start workflowr project.
 </div>
 </div>
 <p>Oxford Nanopore single-nucleus RNA-seq of hiPSC-derived neurons from
-four donors, at 0, 1 and 6 hours after stimulation. The project has two
-aims:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Splicing changes during the stimulation
-response.</strong></li>
-<li><strong>Genetic variants associated with splicing.</strong></li>
-</ol>
-<p>The first two sections describe the data and what the reads contain;
-they apply to both aims.</p>
+four donors, at 0, 1 and 6 hours after stimulation.</p>
+<!-- The project has two aims: -->
+<!-- 1. **Splicing changes during the stimulation response.** -->
+<!-- 2. **Genetic variants associated with splicing.** -->
+<!-- The first two sections describe the data and what the reads contain; they -->
+<!-- apply to both aims. -->
 <div id="data" class="section level1">
 <h1>Data</h1>
 <ul>
@@ -827,13 +857,13 @@ for the three timepoints</li>
 <ul>
 <li><a href="annotation_sqanti3.html">The IsoQuant annotation,
 classified with SQANTI3</a> — what the transcript annotation contains,
-how much of it is novel, and which novel categories are trustworthy</li>
-<li><a href="read_structure.html">Read structure</a> — chr21: exon,
-intron and intergenic reads, which exons each read supports, and the 3’
-bias</li>
-<li><a href="exon_structure.html">Exon structure of reads</a> —
-genome-wide: how exons are extracted from the annotation, and whether
-each read’s exons are consecutive, skipped or retained</li>
+how much of it is novel, and which novel categories are trustworthy
+<!-- * [Read structure](read_structure.html) — -->
+<!--   chr21: exon, intron and intergenic reads, which exons each read supports, -->
+<!--   and the 3' bias -->
+<!-- * [Exon structure of reads](exon_structure.html) — -->
+<!--   genome-wide: how exons are extracted from the annotation, and whether each -->
+<!--   read's exons are consecutive, skipped or retained --></li>
 </ul>
 </div>
 <div id="splicing-changes-during-stimulation" class="section level1">
@@ -850,10 +880,10 @@ class="section level1">
 <ul>
 <li><a href="isolaser.html">isoLASER setup and running notes</a> — what
 the method does, installation, and how it is run; written before the
-first run</li>
-<li><a href="isolaser_per_donor.html">Per-donor and joint pilot on
-chr21</a> — why the data are split by donor, and how many events are
-testable at per-donor depth</li>
+first run
+<!-- * [Per-donor and joint pilot on chr21](isolaser_per_donor.html) — -->
+<!--   why the data are split by donor, and how many events are testable at -->
+<!--   per-donor depth --></li>
 <li><a href="isolaser_variants.html">Checking isoLASER variant calls
 against donor genotypes</a> — chr1 and chr10 calls compared with the
 imputed genotype panel, including heterozygous sites called homozygous

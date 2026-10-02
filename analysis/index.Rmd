@@ -9,13 +9,16 @@ editor_options:
 ---
 
 Oxford Nanopore single-nucleus RNA-seq of hiPSC-derived neurons from four
-donors, at 0, 1 and 6 hours after stimulation. The project has two aims:
+donors, at 0, 1 and 6 hours after stimulation. 
 
-1. **Splicing changes during the stimulation response.**
-2. **Genetic variants associated with splicing.**
 
-The first two sections describe the data and what the reads contain; they
-apply to both aims.
+<!-- The project has two aims: -->
+
+<!-- 1. **Splicing changes during the stimulation response.** -->
+<!-- 2. **Genetic variants associated with splicing.** -->
+
+<!-- The first two sections describe the data and what the reads contain; they -->
+<!-- apply to both aims. -->
 
 # Data
 
@@ -28,12 +31,12 @@ apply to both aims.
 * [The IsoQuant annotation, classified with SQANTI3](annotation_sqanti3.html) —
   what the transcript annotation contains, how much of it is novel, and which
   novel categories are trustworthy
-* [Read structure](read_structure.html) —
-  chr21: exon, intron and intergenic reads, which exons each read supports,
-  and the 3' bias
-* [Exon structure of reads](exon_structure.html) —
-  genome-wide: how exons are extracted from the annotation, and whether each
-  read's exons are consecutive, skipped or retained
+<!-- * [Read structure](read_structure.html) — -->
+<!--   chr21: exon, intron and intergenic reads, which exons each read supports, -->
+<!--   and the 3' bias -->
+<!-- * [Exon structure of reads](exon_structure.html) — -->
+<!--   genome-wide: how exons are extracted from the annotation, and whether each -->
+<!--   read's exons are consecutive, skipped or retained -->
 
 # Splicing changes during stimulation
 
@@ -46,9 +49,9 @@ apply to both aims.
 * [isoLASER setup and running notes](isolaser.html) —
   what the method does, installation, and how it is run; written before the
   first run
-* [Per-donor and joint pilot on chr21](isolaser_per_donor.html) —
-  why the data are split by donor, and how many events are testable at
-  per-donor depth
+<!-- * [Per-donor and joint pilot on chr21](isolaser_per_donor.html) — -->
+<!--   why the data are split by donor, and how many events are testable at -->
+<!--   per-donor depth -->
 * [Checking isoLASER variant calls against donor genotypes](isolaser_variants.html) —
   chr1 and chr10 calls compared with the imputed genotype panel, including
   heterozygous sites called homozygous at low depth

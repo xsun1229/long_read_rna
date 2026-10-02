@@ -53,9 +53,12 @@ donors, at 0, 1 and 6 hours after stimulation.
 <!--   why the data are split by donor, and how many events are testable at -->
 <!--   per-donor depth -->
 * [Checking isoLASER variant calls against donor genotypes](isolaser_variants.html) —
-  chr1 and chr10 calls compared with the imputed genotype panel, including
+  calls across all 22 autosomes compared with the imputed genotype panel, including
   heterozygous sites called homozygous at low depth
 * [Genome-wide allele-specific splicing](isolaser_genome_wide.html) —
   joint analysis across chr1–22 at all three timepoints: filters, candidate
   genes, timepoint patterns and neuronal candidates; within-donor effects not
   yet confirmed
+* [Permutation test for allele-specific splicing](isolaser_permutation_pilot.html) —
+  pilot on chr9 at 6 hours: how the shuffle works, the estimated FDR of the
+  genome-wide screen and of stricter cutoffs, and the HNRNPK result

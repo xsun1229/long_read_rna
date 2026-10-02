@@ -1,0 +1,263 @@
+---
+title: "Permutation test for allele-specific splicing (pilot: chr9, 6 hours)"
+author: "XSun"
+date: "2026-10-02"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+library(data.table)
+A <- "docs/assets/isolaser_permutation"
+est <- fread(file.path(A, "grid_estimates.tsv"))
+pick <- fread(file.path(A, "selected_cutoffs.tsv"))
+passing <- fread(file.path(A, "selected_cutoff_associations.tsv"))
+focus <- fread(file.path(A, "focus_associations.tsv"))
+perrow <- fread(file.path(A, "row_pvalue_summary.tsv"))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+pct <- function(x) sprintf("%.1f%%", 100 * x)
+web <- est[cutoff == "|dPSI|>=0.10, het>=1, row p<=any"]
+h <- focus[gene == "HNRNPK"]
+```
+
+isoLASER has no false discovery rate (FDR) control, so we estimated one by
+permutation: shuffle which allele each read carries, score the shuffled data the
+same way as the real data, and count how many associations pass by chance. This
+pilot covers one chromosome and one timepoint, chr9 at 6 hours, where HNRNPK is
+located.
+
+**Result in brief.** The screen on the [genome-wide page](isolaser_genome_wide.html)
+has an estimated FDR of about `r pct(web$sel_fdr_rows)` here: roughly 4 in 10 of
+its hits would be expected by chance. Adding a requirement on each association's
+own permutation p-value brings the estimate down to 4–8%, and an independent set
+of permutations confirms it. HNRNPK passes every cutoff we tested.
+
+# Why a permutation test
+
+isoLASER labels an association `cis` when its score exceeds the 99th percentile
+of a null distribution that ships with the software. That is a cutoff for each
+test separately, not control of the FDR across many tests. isoLASER's p-values
+can't be used for FDR control either: associations with no allele difference all
+get p between 0.42 and 0.55, and the p-values sometimes contradict the `cis`
+label. A permutation test builds the null distribution from our own data instead.
+
+# How the permutation works
+
+The question is: if a variant had no effect on splicing, how many associations
+would still pass the screen?
+
+| | In each shuffle |
+|:--|:--|
+| Shuffled | For each donor, gene and isoLASER phasing group, the haplotype labels (which parental chromosome a read came from) are randomly reassigned among the reads. A read whose label changes is given the other allele at every variant in that phasing group. The few reads without a haplotype label have their alleles shuffled at each variant. |
+| Kept fixed | Each read's splicing status (whether its transcript includes or skips each exonic part), each donor's read depth, and which donors count as heterozygous for each association. |
+| Broken | Only the link between allele and splicing. |
+| Scored | Exactly as the real data: the heterozygous donors' 2×2 tables (allele × part included or excluded) are pooled and scored with isoLASER's own functions, then the same filters are applied. |
+
+Two details matter:
+
+- Shuffling haplotype labels, rather than each variant's alleles separately,
+  keeps variants on the same haplotype consistent with each other, and keeps the
+  exonic parts that share reads linked.
+- Some shuffled tables end up with fewer than 10 reads on one allele and get no
+  score; this happens for about 5.5% of shuffled values. They count as not
+  passing.
+
+## Starting from isoLASER's own read assignments
+
+The shuffle has to use the alleles isoLASER itself assigned to each read, because
+alleles read directly from the BAM files don't reproduce its counts exactly.
+isoLASER doesn't save them, so we reran its per-donor step for chr9 at 6 hours
+with a copy that records them. Before any permutation, we checked:
+
+| Check | Result |
+|:--|:--|
+| The recording copy gives the same output as an unmodified copy run with the same random seed | identical, all 4 donors |
+| Tables rebuilt from the recorded reads match isoLASER's counts | 23,214 of 23,214 variant tables |
+| Scoring the recorded reads reproduces our heterozygous-donor results | 5,578 of 5,578 associations |
+| The rerun passes the same associations as the original run | the same 20 associations |
+
+isoLASER has two random steps, downsampling reads for very deep genes and the
+starting point of phasing, so the rerun differs from the original run in a few
+other associations, mostly in TPM2. The rerun is used for both the real and the
+shuffled data.
+
+# What we ran
+
+All runs use chr9 at 6 hours, with `r fmt(perrow$tested_rows)` tested
+associations (variant × exonic part with a scorable heterozygous-donor table).
+
+| Batch | Permutations | Random seed | Used for | Run time (24 cores) |
+|:--|--:|--:|:--|--:|
+| Selection | 1,000 | 1 | choosing stricter cutoffs | 4 minutes |
+| Validation | 1,000 | 2 | re-checking the chosen cutoffs | 4 minutes |
+| HNRNPK focus | 100,000 | 3 | a precise p-value for HNRNPK's associations only | 16 minutes |
+
+For a given cutoff, the estimated FDR is the average number of associations
+passing in the shuffled datasets, divided by the number passing in the real data.
+We calculate it separately for associations (variant × exonic part at this
+timepoint) and for genes, since one gene can have several associations.
+
+# Results
+
+## The website's screen
+
+The current screen (isoLASER `cis`, |ΔPSI| ≥ 0.10, at least one heterozygous
+donor with ≥ 30 reads, part ≥ 10 bases, no clustered variants) passes
+`r web$obs_rows` associations in `r web$obs_genes` genes.
+
+| | Real data | Shuffled average | Shuffled, 95% range | Estimated FDR | Estimated FDR, validation |
+|:--|--:|--:|--:|--:|--:|
+| Associations | `r web$obs_rows` | `r round(web$sel_null_rows, 1)` | `r web$sel_null_rows_95` | `r pct(web$sel_fdr_rows)` | `r pct(web$val_fdr_rows)` |
+| Genes | `r web$obs_genes` | `r round(web$sel_null_genes, 1)` | `r web$sel_null_genes_95` | `r pct(web$sel_fdr_genes)` | `r pct(web$val_fdr_genes)` |
+
+![Passing associations in each of the 1,000 selection-batch shuffles (grey) and in the real data (orange).](assets/isolaser_permutation/null_passing_rows.png)
+
+## Stricter cutoffs
+
+Before running these batches, we fixed a grid of 32 stricter cutoffs. Each adds
+to the website screen a choice of:
+
+- |ΔPSI| ≥ 0.10, 0.15, 0.20 or 0.30;
+- at least 1 or 2 heterozygous donors;
+- a maximum row p-value of 0.01, 0.003 or 0.001, or none.
+
+The row p-value is our own addition: it compares an association's real score with
+its own shuffled scores in the selection batch. p ≤ 0.001 means no shuffle scored
+as high as the real data. It is what lowers the estimate most:
+
+```{r row_p_effect}
+x <- est[grepl("^\\|dPSI\\|>=0.10, het>=1", cutoff)]
+x[, limit := sub(".*row p<=", "", cutoff)]
+x <- x[match(c("any", "0.01", "0.003", "0.001"), limit)]
+knitr::kable(data.table(`Row p-value limit` = c("none", "0.01", "0.003", "0.001"),
+  `Associations passing` = x$obs_rows, `Shuffled average` = round(x$sel_null_rows, 2),
+  `Estimated FDR` = pct(x$sel_fdr_rows), `Validation` = pct(x$val_fdr_rows)), align = "lrrrr")
+```
+
+This table keeps the website's |ΔPSI| ≥ 0.10 and at-least-one-donor requirements.
+
+For each target, a rule fixed in advance picked the cutoff that keeps the most
+real associations (or genes) while its selection-batch estimate stays at or below
+the target. The validation batch then re-estimated each pick:
+
+```{r picks}
+pt <- pick[!is.na(cutoff)]
+g <- passing[, .(genes = paste(sort(unique(gene)), collapse = ", ")), by = .(level, target)]
+pt <- merge(pt, g, by = c("level", "target"), sort = FALSE)
+pretty <- function(x) gsub("<=", " ≤ ", gsub(">=", " ≥ ", sub("het>=", "donors>=", sub("dPSI", "ΔPSI", x))))
+knitr::kable(data.table(Target = paste0(round(100 * pt$target), "% of ", ifelse(pt$level == "rows", "associations", "genes")),
+  Cutoff = pretty(pt$cutoff), Passing = pt$observed,
+  Selection = pct(pt$fdr_selection), Validation = pct(pt$fdr_validation), Genes = pt$genes),
+  align = "llrrrl")
+```
+
+*Passing* counts associations or genes in the real data, matching the target;
+*Selection* and *Validation* are the estimated FDR in each batch. Every pick meets
+its target in the validation batch.
+
+The associations passing the 10% association-level cutoff:
+
+```{r passing_rows}
+p10 <- passing[level == "rows" & target == 0.10][order(gene, variant_qual)]
+knitr::kable(data.table(Gene = p10$gene, Variant = p10$variant_qual, `Exonic part` = p10$exonic_part,
+  `Heterozygous donors` = p10$n_het, Reads = p10$het_cov, `ΔPSI` = round(p10$dpsi, 3),
+  `Row p-value` = signif(p10$p_grid, 2)), align = "lllrrrr")
+```
+
+*Reads* is the pooled number of heterozygous-donor reads; ΔPSI is the difference
+in exclusion of the part between the reference and alternative alleles, as on the
+[genome-wide page](isolaser_genome_wide.html). At the 10% gene-level cutoff,
+C9orf72 also passes, with one heterozygous donor.
+
+## HNRNPK
+
+Both HNRNPK variants tested against the highlighted exonic part scored higher
+than all 100,000 shuffles in the focus batch:
+
+| Variant | Heterozygous donors | Reads | ΔPSI | Shuffles scoring as high | p-value |
+|:--|--:|--:|--:|--:|--:|
+| `r h$variant_qual` (highlighted) | `r h$n_het` | `r h$het_cov` | `r sub("-", "−", round(h$dpsi, 3))` | `r h$focus_ge` of `r fmt(h$focus_perms)` | 1 × 10⁻⁵ |
+| chr9:83978398:G>C | 3 | 1,125 | −0.115 | 0 of 100,000 | 1 × 10⁻⁵ |
+
+1 × 10⁻⁵ is the smallest p-value 100,000 shuffles can give. These p-values are
+for HNRNPK only and are not adjusted for having chosen it. The two variants are
+1.7 kb apart and may lie on the same haplotype, so they don't yet count as two
+independent signals.
+
+## P-values for every association
+
+Each association also has a p-value from its own 2,000 shuffles (both batches).
+After Benjamini–Hochberg correction across all `r fmt(perrow$tested_rows)` tested
+associations, `r perrow$passing_with_q_lt_0.10` of the
+`r perrow$website_passing` passing associations reach q < 0.10 and
+`r perrow$passing_with_q_lt_0.05` reach q < 0.05. With 2,000 shuffles, no
+p-value can be smaller than 1/2,001 ≈ 0.0005, which limits this correction; the
+cutoff-based estimate above is the main result.
+
+We did not pool shuffled scores across associations to make p-values. In an
+earlier run, pooled p-values were wrong for individual associations: for 305
+associations, more than 3% of their own shuffles had a pooled p-value below 0.01,
+three times the expected rate.
+
+# Do the results make sense?
+
+Yes, as far as these checks go:
+
+- **isoLASER's threshold is calibrated on the shuffled data.** 0.94% of
+  shuffled associations are labelled `cis` (0.95% in the validation batch),
+  close to the nominal 1%. In the real data 4.4% are, so there is real signal
+  above chance.
+- **The screen's 43% fits simple arithmetic.** About 2,800 tested associations ×
+  about 1% chance `cis` labels gives about 26 per shuffle, and about a third of
+  those also pass the |ΔPSI| and other filters, giving
+  `r round(web$sel_null_rows, 1)` on average.
+- **The two batches agree.** Across all 32 cutoffs, validation estimates are
+  within 5 percentage points of the selection estimates (median 1). They are
+  slightly lower for almost every cutoff, so the chosen cutoffs don't look tuned
+  to chance in the selection batch.
+- **The strongest result agrees with independent evidence.** HNRNPK's variant is
+  a GTEx brain sQTL with the same direction in 13 brain tissues, and the effect is
+  visible in the [sashimi plot](isolaser_genome_wide.html#highlighted-candidates).
+
+What this pilot can't tell us:
+
+- **The counts are small.** The stricter cutoffs keep 4–5 associations on one
+  chromosome at one timepoint, so the estimates are noisy. A cutoff for the website
+  needs the genome-wide estimate.
+- **It is an estimate under this shuffle scheme, not guaranteed FDR control.** It
+  assumes that, if alleles had no effect, reads' haplotype labels would be
+  interchangeable within a phasing group.
+- **It can't catch technical artifacts** that create a real link between allele
+  and splicing, such as allele-specific mapping bias, or a "variant" that is
+  really a misaligned splice-site end.
+- **It doesn't test stimulation.** Whether an association changes between 0 and
+  6 hours is a separate question.
+
+# Next steps
+
+1. Rerun isoLASER's per-donor step with the recording copy for all 22
+   chromosomes × 3 timepoints, and repeat the checks for each.
+2. Run the selection and validation batches for every chromosome × timepoint.
+3. Combine them into a genome-wide estimate, counting each gene once per shuffle,
+   then choose the website's cutoff and update the genome-wide page.
+
+# Scripts and files
+
+Scripts are in `long_read_RNA/10.isolaser_permutation/` (described in its
+`README.md`):
+
+| Script | Role |
+|:--|:--|
+| `1.make_copies.py` | builds the seeded and recording copies of isoLASER |
+| `2.rerun_pilot.sbatch`, `3.joint_pilot.sbatch` | the recording rerun for chr9 at 6 hours |
+| `4.check_pilot.R`, `5.check_rescoring.py` | the checks before permuting |
+| `6.permute_chrom.py`, `8.permute_chrom.sbatch` | one permutation batch |
+| `7.summarize_permutation.R`, `9.summarize_permutation.sbatch` | FDR estimates and p-values |
+
+Results are in `long_read_processed/isolaser_chrom/chr9/6hr/permutation/summary/`.
+Downloads: [all 32 cutoffs](assets/isolaser_permutation/grid_estimates.tsv),
+[chosen cutoffs](assets/isolaser_permutation/selected_cutoffs.tsv),
+[associations passing them](assets/isolaser_permutation/selected_cutoff_associations.tsv).

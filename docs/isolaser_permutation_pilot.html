@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-02" />
+
+<title>Permutation test for allele-specific splicing (pilot: chr9, 6 hours)</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Permutation test for allele-specific
+splicing (pilot: chr9, 6 hours)</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-02</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-02
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2394e81540b2d09a2bd456dffdd7f77cd7069dd3targetblank2394e81a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/2394e81540b2d09a2bd456dffdd7f77cd7069dd3" target="_blank">2394e81</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2394e81540b2d09a2bd456dffdd7f77cd7069dd3targetblank2394e81a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/2394e81540b2d09a2bd456dffdd7f77cd7069dd3" target="_blank">2394e81</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_permutation.Rmd
+    Untracked:  analysis/isolaser_permutation_pilot.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_variants.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>isoLASER has no false discovery rate (FDR) control, so we estimated
+one by permutation: shuffle which allele each read carries, score the
+shuffled data the same way as the real data, and count how many
+associations pass by chance. This pilot covers one chromosome and one
+timepoint, chr9 at 6 hours, where HNRNPK is located.</p>
+<p><strong>Result in brief.</strong> The screen on the <a
+href="isolaser_genome_wide.html">genome-wide page</a> has an estimated
+FDR of about 43.1% here: roughly 4 in 10 of its hits would be expected
+by chance. Adding a requirement on each association’s own permutation
+p-value brings the estimate down to 4–8%, and an independent set of
+permutations confirms it. HNRNPK passes every cutoff we tested.</p>
+<div id="why-a-permutation-test" class="section level1">
+<h1>Why a permutation test</h1>
+<p>isoLASER labels an association <code>cis</code> when its score
+exceeds the 99th percentile of a null distribution that ships with the
+software. That is a cutoff for each test separately, not control of the
+FDR across many tests. isoLASER’s p-values can’t be used for FDR control
+either: associations with no allele difference all get p between 0.42
+and 0.55, and the p-values sometimes contradict the <code>cis</code>
+label. A permutation test builds the null distribution from our own data
+instead.</p>
+</div>
+<div id="how-the-permutation-works" class="section level1">
+<h1>How the permutation works</h1>
+<p>The question is: if a variant had no effect on splicing, how many
+associations would still pass the screen?</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">In each shuffle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Shuffled</td>
+<td align="left">For each donor, gene and isoLASER phasing group, the
+haplotype labels (which parental chromosome a read came from) are
+randomly reassigned among the reads. A read whose label changes is given
+the other allele at every variant in that phasing group. The few reads
+without a haplotype label have their alleles shuffled at each
+variant.</td>
+</tr>
+<tr class="even">
+<td align="left">Kept fixed</td>
+<td align="left">Each read’s splicing status (whether its transcript
+includes or skips each exonic part), each donor’s read depth, and which
+donors count as heterozygous for each association.</td>
+</tr>
+<tr class="odd">
+<td align="left">Broken</td>
+<td align="left">Only the link between allele and splicing.</td>
+</tr>
+<tr class="even">
+<td align="left">Scored</td>
+<td align="left">Exactly as the real data: the heterozygous donors’ 2×2
+tables (allele × part included or excluded) are pooled and scored with
+isoLASER’s own functions, then the same filters are applied.</td>
+</tr>
+</tbody>
+</table>
+<p>Two details matter:</p>
+<ul>
+<li>Shuffling haplotype labels, rather than each variant’s alleles
+separately, keeps variants on the same haplotype consistent with each
+other, and keeps the exonic parts that share reads linked.</li>
+<li>Some shuffled tables end up with fewer than 10 reads on one allele
+and get no score; this happens for about 5.5% of shuffled values. They
+count as not passing.</li>
+</ul>
+<div id="starting-from-isolasers-own-read-assignments"
+class="section level2">
+<h2>Starting from isoLASER’s own read assignments</h2>
+<p>The shuffle has to use the alleles isoLASER itself assigned to each
+read, because alleles read directly from the BAM files don’t reproduce
+its counts exactly. isoLASER doesn’t save them, so we reran its
+per-donor step for chr9 at 6 hours with a copy that records them. Before
+any permutation, we checked:</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Check</th>
+<th align="left">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">The recording copy gives the same output as an
+unmodified copy run with the same random seed</td>
+<td align="left">identical, all 4 donors</td>
+</tr>
+<tr class="even">
+<td align="left">Tables rebuilt from the recorded reads match isoLASER’s
+counts</td>
+<td align="left">23,214 of 23,214 variant tables</td>
+</tr>
+<tr class="odd">
+<td align="left">Scoring the recorded reads reproduces our
+heterozygous-donor results</td>
+<td align="left">5,578 of 5,578 associations</td>
+</tr>
+<tr class="even">
+<td align="left">The rerun passes the same associations as the original
+run</td>
+<td align="left">the same 20 associations</td>
+</tr>
+</tbody>
+</table>
+<p>isoLASER has two random steps, downsampling reads for very deep genes
+and the starting point of phasing, so the rerun differs from the
+original run in a few other associations, mostly in TPM2. The rerun is
+used for both the real and the shuffled data.</p>
+</div>
+</div>
+<div id="what-we-ran" class="section level1">
+<h1>What we ran</h1>
+<p>All runs use chr9 at 6 hours, with 2,788 tested associations (variant
+× exonic part with a scorable heterozygous-donor table).</p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Batch</th>
+<th align="right">Permutations</th>
+<th align="right">Random seed</th>
+<th align="left">Used for</th>
+<th align="right">Run time (24 cores)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Selection</td>
+<td align="right">1,000</td>
+<td align="right">1</td>
+<td align="left">choosing stricter cutoffs</td>
+<td align="right">4 minutes</td>
+</tr>
+<tr class="even">
+<td align="left">Validation</td>
+<td align="right">1,000</td>
+<td align="right">2</td>
+<td align="left">re-checking the chosen cutoffs</td>
+<td align="right">4 minutes</td>
+</tr>
+<tr class="odd">
+<td align="left">HNRNPK focus</td>
+<td align="right">100,000</td>
+<td align="right">3</td>
+<td align="left">a precise p-value for HNRNPK’s associations only</td>
+<td align="right">16 minutes</td>
+</tr>
+</tbody>
+</table>
+<p>For a given cutoff, the estimated FDR is the average number of
+associations passing in the shuffled datasets, divided by the number
+passing in the real data. We calculate it separately for associations
+(variant × exonic part at this timepoint) and for genes, since one gene
+can have several associations.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div id="the-websites-screen" class="section level2">
+<h2>The website’s screen</h2>
+<p>The current screen (isoLASER <code>cis</code>, |ΔPSI| ≥ 0.10, at
+least one heterozygous donor with ≥ 30 reads, part ≥ 10 bases, no
+clustered variants) passes 20 associations in 12 genes.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Real data</th>
+<th align="right">Shuffled average</th>
+<th align="right">Shuffled, 95% range</th>
+<th align="right">Estimated FDR</th>
+<th align="right">Estimated FDR, validation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Associations</td>
+<td align="right">20</td>
+<td align="right">8.6</td>
+<td align="right">2-20</td>
+<td align="right">43.1%</td>
+<td align="right">42.6%</td>
+</tr>
+<tr class="even">
+<td align="left">Genes</td>
+<td align="right">12</td>
+<td align="right">4.5</td>
+<td align="right">1-8</td>
+<td align="right">37.8%</td>
+<td align="right">37.5%</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="assets/isolaser_permutation/null_passing_rows.png" alt="" />
+<p class="caption">Passing associations in each of the 1,000
+selection-batch shuffles (grey) and in the real data (orange).</p>
+</div>
+</div>
+<div id="stricter-cutoffs" class="section level2">
+<h2>Stricter cutoffs</h2>
+<p>Before running these batches, we fixed a grid of 32 stricter cutoffs.
+Each adds to the website screen a choice of:</p>
+<ul>
+<li>|ΔPSI| ≥ 0.10, 0.15, 0.20 or 0.30;</li>
+<li>at least 1 or 2 heterozygous donors;</li>
+<li>a maximum row p-value of 0.01, 0.003 or 0.001, or none.</li>
+</ul>
+<p>The row p-value is our own addition: it compares an association’s
+real score with its own shuffled scores in the selection batch. p ≤
+0.001 means no shuffle scored as high as the real data. It is what
+lowers the estimate most:</p>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="25%" />
+<col width="20%" />
+<col width="17%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Row p-value limit</th>
+<th align="right">Associations passing</th>
+<th align="right">Shuffled average</th>
+<th align="right">Estimated FDR</th>
+<th align="right">Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">none</td>
+<td align="right">20</td>
+<td align="right">8.63</td>
+<td align="right">43.1%</td>
+<td align="right">42.6%</td>
+</tr>
+<tr class="even">
+<td align="left">0.01</td>
+<td align="right">13</td>
+<td align="right">3.65</td>
+<td align="right">28.1%</td>
+<td align="right">27.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">0.003</td>
+<td align="right">10</td>
+<td align="right">1.17</td>
+<td align="right">11.7%</td>
+<td align="right">9.7%</td>
+</tr>
+<tr class="even">
+<td align="left">0.001</td>
+<td align="right">5</td>
+<td align="right">0.38</td>
+<td align="right">7.5%</td>
+<td align="right">6.4%</td>
+</tr>
+</tbody>
+</table>
+<p>This table keeps the website’s |ΔPSI| ≥ 0.10 and at-least-one-donor
+requirements.</p>
+<p>For each target, a rule fixed in advance picked the cutoff that keeps
+the most real associations (or genes) while its selection-batch estimate
+stays at or below the target. The validation batch then re-estimated
+each pick:</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="48%" />
+<col width="4%" />
+<col width="6%" />
+<col width="6%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Target</th>
+<th align="left">Cutoff</th>
+<th align="right">Passing</th>
+<th align="right">Selection</th>
+<th align="right">Validation</th>
+<th align="left">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">5% of associations</td>
+<td align="left">|&lt;U+0394&gt;PSI| &lt;U+2265&gt; 0.10, donors
+&lt;U+2265&gt; 2, row p &lt;U+2264&gt; 0.001</td>
+<td align="right">4</td>
+<td align="right">4.5%</td>
+<td align="right">3.8%</td>
+<td align="left">HNRNPK, SMC2, XPA</td>
+</tr>
+<tr class="even">
+<td align="left">10% of associations</td>
+<td align="left">|&lt;U+0394&gt;PSI| &lt;U+2265&gt; 0.10, donors
+&lt;U+2265&gt; 1, row p &lt;U+2264&gt; 0.001</td>
+<td align="right">5</td>
+<td align="right">7.5%</td>
+<td align="right">6.4%</td>
+<td align="left">HNRNPK, SMC2, XPA, ZDHHC21</td>
+</tr>
+<tr class="odd">
+<td align="left">5% of genes</td>
+<td align="left">|&lt;U+0394&gt;PSI| &lt;U+2265&gt; 0.20, donors
+&lt;U+2265&gt; 1, row p &lt;U+2264&gt; 0.001</td>
+<td align="right">4</td>
+<td align="right">3.9%</td>
+<td align="right">3.2%</td>
+<td align="left">HNRNPK, SMC2, XPA, ZDHHC21</td>
+</tr>
+<tr class="even">
+<td align="left">10% of genes</td>
+<td align="left">|&lt;U+0394&gt;PSI| &lt;U+2265&gt; 0.20, donors
+&lt;U+2265&gt; 1, row p &lt;U+2264&gt; 0.003</td>
+<td align="right">5</td>
+<td align="right">9.0%</td>
+<td align="right">7.8%</td>
+<td align="left">C9orf72, HNRNPK, SMC2, XPA, ZDHHC21</td>
+</tr>
+</tbody>
+</table>
+<p><em>Passing</em> counts associations or genes in the real data,
+matching the target; <em>Selection</em> and <em>Validation</em> are the
+estimated FDR in each batch. Every pick meets its target in the
+validation batch.</p>
+<p>The associations passing the 10% association-level cutoff:</p>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="18%" />
+<col width="25%" />
+<col width="19%" />
+<col width="5%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="left">Variant</th>
+<th align="left">Exonic part</th>
+<th align="right">Heterozygous donors</th>
+<th align="right">Reads</th>
+<th align="right">&lt;U+0394&gt;PSI</th>
+<th align="right">Row p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HNRNPK</td>
+<td align="left">chr9:83978398:G&gt;C</td>
+<td align="left">chr9:83980118-83980152:-</td>
+<td align="right">3</td>
+<td align="right">1125</td>
+<td align="right">-0.115</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">HNRNPK</td>
+<td align="left">chr9:83980154:C&gt;T</td>
+<td align="left">chr9:83980118-83980152:-</td>
+<td align="right">2</td>
+<td align="right">326</td>
+<td align="right">-0.214</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">SMC2</td>
+<td align="left">chr9:104102182:G&gt;A</td>
+<td align="left">chr9:104095298-104095323:+</td>
+<td align="right">2</td>
+<td align="right">80</td>
+<td align="right">-0.312</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">XPA</td>
+<td align="left">chr9:97697295:T&gt;C</td>
+<td align="left">chr9:97682199-97682430:-</td>
+<td align="right">2</td>
+<td align="right">114</td>
+<td align="right">0.311</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">ZDHHC21</td>
+<td align="left">chr9:14680111:A&gt;G</td>
+<td align="left">chr9:14688246-14688307:-</td>
+<td align="right">1</td>
+<td align="right">108</td>
+<td align="right">0.356</td>
+<td align="right">0.001</td>
+</tr>
+</tbody>
+</table>
+<p><em>Reads</em> is the pooled number of heterozygous-donor reads; ΔPSI
+is the difference in exclusion of the part between the reference and
+alternative alleles, as on the <a
+href="isolaser_genome_wide.html">genome-wide page</a>. At the 10%
+gene-level cutoff, C9orf72 also passes, with one heterozygous donor.</p>
+</div>
+<div id="hnrnpk" class="section level2">
+<h2>HNRNPK</h2>
+<p>Both HNRNPK variants tested against the highlighted exonic part
+scored higher than all 100,000 shuffles in the focus batch:</p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Variant</th>
+<th align="right">Heterozygous donors</th>
+<th align="right">Reads</th>
+<th align="right">ΔPSI</th>
+<th align="right">Shuffles scoring as high</th>
+<th align="right">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr9:83980154:C&gt;T (highlighted)</td>
+<td align="right">2</td>
+<td align="right">326</td>
+<td align="right">&lt;U+2212&gt;0.214</td>
+<td align="right">0 of 100,000</td>
+<td align="right">1 × 10⁻⁵</td>
+</tr>
+<tr class="even">
+<td align="left">chr9:83978398:G&gt;C</td>
+<td align="right">3</td>
+<td align="right">1,125</td>
+<td align="right">−0.115</td>
+<td align="right">0 of 100,000</td>
+<td align="right">1 × 10⁻⁵</td>
+</tr>
+</tbody>
+</table>
+<p>1 × 10⁻⁵ is the smallest p-value 100,000 shuffles can give. These
+p-values are for HNRNPK only and are not adjusted for having chosen it.
+The two variants are 1.7 kb apart and may lie on the same haplotype, so
+they don’t yet count as two independent signals.</p>
+</div>
+<div id="p-values-for-every-association" class="section level2">
+<h2>P-values for every association</h2>
+<p>Each association also has a p-value from its own 2,000 shuffles (both
+batches). After Benjamini–Hochberg correction across all 2,788 tested
+associations, 4 of the 20 passing associations reach q &lt; 0.10 and 0
+reach q &lt; 0.05. With 2,000 shuffles, no p-value can be smaller than
+1/2,001 ≈ 0.0005, which limits this correction; the cutoff-based
+estimate above is the main result.</p>
+<p>We did not pool shuffled scores across associations to make p-values.
+In an earlier run, pooled p-values were wrong for individual
+associations: for 305 associations, more than 3% of their own shuffles
+had a pooled p-value below 0.01, three times the expected rate.</p>
+</div>
+</div>
+<div id="do-the-results-make-sense" class="section level1">
+<h1>Do the results make sense?</h1>
+<p>Yes, as far as these checks go:</p>
+<ul>
+<li><strong>isoLASER’s threshold is calibrated on the shuffled
+data.</strong> 0.94% of shuffled associations are labelled
+<code>cis</code> (0.95% in the validation batch), close to the nominal
+1%. In the real data 4.4% are, so there is real signal above
+chance.</li>
+<li><strong>The screen’s 43% fits simple arithmetic.</strong> About
+2,800 tested associations × about 1% chance <code>cis</code> labels
+gives about 26 per shuffle, and about a third of those also pass the
+|ΔPSI| and other filters, giving 8.6 on average.</li>
+<li><strong>The two batches agree.</strong> Across all 32 cutoffs,
+validation estimates are within 5 percentage points of the selection
+estimates (median 1). They are slightly lower for almost every cutoff,
+so the chosen cutoffs don’t look tuned to chance in the selection
+batch.</li>
+<li><strong>The strongest result agrees with independent
+evidence.</strong> HNRNPK’s variant is a GTEx brain sQTL with the same
+direction in 13 brain tissues, and the effect is visible in the <a
+href="isolaser_genome_wide.html#highlighted-candidates">sashimi
+plot</a>.</li>
+</ul>
+<p>What this pilot can’t tell us:</p>
+<ul>
+<li><strong>The counts are small.</strong> The stricter cutoffs keep 4–5
+associations on one chromosome at one timepoint, so the estimates are
+noisy. A cutoff for the website needs the genome-wide estimate.</li>
+<li><strong>It is an estimate under this shuffle scheme, not guaranteed
+FDR control.</strong> It assumes that, if alleles had no effect, reads’
+haplotype labels would be interchangeable within a phasing group.</li>
+<li><strong>It can’t catch technical artifacts</strong> that create a
+real link between allele and splicing, such as allele-specific mapping
+bias, or a “variant” that is really a misaligned splice-site end.</li>
+<li><strong>It doesn’t test stimulation.</strong> Whether an association
+changes between 0 and 6 hours is a separate question.</li>
+</ul>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next steps</h1>
+<ol style="list-style-type: decimal">
+<li>Rerun isoLASER’s per-donor step with the recording copy for all 22
+chromosomes × 3 timepoints, and repeat the checks for each.</li>
+<li>Run the selection and validation batches for every chromosome ×
+timepoint.</li>
+<li>Combine them into a genome-wide estimate, counting each gene once
+per shuffle, then choose the website’s cutoff and update the genome-wide
+page.</li>
+</ol>
+</div>
+<div id="scripts-and-files" class="section level1">
+<h1>Scripts and files</h1>
+<p>Scripts are in <code>long_read_RNA/10.isolaser_permutation/</code>
+(described in its <code>README.md</code>):</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Script</th>
+<th align="left">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>1.make_copies.py</code></td>
+<td align="left">builds the seeded and recording copies of isoLASER</td>
+</tr>
+<tr class="even">
+<td align="left"><code>2.rerun_pilot.sbatch</code>,
+<code>3.joint_pilot.sbatch</code></td>
+<td align="left">the recording rerun for chr9 at 6 hours</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>4.check_pilot.R</code>,
+<code>5.check_rescoring.py</code></td>
+<td align="left">the checks before permuting</td>
+</tr>
+<tr class="even">
+<td align="left"><code>6.permute_chrom.py</code>,
+<code>8.permute_chrom.sbatch</code></td>
+<td align="left">one permutation batch</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>7.summarize_permutation.R</code>,
+<code>9.summarize_permutation.sbatch</code></td>
+<td align="left">FDR estimates and p-values</td>
+</tr>
+</tbody>
+</table>
+<p>Results are in
+<code>long_read_processed/isolaser_chrom/chr9/6hr/permutation/summary/</code>.
+Downloads: <a href="assets/isolaser_permutation/grid_estimates.tsv">all
+32 cutoffs</a>, <a
+href="assets/isolaser_permutation/selected_cutoffs.tsv">chosen
+cutoffs</a>, <a
+href="assets/isolaser_permutation/selected_cutoff_associations.tsv">associations
+passing them</a>.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] data.table_1.14.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12      rstudioapi_0.13  knitr_1.39       magrittr_2.0.3  
+ [5] workflowr_1.7.0  R6_2.5.1         rlang_1.1.2      fastmap_1.1.0   
+ [9] fansi_1.0.3      highr_0.9        stringr_1.5.1    tools_4.2.0     
+[13] xfun_0.41        utf8_1.2.2       cli_3.6.1        git2r_0.30.1    
+[17] jquerylib_0.1.4  htmltools_0.5.2  rprojroot_2.0.3  yaml_2.3.5      
+[21] digest_0.6.29    tibble_3.2.1     lifecycle_1.0.4  later_1.3.0     
+[25] sass_0.4.1       vctrs_0.6.5      promises_1.2.0.1 fs_1.5.2        
+[29] glue_1.6.2       evaluate_0.15    rmarkdown_2.25   stringi_1.7.6   
+[33] bslib_0.3.1      compiler_4.2.0   pillar_1.9.0     jsonlite_1.8.0  
+[37] httpuv_1.6.5     pkgconfig_2.0.3 </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

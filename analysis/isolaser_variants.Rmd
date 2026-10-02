@@ -1,7 +1,7 @@
 ---
 title: "Checking isoLASER variant calls against donor genotypes"
 author: "XSun"
-date: "2026-09-24"
+date: "2026-10-02"
 output:
   workflowr::wflow_html:
     toc: true
@@ -10,143 +10,168 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
-x <- read.delim("docs/assets/isolaser_validation_calls.tsv", stringsAsFactors=FALSE)
-x$alleles_match <- with(x, inPanel & ref == g_ref & alt1 == g_alt)
-x$alleles_match[is.na(x$alleles_match)] <- FALSE
-hq <- subset(x, inPanel & R2 >= 0.8)
-confirmed <- with(hq, alleles_match & g_nalt > 0)
-exact <- with(hq, alleles_match & g_nalt == i_nalt)
-fmt <- function(n) format(n, big.mark=",", trim=TRUE)
-pct <- function(n,d) sprintf("%.1f%%", 100*n/d)
-stopifnot(!anyDuplicated(x[c("chr","tp","donor","pos","ref","alt1")]))
+library(data.table)
+asset <- 'docs/assets/isolaser_validation_all_autosomes'
+x <- fread(file.path(asset,'calls.tsv.gz'), na.strings='NA')
+for (col in c('panel_position','panel_ambiguous','inPanel','alleles_match'))
+  set(x,j=col,value=tolower(as.character(x[[col]]))=='true')
+x[, adjudicable := inPanel & !is.na(R2) & R2 >= .8]
+hq <- x[adjudicable==TRUE]
+confirmed <- hq$alleles_match & hq$g_nalt > 0
+exact <- hq$alleles_match & hq$g_nalt == hq$i_nalt
+p <- hq[alleles_match & g_nalt==1]
+fmt <- function(n) format(n,big.mark=',',trim=TRUE,scientific=FALSE)
+pct <- function(n,d) ifelse(d>0,sprintf('%.1f%%',100*n/d),'—')
+manifest <- fread(file.path(asset,'run_manifest.tsv'))
+stopifnot(nrow(manifest)==264L, uniqueN(manifest[,.(chr,tp,donor)])==264L,
+          sum(manifest$calls)==nrow(x),!anyDuplicated(x[,.(chr,tp,donor,pos,ref,alt1)]))
 ```
 
-**Most calls that the genotype panel can assess have the correct alternate
-allele, but exact genotype agreement is lower.** The main discrepancy is a
-panel heterozygote called homozygous-alternate by isoLASER, especially at low
-read depth. Calls absent from the panel remain unvalidated.
+We compared **all 22 autosomes, four donors and three timepoints (264 runs)**
+against the donor genotype panel. Among `r fmt(nrow(hq))` adjudicable calls,
+**`r pct(sum(confirmed),nrow(hq))` have a confirmed alternate allele** and
+**`r pct(sum(exact),nrow(hq))` have an exactly matching genotype**.
+The main discrepancy is a panel heterozygote called homozygous-alternate;
+its frequency and the cost of increasing the depth cutoff are shown below.
 
-# Comparison and counting
+# What was compared?
 
-We compared **24 Nanopore-model runs**: chr1 and chr10, four donors
-(CD_21, CD_31, CD_36 and CD_48), and three timepoints (0, 1 and 6 hours).
-The reference is the 100-line TOPMed-imputed genotype panel. Its GRCh38
-coordinates and donor names were checked before comparison.
+- **isoLASER:** completed default `--platform Nanopore` runs (`ont_roc`), for CD_21, CD_31, CD_36 and CD_48 at 0, 1 and 6 hours. These are the GM12878 ONT ROC model results, separate from the GTEx-model runs.
+- **Reference:** the 100-line TOPMed-imputed genotype panel, using the corresponding four donor genotypes and GRCh38 coordinates.
+- **Included calls:** PASS single-nucleotide variants with variant-site depth **DP ≥ 10**, one concrete alternate allele and a callable diploid genotype. The gVCF `<NON_REF>` placeholder is ignored.
+- **Counting unit:** one donor × timepoint × variant. Repeated gene-level records for that call are collapsed by retaining the deepest record. Observations of the same variant in different donors or timepoints are counted separately.
 
-**Genotype VCF:**
-`/project/xinhe/lifan/neuron_stim/zicheng_100lines_all_snp_sorted.vcf.gz`
+The `r fmt(nrow(x))` calls represent `r fmt(uniqueN(x[,.(chr,pos,ref,alt1)]))`
+distinct genomic variants. They are **variant calls, not splicing associations**.
 
-The analysis includes PASS SNVs with at least 10 reads. Duplicate gene-level
-records are collapsed within each run, keeping the deepest record. A **call**
-is one donor × timepoint × genomic variant; the same variant observed in
-several samples contributes several calls. The `r fmt(nrow(x))` calls span
-`r fmt(nrow(unique(x[c("chr","pos","ref","alt1")])) )` distinct variants.
-We use call-level counts below because genotype agreement is donor-specific.
+Panel VCF: `/project/xinhe/lifan/neuron_stim/zicheng_100lines_all_snp_sorted.vcf.gz`.
+
+**Matching:** panel records are located by chromosome and position, then matching
+reference/alternate alleles are preferred. If there is no allele-matched record,
+a unique panel record at that position can still document an allele discrepancy.
+Conflicting panel records are marked ambiguous and excluded from adjudication;
+they do not expand the number of calls. This affects `r fmt(sum(x$panel_ambiguous))` calls.
 
 # How much does the panel confirm?
 
-A call is **adjudicable** when the panel has a donor genotype at its position
-and site-level imputation R² ≥ 0.8. Confirmation additionally requires the
-same reference and alternate alleles and a non-reference panel genotype.
-Exact agreement also requires matching heterozygous/homozygous status.
+An **adjudicable** call has an unambiguous, callable donor panel genotype and
+site-level imputation **R² ≥ 0.8**. This is the denominator for both agreement rates.
 
 ```{r overall}
 knitr::kable(data.frame(
-  Measure=c("PASS SNV calls", "Calls at a panel position", "Adjudicable calls",
-            "Alternate allele confirmed", "Exact genotype agreement"),
-  Count=c(fmt(nrow(x)), fmt(sum(x$inPanel)), fmt(nrow(hq)),
-          fmt(sum(confirmed)), fmt(sum(exact))),
-  Denominator=c("", paste0(pct(sum(x$inPanel),nrow(x)), " of all calls"),
-                "Panel position and R² ≥ 0.8",
-                paste0(pct(sum(confirmed),nrow(hq)), " of adjudicable calls"),
-                paste0(pct(sum(exact),nrow(hq)), " of adjudicable calls"))))
+  Measure=c('Included isoLASER calls','Panel genotype available','Adjudicable calls',
+            'Alternate allele confirmed','Exact genotype agreement'),
+  Calls=fmt(c(nrow(x),sum(x$inPanel),nrow(hq),sum(confirmed),sum(exact))),
+  Definition=c('PASS SNVs; DP ≥ 10',
+    paste0(pct(sum(x$inPanel),nrow(x)),' of included calls'),
+    'Panel genotype available; R² ≥ 0.8',
+    paste0(pct(sum(confirmed),nrow(hq)),' of adjudicable calls'),
+    paste0(pct(sum(exact),nrow(hq)),' of adjudicable calls'))),row.names=FALSE)
 ```
 
-Of the 4,710 adjudicable calls, **134 have a homozygous-reference panel
-genotype and one has a different alternate allele**. The latter is
-chr1:23,344,310 in CD_48 at 1 hour: isoLASER calls G>T, while the panel
-record is G>C. It is excluded from both confirmation counts above.
+**Alternate-allele confirmation** requires matching reference and alternate
+alleles and a non-reference panel genotype. **Exact genotype agreement** also
+requires the same number of alternate alleles, ignoring phasing orientation.
+For example, panel **0/1** and isoLASER **1/1** confirm the alternate allele but
+are not an exact genotype match.
 
-## Results by chromosome and timepoint (four donors combined)
-
-```{r per-run}
-rows <- lapply(split(x, paste(x$chr,x$tp)), function(z) {
-  h <- subset(z, inPanel & R2 >= 0.8)
-  data.frame(Chromosome=z$chr[1], Time=z$tp[1], Calls=nrow(z),
-             `In panel`=sum(z$inPanel), Adjudicable=nrow(h),
-             `Allele confirmed (%)`=pct(sum(h$alleles_match & h$g_nalt>0),nrow(h)),
-             `Exact genotype (%)`=pct(sum(h$alleles_match & h$g_nalt==h$i_nalt),nrow(h)),
-             check.names=FALSE)
-})
-knitr::kable(do.call(rbind,rows), row.names=FALSE)
-```
-
-**Column guide**
-
-- **Chromosome / Time:** chromosome and time after stimulation; each row combines the four donors.
-- **Calls:** number of PASS SNV calls with at least 10 reads, after collapsing duplicate gene-level records within each donor and timepoint. A site called in two donors counts twice.
-- **In panel:** calls whose genomic position has a genotype for that donor in the reference VCF, regardless of imputation quality or allele agreement.
-- **Adjudicable:** the subset of “In panel” with imputation R² ≥ 0.8. This is the denominator for both percentage columns.
-- **Allele confirmed (%):** 100 × calls with matching reference/alternate alleles and a non-reference panel genotype ÷ adjudicable calls. Heterozygous versus homozygous-alternate differences are allowed.
-- **Exact genotype (%):** 100 × calls with matching alleles **and** matching heterozygous/homozygous status ÷ adjudicable calls. Phasing orientation is not compared.
-
-For example, a panel genotype of **0/1** and an isoLASER genotype of **1/1**
-for the same alternate allele contributes to “Allele confirmed” but not
-“Exact genotype.”
+Among adjudicable calls, `r fmt(sum(hq$g_nalt==0))` have a homozygous-reference
+panel genotype and `r fmt(sum(!hq$alleles_match))` have different alleles.
+These categories can overlap; neither contributes to alternate-allele confirmation.
 
 # Main discrepancy: heterozygotes called homozygous
 
-Among allele-matched, adjudicable calls where the panel is heterozygous,
-**1,321 of 2,983 (44.3%)** are called homozygous-alternate by isoLASER.
-This discrepancy is more frequent at low depth:
+Among allele-matched, adjudicable calls with a heterozygous panel genotype,
+**`r fmt(sum(p$i_nalt==2))` / `r fmt(nrow(p))`
+(`r pct(sum(p$i_nalt==2),nrow(p))`)** are called homozygous-alternate by isoLASER.
 
-```{r depth}
-p <- subset(hq, alleles_match & g_nalt == 1)
-p$depth <- cut(p$DP, c(9,14,19,29,49,99,Inf),
-               labels=c("10–14","15–19","20–29","30–49","50–99","100+"))
-rates <- tapply(p$i_nalt == 2, list(p$depth,p$chr), mean)
-knitr::kable(data.frame(`Read depth`=rownames(rates),
-                        chr1=sprintf("%.1f%%",100*rates[,"chr1"]),
-                        chr10=sprintf("%.1f%%",100*rates[,"chr10"]),
-                        check.names=FALSE), row.names=FALSE)
+![Genotype discrepancy by variant-site read depth, across all autosomes and samples.](assets/isolaser_validation_all_autosomes/depth_discrepancy.png)
+
+Here **DP is the number of reads overlapping the variant position in the
+isoLASER gVCF**. It is different from the informative-read count for a particular
+variant–exonic-part association used in the allele-specific splicing screen.
+Thus, a variant-site DP cutoff and a splicing-association read cutoff address
+different quantities.
+
+The discrepant calls have a median reported alternate-read fraction (AB) of
+**`r sprintf('%.2f',median(p[i_nalt==2]$AB,na.rm=TRUE))`**. A homozygous call
+therefore does not necessarily mean that no reference-allele reads were observed.
+
+## What changes with a higher depth cutoff?
+
+These are **nested filters on the same completed variant calls**, not new
+isoLASER runs. The last column uses only allele-matched, adjudicable panel
+heterozygotes at the stated depth; it has a different denominator from the two
+agreement columns.
+
+```{r thresholds}
+t <- fread(file.path(asset,'depth_thresholds.tsv'))
+knitr::kable(data.frame(
+  `Minimum variant DP`=t$Minimum_DP,
+  `Calls retained`=fmt(t$Calls),
+  `Adjudicable`=fmt(t$Adjudicable),
+  `Allele confirmed (%)`=pct(t$Confirmed,t$Adjudicable),
+  `Exact genotype (%)`=pct(t$Exact,t$Adjudicable),
+  `Panel het → hom-alt (n/N; %)`=paste0(fmt(t$Called_hom_alt),'/',fmt(t$Panel_heterozygotes),
+                                    ' (',pct(t$Called_hom_alt,t$Panel_heterozygotes),')'),
+  check.names=FALSE),row.names=FALSE)
 ```
 
-The discrepant calls have a median alternate-read fraction of about 0.58,
-so loss of all reference-allele reads does not explain the typical case.
-This association warrants checking the genotype-calling logic and running
-both error models on the **same donor, chromosome and library**. Raising the depth threshold removes many discrepant calls but
-also removes usable sites; filtering outputs alone cannot restore
-heterozygotes omitted from the original phasing.
+Increasing DP trades coverage for agreement in the retained subset. It cannot
+recover heterozygotes missed by the original caller or restore their contribution
+to phasing. These repeated donor/timepoint observations are descriptive counts,
+not independent biological replicates.
+
+# Results by chromosome and timepoint
+
+Each row combines four donors. The table is displayed in full and can be searched
+or sorted; [download the counts](assets/isolaser_validation_all_autosomes/chromosome_timepoint.tsv)
+for further comparisons.
+
+**Column guide:** **Calls** = retained isoLASER calls; **In panel** = calls with
+an unambiguous callable donor panel genotype, regardless of R² or allele match;
+**Adjudicable** = In panel with R² ≥ 0.8. **Allele confirmed (%)** and
+**Exact genotype (%)** use Adjudicable as their denominator and the definitions
+above. A site observed in two donors counts twice.
+
+```{r per-chromosome}
+s <- fread(file.path(asset,'chromosome_timepoint.tsv'))
+table <- data.frame(Chromosome=s$chr,`Time (hours)`=sub('hr','',s$tp),
+  Calls=s$Calls,`In panel`=s[['In panel']],Adjudicable=s$Adjudicable,
+  `Allele confirmed (%)`=pct(s$Confirmed,s$Adjudicable),
+  `Exact genotype (%)`=pct(s$Exact,s$Adjudicable),check.names=FALSE)
+DT::datatable(table,rownames=FALSE,options=list(paging=FALSE,scrollX=TRUE,order=list(),dom='fti'))
+```
 
 # Calls absent from the panel
 
-The panel has no record for **`r fmt(sum(!x$inPanel))` calls**. Their accuracy
-cannot be determined from this comparison. The imputed panel does not cover
-all variants, while RNA sequencing and alignment can also introduce artifacts.
+**`r fmt(sum(!x$panel_position))` calls** have no panel record at their position.
+Another `r fmt(sum(x$panel_position & !x$inPanel))` have a panel record but no
+unambiguous callable donor genotype. Neither group is validated by this comparison.
 
-![Alternate-read fraction among isoLASER calls labeled heterozygous, split by panel overlap.](assets/isolaser_ab_chrom.png)
+![Alternate-read fractions among isoLASER-labeled heterozygous calls, by timepoint and panel availability.](assets/isolaser_validation_all_autosomes/allele_balance.png)
 
-*These histograms include only calls isoLASER labels heterozygous. Their
-balanced allele fractions are a useful diagnostic, but are conditional on
-that label and do not independently validate off-panel calls. RNA allele
-fractions can also be affected by allele-specific expression.*
+The histograms include **only calls isoLASER labels heterozygous**, across all
+22 autosomes; the vertical scales differ between panels. Their allele fractions
+are conditional on this call label and do not independently establish accuracy
+or mapping bias. RNA allele fractions may also reflect allele-specific expression.
 
-# Interpretation and source data
+# Interpretation and reproducibility
 
-The evidence supports **high alternate-allele confirmation within the
-adjudicable subset**, with substantial genotype discordance at shallow
-sites. Both confirmation and exact-genotype agreement should be reported,
-particularly because phasing depends on heterozygous sites. This analysis
-does not estimate sensitivity: it starts from isoLASER calls and does not
-count known variants that isoLASER missed. The comparison panel is imputed,
-so it is not an error-free truth set.
+This comparison measures agreement **among variants isoLASER called**. It does
+not estimate sensitivity, since panel variants missed by isoLASER are not counted,
+and the imputed panel is not an error-free truth set. Alternate-allele confirmation
+and exact genotype agreement should both be reported because phasing depends on
+recognizing heterozygous sites.
 
-The [call-level comparison table](assets/isolaser_validation_calls.tsv)
-contains donor, timepoint, alleles, depth and panel genotype. Counts on this
-page are calculated from that table and require allele agreement.
-The underlying analysis is in `8.isolaser_validation/11.validate_chrom_timepoint.R`;
-its position-based matching should also be updated before regenerating the
-original summary assets.
+The results were regenerated from all 264 gVCFs using
+`8.isolaser_validation/19.validate_all_autosomes.py`; summaries and figures use
+`8.isolaser_validation/20.all_autosome_assets.R`. The earlier chr1/chr10-only
+assets are preserved separately.
 
-Related pages: [isoLASER per donor](isolaser_per_donor.html),
-[junction screen](splicing_candidates.html).
+Downloads: [call-level comparison (compressed TSV)](assets/isolaser_validation_all_autosomes/calls.tsv.gz),
+[run manifest and exclusions](assets/isolaser_validation_all_autosomes/run_manifest.tsv),
+[depth threshold counts](assets/isolaser_validation_all_autosomes/depth_thresholds.tsv).
+
+Related pages: [genome-wide allele-specific splicing](isolaser_genome_wide.html),
+[isoLASER per donor](isolaser_per_donor.html).

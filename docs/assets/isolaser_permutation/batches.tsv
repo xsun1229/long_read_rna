@@ -1,0 +1,4 @@
+batch	dir	seed	permutations
+selection	/project/xinhe/xsun/long_read_RNA/long_read_processed/isolaser_chrom/chr9/6hr/permutation/selection	1	1000
+validation	/project/xinhe/xsun/long_read_RNA/long_read_processed/isolaser_chrom/chr9/6hr/permutation/validation	2	1000
+focus	/project/xinhe/xsun/long_read_RNA/long_read_processed/isolaser_chrom/chr9/6hr/permutation/focus_HNRNPK	3	1e+05

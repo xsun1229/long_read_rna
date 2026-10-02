@@ -1,0 +1,320 @@
+---
+title: "Permutation check for isoLASER splicing signals"
+author: "XSun"
+date: "2026-10-02"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+library(data.table)
+a <- 'docs/assets/isolaser_permutation'
+grid <- fread(file.path(a, 'grid_estimates.tsv'))
+pick <- fread(file.path(a, 'selected_cutoffs.tsv'))
+selected <- fread(file.path(a, 'selected_cutoff_associations.tsv'))
+focus <- fread(file.path(a, 'focus_associations.tsv'))
+row_summary <- fread(file.path(a, 'row_pvalue_summary.tsv'))
+all_rows <- fread(file.path(a, 'row_pvalues.tsv'), na.strings=c('NA','nan','NaN',''))
+batches <- fread(file.path(a, 'batches.tsv'))
+fmt <- function(x) format(x, big.mark=',', trim=TRUE, scientific=FALSE)
+pct <- function(x) sprintf('%.1f%%', 100*x)
+stopifnot(nrow(grid)==32L, nrow(pick)==4L,
+          all(c('selection','validation','focus') %in% batches$batch),
+          all(pick$validation_meets_target),
+          sum(!is.na(all_rows$ami)) == row_summary$tested_rows)
+base <- grid[grepl('\\|dPSI\\|>=0.10, het>=1, row p<=any', cutoff)]
+row5 <- grid[id == pick[level=='rows' & target==0.05, id]]
+row10 <- grid[id == pick[level=='rows' & target==0.10, id]]
+gene5 <- grid[id == pick[level=='genes' & target==0.05, id]]
+gene10 <- grid[id == pick[level=='genes' & target==0.10, id]]
+h <- focus[gene=='HNRNPK']
+```
+
+**The association-level answer:** the analysis has a permutation p-value and a
+Benjamini–Hochberg (BH) adjusted q-value for each of
+`r fmt(row_summary$tested_rows)` testable variant–exonic-part associations on
+chr9 at 6 hours. **None has q < 0.05** with the current 2,000 full-dataset
+permutations. The highlighted HNRNPK association has p =
+`r sprintf('%.6f',h$p_conservative)` and q = `r sprintf('%.3f',h$q_bh)`.
+Its separate 100,000-permutation p-value is more precise but is **unadjusted**.
+
+For context, on chromosome 9 at 6 hours after stimulation,
+`r base$obs_rows` variant–exonic-part associations passed the original 30-read
+screen. A shuffled dataset had about `r sprintf('%.1f',base$val_null_rows)` such
+rows on average. This suggests that the screen includes a real signal above the
+background expected when allele labels are unrelated to splicing, but the
+original screen is too permissive for a short list of confident examples.
+A stricter cutoff retained **`r row5$obs_rows` rows from 3 genes**, with an
+estimated null/observed ratio of **`r pct(row5$val_fdr_rows)`** in an independent
+set of permutations. This is a *pilot result for chr9 at 6 hours*, not a
+stimulation-response test or a genome-wide error rate.
+
+# Adjusted p-value for each association
+
+**The test:** for one variant–part association, compare its observed isoLASER
+association score (AMI) with its own scores from the shuffled reads. A larger
+AMI means a stronger allele–splicing link. If \(B\) permutations are run,
+
+\[
+p_{\mathrm{perm}} =
+\frac{1 + \#\{\text{permuted AMI} \geq \text{observed AMI}\}}{B+1}.
+\]
+
+For the two full batches together, \(B=2{,}000\). A permutation with an
+undefined score is counted as at least as extreme, making the reported p-value
+conservative. With no permutation more extreme, the smallest available
+p-value is \(1/2{,}001 \approx 0.00050\), not zero.
+
+We apply the **BH multiple-testing adjustment** to these p-values across all
+`r fmt(row_summary$tested_rows)` chr9, 6-hour rows with a defined observed
+score. This yields one **q-value per association**. Smaller q-values offer
+stronger evidence after accounting for the number tested. Here
+**`r sum(all_rows$q_bh < 0.05, na.rm=TRUE)` rows have q < 0.05**, and
+`r sum(all_rows$q_bh < 0.10, na.rm=TRUE)` have q < 0.10. Among the
+`r row_summary$website_passing` original-screen rows,
+`r row_summary$passing_with_q_lt_0.10` have q < 0.10. These are adjustments
+**within chr9 at 6 hours**; including the other chromosomes and timepoints
+will increase the number of tests.
+
+Search the table by gene or variant. One row is one variant × exonic-part
+association; several rows can involve the same gene. The **permutation p**
+and **BH q** columns answer the association-level question. The table includes
+every row with a defined observed score, including rows that did not pass the
+separate original screening filters.
+
+```{r association-q-table}
+tested <- all_rows[!is.na(ami)]
+tested[, Gene := sub('^[^_]*_', '', Gene_name)]
+setorder(tested, q_bh, p_conservative, Gene)
+qtab <- data.frame(Gene=tested$Gene, Variant=tested$variant_qual,
+  `Exonic part`=tested$exonic_part, `Het donors`=tested$n_het,
+  `ΔPSI`=tested$dpsi, `Permutation p`=tested$p_conservative,
+  `BH q`=tested$q_bh, `Passed original screen`=tested$pass_website,
+  check.names=FALSE)
+DT::datatable(qtab, rownames=FALSE,
+  options=list(pageLength=10, scrollX=TRUE, order=list(list(6,'asc')))) |>
+  DT::formatSignif(columns=c('Permutation p','BH q'),digits=4)
+```
+
+[Download all rows, including those without a defined score](assets/isolaser_permutation/row_pvalues.tsv).
+The recorded p-values follow the nonzero permutation convention described by
+[Phipson and Smyth](https://pubmed.ncbi.nlm.nih.gov/21044043/); the adjustment
+uses the [Benjamini–Hochberg procedure](https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1995.tb02031.x).
+The q-values are conditional on this read-shuffling null and should not be
+interpreted as validated genome-wide q-values.
+
+To obtain a **genome-wide adjusted q-value for every association**, run the
+permutation analysis for the other chromosomes and timepoints, calculate a
+permutation p-value for each test, then apply BH to the complete test family.
+More full-dataset permutations would improve resolution for the strongest
+rows. The focused HNRNPK run alone cannot supply a refined q-value for every
+association.
+
+# The question the permutation asks
+
+isoLASER links a variant's allele to whether a long read includes an exonic part.
+For each variant–part pair, a 2 × 2 table counts reads with the reference or
+alternate allele and with the part included or excluded. A strong link can be
+called `cis`, but screening many such tables can still produce apparent links
+by chance. We ask: **how many would pass the same screen if we broke the
+allele–splicing link while keeping the observed reads and their splicing
+patterns?**
+
+Here is a **made-up example**. H1 carries REF and H2 carries ALT for this variant.
+The column “part included?” stays attached to each read during permutation.
+
+| Read | Part included? | Original haplotype / allele | Shuffled haplotype / allele |
+|:--|:--|:--|:--|
+| A | Yes | H1 / REF | H2 / ALT |
+| B | Yes | H1 / REF | H1 / REF |
+| C | No | H2 / ALT | H1 / REF |
+| D | No | H2 / ALT | H2 / ALT |
+
+Originally, both inclusion reads carry REF and both exclusion reads carry ALT.
+After one shuffle, each splicing outcome has one of each. Repeating the shuffle
+shows how often a link at least as strong as the observed one appears by chance.
+
+**The actual shuffle works within each donor × gene × phasing group.** It
+redistributes haplotype labels among reads in that group. When a read changes
+label, its alleles at the linked variants are flipped together; its exonic-part
+statuses do not change. For reads without a usable haplotype label, alleles
+are shuffled within that variant. The same shuffled allele is used for that
+read across every part tested for the variant. Variant coverage and the donor
+set selected from the *observed* data stay fixed. A shuffled table can have an
+undefined score if too few reads remain on one allele; the cutoff analysis
+treats it as failing the screen.
+
+This preserves connections among parts and linked variants better than filling
+each 2 × 2 table with independent random numbers. Its interpretation still
+rests on reads being exchangeable within the groups where labels are shuffled;
+it does not remove mapping bias or alignment artifacts.
+
+# What we ran and checked
+
+This first run covers **chr9, 6 hours, four donors** (CD_21, CD_31, CD_36,
+CD_48). It was chosen because the HNRNPK example is on chr9. The original
+screen required at least **30 informative reads from each contributing donor**
+for a variant–part pair, an observed allele fraction of 0.25–0.75 for that
+donor, a `cis` label, |ΔPSI| ≥ 0.10, a part at least 10 bp long, and no other
+tested variant within 30 bp. A “passing row” means one
+**variant × exonic part × timepoint association**; several rows can belong to
+the same gene.
+
+isoLASER did not save its variant-specific allele assignment for each read.
+We therefore reran its Nanopore-model analysis once with a recording copy that
+saved those assignments. The rerun, rather than the earlier unseeded output,
+is the observed dataset used below. No alignment or variant calling is repeated
+for each shuffle.
+
+Before permuting, all four donors passed checks that the recording copy and a
+control copy produce identical variant, splicing-table and haplotype outputs.
+Every recorded variant–part read table reproduced isoLASER's counts. Pooling
+and rescoring the unshuffled records then matched all **5,578 / 5,578** joint
+rows from the rerun. This is a check that the permutation starts from the same
+statistics as the observed analysis.
+
+We ran **1,000 selection permutations**, then **1,000 independent validation
+permutations** with a different random seed. A fixed grid of 32 cutoffs varies
+|ΔPSI|, the minimum number of heterozygous donors (one or two), and each
+row's empirical permutation p-value. The selection batch chooses a cutoff;
+the validation batch estimates its null count again. A separate **100,000
+permutation focus run** tests the selected HNRNPK association. The first,
+older 1,000-permutation experiment is excluded from these results.
+
+# How to read the screen-level result
+
+For any cutoff, both real and shuffled datasets must pass **the same rules**.
+The reported estimate is
+
+\[
+\text{estimated null/observed ratio}
+= \frac{\text{mean number passing in a permuted dataset}}
+       {\text{number passing in the observed dataset}}.
+\]
+
+For example, at the original cutoff, `r base$obs_rows` rows pass in the real
+data and `r sprintf('%.3f',base$val_null_rows)` pass in a validation shuffle
+on average: `r sprintf('%.3f',base$val_null_rows)` / `r base$obs_rows` =
+**`r pct(base$val_fdr_rows)`**. This ratio is an *estimated permutation FDR*
+under this shuffle scheme, not a guarantee that this exact fraction of the
+observed rows is false.
+
+```{r headline}
+show <- rbindlist(list(
+  data.table(Screen='Original website screen', Observed_rows=base$obs_rows,
+             Null_rows=base$val_null_rows, Row_ratio=base$val_fdr_rows,
+             Observed_genes=base$obs_genes, Null_genes=base$val_null_genes,
+             Gene_ratio=base$val_fdr_genes),
+  data.table(Screen='Selected 5% row cutoff', Observed_rows=row5$obs_rows,
+             Null_rows=row5$val_null_rows, Row_ratio=row5$val_fdr_rows,
+             Observed_genes=row5$obs_genes, Null_genes=row5$val_null_genes,
+             Gene_ratio=row5$val_fdr_genes),
+  data.table(Screen='Selected 10% row cutoff', Observed_rows=row10$obs_rows,
+             Null_rows=row10$val_null_rows, Row_ratio=row10$val_fdr_rows,
+             Observed_genes=row10$obs_genes, Null_genes=row10$val_null_genes,
+             Gene_ratio=row10$val_fdr_genes)))
+knitr::kable(data.frame(Screen=show$Screen, `Real rows`=show$Observed_rows,
+  `Mean null rows`=sprintf('%.3f',show$Null_rows), `Row ratio`=pct(show$Row_ratio),
+  `Real genes`=show$Observed_genes, `Mean null genes`=sprintf('%.3f',show$Null_genes),
+  `Gene ratio`=pct(show$Gene_ratio), check.names=FALSE),row.names=FALSE)
+```
+
+The two ratios differ because two HNRNPK rows count as **two row signals but
+one gene**. Counts per permutation are small, so the estimate is uncertain:
+under the original rule, the central 95% of selection permutations had
+`r base$sel_null_rows_95` passing rows. Gene-level ratios answer how many
+genes appear under the null; a row-level cutoff is selected against the row
+ratio.
+
+![Number of passing rows in each selection permutation at the original screen cutoff; orange line shows the observed count.](assets/isolaser_permutation/null_passing_rows.png)
+
+Among permuted rows with a defined association score, the `cis` label occurred
+in **0.94%** of selection rows and **0.95%** of validation rows. That is close
+to isoLASER's nominal 1% null-tail criterion and is a useful calibration
+check for this dataset. It does not by itself validate every individual call.
+
+# Which genes remain with stricter cutoffs?
+
+The grid chose the cutoff retaining the most observed rows or genes while
+meeting the chosen 5% or 10% **selection-batch** target. All four selected
+cutoffs also met their target in the independent validation batch. The row
+and gene targets are separate choices, so their lists need not be identical.
+
+```{r chosen}
+knitr::kable(data.frame(
+  `Target`=c('5% of rows','10% of rows','5% of genes','10% of genes'),
+  `Additional rules`=c('≥2 donors; |ΔPSI| ≥0.10; row p ≤0.001',
+                       '≥1 donor; |ΔPSI| ≥0.10; row p ≤0.001',
+                       '≥1 donor; |ΔPSI| ≥0.20; row p ≤0.001',
+                       '≥1 donor; |ΔPSI| ≥0.20; row p ≤0.003'),
+  `Observed`=c(pick[level=='rows' & target==0.05, observed],
+               pick[level=='rows' & target==0.10, observed],
+               pick[level=='genes' & target==0.05, observed],
+               pick[level=='genes' & target==0.10, observed]),
+  `Validation ratio`=pct(c(row5$val_fdr_rows,row10$val_fdr_rows,gene5$val_fdr_genes,gene10$val_fdr_genes)),
+  check.names=FALSE),row.names=FALSE)
+```
+
+At the **5% row target**, the four associations are two HNRNPK variant–part
+rows, one XPA row, and one SMC2 row. At the **5% gene target**, ZDHHC21 also
+appears, but its association has only one qualifying donor. C9orf72 appears
+at the 10% gene target, also with one donor. These are association candidates;
+this single timepoint does not show that stimulation changes their splicing.
+
+```{r selected-rows}
+z <- selected[level=='rows' & target==0.05]
+knitr::kable(data.frame(Gene=z$gene, Variant=z$variant_qual,
+  `Exonic part`=z$exonic_part, `Het donors`=z$n_het,
+  `Pooled reads`=z$het_cov, `ΔPSI`=sprintf('%.3f',z$dpsi),
+  check.names=FALSE),row.names=FALSE)
+```
+
+# HNRNPK: a focused check
+
+The highlighted HNRNPK association links `r h$variant_qual` to
+`r h$exonic_part`, with `r h$n_het` qualifying donors and
+`r h$het_cov` pooled informative reads. Its observed |ΔPSI| is
+`r sprintf('%.3f',abs(h$dpsi))`. None of the `r fmt(h$focus_perms)` focused
+shuffles produced an association score at least as large, giving
+\((0+1)/(100{,}000+1)\) = **`r sprintf('%.5f',h$focus_p_unadjusted)`**.
+This is an *unadjusted, candidate-specific p-value* for this association,
+selected after the initial screen. It is evidence that this particular link
+is stronger than expected under the shuffle; it does not test a change from
+0 to 6 hours or by itself control for the many associations screened.
+
+Across all `r fmt(row_summary$tested_rows)` rows with a defined observed score,
+the two full batches give **zero** BH q-values below 0.05 and
+`r row_summary$passing_with_q_lt_0.10` original-screen rows below 0.10.
+The HNRNPK row's BH q-value from those full batches is
+`r sprintf('%.3f',h$q_bh)`. The 100,000 focused shuffles improve resolution
+for HNRNPK's own p-value; they are not incorporated into that adjustment
+across the chr9, 6-hour tested rows.
+
+# Does this result make sense, and what remains?
+
+Yes, with limits. The original screen retains more rows than the null average
+(`r base$obs_rows` versus `r sprintf('%.1f',base$val_null_rows)`), while a
+cutoff requiring stronger evidence retains fewer rows and has a much smaller
+null/observed ratio. The independent validation batch gives a similar answer
+to the selection batch (`r pct(row5$sel_fdr_rows)` versus
+`r pct(row5$val_fdr_rows)` for the selected 5% row cutoff). The near-1% `cis`
+rate among shuffled defined scores is also reassuring.
+
+The null can miss technical artifacts that cause a real read-level
+allele–splicing link, including allele-dependent mapping or variants close to
+splice boundaries. Even the stringent four-row result merits read-alignment
+inspection and independent support. Most importantly, this pilot covers
+**only chr9 at 6 hours**. Repeating it across chromosomes and timepoints is
+needed before reporting a genome-wide error rate or testing a stimulation
+interaction. A change in which timepoints pass a cutoff is not, by itself,
+a test of that interaction.
+
+Source: `10.isolaser_permutation/` scripts 1–9. Downloads:
+[all grid estimates](assets/isolaser_permutation/grid_estimates.tsv),
+[selected cutoffs](assets/isolaser_permutation/selected_cutoffs.tsv),
+[selected associations](assets/isolaser_permutation/selected_cutoff_associations.tsv),
+[focused HNRNPK results](assets/isolaser_permutation/focus_associations.tsv).
+See also [the genome-wide allele-specific splicing screen](isolaser_genome_wide.html).

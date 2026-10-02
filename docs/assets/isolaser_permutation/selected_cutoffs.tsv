@@ -1,0 +1,5 @@
+level	target	cutoff	id	observed	fdr_selection	fdr_validation	validation_meets_target
+rows	0.05	|dPSI|>=0.10, het>=2, row p<=0.001	5	4	0.0445	0.03825	TRUE
+rows	0.1	|dPSI|>=0.10, het>=1, row p<=0.001	1	5	0.0752	0.0644	TRUE
+genes	0.05	|dPSI|>=0.20, het>=1, row p<=0.001	17	4	0.039	0.03225	TRUE
+genes	0.1	|dPSI|>=0.20, het>=1, row p<=0.003	18	5	0.09	0.078	TRUE

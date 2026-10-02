@@ -1,0 +1,2 @@
+row	gene	variant_qual	exonic_part	n_het	het_cov	ami	dpsi	label	pass_website	p_conservative	q_bh	focus_perms	focus_defined	focus_ge	focus_p_unadjusted
+2226	HNRNPK	chr9:83980154:C>T	chr9:83980118-83980152:-	2	326	0.048	-0.214	cis	TRUE	0.000499750124937531	0.073331755175044	100000	100000	0	9.99990000099999e-06

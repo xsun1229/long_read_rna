@@ -13,7 +13,7 @@
 
 <title>Long-read RNA-seq in stimulated neurons</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -32,8 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -329,7 +329,7 @@ title="This is the local directory in which the code in this file was executed."
 This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
 analysis was created with <a
   href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
 that were applied when the results were created. The <em>Past
 versions</em> tab lists the development history.
 </p>
@@ -361,15 +361,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree84fe5e67ccb948969eee47a60be821132466c6a7targetblank84fe5e6a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2394e81540b2d09a2bd456dffdd7f77cd7069dd3targetblank2394e81a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/84fe5e67ccb948969eee47a60be821132466c6a7" target="_blank">84fe5e6</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/2394e81540b2d09a2bd456dffdd7f77cd7069dd3" target="_blank">2394e81</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree84fe5e67ccb948969eee47a60be821132466c6a7targetblank84fe5e6a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2394e81540b2d09a2bd456dffdd7f77cd7069dd3targetblank2394e81a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -379,7 +379,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/84fe5e67ccb948969eee47a60be821132466c6a7" target="_blank">84fe5e6</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/2394e81540b2d09a2bd456dffdd7f77cd7069dd3" target="_blank">2394e81</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -393,8 +393,13 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_permutation.Rmd
+    Untracked:  analysis/isolaser_permutation_pilot.Rmd
+
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_variants.Rmd
 
 </code></pre>
 <p>
@@ -439,6 +444,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/2394e81540b2d09a2bd456dffdd7f77cd7069dd3/analysis/index.Rmd" target="_blank">2394e81</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-02
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/2394e81540b2d09a2bd456dffdd7f77cd7069dd3/docs/index.html" target="_blank">2394e81</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-02
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -885,13 +924,17 @@ first run
 <!--   why the data are split by donor, and how many events are testable at -->
 <!--   per-donor depth --></li>
 <li><a href="isolaser_variants.html">Checking isoLASER variant calls
-against donor genotypes</a> — chr1 and chr10 calls compared with the
-imputed genotype panel, including heterozygous sites called homozygous
-at low depth</li>
+against donor genotypes</a> — calls across all 22 autosomes compared
+with the imputed genotype panel, including heterozygous sites called
+homozygous at low depth</li>
 <li><a href="isolaser_genome_wide.html">Genome-wide allele-specific
 splicing</a> — joint analysis across chr1–22 at all three timepoints:
 filters, candidate genes, timepoint patterns and neuronal candidates;
 within-donor effects not yet confirmed</li>
+<li><a href="isolaser_permutation_pilot.html">Permutation test for
+allele-specific splicing</a> — pilot on chr9 at 6 hours: how the shuffle
+works, the estimated FDR of the genome-wide screen and of stricter
+cutoffs, and the HNRNPK result</li>
 </ul>
 </div>
 

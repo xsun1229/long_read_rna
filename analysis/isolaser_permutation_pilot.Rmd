@@ -10,6 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))  # keep non-ASCII symbols when built from a non-UTF-8 session
 library(data.table)
 A <- "docs/assets/isolaser_permutation"
 est <- fread(file.path(A, "grid_estimates.tsv"))
@@ -202,62 +203,62 @@ earlier run, pooled p-values were wrong for individual associations: for 305
 associations, more than 3% of their own shuffles had a pooled p-value below 0.01,
 three times the expected rate.
 
-# Do the results make sense?
+<!-- # Do the results make sense? -->
 
-Yes, as far as these checks go:
+<!-- Yes, as far as these checks go: -->
 
-- **isoLASER's threshold is calibrated on the shuffled data.** 0.94% of
-  shuffled associations are labelled `cis` (0.95% in the validation batch),
-  close to the nominal 1%. In the real data 4.4% are, so there is real signal
-  above chance.
-- **The screen's 43% fits simple arithmetic.** About 2,800 tested associations ×
-  about 1% chance `cis` labels gives about 26 per shuffle, and about a third of
-  those also pass the |ΔPSI| and other filters, giving
-  `r round(web$sel_null_rows, 1)` on average.
-- **The two batches agree.** Across all 32 cutoffs, validation estimates are
-  within 5 percentage points of the selection estimates (median 1). They are
-  slightly lower for almost every cutoff, so the chosen cutoffs don't look tuned
-  to chance in the selection batch.
-- **The strongest result agrees with independent evidence.** HNRNPK's variant is
-  a GTEx brain sQTL with the same direction in 13 brain tissues, and the effect is
-  visible in the [sashimi plot](isolaser_genome_wide.html#highlighted-candidates).
+<!-- - **isoLASER's threshold is calibrated on the shuffled data.** 0.94% of -->
+<!--   shuffled associations are labelled `cis` (0.95% in the validation batch), -->
+<!--   close to the nominal 1%. In the real data 4.4% are, so there is real signal -->
+<!--   above chance. -->
+<!-- - **The screen's 43% fits simple arithmetic.** About 2,800 tested associations × -->
+<!--   about 1% chance `cis` labels gives about 26 per shuffle, and about a third of -->
+<!--   those also pass the |ΔPSI| and other filters, giving -->
+<!--   `r round(web$sel_null_rows, 1)` on average. -->
+<!-- - **The two batches agree.** Across all 32 cutoffs, validation estimates are -->
+<!--   within 5 percentage points of the selection estimates (median 1). They are -->
+<!--   slightly lower for almost every cutoff, so the chosen cutoffs don't look tuned -->
+<!--   to chance in the selection batch. -->
+<!-- - **The strongest result agrees with independent evidence.** HNRNPK's variant is -->
+<!--   a GTEx brain sQTL with the same direction in 13 brain tissues, and the effect is -->
+<!--   visible in the [sashimi plot](isolaser_genome_wide.html#highlighted-candidates). -->
 
-What this pilot can't tell us:
+<!-- What this pilot can't tell us: -->
 
-- **The counts are small.** The stricter cutoffs keep 4–5 associations on one
-  chromosome at one timepoint, so the estimates are noisy. A cutoff for the website
-  needs the genome-wide estimate.
-- **It is an estimate under this shuffle scheme, not guaranteed FDR control.** It
-  assumes that, if alleles had no effect, reads' haplotype labels would be
-  interchangeable within a phasing group.
-- **It can't catch technical artifacts** that create a real link between allele
-  and splicing, such as allele-specific mapping bias, or a "variant" that is
-  really a misaligned splice-site end.
-- **It doesn't test stimulation.** Whether an association changes between 0 and
-  6 hours is a separate question.
+<!-- - **The counts are small.** The stricter cutoffs keep 4–5 associations on one -->
+<!--   chromosome at one timepoint, so the estimates are noisy. A cutoff for the website -->
+<!--   needs the genome-wide estimate. -->
+<!-- - **It is an estimate under this shuffle scheme, not guaranteed FDR control.** It -->
+<!--   assumes that, if alleles had no effect, reads' haplotype labels would be -->
+<!--   interchangeable within a phasing group. -->
+<!-- - **It can't catch technical artifacts** that create a real link between allele -->
+<!--   and splicing, such as allele-specific mapping bias, or a "variant" that is -->
+<!--   really a misaligned splice-site end. -->
+<!-- - **It doesn't test stimulation.** Whether an association changes between 0 and -->
+<!--   6 hours is a separate question. -->
 
-# Next steps
+<!-- # Next steps -->
 
-1. Rerun isoLASER's per-donor step with the recording copy for all 22
-   chromosomes × 3 timepoints, and repeat the checks for each.
-2. Run the selection and validation batches for every chromosome × timepoint.
-3. Combine them into a genome-wide estimate, counting each gene once per shuffle,
-   then choose the website's cutoff and update the genome-wide page.
+<!-- 1. Rerun isoLASER's per-donor step with the recording copy for all 22 -->
+<!--    chromosomes × 3 timepoints, and repeat the checks for each. -->
+<!-- 2. Run the selection and validation batches for every chromosome × timepoint. -->
+<!-- 3. Combine them into a genome-wide estimate, counting each gene once per shuffle, -->
+<!--    then choose the website's cutoff and update the genome-wide page. -->
 
-# Scripts and files
+<!-- # Scripts and files -->
 
-Scripts are in `long_read_RNA/10.isolaser_permutation/` (described in its
-`README.md`):
+<!-- Scripts are in `long_read_RNA/10.isolaser_permutation/` (described in its -->
+<!-- `README.md`): -->
 
-| Script | Role |
-|:--|:--|
-| `1.make_copies.py` | builds the seeded and recording copies of isoLASER |
-| `2.rerun_pilot.sbatch`, `3.joint_pilot.sbatch` | the recording rerun for chr9 at 6 hours |
-| `4.check_pilot.R`, `5.check_rescoring.py` | the checks before permuting |
-| `6.permute_chrom.py`, `8.permute_chrom.sbatch` | one permutation batch |
-| `7.summarize_permutation.R`, `9.summarize_permutation.sbatch` | FDR estimates and p-values |
+<!-- | Script | Role | -->
+<!-- |:--|:--| -->
+<!-- | `1.make_copies.py` | builds the seeded and recording copies of isoLASER | -->
+<!-- | `2.rerun_pilot.sbatch`, `3.joint_pilot.sbatch` | the recording rerun for chr9 at 6 hours | -->
+<!-- | `4.check_pilot.R`, `5.check_rescoring.py` | the checks before permuting | -->
+<!-- | `6.permute_chrom.py`, `8.permute_chrom.sbatch` | one permutation batch | -->
+<!-- | `7.summarize_permutation.R`, `9.summarize_permutation.sbatch` | FDR estimates and p-values | -->
 
-Results are in `long_read_processed/isolaser_chrom/chr9/6hr/permutation/summary/`.
-Downloads: [all 32 cutoffs](assets/isolaser_permutation/grid_estimates.tsv),
-[chosen cutoffs](assets/isolaser_permutation/selected_cutoffs.tsv),
-[associations passing them](assets/isolaser_permutation/selected_cutoff_associations.tsv).
+<!-- Results are in `long_read_processed/isolaser_chrom/chr9/6hr/permutation/summary/`. -->
+<!-- Downloads: [all 32 cutoffs](assets/isolaser_permutation/grid_estimates.tsv), -->
+<!-- [chosen cutoffs](assets/isolaser_permutation/selected_cutoffs.tsv), -->
+<!-- [associations passing them](assets/isolaser_permutation/selected_cutoff_associations.tsv). -->

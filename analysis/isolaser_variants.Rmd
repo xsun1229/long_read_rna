@@ -10,6 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))  # keep non-ASCII symbols when built from a non-UTF-8 session
 library(data.table)
 asset <- 'docs/assets/isolaser_validation_all_autosomes'
 x <- fread(file.path(asset,'calls.tsv.gz'), na.strings='NA')

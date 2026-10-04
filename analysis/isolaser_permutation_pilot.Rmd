@@ -114,7 +114,25 @@ donor with ≥ 30 reads, part ≥ 10 bases, no clustered variants) passes
 | Associations | `r web$obs_rows` | `r round(web$sel_null_rows, 1)` | `r web$sel_null_rows_95` | `r pct(web$sel_fdr_rows)` | `r pct(web$val_fdr_rows)` |
 | Genes | `r web$obs_genes` | `r round(web$sel_null_genes, 1)` | `r web$sel_null_genes_95` | `r pct(web$sel_fdr_genes)` | `r pct(web$val_fdr_genes)` |
 
-![Passing associations in each of the 1,000 selection-batch shuffles (grey) and in the real data (orange).](assets/isolaser_permutation/null_passing_rows.png)
+**How to read the columns:** *Real data* is the number passing without shuffling.
+*Shuffled average* is the mean count across 1,000 shuffles in the **selection**
+batch. *Shuffled, 95% range* shows where the middle 95% of those 1,000 counts
+fell; it is not a confidence interval for the FDR. *Estimated FDR* divides the
+shuffled average by the real count. *Estimated FDR, validation* repeats that
+calculation using a **separate 1,000-shuffle batch with a different random
+seed**, without changing the cutoff. Similar estimates in the two batches are
+a check that the finding is not peculiar to the first random set of shuffles.
+These are estimated null-to-observed ratios, not a count of known false rows.
+
+The plot below applies the explicit **`cis`, |dPSI| >= 0.10, at least one
+heterozygous donor with >=30 informative reads, part >=10 bp, and no other
+tested variant within 30 bp** cutoff. Each grey bar counts how many of the
+1,000 selection shuffles yielded the number of passing associations on the
+horizontal axis. The orange line marks the `r web$obs_rows` passing
+associations in the real chr9, 6-hour data. This is a screen-wide count,
+not the p-value for a particular variant–part association.
+
+![Passing associations under the stated cis, dPSI, donor, part-length, and variant-spacing cutoff: selection shuffles (grey) and real data (orange).](assets/isolaser_permutation/null_passing_rows.png)
 
 ## Stricter cutoffs
 
@@ -139,6 +157,10 @@ knitr::kable(data.table(`Row p-value limit` = c("none", "0.01", "0.003", "0.001"
 ```
 
 This table keeps the website's |ΔPSI| ≥ 0.10 and at-least-one-donor requirements.
+*Estimated FDR* is the mean number of passing associations across the selection
+shuffles divided by the real passing count. *Validation* is the same ratio
+calculated from the second, independent batch of 1,000 shuffles; the row
+p-value limit is kept fixed when doing this check.
 
 For each target, a rule fixed in advance picked the cutoff that keeps the most
 real associations (or genes) while its selection-batch estimate stays at or below
@@ -148,7 +170,7 @@ the target. The validation batch then re-estimated each pick:
 pt <- pick[!is.na(cutoff)]
 g <- passing[, .(genes = paste(sort(unique(gene)), collapse = ", ")), by = .(level, target)]
 pt <- merge(pt, g, by = c("level", "target"), sort = FALSE)
-pretty <- function(x) gsub("<=", " ≤ ", gsub(">=", " ≥ ", sub("het>=", "donors>=", sub("dPSI", "ΔPSI", x))))
+pretty <- function(x) sub("het>=", "donors>=", x)
 knitr::kable(data.table(Target = paste0(round(100 * pt$target), "% of ", ifelse(pt$level == "rows", "associations", "genes")),
   Cutoff = pretty(pt$cutoff), Passing = pt$observed,
   Selection = pct(pt$fdr_selection), Validation = pct(pt$fdr_validation), Genes = pt$genes),
@@ -156,15 +178,17 @@ knitr::kable(data.table(Target = paste0(round(100 * pt$target), "% of ", ifelse(
 ```
 
 *Passing* counts associations or genes in the real data, matching the target;
-*Selection* and *Validation* are the estimated FDR in each batch. Every pick meets
-its target in the validation batch.
+*Selection* is the estimated FDR from the first 1,000 shuffles, which were
+used to choose the cutoff. *Validation* is the estimate from another 1,000
+shuffles with a different seed, using the cutoff already chosen. Every pick
+also meets its target in this validation batch.
 
 The associations passing the 10% association-level cutoff:
 
 ```{r passing_rows}
 p10 <- passing[level == "rows" & target == 0.10][order(gene, variant_qual)]
 knitr::kable(data.table(Gene = p10$gene, Variant = p10$variant_qual, `Exonic part` = p10$exonic_part,
-  `Heterozygous donors` = p10$n_het, Reads = p10$het_cov, `ΔPSI` = round(p10$dpsi, 3),
+  `Heterozygous donors` = p10$n_het, Reads = p10$het_cov, `dPSI` = round(p10$dpsi, 3),
   `Row p-value` = signif(p10$p_grid, 2)), align = "lllrrrr")
 ```
 
@@ -180,28 +204,28 @@ than all 100,000 shuffles in the focus batch:
 
 | Variant | Heterozygous donors | Reads | ΔPSI | Shuffles scoring as high | p-value |
 |:--|--:|--:|--:|--:|--:|
-| `r h$variant_qual` (highlighted) | `r h$n_het` | `r h$het_cov` | `r sub("-", "−", round(h$dpsi, 3))` | `r h$focus_ge` of `r fmt(h$focus_perms)` | 1 × 10⁻⁵ |
-| chr9:83978398:G>C | 3 | 1,125 | −0.115 | 0 of 100,000 | 1 × 10⁻⁵ |
+| `r h$variant_qual` (highlighted) | `r h$n_het` | `r h$het_cov` | `r round(h$dpsi, 3)` | `r h$focus_ge` of `r fmt(h$focus_perms)` | 1 × 10⁻⁵ |
+| chr9:83978398:G>C | 3 | 1,125 | -0.115 | 0 of 100,000 | 1 × 10⁻⁵ |
 
 1 × 10⁻⁵ is the smallest p-value 100,000 shuffles can give. These p-values are
 for HNRNPK only and are not adjusted for having chosen it. The two variants are
 1.7 kb apart and may lie on the same haplotype, so they don't yet count as two
 independent signals.
 
-## P-values for every association
+<!-- ## P-values for every association -->
 
-Each association also has a p-value from its own 2,000 shuffles (both batches).
-After Benjamini–Hochberg correction across all `r fmt(perrow$tested_rows)` tested
-associations, `r perrow$passing_with_q_lt_0.10` of the
-`r perrow$website_passing` passing associations reach q < 0.10 and
-`r perrow$passing_with_q_lt_0.05` reach q < 0.05. With 2,000 shuffles, no
-p-value can be smaller than 1/2,001 ≈ 0.0005, which limits this correction; the
-cutoff-based estimate above is the main result.
+<!-- Each association also has a p-value from its own 2,000 shuffles (both batches). -->
+<!-- After Benjamini–Hochberg correction across all `r fmt(perrow$tested_rows)` tested -->
+<!-- associations, `r perrow$passing_with_q_lt_0.10` of the -->
+<!-- `r perrow$website_passing` passing associations reach q < 0.10 and -->
+<!-- `r perrow$passing_with_q_lt_0.05` reach q < 0.05. With 2,000 shuffles, no -->
+<!-- p-value can be smaller than 1/2,001 ≈ 0.0005, which limits this correction; the -->
+<!-- cutoff-based estimate above is the main result. -->
 
-We did not pool shuffled scores across associations to make p-values. In an
-earlier run, pooled p-values were wrong for individual associations: for 305
-associations, more than 3% of their own shuffles had a pooled p-value below 0.01,
-three times the expected rate.
+<!-- We did not pool shuffled scores across associations to make p-values. In an -->
+<!-- earlier run, pooled p-values were wrong for individual associations: for 305 -->
+<!-- associations, more than 3% of their own shuffles had a pooled p-value below 0.01, -->
+<!-- three times the expected rate. -->
 
 <!-- # Do the results make sense? -->
 

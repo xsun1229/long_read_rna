@@ -1,0 +1,19 @@
+set	tp	role	points	genes	pearson_r	spearman_rho	concordant	expected
+one per gene	0hr	skipping	0	0			0	negative
+one per gene	0hr	inclusion	1	1			1	positive
+one per gene	1hr	skipping	0	0			0	negative
+one per gene	1hr	inclusion	2	2			2	positive
+one per gene	6hr	skipping	1	1			1	negative
+one per gene	6hr	inclusion	3	3	0.939954269988364	0.5	3	positive
+all associations	0hr	skipping	0	0			0	negative
+all associations	0hr	inclusion	2	1			2	positive
+all associations	1hr	skipping	0	0			0	negative
+all associations	1hr	inclusion	2	2			2	positive
+all associations	6hr	skipping	1	1			1	negative
+all associations	6hr	inclusion	4	3	0.941251139190135	0.8	4	positive
+cortical tissues	0hr	skipping	0	0			0	negative
+cortical tissues	0hr	inclusion	1	1			1	positive
+cortical tissues	1hr	skipping	0	0			0	negative
+cortical tissues	1hr	inclusion	2	2			2	positive
+cortical tissues	6hr	skipping	1	1			1	negative
+cortical tissues	6hr	inclusion	2	2			2	positive

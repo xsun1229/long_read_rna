@@ -1,0 +1,4 @@
+tp	reported_snv_associations	reported_genes	gtex_variant_gene_overlap	overlap_genes	comparable_associations	comparable_genes	inclusion_points	skipping_points
+0hr	188	63	6	3	2	1	2	0
+1hr	181	71	22	9	2	2	2	0
+6hr	168	71	22	9	4	3	4	1

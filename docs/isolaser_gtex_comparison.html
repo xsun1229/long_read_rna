@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-14" />
+
+<title>Allele-specific splicing: comparison with GTEx Cerebellum sQTLs</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Allele-specific splicing: comparison with
+GTEx Cerebellum sQTLs</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-14</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-14
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea282ef5554aea48040e76c5be1a2bc1296ef1875targetblanka282ef5a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/a282ef5554aea48040e76c5be1a2bc1296ef1875" target="_blank">a282ef5</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea282ef5554aea48040e76c5be1a2bc1296ef1875targetblanka282ef5a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/a282ef5554aea48040e76c5be1a2bc1296ef1875" target="_blank">a282ef5</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_gtex_comparison.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>We compared our <a href="isolaser_fdr.html">permutation-adjusted
+allele-specific splicing results</a> with significant GTEx v8
+<strong>Cerebellum</strong> sQTLs. The tissue is fixed for every point;
+there is no selection across tissues. The aim follows the effect-size
+comparison in the right panel of <a
+href="https://www.nature.com/articles/s41467-025-64605-6">Fig. 3e of the
+isoLASER paper</a>.</p>
+<p><strong>Main finding: 5 distinct matched pairs in 4 genes</strong>,
+with 8 plotted comparisons across baseline, 1 hour and 6 hours. The
+genes are <strong>HNRNPK, ATP5MJ, HLA-C and SNHG5</strong>. All
+comparisons have the expected effect direction, but there are too few
+independent genes for a strong correlation or genome-wide validation
+conclusion.</p>
+<div id="pair-counts-and-selection" class="section level1">
+<h1>Pair counts and selection</h1>
+<p>An isoLASER <strong>association</strong> is a gene × variant × exonic
+part. A <strong>matched pair</strong> links that association to a GTEx
+junction for the same variant and gene. The same pair can be measured at
+more than one timepoint; a gene can contribute multiple pairs.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="48%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Selection step</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+<th align="right">Unique across timepoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Reported after permutation FDR and effect screen</td>
+<td align="right">191 (64)</td>
+<td align="right">183 (73)</td>
+<td align="right">174 (74)</td>
+<td align="right">375 (131)</td>
+</tr>
+<tr class="even">
+<td align="left">Single-base variants eligible for matching</td>
+<td align="right">188 (63)</td>
+<td align="right">181 (71)</td>
+<td align="right">168 (71)</td>
+<td align="right">367 (127)</td>
+</tr>
+<tr class="odd">
+<td align="left">Same variant and gene in GTEx Cerebellum</td>
+<td align="right">6 (3)</td>
+<td align="right">21 (8)</td>
+<td align="right">13 (7)</td>
+<td align="right">30 (12)</td>
+</tr>
+<tr class="even">
+<td align="left">Comparable annotated splice event</td>
+<td align="right">2 (1)</td>
+<td align="right">2 (2)</td>
+<td align="right">4 (3)</td>
+<td align="right">5 (4)</td>
+</tr>
+</tbody>
+</table>
+<p>Cells show <strong>isoLASER associations (genes)</strong>. The last
+column deduplicates gene–variant–part associations across timepoints; it
+is not the sum of the timepoint columns. The input screen requires
+permutation BH q &lt; 0.05, isoLASER’s <code>cis</code> label and |dPSI|
+≥ 0.10. BH is performed separately within each timepoint. Indels are
+excluded from matching.</p>
+<p>The same-variant/gene step contains 30 distinct variant–part
+associations from 14 gene–variant pairs; one variant can be tested
+against several parts. The event check leaves 5 associations, each with
+one comparable Cerebellum junction in the current results, hence 5
+distinct matched pairs.</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="28%" />
+<col width="26%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Inclusion-junction pairs</th>
+<th align="right">Skipping-junction pairs</th>
+<th align="right">Plotted points</th>
+<th align="right">Distinct genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Five unique pairs give eight timepoint-specific
+points.</strong> All current Cerebellum matches are <strong>inclusion
+junctions</strong>; no skipping-junction match passes the current
+filters. These points are not independent signals: HNRNPK contributes
+two variants linked to the same part, with measurements at multiple
+timepoints.</p>
+</div>
+<div id="how-comparable-pairs-were-chosen" class="section level1">
+<h1>How comparable pairs were chosen</h1>
+<p><strong>Overlap alone is insufficient.</strong> GTEx tests
+intron/junction usage, while isoLASER tests inclusion of an exonic part.
+We require an annotated local relationship between the two
+measurements.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Match variant and gene.</strong> Use the Cerebellum
+significant-pair file only. Require the same GRCh38 position, REF/ALT
+alleles and Ensembl gene ID.</li>
+<li><strong>Check transcript structures.</strong> Use isoLASER’s
+annotation and part definitions. Exon-skipping matches require an
+included transcript with both flanking junctions and an excluded
+transcript with the skipping junction. Alternative splice-site matches
+require junctions sharing one endpoint, with the other shifted across
+the part.</li>
+<li><strong>Assign the junction’s role.</strong> An inclusion junction
+occurs in at least one part-including transcript and no part-excluding
+transcript; the converse defines a skipping junction. Reject junctions
+present in both groups, and skipping spans containing another
+non-overlapping annotated exon. The junction need not occur in every
+transcript of its assigned group.</li>
+<li><strong>Retain matched pairs.</strong> The primary plot keeps every
+distinct variant–part–GTEx-junction match within Cerebellum, separately
+at each timepoint. It does not reduce the results to one point per gene
+or select a tissue/junction by its p-value. A secondary sensitivity plot
+selects one representative per gene and role using the Cerebellum
+p-value.</li>
+</ol>
+<p>Coordinates are standardized before matching. isoLASER’s stored
+variant position is 0-based; GTEx variant IDs are 1-based. For example,
+<code>chr9:83980154:C&gt;T</code> and <code>chr9_83980155_C_T_b38</code>
+identify the same SNP. The GTEx intron’s right endpoint is reduced by
+one to obtain a 0-based, half-open interval, following the <a
+href="https://github.com/davidaknowles/leafcutter/blob/master/clustering/leafcutter_cluster_regtools.py">LeafCutter
+coordinate conversion</a>. Main matches require exact endpoints. The
+earlier 2-base sensitivity check did not add any selected matches.</p>
+<div id="example-hnrnpk" class="section level2">
+<h2>Example: HNRNPK</h2>
+<p><img
+src="assets/isolaser_gtex/cerebellum/comparable_event_examples.png" /></p>
+<p>Gold is the 34-base part chr9:[83980118,83980152); blue is the
+Cerebellum GTEx junction chr9:[83978452,83980118), which connects to the
+part. The alternative annotated junction ends at 83980152 and excludes
+it. The diagram is schematic, not to scale; its coordinates are
+0-based.</p>
+<p>For the same C&gt;T variant at 6 hours, our ALT-minus-REF inclusion
+effect is <strong>-21.4 percentage points</strong>, and the Cerebellum
+inclusion-junction beta is <strong>-1.23</strong>. Both decrease, as
+expected for an inclusion junction.</p>
+<p>SNHG5 also has an inclusion-junction match in Cerebellum: dPSI is
++16.9 points and beta is +0.72. These fixed-tissue estimates replace the
+different tissue/junction choices in the earlier multi-tissue
+comparison.</p>
+<p><a
+href="assets/isolaser_gtex/cerebellum/comparable_event_examples.pdf">Download
+the HNRNPK example as PDF</a>.</p>
+</div>
+</div>
+<div id="effect-size-plots" class="section level1">
+<h1>Effect-size plots</h1>
+<p>The x-axis is our donor-normalized <strong>ALT minus REF part
+inclusion</strong>. The y-axis is GTEx’s ALT effect on normalized
+<strong>intron usage</strong>, from the <a
+href="https://github.com/broadinstitute/gtex-pipeline/blob/master/qtl/leafcutter/README.md">GTEx
+sQTL pipeline</a>. The axes have different units, so numerical equality
+is not expected. Inclusion junctions should have matching effect signs
+(positive correlation); skipping junctions would have opposite signs.
+All matches here are inclusion junctions, so only those panels are
+shown.</p>
+<div id="what-did-the-paper-plot" class="section level2">
+<h2>What did the paper plot?</h2>
+<p>The <a
+href="https://www.nature.com/articles/s41467-025-64605-6.pdf">Fig. 3e
+caption and methods</a> describe comparing isoLASER effects with GTEx
+effects for <strong>matched variant–splicing associations</strong>, not
+a gene-level effect summary. A gene may contribute multiple
+associations. The linked <a
+href="https://github.com/gxiaolab/isoLASER_paper">public repository</a>
+contains the processing workflows; we did not find figure-specific
+plotting code there, so its exact duplicate-removal rule remains
+unverified. Our primary plot therefore shows matched pairs, with a
+separate gene-representative sensitivity view. This is an adaptation of
+the paper: its displayed example is ovary, and its described comparison
+uses the longest skipping junction.</p>
+</div>
+<div id="figures" class="section level2 tabset">
+<h2 class="tabset">Figures</h2>
+<div id="all-matched-pairs" class="section level3">
+<h3>All matched pairs</h3>
+<p><img
+src="assets/isolaser_gtex/cerebellum/cerebellum_pair_effects.png" /></p>
+<p>Each dot is one matched variant–part–junction pair at one timepoint.
+All 8 points are included; the gene count is reported separately in each
+panel. Point labels distinguish the two HNRNPK variants.</p>
+<p><a
+href="assets/isolaser_gtex/cerebellum/cerebellum_pair_effects.pdf">Download
+PDF</a>.</p>
+</div>
+<div id="one-representative-per-gene" class="section level3">
+<h3>One representative per gene</h3>
+<p><img
+src="assets/isolaser_gtex/cerebellum/cerebellum_gene_effects.png" /></p>
+<p>This supplementary view retains 6 points across panels, one
+representative per gene and junction role at each timepoint, selected by
+the Cerebellum p-value. It illustrates the influence of repeated
+variants in one gene.</p>
+<p><a
+href="assets/isolaser_gtex/cerebellum/cerebellum_gene_effects.pdf">Download
+PDF</a>.</p>
+</div>
+</div>
+<div id="interpretation" class="section level2">
+<h2>Interpretation</h2>
+<p>All 8 of 8 comparisons agree in direction. At 6 hours, Pearson r =
+0.94 and Spearman rho = 0.80, based on only <strong>4 pairs in 3
+genes</strong>. These are descriptive correlations and provide limited
+external corroboration. They do not validate the full scan or estimate
+its FDR. HNRNPK agrees at all three timepoints; HLA-C still warrants
+mapping checks.</p>
+<p>AHI1, WDR45B and KPNA2 do not enter this comparable-event subset. An
+absent match does not disprove an association: we use GTEx significant
+pairs only, and adult Cerebellum differs from stimulated hiPSC-derived
+neurons. The event check is local and annotation-based; the available
+files do not establish the complete structure of every GTEx cluster.</p>
+</div>
+</div>
+<div id="matched-pairs-and-data" class="section level1">
+<h1>Matched pairs and data</h1>
+<p>All rows use <strong>Brain_Cerebellum</strong>. Variant positions are
+<strong>1-based</strong>, while part and junction intervals are
+<strong>0-based, half-open</strong>. dPSI is ALT minus REF inclusion,
+shown in percentage points.</p>
+<div id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-21.4\" data-max=\"16.9\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-1.54\" data-max=\"1.43\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1e-15\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.000204\" data-max=\"0.00694\" data-scale=\"6\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Eight Cerebellum pair-timepoint comparisons; repeated genes and variants are not independent signals.<\/caption>","data":[["ATP5MJ","HLA-C","HNRNPK","HNRNPK","HNRNPK","HNRNPK","HNRNPK","SNHG5"],["1 hr","6 hr","0 hr","0 hr","1 hr","6 hr","6 hr","6 hr"],["chr14:103915165:T&gt;C","chr6:31268790:T&gt;C","chr9:83978399:G&gt;C","chr9:83980155:C&gt;T","chr9:83980155:C&gt;T","chr9:83978399:G&gt;C","chr9:83980155:C&gt;T","chr6:85678170:G&gt;T"],["chr14:103914478-103914633:-","chr6:31269965-31270085:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr6:85677794-85677868:-"],["chr14:103913984-103914478","chr6:31270085-31270209","chr9:83978452-83980118","chr9:83978452-83980118","chr9:83978452-83980118","chr9:83978452-83980118","chr9:83978452-83980118","chr6:85677875-85677953"],["exon skipping","exon skipping","alternative splice site","alternative splice site","alternative splice site","alternative splice site","alternative splice site","exon skipping"],[10.3,-11.9,-11.4,-19.8,-18.2,-11.5,-21.4,16.9],[1.43,-1.54,-1.12,-1.23,-1.23,-1.12,-1.23,0.722],[9.5e-34,2.08e-67,4.97e-29,3.01e-43,3.01e-43,4.97e-29,3.01e-43,1.98e-16],[0.000405,0.00694,0.000711,0.000204,0.000405,0.000395,0.00183,0.00217]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Timepoint<\/th>\n      <th>Variant (1-based)<\/th>\n      <th>Exonic part (0-based)<\/th>\n      <th>GTEx junction (0-based)<\/th>\n      <th>Event type<\/th>\n      <th>Our dPSI (pp)<\/th>\n      <th>Cerebellum beta<\/th>\n      <th>GTEx nominal p<\/th>\n      <th>Our BH q<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"order":[],"dom":"Blfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[6,7,8,9]}],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<p>Downloads: <a
+href="assets/isolaser_gtex/cerebellum/pair_points.tsv">all matched
+pairs</a>, <a
+href="assets/isolaser_gtex/cerebellum/selection_counts.tsv">selection
+counts</a>, <a
+href="assets/isolaser_gtex/cerebellum/variant_gene_matches.tsv">same-variant/gene
+matches before the event check</a>, <a
+href="assets/isolaser_gtex/cerebellum/stats.tsv">statistics</a>, and <a
+href="assets/isolaser_gtex/cerebellum/inputs.tsv">input
+checksums</a>.</p>
+<p>Reproduce with
+<code>Rscript 10.isolaser_permutation/31.cerebellum_comparison.R</code>,
+then
+<code>Rscript 10.isolaser_permutation/29.gtex_comparable_examples.R --cerebellum</code>.
+The local output folder is
+<code>10.isolaser_permutation/out/adaptive/gtex_comparison/cerebellum/</code>.
+The earlier multi-tissue outputs remain in its parent folder.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DT_0.22           data.table_1.14.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12       pillar_1.9.0      compiler_4.2.0    bslib_0.3.1      
+ [5] later_1.3.0       jquerylib_0.1.4   git2r_0.30.1      highr_0.9        
+ [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
+[13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3  
+[17] rlang_1.1.2       cli_3.6.1         rstudioapi_0.13   crosstalk_1.2.0  
+[21] yaml_2.3.5        xfun_0.41         fastmap_1.1.0     stringr_1.5.1    
+[25] knitr_1.39        fs_1.5.2          vctrs_0.6.5       sass_0.4.1       
+[29] htmlwidgets_1.5.4 rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
+[33] fansi_1.0.3       rmarkdown_2.25    magrittr_2.0.3    promises_1.2.0.1 
+[37] htmltools_0.5.2   httpuv_1.6.5      utf8_1.2.2        stringi_1.7.6    </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -65,3 +65,6 @@ donors, at 0, 1 and 6 hours after stimulation.
 * [Genome-wide FDR for allele-specific splicing](isolaser_fdr.html) —
   the permutation test on all chromosomes and timepoints: how it works, signals
   before and after FDR control, and neuron- and stimulation-relevant examples
+* [Comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison.html) —
+  how comparable variant–part/junction pairs were selected, pair counts,
+  worked examples and effect-size comparisons across timepoints

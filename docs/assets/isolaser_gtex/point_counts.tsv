@@ -1,0 +1,10 @@
+view	tp	inclusion	skipping	total	genes	concordant
+All associations	0hr	2	0	2	1	2
+All associations	1hr	2	0	2	2	2
+All associations	6hr	4	1	5	3	5
+One per gene and role	0hr	1	0	1	1	1
+One per gene and role	1hr	2	0	2	2	2
+One per gene and role	6hr	3	1	4	3	4
+Cortical tissues	0hr	1	0	1	1	1
+Cortical tissues	1hr	2	0	2	2	2
+Cortical tissues	6hr	2	1	3	3	3

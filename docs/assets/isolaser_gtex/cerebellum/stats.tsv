@@ -1,0 +1,7 @@
+tp	role	view	points	genes	concordant	pearson_r	spearman_rho
+0hr	inclusion	All matched pairs	2	1	2		
+1hr	inclusion	All matched pairs	2	2	2		
+6hr	inclusion	All matched pairs	4	3	4	0.935200018804821	0.8
+6hr	inclusion	One per gene	3	3	3	0.933062788752334	0.5
+0hr	inclusion	One per gene	1	1	1		
+1hr	inclusion	One per gene	2	2	2		

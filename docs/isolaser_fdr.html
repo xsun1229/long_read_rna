@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-14" />
+
+<title>Genome-wide FDR for allele-specific splicing</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Genome-wide FDR for allele-specific
+splicing</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-14</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-14
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree3d42f132a753f50e34e6a420b4ac7f29995f41f7targetblank3d42f13a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/3d42f132a753f50e34e6a420b4ac7f29995f41f7" target="_blank">3d42f13</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree3d42f132a753f50e34e6a420b4ac7f29995f41f7targetblank3d42f13a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/3d42f132a753f50e34e6a420b4ac7f29995f41f7" target="_blank">3d42f13</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_fdr.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>We extended the <a href="isolaser_permutation_pilot.html">chr9
+permutation pilot</a> to all 22 autosomes at baseline, 1 hour and 6
+hours, using four donors. The aim is to attach a permutation p-value and
+a <strong>BH-adjusted p-value (q-value)</strong> to each allele–splicing
+association, with correction performed separately within each
+timepoint.</p>
+<p><strong>Main result:</strong> 375 associations in <strong>131
+genes</strong> have q &lt; 0.05 and pass the original <code>cis</code> /
+effect-size screen. 25 genes meet these criteria at all three
+timepoints. Calibration found no excess of false discoveries under the
+chosen permutation null; its limits are described below.</p>
+<div id="genome-wide-results" class="section level1">
+<h1>Genome-wide results</h1>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="24%" />
+<col width="14%" />
+<col width="21%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Tested associations</th>
+<th align="right">Screen</th>
+<th align="right">Screen + q &lt; 0.10</th>
+<th align="right">Screen + q &lt; 0.05</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr</td>
+<td align="right">37,156</td>
+<td align="right">530 (191)</td>
+<td align="right">215 (71)</td>
+<td align="right">191 (64)</td>
+</tr>
+<tr class="even">
+<td align="left">1hr</td>
+<td align="right">57,517</td>
+<td align="right">773 (288)</td>
+<td align="right">223 (95)</td>
+<td align="right">183 (73)</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr</td>
+<td align="right">60,860</td>
+<td align="right">759 (285)</td>
+<td align="right">229 (87)</td>
+<td align="right">174 (74)</td>
+</tr>
+<tr class="even">
+<td align="left">any timepoint</td>
+<td align="right">77,954</td>
+<td align="right">1,675 (561)</td>
+<td align="right">472 (158)</td>
+<td align="right">375 (131)</td>
+</tr>
+</tbody>
+</table>
+<p>Cells under <strong>Screen</strong> and <strong>Screen + q</strong>
+show <strong>associations (genes)</strong>. The screen requires
+isoLASER’s <code>cis</code> label and |ΔPSI| ≥ 0.10. At q &lt; 0.05, 23%
+of the screen’s genes remain; q &lt; 0.10 adds 27 genes. These counts
+use the recording rerun, so they can differ slightly from the original
+<a href="isolaser_genome_wide.html">genome-wide screen</a>.</p>
+<p><strong>Any timepoint</strong> counts each gene or variant–part
+association once across timepoints. BH targets FDR in each timepoint’s
+full association family. The effect-filtered subset shown here, its gene
+totals, and the union across timepoints do not have a separate 5% FDR
+guarantee. Gene totals count genes containing a qualifying association;
+they are not gene-level adjusted tests.</p>
+</div>
+<div id="how-the-test-works" class="section level1">
+<h1>How the test works</h1>
+<p>An <strong>association</strong> is a gene × variant × exonic part at
+one timepoint. An exonic part is an interval defined by transcript exon
+boundaries and need not be a complete exon. Reads form a 2 × 2 table:
+reference/alternative allele × part included/excluded. We combine
+eligible donors’ tables using isoLASER’s own normalization and adjusted
+mutual information (<strong>AMI</strong>) functions. Higher AMI means
+stronger allele–splicing association; values near zero indicate little
+evidence, and slightly negative values are possible.</p>
+<p>The tested family requires at least one donor with <strong>≥30
+informative reads and RNA alternative-allele fraction
+0.25–0.75</strong>, a part ≥10 bp, and no other tested variant less than
+30 bp away. The donor rule is our operational heterozygous-donor filter.
+Eligible associations without a computable observed score stay in the
+family with p = 1.</p>
+<p>For each permutation, we shuffle haplotype labels among reads
+<strong>within donor, gene and phasing group</strong>. If a label
+changes, the read’s allele is flipped at every linked variant in that
+group. Unlabelled reads have their alleles shuffled per variant. Each
+read’s inclusion status, total coverage and the original eligible donor
+set stay fixed. Before shuffling, reconstruction and rescoring checks
+must reproduce the recording rerun’s tables.</p>
+<p>We count a <strong>hit</strong> when the shuffled AMI is at least as
+high as the observed AMI. An undefined shuffled score also counts as a
+hit, conservatively:</p>
+<p><span class="math display">\[
+p = \frac{1 + \text{hits}}{1 + \text{shuffles}}.
+\]</span></p>
+<p>Every association starts with 1,000 shuffles. Those with fewer than
+20 hits continue to 10,000, 100,000 and finally 1,000,000 in total.
+Checkpoints and the hit threshold were fixed in advance; this stopping
+rule is conservative provided the underlying fixed-length permutation
+tests are valid. BH is then applied to all eligible associations within
+each timepoint, before selecting the <code>cis</code> / effect-size
+examples.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="12%" />
+<col width="20%" />
+<col width="21%" />
+<col width="23%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Stopped at 1,000</th>
+<th align="right">Stopped at 10,000</th>
+<th align="right">Stopped at 100,000</th>
+<th align="right">Reached 1,000,000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr</td>
+<td align="right">36,307</td>
+<td align="right">431</td>
+<td align="right">123</td>
+<td align="right">295</td>
+</tr>
+<tr class="even">
+<td align="left">1hr</td>
+<td align="right">56,319</td>
+<td align="right">733</td>
+<td align="right">204</td>
+<td align="right">261</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr</td>
+<td align="right">59,674</td>
+<td align="right">696</td>
+<td align="right">218</td>
+<td align="right">272</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stopped</strong> means the association had at least 20 hits
+at that checkpoint, or had no observed score and received p = 1. Zero
+hits after a million shuffles gives p = 1/1,000,001, approximately 10⁻⁶.
+Every tested association at this minimum p-value has q &lt; 0.05 in the
+current results.</p>
+</div>
+<div id="calibration-how-often-are-null-signals-reported"
+class="section level1">
+<h1>Calibration: how often are null signals reported?</h1>
+<p>We created <strong>20 independently shuffled pseudo-observed datasets
+per timepoint</strong> and repeated the complete adaptive test and BH
+correction on each. Donor eligibility was chosen from the original data
+and held fixed. These 60 analyses are designed to remove the
+allele–splicing link: a discovery in them is a false positive under this
+null. BH can occasionally report one even when all associations are
+null, so we assess the frequency across runs.</p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="14%" />
+<col width="30%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Null datasets</th>
+<th align="right">Datasets with a BH discovery</th>
+<th align="right">95% interval for that rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr</td>
+<td align="right">20</td>
+<td align="right">0/20</td>
+<td align="right">0.0% - 16.8%</td>
+</tr>
+<tr class="even">
+<td align="left">1hr</td>
+<td align="right">20</td>
+<td align="right">0/20</td>
+<td align="right">0.0% - 16.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr</td>
+<td align="right">20</td>
+<td align="right">0/20</td>
+<td align="right">0.0% - 16.8%</td>
+</tr>
+<tr class="even">
+<td align="left">Pooled across timepoints</td>
+<td align="right">60</td>
+<td align="right">0/60</td>
+<td align="right">0.0% - 6.0%</td>
+</tr>
+</tbody>
+</table>
+<p>No dataset produced a BH discovery at q &lt; 0.05; BY also produced
+none. The intervals are binomial confidence intervals for the chance of
+<strong>any</strong> discovery in an all-null analysis. Zero of 20 runs
+still allows a rate up to <strong>16.8% per timepoint</strong>; pooling
+60 datasets gives an upper bound of 6.0% for the average rate. Pooling
+does not establish control separately at each timepoint.</p>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="24%" />
+<col width="30%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Measure</th>
+<th align="right">Mean observed share</th>
+<th align="right">Approximate 95% interval</th>
+<th align="right">Nominal upper rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">share of p &lt; 0.001</td>
+<td align="right">0.023%</td>
+<td align="right">0.020% - 0.025%</td>
+<td align="right">0.1%</td>
+</tr>
+<tr class="even">
+<td align="left">share of p &lt; 0.01</td>
+<td align="right">0.302%</td>
+<td align="right">0.290% - 0.313%</td>
+<td align="right">1.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">share of p &lt; 0.05</td>
+<td align="right">1.677%</td>
+<td align="right">1.650% - 1.704%</td>
+<td align="right">5.0%</td>
+</tr>
+</tbody>
+</table>
+<p>These are mean shares across the 60 datasets, with approximate
+intervals from the variation between runs. For example, p &lt; 0.01
+occurred for about 0.30% of associations, below the nominal 1%. Ties
+help explain this conservative behavior: when the observed and shuffled
+AMIs are both zero, a tie counts as a hit. AMI is rounded to three
+decimals by isoLASER.</p>
+<p><strong>Interpretation:</strong> calibration supports conservative
+behavior under our permutation null. It does not prove validity for
+every association or estimate the false-discovery proportion among the
+real-data results.</p>
+<p><img src="assets/fdr/qq.png" /></p>
+<p>The QQ plot compares p-values with a uniform reference. Real data
+(blue) have more small p-values; calibration (grey) lies on or below the
+diagonal. The upper plateau reflects the minimum attainable p-value.</p>
+</div>
+<div id="genes-to-follow-up" class="section level1">
+<h1>Genes to follow up</h1>
+<p>Here, <strong>reported</strong> means q &lt; 0.05 plus the
+<code>cis</code> / effect-size screen. A gene can contain several
+associations, and different associations can qualify at different
+timepoints.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Pattern</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Significant at 3 timepoints</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">Significant at 2 timepoints</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">One timepoint; nominal support elsewhere</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">One timepoint; no nominal support elsewhere</td>
+<td align="right">21</td>
+</tr>
+<tr class="odd">
+<td align="left">One timepoint; no usable score elsewhere</td>
+<td align="right">31</td>
+</tr>
+</tbody>
+</table>
+<p>For genes reported at only one timepoint, the last three categories
+describe the representative association at the other timepoints: nominal
+p &lt; 0.05, p ≥ 0.05 where scored, or no usable score. They are
+descriptive categories, not tests of an allele × time interaction. Among
+comparisons of significant associations with another timepoint, 85% had
+nominal p &lt; 0.05 there and 98% had the same effect direction.</p>
+<div id="neuronal-examples-reported-at-all-three-timepoints"
+class="section level2">
+<h2>Neuronal examples reported at all three timepoints</h2>
+<p>For each gene, the table follows its strongest reported association.
+<strong>0 / 1 / 6 hr</strong> show the allelic effect in percentage
+points, with pooled informative coverage in brackets. The stored effect
+is reference minus alternative <strong>exclusion</strong>, equivalently
+<strong>alternative minus reference inclusion</strong>: +10 means 10
+percentage points higher inclusion on the alternative allele.
+<strong>Best q</strong> is the lowest timepoint-specific q-value for
+this association; <strong>Het donors</strong> is its maximum
+contributing donor count across timepoints, out of four. <strong>No
+score</strong> means that timepoint lacks a usable effect estimate.</p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="4%" />
+<col width="7%" />
+<col width="61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+<th align="right">Best q</th>
+<th align="right">Het donors</th>
+<th align="left">Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HNRNPK</td>
+<td align="right">-20 (303)</td>
+<td align="right">-18 (523)</td>
+<td align="right">-21 (326)</td>
+<td align="right">2e-04</td>
+<td align="right">3</td>
+<td align="left">Au-Kline syndrome (DDG2P), SFARI syndromic; GTEx brain
+sQTL comparison on the genome-wide page</td>
+</tr>
+<tr class="even">
+<td align="left">ATL1</td>
+<td align="right">+36 (592)</td>
+<td align="right">+34 (1,573)</td>
+<td align="right">+33 (1,694)</td>
+<td align="right">2e-04</td>
+<td align="right">4</td>
+<td align="left">Hereditary spastic paraplegia (DDG2P); neuron
+projection development (GO)</td>
+</tr>
+<tr class="odd">
+<td align="left">KANSL1</td>
+<td align="right">-26 (117)</td>
+<td align="right">-20 (183)</td>
+<td align="right">-30 (310)</td>
+<td align="right">4e-04</td>
+<td align="right">4</td>
+<td align="left">Koolen-de Vries syndrome (DDG2P); SFARI score 1</td>
+</tr>
+<tr class="even">
+<td align="left">APLP2</td>
+<td align="right">-24 (458)</td>
+<td align="right">-26 (602)</td>
+<td align="right">-31 (649)</td>
+<td align="right">2e-04</td>
+<td align="right">3</td>
+<td align="left">APP family member; neuron projection development
+(GO)</td>
+</tr>
+</tbody>
+</table>
+<p>These examples have neuronal or disorder annotations, but none meets
+our expression- or splicing-response flag described below.
+<strong>HNRNPK</strong> is a consistent allele-specific association
+across timepoints: zero hits in a million shuffles at 0 and 1 hour, and
+four hits at 6 hours.</p>
+<p><img src="assets/fdr/HNRNPK_null.png" /></p>
+<p>Grey bars show only the first 1,000 shuffled scores; the blue line is
+the observed score. The displayed p-values use the full adaptive
+run.</p>
+</div>
+<div id="candidates-for-a-change-after-stimulation"
+class="section level2">
+<h2>Candidates for a change after stimulation</h2>
+<p>AHI1 is reported at 1 and 6 hours; WDR45B and KPNA2 at 6 hours only.
+Their representative associations are weaker at earlier timepoints,
+making them candidates for a direct comparison of allelic effects over
+time.</p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="5%" />
+<col width="6%" />
+<col width="7%" />
+<col width="4%" />
+<col width="7%" />
+<col width="62%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+<th align="right">Best q</th>
+<th align="right">Het donors</th>
+<th align="left">Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">AHI1</td>
+<td align="right">-5 (484)</td>
+<td align="right">-24 (486)</td>
+<td align="right">-29 (1,144)</td>
+<td align="right">0.0004</td>
+<td align="right">4</td>
+<td align="left">Joubert syndrome (DDG2P), SFARI syndromic; expression
+up 2.6-fold at 6 hr; junction-screen hit</td>
+</tr>
+<tr class="even">
+<td align="left">WDR45B</td>
+<td align="right">+8 (52)</td>
+<td align="right">+8 (358)</td>
+<td align="right">+18 (598)</td>
+<td align="right">0.0150</td>
+<td align="right">4</td>
+<td align="left">Expression up 2.4-fold at 1 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">KPNA2</td>
+<td align="right">+8 (97)</td>
+<td align="right">+2 (284)</td>
+<td align="right">+12 (500)</td>
+<td align="right">0.0032</td>
+<td align="right">3</td>
+<td align="left">Synapse (GO); expression up 1.9-fold at 6 hr, below the
+2-fold annotation rule</td>
+</tr>
+</tbody>
+</table>
+<p>For <strong>AHI1</strong>, variant chr6:135465851:C&gt;T is
+significant for six exonic parts. The highlighted part has a small
+baseline effect (−5 percentage points, p = 0.46; 484 informative reads),
+compared with −24 and −29 points at 1 and 6 hours (p approximately 3 ×
+10⁻⁶ and 10⁻⁶). Other parts already show nominal baseline associations,
+and coverage increases at 6 hours. This is a follow-up candidate, not
+evidence that the variant becomes active only after stimulation.</p>
+<p><img src="assets/fdr/AHI1_null.png" /></p>
+<div id="read-alignments-at-all-three-timepoints"
+class="section level3">
+<h3>Read alignments at all three timepoints</h3>
+<p>The following <strong>isoLASER sashimi plots</strong> use its
+<code>nigiri_plot</code> renderer, with the project’s plotting fixes and
+a layout for comparing 0, 1 and 6 hours. Reads are separated into REF
+and ALT using <strong>isoLASER’s recorded allele assignments for the
+exact variant–part association</strong>. Each timepoint pools only
+donors meeting the same criterion as the test: at least 30 informative
+reads and an ALT fraction between 0.25 and 0.75. Donor IDs appear above
+the tracks; the contributing donors can change between timepoints.</p>
+<p><strong>How to read these plots:</strong> blue is REF, orange is ALT,
+and yellow marks the tested exonic part. Coverage heights and numbers on
+the curves are <strong>raw alignment counts</strong>, with every
+junction supported by at least one read shown
+(<code>-M 1 --min-junction-ratio 0</code>). All six tracks within a gene
+share the same coverage scale. The transcript diagrams show
+representative local structures, not every isoform.</p>
+<p><strong>The inclusion percentage is a different quantity from an arc
+count.</strong> A label such as <strong>65/137 (47.4%)</strong> means 65
+of 137 REF reads were assigned to transcripts containing the tested
+part. isoLASER determines this from the read’s transcript assignment
+(<code>ZT</code>); a partial read may not physically reach that part.
+Each panel therefore also gives the number of reads that actually
+overlap the displayed window. The reported dPSI uses donor-normalized
+counts, so it need not equal the difference between the two raw pooled
+percentages.</p>
+<p>The calculations below show <strong>included / (included +
+excluded)</strong>; both counts come from transcript assignments.
+<strong>No single junction arc is the statistical test.</strong>
+isoLASER tests the allele × part-included/excluded 2×2 table, using AMI
+as the permutation statistic. dPSI describes the effect size. Donor
+tables are scaled to their mean depth and rounded before pooling; the
+6-hour calculation below each figure shows these normalized counts.</p>
+<div id="ahi1-alternative-exon-usage" class="section level4">
+<h4>AHI1: alternative exon usage</h4>
+<p>The highlighted 85-base part is an annotated exon in some
+transcripts; other transcripts skip it. Assigned inclusion is lower for
+ALT than REF, with a larger difference at 1 and 6 hours. Read depth and
+the donor set also change, so these panels do not establish an
+allele-by-stimulation interaction.</p>
+<p><img src="assets/fdr/AHI1_sashimi.png" /></p>
+<p><strong>Tested association:</strong> chr6:135465851:C&gt;T versus
+inclusion of the yellow 85-base part, chr6:135495813–135495898
+(isoLASER’s 0-based coordinates). Arcs jumping over this part support
+exclusion; arcs joining it to neighboring exons support inclusion. The
+other arcs provide transcript context.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="35%" />
+<col width="35%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">REF: included / (included + excluded)</th>
+<th align="left">ALT: included / (included + excluded)</th>
+<th align="right">Normalized dPSI (pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">65 / (65 + 72) = 47.4%</td>
+<td align="left">148 / (148 + 200) = 42.5%</td>
+<td align="right">-5.2</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">82 / (82 + 58) = 58.6%</td>
+<td align="left">125 / (125 + 222) = 36.0%</td>
+<td align="right">-23.5</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">140 / (140 + 154) = 47.6%</td>
+<td align="left">156 / (156 + 695) = 18.3%</td>
+<td align="right">-29.1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where does the 140 come from? AHI1, 6 hr, REF
+allele:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Donor</th>
+<th align="right">Part included</th>
+<th align="right">Part excluded</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">CD_31</td>
+<td align="right">46</td>
+<td align="right">59</td>
+</tr>
+<tr class="even">
+<td align="left">CD_36</td>
+<td align="right">39</td>
+<td align="right">47</td>
+</tr>
+<tr class="odd">
+<td align="left">CD_48</td>
+<td align="right">55</td>
+<td align="right">48</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="right">140</td>
+<td align="right">154</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Included: 46 + 39 + 55 = 140. Excluded: 59 + 47 + 48 =
+154.</strong> Therefore, <strong>140 / (140 + 154) = 47.6%</strong>.
+Each read is counted once, using whether its assigned transcript
+contains the yellow part; these are <strong>not sums of arc
+labels</strong>. CD_21 is excluded at this timepoint because its ALT
+fraction (0.759) exceeds the donor-filter maximum of 0.75.</p>
+<p>At <strong>6 hr</strong>, the donor-normalized effect calculation is
+<strong>100 x (157/850 - 140/294) = -29.1 percentage points</strong>
+(ALT inclusion minus REF inclusion).</p>
+<p><a href="assets/fdr/AHI1_sashimi.pdf">Open AHI1 as PDF</a> to enlarge
+junction labels.</p>
+</div>
+<div id="wdr45b-limited-direct-coverage-of-the-alternative-exon"
+class="section level4">
+<h4>WDR45B: limited direct coverage of the alternative exon</h4>
+<p>This part belongs to an alternative exon near the transcript’s
+3-prime end. <strong>Treat this as a candidate requiring
+validation.</strong> Many reads are assigned an inclusion status from
+their transcript identity without reaching this region: at 6 hours only
+<strong>1 of 370 ALT reads</strong> overlaps the displayed window. The
+assigned ALT inclusion of 186/370 (50.3%) therefore has very little
+direct local alignment support in this plot. WDR45B is a weaker
+visualization example than its association statistics alone suggest.</p>
+<p><img src="assets/fdr/WDR45B_sashimi.png" /></p>
+<p><strong>Tested association:</strong> chr17:82643963:C&gt;T versus
+inclusion of the yellow 220-base part, chr17:82626788–82627008
+(0-based). The long arc crossing the yellow band supports its exclusion;
+the test counts assigned inclusion as well as exclusion, including
+partial reads that do not reach this window.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="35%" />
+<col width="35%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">REF: included / (included + excluded)</th>
+<th align="left">ALT: included / (included + excluded)</th>
+<th align="right">Normalized dPSI (pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">5 / (5 + 13) = 27.8%</td>
+<td align="left">12 / (12 + 22) = 35.3%</td>
+<td align="right">+7.5</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">42 / (42 + 108) = 28.0%</td>
+<td align="left">77 / (77 + 129) = 37.4%</td>
+<td align="right">+7.9</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">78 / (78 + 149) = 34.4%</td>
+<td align="left">186 / (186 + 184) = 50.3%</td>
+<td align="right">+18.0</td>
+</tr>
+</tbody>
+</table>
+<p>At <strong>6 hr</strong>, the donor-normalized effect calculation is
+<strong>100 x (188/373 - 73/225) = +18.0 percentage points</strong> (ALT
+inclusion minus REF inclusion).</p>
+<p><a href="assets/fdr/WDR45B_sashimi.pdf">Open WDR45B as PDF</a>.</p>
+</div>
+<div id="kpna2-a-retained-intron-segment" class="section level4">
+<h4>KPNA2: a retained intron segment</h4>
+<p>The yellow 100-base part is removed as an intron in some transcripts
+and retained within a longer exon in others. An arc across the yellow
+interval supports <strong>removal</strong> of the part; continuous
+aligned coverage through it supports retention. Assigned inclusion is
+higher for ALT, with the largest normalized difference at 6 hours (+11.6
+percentage points). Partial reads and transcript assignments still
+explain why the inclusion totals are not simply the sum of local
+junction counts.</p>
+<p><img src="assets/fdr/KPNA2_sashimi.png" /></p>
+<p><strong>Tested association:</strong> chr17:68035783:T&gt;C versus
+retention of the yellow 100-base part, chr17:68042999–68043099
+(0-based). The short arc exactly across this band supports
+<strong>removal</strong>, not retention: at 6 hr it has <strong>187 REF
+and 135 ALT reads</strong>. Those arc counts are not the full
+excluded-read totals, because isoLASER uses transcript assignments for
+all informative reads.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="35%" />
+<col width="35%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">REF: included / (included + excluded)</th>
+<th align="left">ALT: included / (included + excluded)</th>
+<th align="right">Normalized dPSI (pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">2 / (2 + 46) = 4.2%</td>
+<td align="left">7 / (7 + 42) = 14.3%</td>
+<td align="right">+7.6</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">7 / (7 + 159) = 4.2%</td>
+<td align="left">8 / (8 + 111) = 6.7%</td>
+<td align="right">+1.9</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">7 / (7 + 274) = 2.5%</td>
+<td align="left">28 / (28 + 192) = 12.7%</td>
+<td align="right">+11.6</td>
+</tr>
+</tbody>
+</table>
+<p>At <strong>6 hr</strong>, the donor-normalized effect calculation is
+<strong>100 x (30/213 - 7/287) = +11.6 percentage points</strong> (ALT
+inclusion minus REF inclusion).</p>
+<p><a href="assets/fdr/KPNA2_sashimi.pdf">Open KPNA2 as PDF</a>.</p>
+<p><a href="assets/fdr/sashimi_summary.tsv">Download allele inclusion
+counts and window coverage</a>, <a
+href="assets/fdr/sashimi_donor_counts.tsv">per-donor count tables</a>,
+or <a href="assets/fdr/sashimi_junction_counts.tsv">the exact junction
+counts</a>. Reproducible scripts:
+<code>10.isolaser_permutation/25.sashimi_candidates.py</code> and
+<code>26.sashimi_layout.R</code>; original calling and permutation
+results are unchanged.</p>
+<p>CACNA1E and PARK7 are also relevant neuronal examples in the full
+table. Both are reported at 1 hour with nominal support at another
+timepoint.</p>
+</div>
+</div>
+</div>
+<div id="full-interactive-gene-table" class="section level2">
+<h2>Full interactive gene table</h2>
+<p>The table includes all <strong>131 reported genes</strong>. The
+variant, part, timepoint effects, best q and donor count refer to the
+representative association; <strong>Significant at</strong> describes
+the gene across all its associations.</p>
+<div id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2e-04\" data-max=\"0.046\" data-scale=\"5\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Search or filter genes, sort columns, and export the filtered table as CSV.<\/caption>","data":[["APLP2","ARF1","ATL1","CST3","CYBA","DHX36","HLA-A","HLA-C","HNRNPK","REXO2","RPL37A","RPLP0","RPS5","RPS8","TEFM","TMCO1","TRAPPC5","KANSL1","TBCA","LZIC","LUC7L3","UBE2V2","RPF1","EIF3I","CHORDC1","AKAP1","LRPPRC","NAXE","PAPOLA","PTPRS","UGP2","ELAVL4","PSMD6","HMGN1","ASAH1","CUTA","ENSG00000290993","FCF1","KPNA2","PCBP4","ROGDI","RPL28","TSTD2","UBAP2","WASF1","WDR45B","ALDH3A2","ASXL3","ATAD1","CCDC186","DCBLD2","EIF2AK1","HNRNPL","LMBRD1","NAA38","ODF2L","PATJ","PKM","STK33","TAX1BP1","WSB1","ACTB","DSTN","EIF1","EIF5A","FERMT2","FKBP1A","RHOA","RHOC","RPL11","RPL19","RPS11","RPS20","SLC25A4","ZNRD2","EIF4E2","CNBP","CACNA1E","EMSY","SNHG5","ZDHHC21","RPS2","UFSP2","ATP5MJ","GOLGA8B","CNIH1","ATP5MG","YEATS4","SMARCB1","CHD9","SUCO","CNOT1","HSPH1","KCNB2","EHBP1","ZNF749","NDUFA2","CEP170","KRT8","PARK7","RRP15","DNTTIP2","HOTAIRM1","LEPROT","RPS7","SMC3","UNC79","ZFAND2A","ADGRL3","C11orf58","DDX17","RACK1","RPL27","RPS14","MIX23","PFKP","CD9","SPOCK3","SORBS2","LAMTOR4","UBE2Q2P2","SLC25A36","ANKRD36B","FAM200B","TNRC6B","XPA","AHI1","ANKRD50","ENSG00000284707","MARCHF7","TBCB"],["Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","Significant at 3 timepoints","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints","Significant at 2 timepoints"],["0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","0hr, 1hr, 6hr","1hr","1hr","6hr","6hr","1hr","0hr","0hr","0hr","0hr","1hr","1hr","1hr","1hr","6hr","1hr","1hr","6hr","1hr","1hr","6hr","6hr","1hr","6hr","1hr","6hr","1hr","1hr","1hr","6hr","1hr","6hr","6hr","6hr","1hr","1hr","6hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","0hr","1hr","6hr","6hr","6hr","0hr","0hr","1hr","0hr","0hr","1hr","1hr","6hr","6hr","6hr","6hr","6hr","6hr","1hr","6hr","1hr","6hr","6hr","1hr","6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","0hr, 1hr","0hr, 1hr","0hr, 1hr","0hr, 6hr","0hr, 6hr","0hr, 1hr","0hr, 1hr","0hr, 1hr","0hr, 6hr","0hr, 6hr","0hr, 6hr","0hr, 1hr","0hr, 6hr","0hr, 6hr","1hr, 6hr","0hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr","1hr, 6hr"],["-24 (458)","+22 (713)","+36 (592)","-57 (1,294)","-52 (226)","+44 (125)","+40 (139)","-16 (257)","-20 (303)","-26 (310)","+11 (4,307)","+45 (3,200)","+50 (935)","+14 (3,734)","-65 (79)","+47 (1,436)","+36 (793)","-26 (117)","+15 (465)","-44 (114)","+13 (930)","-22 (102)","+61 (41)","+9 (471)","+40 (61)","no score","no score","no score","no score","no score","+40 (38)","-48 (50)","-48 (67)","+30 (148)","+7 (36)","+7 (72)","+2 (262)","no score","+8 (97)","-4 (59)","-12 (60)","+15 (37)","+6 (170)","-2 (91)","+3 (127)","+8 (52)","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","-48 (129)","-35 (1,058)","-14 (1,608)","+31 (991)","-84 (77)","-32 (389)","-57 (134)","+79 (363)","+40 (6,511)","-13 (2,954)","+13 (3,100)","+13 (1,700)","+38 (743)","-64 (66)","+30 (128)","+23 (283)","no score","no score","no score","no score","+12 (929)","+43 (80)","+8 (1,230)","+38 (36)","-10 (231)","-14 (567)","+20 (118)","-17 (167)","+19 (298)","-38 (72)","-12 (201)","+13 (203)","-22 (171)","+49 (32)","-77 (38)","-21 (97)","-3 (438)","-19 (41)","-7 (595)","-9 (177)","no score","no score","no score","no score","no score","no score","no score","+42 (206)","-57 (89)","-48 (141)","+17 (1,878)","+17 (1,328)","+76 (5,508)","+59 (62)","+21 (140)","-33 (109)","-16 (162)","-20 (124)","-14 (514)","+68 (31)","-35 (94)","+38 (67)","+30 (76)","+17 (257)","+32 (38)","-5 (484)","-17 (81)","+27 (50)","+24 (52)","-9 (661)"],["-26 (602)","+20 (1,222)","+34 (1,573)","-53 (2,282)","-42 (316)","+25 (290)","+39 (229)","-12 (435)","-18 (523)","-19 (229)","+12 (6,344)","+48 (3,933)","+54 (2,394)","+15 (3,140)","-36 (74)","+44 (430)","+43 (1,540)","-20 (183)","+12 (851)","-25 (247)","+16 (1,907)","-17 (342)","+67 (55)","+14 (553)","+46 (129)","+58 (74)","+10 (78)","no score","-5 (37)","+60 (42)","+8 (78)","+0 (61)","+8 (214)","+12 (219)","+21 (104)","+34 (123)","-17 (396)","-16 (68)","+2 (284)","+48 (53)","+32 (100)","+10 (55)","+18 (540)","+20 (171)","+7 (214)","+8 (358)","+46 (96)","no score","-18 (680)","no score","-30 (119)","+29 (92)","+55 (58)","no score","-36 (225)","no score","no score","no score","-26 (77)","+68 (45)","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","+40 (214)","-30 (83)","+18 (111)","+29 (98)","no score","+23 (129)","+10 (2,211)","+35 (43)","-8 (349)","-14 (1,053)","+21 (183)","-14 (373)","+20 (375)","-9 (178)","-12 (335)","+10 (404)","-25 (250)","+31 (214)","-17 (84)","-24 (256)","-9 (706)","-21 (92)","-17 (980)","-6 (98)","-47 (73)","+44 (80)","+37 (113)","+35 (1,387)","+25 (156)","-50 (87)","+40 (63)","+24 (207)","-67 (310)","-38 (271)","no score","no score","+74 (7,333)","+50 (74)","+11 (297)","-18 (145)","-15 (320)","-15 (213)","-11 (911)","+29 (40)","no score","+7 (49)","+12 (243)","+23 (514)","+31 (124)","-24 (486)","-31 (246)","+21 (203)","+42 (157)","-14 (1,095)"],["-31 (649)","+20 (1,323)","+33 (1,694)","-58 (2,558)","-52 (330)","+19 (327)","+48 (266)","-10 (678)","-21 (326)","-30 (219)","+13 (6,428)","+46 (4,281)","+54 (2,295)","+15 (2,368)","-43 (132)","+47 (2,265)","+38 (1,225)","-30 (310)","+10 (801)","-50 (161)","+16 (1,301)","-25 (383)","+57 (49)","+13 (306)","+55 (257)","+27 (33)","+0 (76)","-42 (65)","-10 (149)","+2 (54)","+15 (72)","+21 (43)","-1 (194)","no score","+8 (65)","+14 (96)","-4 (129)","no score","+12 (500)","+6 (66)","-5 (81)","+28 (185)","+3 (134)","+8 (106)","+13 (260)","+18 (598)","no score","-93 (31)","no score","-35 (115)","no score","no score","no score","+46 (89)","no score","-53 (125)","+59 (48)","+26 (78)","no score","no score","+40 (225)","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","no score","+20 (306)","-35 (153)","+17 (411)","+40 (107)","no score","no score","+5 (2,074)","+35 (43)","-7 (336)","-11 (1,002)","no score","-17 (207)","+18 (489)","-30 (215)","-16 (399)","+14 (740)","-28 (292)","+12 (126)","-74 (127)","-31 (129)","-14 (707)","-20 (198)","-8 (969)","-23 (260)","-39 (107)","+45 (121)","+38 (81)","+33 (597)","+38 (131)","-64 (80)","+49 (120)","+25 (82)","no score","no score","no score","+17 (1,519)","no score","+36 (30)","+10 (340)","-29 (244)","-16 (264)","-11 (293)","-10 (887)","+43 (98)","-22 (342)","+36 (140)","+32 (214)","+9 (497)","+31 (114)","-29 (1,144)","-34 (317)","+28 (173)","+39 (289)","-16 (1,483)"],[0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0004,0.00078,0.0004,0.0004,0.0004,0.00041,0.00041,0.0004,0.00041,0.021,0.0093,0.0004,0.018,0.012,0.013,0.016,0.035,0.0059,0.023,0.024,0.00041,0.0032,0.0011,0.046,0.023,0.02,0.032,0.038,0.015,0.00041,0.0004,0.00041,0.0004,0.004,0.027,0.0011,0.0004,0.00041,0.0004,0.015,0.045,0.033,0.0034,0.0004,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.014,0.028,0.00041,0.0015,0.0022,0.015,0.0002,0.00088,0.00041,0.0084,0.013,0.00041,0.025,0.023,0.035,0.0094,0.0004,0.0004,0.0018,0.0037,0.0004,0.018,0.035,0.043,0.00041,0.0004,0.00041,0.0011,0.0017,0.0004,0.0004,0.0004,0.0004,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.00037,0.0011,0.00077,0.0041,0.017,0.02,0.0038,0.0094,0.0095,0.00077,0.00041,0.024,0.0004,0.0004,0.0032,0.0004,0.0004],[3,4,4,3,3,3,1,2,3,4,4,4,2,4,3,4,2,4,2,4,4,4,1,4,2,2,2,1,3,1,1,1,2,1,2,1,4,2,3,1,1,2,4,3,4,4,2,1,2,3,2,1,1,2,1,2,1,2,2,1,3,3,3,2,4,2,4,3,4,4,3,2,2,3,2,3,4,2,3,3,1,1,2,2,1,2,4,2,4,4,4,4,4,4,4,2,2,4,3,2,3,2,2,2,2,3,2,2,4,2,2,3,1,4,2,2,4,3,2,3,2,4,2,4,3,2,4,4,2,3,4],["neuron projection development","synaptic signaling","neuron projection development","","","neuron projection; neuron projection development","","","","","","synapse","","","","","","","","","","","","","","","","","","synapse; neuron projection; neuron projection development","","neuron projection","","","","","","","synapse; synaptic signaling","","","neuron projection","","","","","","","synapse; synaptic signaling","","","","","","","","","","","","","synapse; neuron projection; neuron projection development","","","","","","synapse; neuron projection","neuron projection","","","","","","","","","synaptic signaling","","","","","","","","","","","","","","","","neuron projection","","","","","","neuron projection; neuron death","","","","","","","","","synapse; neuron projection","","","neuron projection; neuron death","","synapse","","","","","synapse; neuron projection","","","","","","","","","","","",""],["","ARF1-related periventricular nodular heterotopia","ATL1-related hereditary spastic paraplegia","","","","SFARI score 2","","SFARI score 2, syndromic; HNRNPK-related Au-Kline syndrome","","","","","","","TMCO1-related craniofacial dysmorphism, skeletal anomalies, and intellectual developmental disorder syndrome","","SFARI score 1, syndromic; KANSL1-related chromosome 17q21.31 microdeletion syndrome","","","","","","","","","LRPPRC-related Leigh syndrome, French-Canadian type","NAXE-related lethal neurometabolic disorder of early childhood","","","UGP2-related epileptic encephalopathy","","SFARI score 1","SFARI score 2","ASAH1-related Farber lipogranulomatosis; ASAH1-related spinal muscular atrophy with progressive myoclonic epilepsy","","","","","","ROGDI-related Kohlschutter-Tonz syndrome","","","","SFARI score -, syndromic","","ALDH3A2-related Sjogren-Larsson syndrome","SFARI score 1, syndromic; ASXL3-related Bainbridge-Ropers syndrome","","","","","","LMBRD1-related methylmalonic aciduria and homocystinuria","","","SFARI score 2","","","","","SFARI score 1, syndromic; ACTB-related Baraitser-Winter syndrome; ACTB-related haploinsufficiency syndrome","","","EIF5A-related craniofacial-neurodevelopmental disorder","","","","","RPL11-related Diamond-Blackfan anemia with cleft palate and abnormal thumbs","","","","SLC25A4-related severe early-onset mitochondrial disease and loss of mitochondrial DNA copy number; SLC25A4-related Fontaine progeroid syndrome","","","","SFARI score 1; CACNA1E-related epileptic encephalopathy with contractures, macrocephaly, and dyskinesia","SFARI score 2","","","","","","","","","","SMARCB1-related rhabdoid tumor predisposition syndrome; SMARCB1-related Coffin-Siris syndrome","","","SFARI score 2, syndromic; CNOT1-related holoprosencephaly with or without pancreatic agenesis; CNOT1-related neurodevelopmental disorder","","","","","","","","","","","","","","SFARI score 2, syndromic; SMC3-related Cornelia de Lange syndrome","SFARI score 2","","","","","","","","","","","","","","","","","","SFARI score 2; TNRC6B-related neurodevelopmental disorder","XPA-related xeroderma pigmentosum","SFARI score -, syndromic; AHI1-related Joubert syndrome","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","up at 1 hr","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","up at 1 and 6 hr","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","yes","","yes","","","","","yes","yes","","","","","yes","","","","","","","","","","","","","","","","","","","","","","","","","","","","","yes","","","","","yes","yes","","yes","","","","","","","","","","","","","","","","","","","","","","","yes","","yes","","","","yes","","yes","yes",""],["chr11:130143671:T&gt;C","chr1:228098261:G&gt;A","chr14:50632326:G&gt;A","chr20:23637789:C&gt;T","chr16:88643419:A&gt;G","chr3:154280584:C&gt;T","chr6:29945264:C&gt;T","chr6:31269346:T&gt;C","chr9:83980154:C&gt;T","chr11:114443914:T&gt;C","chr2:216501462:C&gt;A","chr12:120200811:A&gt;G","chr19:58394795:T&gt;C","chr1:44778094:C&gt;T","chr17:30904132:C&gt;T","chr1:165759531:C&gt;T","chr19:7682406:T&gt;G","chr17:46171991:C&gt;T","chr5:77776296:G&gt;C","chr1:9930408:G&gt;T","chr17:50741683:G&gt;A","chr8:48008429:C&gt;G","chr1:84480988:G&gt;A","chr1:32231007:T&gt;C","chr11:90223037:G&gt;A","chr17:57120552:G&gt;C","chr2:43995991:C&gt;T","chr1:156591858:G&gt;C","chr14:96547911:G&gt;A","chr19:5286060:C&gt;T","chr2:63841143:G&gt;C","chr1:50201233:C&gt;T","chr3:64010585:C&gt;T","chr21:39348567:C&gt;T","chr8:18056460:G&gt;A","chr6:33418109:A&gt;G","chr3:129399198:T&gt;A","chr14:74716091:T&gt;C","chr17:68035783:T&gt;C","chr3:51957958:C&gt;T","chr16:4797045:C&gt;T","chr19:55385958:A&gt;G","chr9:97627421:C&gt;T","chr9:33989066:G&gt;T","chr6:110107129:C&gt;T","chr17:82643963:C&gt;T","chr17:19675559:A&gt;T","chr18:33607676:GTC&gt;AA","chr10:87790352:C&gt;T","chr10:114127463:G&gt;T","chr3:98819211:C&gt;T","chr7:6046116:A&gt;TTTTTTT","chr19:38836397:A&gt;T","chr6:69697572:A&gt;T","chr17:7857385:A&gt;G","chr1:86358801:A&gt;T","chr1:61990341:G&gt;A","chr15:72202611:A&gt;T","chr11:8474721:C&gt;T","chr7:27740145:G&gt;A","chr17:27308206:G&gt;A","chr7:5529549:C&gt;G","chr20:17604617:A&gt;G","chr17:41690888:C&gt;G","chr17:7311591:T&gt;C","chr14:52893422:G&gt;T","chr20:1392867:G&gt;C","chr3:49362552:A&gt;G","chr1:112707081:C&gt;T","chr1:23696351:G&gt;C","chr17:39204181:C&gt;A","chr19:49497575:T&gt;C","chr8:56073081:T&gt;C","chr4:185143455:C&gt;G","chr11:65570902:C&gt;T","chr2:232567145:A&gt;T","chr3:129170458:T&gt;A","chr1:181483500:C&gt;CT","chr11:76451921:G&gt;A","chr6:85678169:G&gt;T","chr9:14680111:A&gt;G","chr16:1964589:C&gt;T","chr4:185418480:C&gt;T","chr14:103915164:T&gt;C","chr15:34552979:T&gt;C","chr14:54427577:T&gt;C","chr11:118401604:T&gt;G","chr12:69362843:G&gt;A","chr22:23791876:C&gt;A","chr16:53226393:G&gt;A","chr1:172569135:G&gt;A","chr16:58599271:C&gt;T","chr13:31137181:C&gt;T","chr8:72568169:G&gt;A","chr2:62864892:G&gt;A","chr19:57435555:G&gt;C","chr5:140647630:T&gt;C","chr1:243199086:C&gt;T","chr12:52905050:T&gt;G","chr1:7961717:T&gt;C","chr1:218302520:G&gt;A","chr1:93877466:A&gt;G","chr7:27099209:G&gt;A","chr1:65420714:T&gt;C","chr2:3575323:T&gt;G","chr10:110589681:G&gt;A","chr14:93618347:G&gt;A","chr7:1159995:T&gt;C","chr4:61497171:C&gt;T","chr11:16755046:C&gt;A","chr22:38494088:G&gt;T","chr5:181239507:A&gt;G","chr17:43002951:G&gt;A","chr5:150447721:T&gt;G","chr3:122363003:C&gt;G","chr10:3136622:G&gt;C","chr12:6225509:AATAATA&gt;C","chr4:166734709:C&gt;T","chr4:185956231:G&gt;A","chr7:100149506:G&gt;A","chr15:82404653:A&gt;G","chr3:140963243:T&gt;C","chr2:97560841:C&gt;G","chr4:15687141:G&gt;A","chr22:40246080:G&gt;A","chr9:97697295:T&gt;C","chr6:135465851:C&gt;T","chr4:124667424:G&gt;T","chr7:97972258:G&gt;A","chr2:159747851:G&gt;A","chr19:36125941:G&gt;A"],["chr11:130123611-130123779:+","chr1:228082790-228082850:+","chr14:50629950-50629994:+","chr20:23637945-23637955:-","chr16:88643289-88643312:-","chr3:154319080-154319284:-","chr6:29944616-29944634:+","chr6:31269965-31270085:-","chr9:83980118-83980152:-","chr11:114444540-114444585:+","chr2:216499831-216499866:+","chr12:120200832-120200852:-","chr19:58388417-58388480:+","chr1:44775600-44775635:+","chr17:30903517-30904038:-","chr1:165754892-165754990:-","chr19:7680878-7681026:+","chr17:46170276-46170854:-","chr5:77691498-77693265:-","chr1:9943248-9943348:-","chr17:50737286-50737360:+","chr8:48034865-48035061:+","chr1:84482995-84483330:+","chr1:32226283-32226320:+","chr11:90212798-90213308:-","chr17:57096577-57096590:+","chr2:43975645-43975672:-","chr1:156594090-156594129:+","chr14:96552983-96553532:+","chr19:5256107-5256119:-","chr2:63842538-63842599:+","chr1:50108965-50109065:+","chr3:64023274-64023391:-","chr21:39347516-39347915:-","chr8:18075922-18076037:-","chr6:33418070-33418086:-","chr3:129396216-129396293:-","chr14:74715820-74715950:+","chr17:68042999-68043099:+","chr3:51961940-51962079:-","chr16:4797840-4797861:-","chr19:55392085-55392100:+","chr9:97627115-97627305:-","chr9:34048824-34048868:-","chr6:110179649-110179670:-","chr17:82626788-82627008:-","chr17:19648850-19648877:+","chr18:33607676-33608074:+","chr10:87770951-87771041:-","chr10:114125885-114126105:-","chr3:98901121-98901171:-","chr7:6058147-6058242:-","chr19:38841612-38841682:-","chr6:69796597-69796608:-","chr17:7857198-7857263:-","chr1:86358343-86358786:-","chr1:61991481-61991779:+","chr15:72209844-72209859:-","chr11:8593743-8593956:-","chr7:27816394-27816520:+","chr17:27302434-27303319:+","chr7:5530604-5530627:-","chr20:17591931-17592063:+","chr17:41689265-41689777:+","chr17:7311481-7311577:+","chr14:52951035-52951050:-","chr20:1371147-1372075:-","chr3:49411976-49411994:-","chr1:112705168-112705201:-","chr1:23694791-23695797:+","chr17:39202448-39202988:+","chr19:49497325-49497519:+","chr8:56074356-56074380:-","chr4:185145354-185145758:+","chr11:65570510-65570602:+","chr2:232568944-232569178:+","chr3:129171633-129171651:-","chr1:181793667-181793793:+","chr11:76453388-76453931:+","chr6:85677794-85677868:-","chr9:14683570-14683729:-","chr16:1962909-1962949:-","chr4:185418513-185418586:-","chr14:103914478-103914633:-","chr15:34583651-34583665:-","chr14:54436078-54436126:-","chr11:118407097-118408999:+","chr12:69361316-69361433:+","chr22:23791867-23791894:+","chr16:53207988-53208031:+","chr1:172585017-172585086:+","chr16:58599009-58599235:-","chr13:31140309-31141121:-","chr8:72568313-72568454:+","chr2:62858405-62858416:+","chr19:57438101-57438456:+","chr5:140645678-140645725:-","chr1:243185778-243186072:-","chr12:52905052-52905076:-","chr1:7961735-7961747:+","chr1:218302559-218302671:+","chr1:93875665-93875783:-","chr7:27099006-27099073:+","chr1:65421327-65421459:+","chr2:3575556-3575591:+","chr10:110591132-110592199:+","chr14:93620891-93621041:+","chr7:1153224-1153241:-","chr4:62068183-62068217:+","chr11:16755892-16756024:+","chr22:38488115-38488961:-","chr5:181240215-181240312:-","chr17:42999185-42999279:+","chr5:150449436-150449485:-","chr3:122383147-122383173:-","chr10:3129006-3129818:+","chr12:6200411-6200421:+","chr4:167062491-167062537:-","chr4:185925409-185925530:-","chr7:100148993-100149053:+","chr15:82395232-82395301:+","chr3:140963471-140966211:+","chr2:97550103-97550166:-","chr4:15681905-15681968:+","chr22:40246102-40246362:+","chr9:97682199-97682430:-","chr6:135495813-135495898:-","chr4:124709999-124710517:-","chr7:97970545-97970730:-","chr2:159712606-159712661:+","chr19:36124249-36124363:+"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Pattern<\/th>\n      <th>Significant at<\/th>\n      <th>0 hr<\/th>\n      <th>1 hr<\/th>\n      <th>6 hr<\/th>\n      <th>Best q<\/th>\n      <th>Het donors<\/th>\n      <th>Neuronal GO term<\/th>\n      <th>Developmental disorder or autism<\/th>\n      <th>Expression after stimulation<\/th>\n      <th>Splicing after stimulation<\/th>\n      <th>Variant<\/th>\n      <th>Exonic part<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"lengthMenu":[10,25,50,150],"scrollX":true,"order":[],"dom":"Blfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[6,7]}],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<p>The four annotations below help select examples; they are exploratory
+and are not enrichment tests or evidence of stimulation-dependent
+allelic effects.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Annotation</th>
+<th align="left">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Neuronal GO term</td>
+<td align="left">Curated, non-electronic GO annotation to synapse,
+neuron projection, synaptic signaling, neuron projection development or
+neuron death.</td>
+</tr>
+<tr class="even">
+<td align="left">Developmental disorder or autism</td>
+<td align="left">SFARI score 1, 2 or syndromic; or a strong/definitive
+DDG2P association. Not all listed disorders are neurological.</td>
+</tr>
+<tr class="odd">
+<td align="left">Expression after stimulation</td>
+<td align="left">In the 100-line cohort of <a
+href="https://doi.org/10.1126/science.adw3949">Liang et al., Science
+2026</a>, pooled expression changes ≥2-fold at 1 or 6 hours with the
+same direction in ≥75% of lines. This is a descriptive check, without a
+statistical test.</td>
+</tr>
+<tr class="even">
+<td align="left">Splicing after stimulation</td>
+<td align="left">A junction-usage hit in our <a
+href="splicing_candidates.html">long-read stimulation screen</a>.</td>
+</tr>
+</tbody>
+</table>
+<!-- # Interpretation limits -->
+<!-- - This is within-donor allele-specific splicing analysis with four donors; -->
+<!--   20 of the 131 reported genes have a representative -->
+<!--   association supported by one heterozygous donor. It does not establish a -->
+<!--   population-level sQTL. -->
+<!-- - Significance at one timepoint and not another does not demonstrate a change -->
+<!--   with stimulation. That requires a direct allele × time test. -->
+<!-- - Permutation does not eliminate alignment or variant-calling artifacts. -->
+<!--   HLA-A and HLA-C warrant particular mapping checks because of their polymorphism. -->
+<!-- - Rounded scores and conservative treatment of undefined shuffles can reduce -->
+<!--   power. Failure to pass the screen does not establish absence of an effect. -->
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DT_0.22           data.table_1.14.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12       pillar_1.9.0      compiler_4.2.0    bslib_0.3.1      
+ [5] later_1.3.0       jquerylib_0.1.4   git2r_0.30.1      highr_0.9        
+ [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
+[13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3  
+[17] rlang_1.1.2       cli_3.6.1         rstudioapi_0.13   crosstalk_1.2.0  
+[21] yaml_2.3.5        xfun_0.41         fastmap_1.1.0     stringr_1.5.1    
+[25] knitr_1.39        fs_1.5.2          vctrs_0.6.5       sass_0.4.1       
+[29] htmlwidgets_1.5.4 rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
+[33] fansi_1.0.3       rmarkdown_2.25    magrittr_2.0.3    promises_1.2.0.1 
+[37] htmltools_0.5.2   httpuv_1.6.5      utf8_1.2.2        stringi_1.7.6    </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

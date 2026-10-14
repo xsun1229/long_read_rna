@@ -1,0 +1,437 @@
+---
+title: "Genome-wide FDR for allele-specific splicing"
+author: "XSun"
+date: "2026-10-14"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+A <- "docs/assets/fdr"
+ov <- fread(file.path(A, "fdr_overview.tsv"))
+rounds <- fread(file.path(A, "adaptive_rounds.tsv"))
+cal <- fread(file.path(A, "calibration.tsv"))
+cons <- fread(file.path(A, "consistency.tsv"))
+g <- fread(file.path(A, "significant_genes.tsv"))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+pct <- function(x, digits=0) sprintf(paste0("%.", digits, "f%%"), 100 * x)
+interval <- function(lo, hi, digits=1) paste(pct(lo, digits), pct(hi, digits), sep=" - ")
+any_tp <- ov[tp == "any timepoint"]
+calp <- cal[tp == "all timepoints"]
+cal_bh <- cal[measure == "runs with any BH discovery (q < 0.05)"]
+fold <- function(gn, t) sprintf("%.1f", 2^g[gene == gn][[paste0("logFC_", t)]])
+effect_reads <- function(d, t) fifelse(is.na(d[[paste0("dpsi_", t)]]), "no score",
+  sprintf("%+.0f (%s)", 100 * d[[paste0("dpsi_", t)]], fmt(d[[paste0("het_cov_", t)]])))
+best_q <- function(d) signif(pmin(d$q_bh_0hr, d$q_bh_1hr, d$q_bh_6hr, na.rm=TRUE), 2)
+example_table <- function(genes, why) {
+  d <- g[match(genes, gene)]
+  data.table(Gene=d$gene, `0 hr`=effect_reads(d, "0hr"), `1 hr`=effect_reads(d, "1hr"), `6 hr`=effect_reads(d, "6hr"),
+             `Best q`=best_q(d), `Het donors`=d$max_het, Relevance=why)
+}
+pattern_labels <- c("all three timepoints"="Significant at 3 timepoints",
+                    "two timepoints"="Significant at 2 timepoints",
+                    "shared, below threshold elsewhere"="One timepoint; nominal support elsewhere",
+                    "candidate timepoint-specific"="One timepoint; no nominal support elsewhere",
+                    "not testable elsewhere"="One timepoint; no usable score elsewhere")
+g[, display_pattern := unname(pattern_labels[pattern])]
+annot <- function(d) d[, .(`Neuronal GO term`=neuronal_go,
+  `Developmental disorder or autism`=fifelse(nzchar(sfari) & nzchar(ddg2p), paste0(sfari, "; ", ddg2p), paste0(sfari, ddg2p)),
+  `Expression after stimulation`=expression_response, `Splicing after stimulation`=fifelse(stim_splicing, "yes", ""))]
+interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE, filter="top", extensions="Buttons",
+  options=list(pageLength=10, lengthMenu=c(10, 25, 50, 150), scrollX=TRUE, order=list(), dom="Blfrtip", buttons=c("copy", "csv")),
+  caption="Search or filter genes, sort columns, and export the filtered table as CSV.")
+all3 <- g[pattern == "all three timepoints"]
+sashimi_counts <- fread(file.path(A, "sashimi_summary.tsv"))
+sashimi_donors <- fread(file.path(A, "sashimi_donor_counts.tsv"))
+sashimi_calculation <- function(gn) {
+  d <- sashimi_counts[gene == gn][match(c("0hr", "1hr", "6hr"), timepoint)]
+  fraction <- function(i, e) sprintf("%d / (%d + %d) = %.1f%%", i, i, e, 100*i/(i+e))
+  knitr::kable(data.table(Timepoint=sub("hr", " hr", d$timepoint),
+    `REF: included / (included + excluded)`=fraction(d$REF_i, d$REF_e),
+    `ALT: included / (included + excluded)`=fraction(d$ALT_i, d$ALT_e),
+    `Normalized dPSI (pp)`=sprintf("%+.1f", 100*d$normalized_dPSI)), align="lllr")
+}
+sashimi_test_calculation <- function(gn) {
+  d <- sashimi_donors[gene == gn & timepoint == "6hr" & usable %in% c("True", "TRUE", "true")]
+  cols <- c("REF_e", "REF_i", "ALT_e", "ALT_i")
+  n <- colSums(round(as.matrix(d[, ..cols]) * (mean(d$DP)/d$DP)))
+  ref <- n["REF_i"] + n["REF_e"]; alt <- n["ALT_i"] + n["ALT_e"]
+  effect <- sashimi_counts[gene == gn & timepoint == "6hr", normalized_dPSI]
+  stopifnot(round(n["ALT_i"]/alt - n["REF_i"]/ref, 3) == effect)
+  sprintf("At **6 hr**, the donor-normalized effect calculation is **100 x (%d/%d - %d/%d) = %+.1f percentage points** (ALT inclusion minus REF inclusion).",
+    n["ALT_i"], alt, n["REF_i"], ref, 100*effect)
+}
+```
+
+We extended the [chr9 permutation pilot](isolaser_permutation_pilot.html) to all
+22 autosomes at baseline, 1 hour and 6 hours, using four donors. The aim is to
+attach a permutation p-value and a **BH-adjusted p-value (q-value)** to each
+allele–splicing association, with correction performed separately within each
+timepoint.
+
+**Main result:** `r fmt(any_tp$q05_associations)` associations in
+**`r fmt(any_tp$q05_genes)` genes** have q < 0.05 and pass the original
+`cis` / effect-size screen. `r nrow(all3)` genes meet these criteria at all
+three timepoints. Calibration found no excess of false discoveries under the
+chosen permutation null; its limits are described below.
+
+# Genome-wide results
+
+```{r overview}
+counts <- function(a, b) sprintf("%s (%s)", fmt(a), fmt(b))
+knitr::kable(ov[, .(Timepoint=tp, `Tested associations`=fmt(tested),
+  Screen=counts(screen_associations, screen_genes),
+  `Screen + q < 0.10`=counts(q10_associations, q10_genes),
+  `Screen + q < 0.05`=counts(q05_associations, q05_genes))], align="lrrrr")
+```
+
+Cells under **Screen** and **Screen + q** show **associations (genes)**.
+The screen requires isoLASER's `cis` label and |ΔPSI| ≥ 0.10. At q < 0.05,
+`r pct(any_tp$q05_genes / any_tp$screen_genes)` of the screen's genes remain;
+q < 0.10 adds `r fmt(any_tp$q10_genes - any_tp$q05_genes)` genes.
+These counts use the recording rerun, so they can differ slightly from the
+original [genome-wide screen](isolaser_genome_wide.html).
+
+**Any timepoint** counts each gene or variant–part association once across
+timepoints. BH targets FDR in each timepoint's full association family. The
+effect-filtered subset shown here, its gene totals, and the union across
+timepoints do not have a separate 5% FDR guarantee. Gene totals count genes
+containing a qualifying association; they are not gene-level adjusted tests.
+
+# How the test works
+
+An **association** is a gene × variant × exonic part at one timepoint. An
+exonic part is an interval defined by transcript exon boundaries and need not
+be a complete exon. Reads form a 2 × 2 table: reference/alternative allele ×
+part included/excluded. We combine eligible donors' tables using isoLASER's
+own normalization and adjusted mutual information (**AMI**) functions. Higher
+AMI means stronger allele–splicing association; values near zero indicate
+little evidence, and slightly negative values are possible.
+
+The tested family requires at least one donor with **≥30 informative reads
+and RNA alternative-allele fraction 0.25–0.75**, a part ≥10 bp, and no other
+tested variant less than 30 bp away. The donor rule is our operational
+heterozygous-donor filter. Eligible associations without a computable observed
+score stay in the family with p = 1.
+
+For each permutation, we shuffle haplotype labels among reads **within donor,
+gene and phasing group**. If a label changes, the read's allele is flipped at
+every linked variant in that group. Unlabelled reads have their alleles
+shuffled per variant. Each read's inclusion status, total coverage and the
+original eligible donor set stay fixed. Before shuffling, reconstruction and
+rescoring checks must reproduce the recording rerun's tables.
+
+We count a **hit** when the shuffled AMI is at least as high as the observed
+AMI. An undefined shuffled score also counts as a hit, conservatively:
+
+\[
+p = \frac{1 + \text{hits}}{1 + \text{shuffles}}.
+\]
+
+Every association starts with 1,000 shuffles. Those with fewer than 20 hits
+continue to 10,000, 100,000 and finally 1,000,000 in total. Checkpoints and the
+hit threshold were fixed in advance; this stopping rule is conservative
+provided the underlying fixed-length permutation tests are valid. BH is then
+applied to all eligible associations within each timepoint, before selecting
+the `cis` / effect-size examples.
+
+```{r rounds}
+knitr::kable(rounds[, .(Timepoint=tp, `Stopped at 1,000`=fmt(stopped_1e3),
+  `Stopped at 10,000`=fmt(stopped_1e4), `Stopped at 100,000`=fmt(stopped_1e5),
+  `Reached 1,000,000`=fmt(reached_1e6))], align="lrrrr")
+```
+
+**Stopped** means the association had at least 20 hits at that checkpoint,
+or had no observed score and received p = 1. Zero hits after a million shuffles
+gives p = 1/1,000,001, approximately 10⁻⁶. Every tested association at this
+minimum p-value has q < 0.05 in the current results.
+
+# Calibration: how often are null signals reported?
+
+We created **20 independently shuffled pseudo-observed datasets per
+timepoint** and repeated the complete adaptive test and BH correction on
+each. Donor eligibility was chosen from the original data and held fixed.
+These 60 analyses are designed to remove the allele–splicing link: a discovery
+in them is a false positive under this null. BH can occasionally report one
+even when all associations are null, so we assess the frequency across runs.
+
+```{r calibration_discoveries}
+knitr::kable(cal_bh[, .(Timepoint=fifelse(tp == "all timepoints", "Pooled across timepoints", tp),
+  `Null datasets`=runs, `Datasets with a BH discovery`=sprintf("%d/%d", runs_with_discovery, runs),
+  `95% interval for that rate`=interval(lower_95, upper_95))], align="lrrr")
+```
+
+No dataset produced a BH discovery at q < 0.05; BY also produced none. The
+intervals are binomial confidence intervals for the chance of **any**
+discovery in an all-null analysis. Zero of 20 runs still allows a rate up to
+**`r pct(cal_bh[tp == "0hr", upper_95], 1)` per timepoint**; pooling 60 datasets
+gives an upper bound of `r pct(cal_bh[tp == "all timepoints", upper_95], 1)`
+for the average rate. Pooling does not establish control separately at each
+timepoint.
+
+```{r calibration_pvalues}
+cp <- calp[grepl("^share of p", measure)]
+knitr::kable(cp[, .(Measure=measure, `Mean observed share`=pct(estimate, 3),
+  `Approximate 95% interval`=interval(lower_95, upper_95, 3),
+  `Nominal upper rate`=pct(nominal, 1))], align="lrrr")
+```
+
+These are mean shares across the 60 datasets, with approximate intervals from
+the variation between runs. For example, p < 0.01 occurred for about
+`r pct(cp[measure == "share of p < 0.01", estimate], 2)` of associations,
+below the nominal 1%. Ties help explain this conservative behavior: when the
+observed and shuffled AMIs are both zero, a tie counts as a hit. AMI is rounded
+to three decimals by isoLASER.
+
+**Interpretation:** calibration supports conservative behavior under our
+permutation null. It does not prove validity for every association or estimate
+the false-discovery proportion among the real-data results.
+
+![](assets/fdr/qq.png)
+
+The QQ plot compares p-values with a uniform reference. Real data (blue) have
+more small p-values; calibration (grey) lies on or below the diagonal. The
+upper plateau reflects the minimum attainable p-value.
+
+# Genes to follow up
+
+Here, **reported** means q < 0.05 plus the `cis` / effect-size screen. A gene
+can contain several associations, and different associations can qualify at
+different timepoints.
+
+```{r patterns}
+pat <- g[, .N, by=pattern][match(names(pattern_labels), pattern)][!is.na(pattern)]
+knitr::kable(pat[, .(Pattern=unname(pattern_labels[pattern]), Genes=N)], align="lr")
+```
+
+For genes reported at only one timepoint, the last three categories describe
+the representative association at the other timepoints: nominal p < 0.05,
+p ≥ 0.05 where scored, or no usable score. They are descriptive categories,
+not tests of an allele × time interaction. Among comparisons of significant
+associations with another timepoint, `r pct(cons$nominal_p_lt_0.05)` had nominal
+p < 0.05 there and `r pct(cons$same_sign)` had the same effect direction.
+
+## Neuronal examples reported at all three timepoints
+
+For each gene, the table follows its strongest reported association.
+**0 / 1 / 6 hr** show the allelic effect in percentage points, with pooled
+informative coverage in brackets. The stored effect is reference minus
+alternative **exclusion**, equivalently **alternative minus reference
+inclusion**: +10 means 10 percentage points higher inclusion on the alternative
+allele. **Best q** is the lowest timepoint-specific q-value for this association;
+**Het donors** is its maximum contributing donor count across timepoints, out
+of four. **No score** means that timepoint lacks a usable effect estimate.
+
+```{r ex_all3}
+knitr::kable(example_table(c("HNRNPK", "ATL1", "KANSL1", "APLP2"), c(
+  "Au-Kline syndrome (DDG2P), SFARI syndromic; GTEx brain sQTL comparison on the genome-wide page",
+  "Hereditary spastic paraplegia (DDG2P); neuron projection development (GO)",
+  "Koolen-de Vries syndrome (DDG2P); SFARI score 1",
+  "APP family member; neuron projection development (GO)")), align="lrrrrrl")
+```
+
+These examples have neuronal or disorder annotations, but none meets our
+expression- or splicing-response flag described below. **HNRNPK** is a
+consistent allele-specific association across timepoints: zero hits in a
+million shuffles at 0 and 1 hour, and four hits at 6 hours.
+
+![](assets/fdr/HNRNPK_null.png)
+
+Grey bars show only the first 1,000 shuffled scores; the blue line is the
+observed score. The displayed p-values use the full adaptive run.
+
+## Candidates for a change after stimulation
+
+AHI1 is reported at 1 and 6 hours; WDR45B and KPNA2 at 6 hours only. Their
+representative associations are weaker at earlier timepoints, making them
+candidates for a direct comparison of allelic effects over time.
+
+```{r ex_stimulation}
+knitr::kable(example_table(c("AHI1", "WDR45B", "KPNA2"), c(
+  sprintf("Joubert syndrome (DDG2P), SFARI syndromic; expression up %s-fold at 6 hr; junction-screen hit", fold("AHI1", "6hr")),
+  sprintf("Expression up %s-fold at 1 hr", fold("WDR45B", "1hr")),
+  sprintf("Synapse (GO); expression up %s-fold at 6 hr, below the 2-fold annotation rule", fold("KPNA2", "6hr")))), align="lrrrrrl")
+```
+
+For **AHI1**, variant chr6:135465851:C>T is significant for six exonic parts.
+The highlighted part has a small baseline effect (−5 percentage points,
+p = 0.46; 484 informative reads), compared with −24 and −29 points at 1 and
+6 hours (p approximately 3 × 10⁻⁶ and 10⁻⁶). Other parts already show nominal
+baseline associations, and coverage increases at 6 hours. This is a follow-up
+candidate, not evidence that the variant becomes active only after stimulation.
+
+![](assets/fdr/AHI1_null.png)
+
+### Read alignments at all three timepoints
+
+The following **isoLASER sashimi plots** use its `nigiri_plot` renderer, with
+the project's plotting fixes and a layout for comparing 0, 1 and 6 hours.
+Reads are separated into REF and ALT using **isoLASER's recorded allele
+assignments for the exact variant–part association**. Each timepoint pools
+only donors meeting the same criterion as the test: at least 30 informative
+reads and an ALT fraction between 0.25 and 0.75. Donor IDs appear above the
+tracks; the contributing donors can change between timepoints.
+
+**How to read these plots:** blue is REF, orange is ALT, and yellow marks the
+tested exonic part. Coverage heights and numbers on the curves are **raw
+alignment counts**, with every junction supported by at least one read shown
+(`-M 1 --min-junction-ratio 0`). All six tracks within a gene share the same
+coverage scale. The transcript diagrams show representative local structures,
+not every isoform.
+
+**The inclusion percentage is a different quantity from an arc count.** A
+label such as **65/137 (47.4%)** means 65 of 137 REF reads were assigned to
+transcripts containing the tested part. isoLASER determines this from the
+read's transcript assignment (`ZT`); a partial read may not physically reach
+that part. Each panel therefore also gives the number of reads that actually
+overlap the displayed window. The reported dPSI uses donor-normalized counts,
+so it need not equal the difference between the two raw pooled percentages.
+
+The calculations below show **included / (included + excluded)**; both counts
+come from transcript assignments. **No single junction arc is the statistical
+test.** isoLASER tests the allele × part-included/excluded 2×2 table, using AMI
+as the permutation statistic. dPSI describes the effect size. Donor tables are
+scaled to their mean depth and rounded before pooling; the 6-hour calculation
+below each figure shows these normalized counts.
+
+#### AHI1: alternative exon usage
+
+The highlighted 85-base part is an annotated exon in some transcripts; other
+transcripts skip it. Assigned inclusion is lower for ALT than REF, with a
+larger difference at 1 and 6 hours. Read depth and the donor set also change,
+so these panels do not establish an allele-by-stimulation interaction.
+
+![](assets/fdr/AHI1_sashimi.png)
+
+**Tested association:** chr6:135465851:C>T versus inclusion of the yellow
+85-base part, chr6:135495813–135495898 (isoLASER's 0-based coordinates).
+Arcs jumping over this part support exclusion; arcs joining it to neighboring
+exons support inclusion. The other arcs provide transcript context.
+
+```{r ahi1_sashimi_calculation}
+sashimi_calculation("AHI1")
+```
+
+**Where does the 140 come from? AHI1, 6 hr, REF allele:**
+
+```{r ahi1_ref_donor_breakdown}
+ahi1_ref_breakdown <- sashimi_donors[gene == "AHI1" & timepoint == "6hr" &
+  usable %in% c("True", "TRUE", "true"),
+  .(Donor=donor, `Part included`=REF_i, `Part excluded`=REF_e)]
+ahi1_ref_breakdown <- rbind(ahi1_ref_breakdown, data.table(
+  Donor="Total", `Part included`=sum(ahi1_ref_breakdown$`Part included`),
+  `Part excluded`=sum(ahi1_ref_breakdown$`Part excluded`)))
+knitr::kable(ahi1_ref_breakdown, align="lrr")
+```
+
+**Included: 46 + 39 + 55 = 140. Excluded: 59 + 47 + 48 = 154.**
+Therefore, **140 / (140 + 154) = 47.6%**. Each read is counted once, using
+whether its assigned transcript contains the yellow part; these are **not sums
+of arc labels**. CD_21 is excluded at this timepoint because its ALT fraction
+(0.759) exceeds the donor-filter maximum of 0.75.
+
+`r sashimi_test_calculation("AHI1")`
+
+[Open AHI1 as PDF](assets/fdr/AHI1_sashimi.pdf) to enlarge junction labels.
+
+#### WDR45B: limited direct coverage of the alternative exon
+
+This part belongs to an alternative exon near the transcript's 3-prime end.
+**Treat this as a candidate requiring validation.** Many reads are assigned
+an inclusion status from their transcript identity without reaching this
+region: at 6 hours only **1 of 370 ALT reads** overlaps the displayed window.
+The assigned ALT inclusion of 186/370 (50.3%) therefore has very little direct
+local alignment support in this plot. WDR45B is a weaker visualization example
+than its association statistics alone suggest.
+
+![](assets/fdr/WDR45B_sashimi.png)
+
+**Tested association:** chr17:82643963:C>T versus inclusion of the yellow
+220-base part, chr17:82626788–82627008 (0-based). The long arc crossing the
+yellow band supports its exclusion; the test counts assigned inclusion as
+well as exclusion, including partial reads that do not reach this window.
+
+```{r wdr45b_sashimi_calculation}
+sashimi_calculation("WDR45B")
+```
+
+`r sashimi_test_calculation("WDR45B")`
+
+[Open WDR45B as PDF](assets/fdr/WDR45B_sashimi.pdf).
+
+#### KPNA2: a retained intron segment
+
+The yellow 100-base part is removed as an intron in some transcripts and
+retained within a longer exon in others. An arc across the yellow interval
+supports **removal** of the part; continuous aligned coverage through it
+supports retention. Assigned inclusion is higher for ALT, with the largest
+normalized difference at 6 hours (+11.6 percentage points). Partial reads and
+transcript assignments still explain why the inclusion totals are not simply
+the sum of local junction counts.
+
+![](assets/fdr/KPNA2_sashimi.png)
+
+**Tested association:** chr17:68035783:T>C versus retention of the yellow
+100-base part, chr17:68042999–68043099 (0-based). The short arc exactly across
+this band supports **removal**, not retention: at 6 hr it has **187 REF and
+135 ALT reads**. Those arc counts are not the full excluded-read totals,
+because isoLASER uses transcript assignments for all informative reads.
+
+```{r kpna2_sashimi_calculation}
+sashimi_calculation("KPNA2")
+```
+
+`r sashimi_test_calculation("KPNA2")`
+
+[Open KPNA2 as PDF](assets/fdr/KPNA2_sashimi.pdf).
+
+[Download allele inclusion counts and window coverage](assets/fdr/sashimi_summary.tsv),
+[per-donor count tables](assets/fdr/sashimi_donor_counts.tsv), or
+[the exact junction counts](assets/fdr/sashimi_junction_counts.tsv).
+Reproducible scripts: `10.isolaser_permutation/25.sashimi_candidates.py` and
+`26.sashimi_layout.R`; original calling and permutation results are unchanged.
+
+CACNA1E and PARK7 are also relevant neuronal examples in the full table. Both
+are reported at 1 hour with nominal support at another timepoint.
+
+## Full interactive gene table
+
+The table includes all **`r nrow(g)` reported genes**. The variant, part,
+timepoint effects, best q and donor count refer to the representative
+association; **Significant at** describes the gene across all its associations.
+
+```{r all}
+interactive_table(cbind(g[, .(Gene=gene, Pattern=display_pattern, `Significant at`=sig_tps,
+  `0 hr`=effect_reads(g, "0hr"), `1 hr`=effect_reads(g, "1hr"), `6 hr`=effect_reads(g, "6hr"),
+  `Best q`=best_q(g), `Het donors`=max_het)], annot(g),
+  g[, .(Variant=variant_qual, `Exonic part`=exonic_part)]))
+```
+
+The four annotations below help select examples; they are exploratory and are
+not enrichment tests or evidence of stimulation-dependent allelic effects.
+
+| Annotation | Rule |
+|:--|:--|
+| Neuronal GO term | Curated, non-electronic GO annotation to synapse, neuron projection, synaptic signaling, neuron projection development or neuron death. |
+| Developmental disorder or autism | SFARI score 1, 2 or syndromic; or a strong/definitive DDG2P association. Not all listed disorders are neurological. |
+| Expression after stimulation | In the 100-line cohort of [Liang et al., Science 2026](https://doi.org/10.1126/science.adw3949), pooled expression changes ≥2-fold at 1 or 6 hours with the same direction in ≥75% of lines. This is a descriptive check, without a statistical test. |
+| Splicing after stimulation | A junction-usage hit in our [long-read stimulation screen](splicing_candidates.html). |
+
+<!-- # Interpretation limits -->
+
+<!-- - This is within-donor allele-specific splicing analysis with four donors; -->
+<!--   `r g[max_het == 1, .N]` of the `r nrow(g)` reported genes have a representative -->
+<!--   association supported by one heterozygous donor. It does not establish a -->
+<!--   population-level sQTL. -->
+<!-- - Significance at one timepoint and not another does not demonstrate a change -->
+<!--   with stimulation. That requires a direct allele × time test. -->
+<!-- - Permutation does not eliminate alignment or variant-calling artifacts. -->
+<!--   HLA-A and HLA-C warrant particular mapping checks because of their polymorphism. -->
+<!-- - Rounded scores and conservative treatment of undefined shuffles can reduce -->
+<!--   power. Failure to pass the screen does not establish absence of an effect. -->

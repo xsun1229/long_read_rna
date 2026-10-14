@@ -62,3 +62,6 @@ donors, at 0, 1 and 6 hours after stimulation.
 * [Permutation test for allele-specific splicing](isolaser_permutation_pilot.html) —
   pilot on chr9 at 6 hours: how the shuffle works, the estimated FDR of the
   genome-wide screen and of stricter cutoffs, and the HNRNPK result
+* [Genome-wide FDR for allele-specific splicing](isolaser_fdr.html) —
+  the permutation test on all chromosomes and timepoints: how it works, signals
+  before and after FDR control, and neuron- and stimulation-relevant examples

@@ -1,0 +1,14 @@
+set	tp	n	genes	expected_sign	pearson_r	pearson_p	subset
+After our FDR cutoff (BH q < 0.05)	0hr	2	1	2			GTEx p < 1e-5
+After our FDR cutoff (BH q < 0.05)	1hr	2	2	2			GTEx p < 1e-5
+After our FDR cutoff (BH q < 0.05)	6hr	3	2	3	-0.974918023498987	0.142885431064328	GTEx p < 1e-5
+After our FDR cutoff (BH q < 0.05)	0hr	8	6	3	-0.613814528763314	0.10550494844519	all
+After our FDR cutoff (BH q < 0.05)	1hr	16	13	8	0.000665612535268825	0.998048014968471	all
+After our FDR cutoff (BH q < 0.05)	6hr	12	10	5	-0.160984300218641	0.61720189161328	all
+Before our FDR cutoff	0hr	3	2	3	-0.975393808379489	0.141518069054098	GTEx p < 1e-5
+Before our FDR cutoff	1hr	12	12	8	-0.217582691376578	0.49693428848045	GTEx p < 1e-5
+Before our FDR cutoff	6hr	7	5	5	-0.499229478224433	0.254020271366961	GTEx p < 1e-5
+Before our FDR cutoff	1hr	3	3	1	-0.964706561150496	0.169639806043231	GTEx significant pair
+Before our FDR cutoff	0hr	31	27	10	-0.0918959354696074	0.622951658871196	all
+Before our FDR cutoff	1hr	60	48	35	-0.0435869249577688	0.740887841385464	all
+Before our FDR cutoff	6hr	56	44	31	0.0024998595024322	0.985411235505686	all

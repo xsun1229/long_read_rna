@@ -1,0 +1,11 @@
+{
+  "retained_previous_points": 8,
+  "total_points": 71,
+  "distinct_pairs": 44,
+  "distinct_associations": 23,
+  "genes": 17,
+  "expected_signs": 42,
+  "max_previous_vs_parquet_p_relative_difference": 6.075057331234035e-05,
+  "checks": "PASS: uniqueness, retained previous points/effects, screen filters, direction labels, correlations",
+  "additional_points_absent_from_significant_pair_file": 63
+}

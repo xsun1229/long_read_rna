@@ -1,0 +1,10 @@
+{
+  "matched_points": 365,
+  "distinct_pairs": 308,
+  "distinct_associations": 148,
+  "genes": 107,
+  "passed_existing_bh_q_005": 71,
+  "after_fdr_points_retained": 71,
+  "expected_signs": 210,
+  "checks": "PASS: unique keys, complete after-FDR subset with identical effects/q, original source filters, directions"
+}

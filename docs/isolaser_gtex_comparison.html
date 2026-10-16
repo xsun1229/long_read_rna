@@ -11,9 +11,9 @@
 
 <meta name="author" content="XSun" />
 
-<meta name="date" content="2026-10-14" />
+<meta name="date" content="2026-10-15" />
 
-<title>Allele-specific splicing: comparison with GTEx Cerebellum sQTLs</title>
+<title>Allele-specific splicing vs GTEx Cerebellum sQTLs</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -43,11 +43,6 @@
 <link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
-<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
-<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
-<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
-<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
-<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
 <link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
 <link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
@@ -376,10 +371,10 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Allele-specific splicing: comparison with
-GTEx Cerebellum sQTLs</h1>
+<h1 class="title toc-ignore">Allele-specific splicing vs GTEx Cerebellum
+sQTLs</h1>
 <h4 class="author">XSun</h4>
-<h4 class="date">2026-10-14</h4>
+<h4 class="date">2026-10-15</h4>
 
 </div>
 
@@ -408,7 +403,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-10-14
+<strong>Last updated:</strong> 2026-10-15
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -446,10 +441,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -542,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea282ef5554aea48040e76c5be1a2bc1296ef1875targetblanka282ef5a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2f551168ef19494120014d8ef4aeab2db4cf3636targetblank2f55116a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/a282ef5554aea48040e76c5be1a2bc1296ef1875" target="_blank">a282ef5</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/2f551168ef19494120014d8ef4aeab2db4cf3636" target="_blank">2f55116</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea282ef5554aea48040e76c5be1a2bc1296ef1875targetblanka282ef5a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2f551168ef19494120014d8ef4aeab2db4cf3636targetblank2f55116a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/a282ef5554aea48040e76c5be1a2bc1296ef1875" target="_blank">a282ef5</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/2f551168ef19494120014d8ef4aeab2db4cf3636" target="_blank">2f55116</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -574,11 +569,9 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/isolaser_gtex_comparison.Rmd
-
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_fdr.Rmd
+    Modified:   analysis/isolaser_gtex_comparison.Rmd
 
 </code></pre>
 <p>
@@ -593,292 +586,294 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/isolaser_gtex_comparison.Rmd</code>) and HTML
+(<code>docs/isolaser_gtex_comparison.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/2f551168ef19494120014d8ef4aeab2db4cf3636/analysis/isolaser_gtex_comparison.Rmd" target="_blank">2f55116</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-14
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/2f551168ef19494120014d8ef4aeab2db4cf3636/docs/isolaser_gtex_comparison.html" target="_blank">2f55116</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-14
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
-<p>We compared our <a href="isolaser_fdr.html">permutation-adjusted
-allele-specific splicing results</a> with significant GTEx v8
-<strong>Cerebellum</strong> sQTLs. The tissue is fixed for every point;
-there is no selection across tissues. The aim follows the effect-size
-comparison in the right panel of <a
+<p>We compare our allelic splicing effects (isoLASER ΔPSI) with GTEx v8
+Cerebellum sQTL effects (beta), as in the right panel of <a
 href="https://www.nature.com/articles/s41467-025-64605-6">Fig. 3e of the
-isoLASER paper</a>.</p>
-<p><strong>Main finding: 5 distinct matched pairs in 4 genes</strong>,
-with 8 plotted comparisons across baseline, 1 hour and 6 hours. The
-genes are <strong>HNRNPK, ATP5MJ, HLA-C and SNHG5</strong>. All
-comparisons have the expected effect direction, but there are too few
-independent genes for a strong correlation or genome-wide validation
-conclusion.</p>
-<div id="pair-counts-and-selection" class="section level1">
-<h1>Pair counts and selection</h1>
-<p>An isoLASER <strong>association</strong> is a gene × variant × exonic
-part. A <strong>matched pair</strong> links that association to a GTEx
-junction for the same variant and gene. The same pair can be measured at
-more than one timepoint; a gene can contribute multiple pairs.</p>
-<table style="width:100%;">
-<colgroup>
-<col width="48%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="24%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Selection step</th>
-<th align="right">0 hr</th>
-<th align="right">1 hr</th>
-<th align="right">6 hr</th>
-<th align="right">Unique across timepoints</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Reported after permutation FDR and effect screen</td>
-<td align="right">191 (64)</td>
-<td align="right">183 (73)</td>
-<td align="right">174 (74)</td>
-<td align="right">375 (131)</td>
-</tr>
-<tr class="even">
-<td align="left">Single-base variants eligible for matching</td>
-<td align="right">188 (63)</td>
-<td align="right">181 (71)</td>
-<td align="right">168 (71)</td>
-<td align="right">367 (127)</td>
-</tr>
-<tr class="odd">
-<td align="left">Same variant and gene in GTEx Cerebellum</td>
-<td align="right">6 (3)</td>
-<td align="right">21 (8)</td>
-<td align="right">13 (7)</td>
-<td align="right">30 (12)</td>
-</tr>
-<tr class="even">
-<td align="left">Comparable annotated splice event</td>
-<td align="right">2 (1)</td>
-<td align="right">2 (2)</td>
-<td align="right">4 (3)</td>
-<td align="right">5 (4)</td>
-</tr>
-</tbody>
-</table>
-<p>Cells show <strong>isoLASER associations (genes)</strong>. The last
-column deduplicates gene–variant–part associations across timepoints; it
-is not the sum of the timepoint columns. The input screen requires
-permutation BH q &lt; 0.05, isoLASER’s <code>cis</code> label and |dPSI|
-≥ 0.10. BH is performed separately within each timepoint. Indels are
-excluded from matching.</p>
-<p>The same-variant/gene step contains 30 distinct variant–part
-associations from 14 gene–variant pairs; one variant can be tested
-against several parts. The event check leaves 5 associations, each with
-one comparable Cerebellum junction in the current results, hence 5
-distinct matched pairs.</p>
+isoLASER paper</a>. As in the paper, we use the <strong>skipping
+junction</strong> of each event, whose usage falls when the exonic part
+is included, so a <strong>negative correlation</strong> is expected.</p>
+<div id="how-pairs-were-matched" class="section level1">
+<h1>How pairs were matched</h1>
+<ul>
+<li><strong>Variant and gene:</strong> the same SNV (position, REF and
+ALT; isoLASER’s 0-based position + 1 = GTEx’s) tested for the same
+Ensembl gene in GTEx.</li>
+<li><strong>GTEx data:</strong> full Cerebellum summary statistics,
+every tested association at any p-value.</li>
+<li><strong>Event:</strong> the exonic part must form an annotated
+exon-skipping or alternative-splice-site event (the cluster types the
+paper used), and the GTEx junction must be exactly that event’s skipping
+junction.</li>
+<li><strong>Points:</strong> each point is one <strong>pair</strong>: an
+isoLASER association (variant × exonic part) and its matched GTEx
+skipping junction, at one timepoint. Timepoints are plotted
+separately.</li>
+<li><strong>Our associations:</strong> before our FDR cutoff (isoLASER
+<code>cis</code> and |ΔPSI| ≥ 0.10; the paper applied no FDR) and after
+it (permutation BH q &lt; 0.05 within each timepoint, as on the <a
+href="isolaser_fdr.html">FDR page</a>).</li>
+</ul>
+<p><strong>Example, HNRNPK.</strong> The C&gt;T variant (chr9:83980154,
+0-based) and the 34-base exonic part (gold) form an alternative splice
+site. GTEx measures the skipping junction (blue), which jumps over the
+part; the grey junction includes it. At 6 hours, ALT changes part
+inclusion by -21.4 percentage points, and GTEx’s beta for the skipping
+junction is +0.97: opposite signs, as expected.</p>
+<p><img
+src="assets/isolaser_gtex/comparable_event_example_skipping.png" /></p>
 <table>
 <colgroup>
-<col width="11%" />
-<col width="28%" />
-<col width="26%" />
-<col width="16%" />
-<col width="16%" />
+<col width="10%" />
+<col width="9%" />
+<col width="23%" />
+<col width="36%" />
+<col width="13%" />
+<col width="5%" />
 </colgroup>
 <thead>
 <tr class="header">
+<th align="left">Set</th>
 <th align="left">Timepoint</th>
-<th align="right">Inclusion-junction pairs</th>
-<th align="right">Skipping-junction pairs</th>
-<th align="right">Plotted points</th>
-<th align="right">Distinct genes</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">Before FDR</td>
 <td align="left">0 hr</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">1</td>
+<td align="right">517</td>
+<td align="right">207</td>
+<td align="right">31</td>
+<td align="right">27</td>
 </tr>
 <tr class="even">
+<td align="left">Before FDR</td>
 <td align="left">1 hr</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">2</td>
+<td align="right">755</td>
+<td align="right">337</td>
+<td align="right">60</td>
+<td align="right">48</td>
 </tr>
 <tr class="odd">
+<td align="left">Before FDR</td>
 <td align="left">6 hr</td>
-<td align="right">4</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">3</td>
+<td align="right">736</td>
+<td align="right">408</td>
+<td align="right">56</td>
+<td align="right">44</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">188</td>
+<td align="right">25</td>
+<td align="right">8</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">181</td>
+<td align="right">55</td>
+<td align="right">16</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">168</td>
+<td align="right">41</td>
+<td align="right">12</td>
+<td align="right">10</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Five unique pairs give eight timepoint-specific
-points.</strong> All current Cerebellum matches are <strong>inclusion
-junctions</strong>; no skipping-junction match passes the current
-filters. These points are not independent signals: HNRNPK contributes
-two variants linked to the same part, with measurements at multiple
-timepoints.</p>
 </div>
-<div id="how-comparable-pairs-were-chosen" class="section level1">
-<h1>How comparable pairs were chosen</h1>
-<p><strong>Overlap alone is insufficient.</strong> GTEx tests
-intron/junction usage, while isoLASER tests inclusion of an exonic part.
-We require an annotated local relationship between the two
-measurements.</p>
-<ol style="list-style-type: decimal">
-<li><strong>Match variant and gene.</strong> Use the Cerebellum
-significant-pair file only. Require the same GRCh38 position, REF/ALT
-alleles and Ensembl gene ID.</li>
-<li><strong>Check transcript structures.</strong> Use isoLASER’s
-annotation and part definitions. Exon-skipping matches require an
-included transcript with both flanking junctions and an excluded
-transcript with the skipping junction. Alternative splice-site matches
-require junctions sharing one endpoint, with the other shifted across
-the part.</li>
-<li><strong>Assign the junction’s role.</strong> An inclusion junction
-occurs in at least one part-including transcript and no part-excluding
-transcript; the converse defines a skipping junction. Reject junctions
-present in both groups, and skipping spans containing another
-non-overlapping annotated exon. The junction need not occur in every
-transcript of its assigned group.</li>
-<li><strong>Retain matched pairs.</strong> The primary plot keeps every
-distinct variant–part–GTEx-junction match within Cerebellum, separately
-at each timepoint. It does not reduce the results to one point per gene
-or select a tissue/junction by its p-value. A secondary sensitivity plot
-selects one representative per gene and role using the Cerebellum
-p-value.</li>
-</ol>
-<p>Coordinates are standardized before matching. isoLASER’s stored
-variant position is 0-based; GTEx variant IDs are 1-based. For example,
-<code>chr9:83980154:C&gt;T</code> and <code>chr9_83980155_C_T_b38</code>
-identify the same SNP. The GTEx intron’s right endpoint is reduced by
-one to obtain a 0-based, half-open interval, following the <a
-href="https://github.com/davidaknowles/leafcutter/blob/master/clustering/leafcutter_cluster_regtools.py">LeafCutter
-coordinate conversion</a>. Main matches require exact endpoints. The
-earlier 2-base sensitivity check did not add any selected matches.</p>
-<div id="example-hnrnpk" class="section level2">
-<h2>Example: HNRNPK</h2>
-<p><img
-src="assets/isolaser_gtex/cerebellum/comparable_event_examples.png" /></p>
-<p>Gold is the 34-base part chr9:[83980118,83980152); blue is the
-Cerebellum GTEx junction chr9:[83978452,83980118), which connects to the
-part. The alternative annotated junction ends at 83980152 and excludes
-it. The diagram is schematic, not to scale; its coordinates are
-0-based.</p>
-<p>For the same C&gt;T variant at 6 hours, our ALT-minus-REF inclusion
-effect is <strong>-21.4 percentage points</strong>, and the Cerebellum
-inclusion-junction beta is <strong>-1.23</strong>. Both decrease, as
-expected for an inclusion junction.</p>
-<p>SNHG5 also has an inclusion-junction match in Cerebellum: dPSI is
-+16.9 points and beta is +0.72. These fixed-tissue estimates replace the
-different tissue/junction choices in the earlier multi-tissue
-comparison.</p>
-<p><a
-href="assets/isolaser_gtex/cerebellum/comparable_event_examples.pdf">Download
-the HNRNPK example as PDF</a>.</p>
+<div id="result" class="section level1">
+<h1>Result</h1>
+<p><img src="assets/isolaser_gtex/fig3e_style.png" /></p>
+<p><a href="assets/isolaser_gtex/fig3e_style.pdf">Download PDF</a></p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="11%" />
+<col width="6%" />
+<col width="14%" />
+<col width="21%" />
+<col width="32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">31</td>
+<td align="right">-0.09 (0.62)</td>
+<td align="right">10/31</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">60</td>
+<td align="right">-0.04 (0.74)</td>
+<td align="right">35/60</td>
+<td align="right">8/12</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">56</td>
+<td align="right">0.00 (0.99)</td>
+<td align="right">31/56</td>
+<td align="right">5/7</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">8</td>
+<td align="right">-0.61 (0.11)</td>
+<td align="right">3/8</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">16</td>
+<td align="right">0.00 (1.00)</td>
+<td align="right">8/16</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">-0.16 (0.62)</td>
+<td align="right">5/12</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<!-- **Expected sign**: our ΔPSI and GTEx's beta have opposite signs. -->
+<!-- **GTEx p < 1e-5**: the pairs where GTEx itself has strong evidence. -->
+<!-- - **No overall correlation.** Before FDR, R is near 0 at every timepoint; after -->
+<!--   FDR the panels have only 8–16 points and no correlation is significant. Most -->
+<!--   points (grey) have no GTEx evidence (nominal p ≥ 0.05); their beta is close -->
+<!--   to 0 and its sign is noise. -->
+<!-- - **Where GTEx has strong evidence, the direction usually agrees:** before -->
+<!--   FDR, 16 of 22 pairs with GTEx p < 10⁻⁵ have -->
+<!--   the expected sign, including HNRNPK at all three timepoints, ATP5MJ, SNHG5 -->
+<!--   and EIF6. -->
+<!-- - **Why fewer points than the paper.** The paper's ovary panel has about 200 -->
+<!--   points, all known sQTLs ("SAVs matching known sQTLs"), from ENCODE ovary -->
+<!--   matched to GTEx ovary. Here only 3 plotted pairs are known -->
+<!--   GTEx sQTLs (in GTEx's significant-pair file). Only -->
+<!--   40<U+2013>55% -->
+<!--   of our associations before FDR -->
+<!--   (13<U+2013>30% -->
+<!--   after) are tested in GTEx for the same variant and gene, only some of those -->
+<!--   form a simple annotated event, and our cells (hiPSC-derived neurons) differ -->
+<!--   from adult cerebellum. -->
 </div>
-</div>
-<div id="effect-size-plots" class="section level1">
-<h1>Effect-size plots</h1>
-<p>The x-axis is our donor-normalized <strong>ALT minus REF part
-inclusion</strong>. The y-axis is GTEx’s ALT effect on normalized
-<strong>intron usage</strong>, from the <a
-href="https://github.com/broadinstitute/gtex-pipeline/blob/master/qtl/leafcutter/README.md">GTEx
-sQTL pipeline</a>. The axes have different units, so numerical equality
-is not expected. Inclusion junctions should have matching effect signs
-(positive correlation); skipping junctions would have opposite signs.
-All matches here are inclusion junctions, so only those panels are
-shown.</p>
-<div id="what-did-the-paper-plot" class="section level2">
-<h2>What did the paper plot?</h2>
-<p>The <a
-href="https://www.nature.com/articles/s41467-025-64605-6.pdf">Fig. 3e
-caption and methods</a> describe comparing isoLASER effects with GTEx
-effects for <strong>matched variant–splicing associations</strong>, not
-a gene-level effect summary. A gene may contribute multiple
-associations. The linked <a
-href="https://github.com/gxiaolab/isoLASER_paper">public repository</a>
-contains the processing workflows; we did not find figure-specific
-plotting code there, so its exact duplicate-removal rule remains
-unverified. Our primary plot therefore shows matched pairs, with a
-separate gene-representative sensitivity view. This is an adaptation of
-the paper: its displayed example is ovary, and its described comparison
-uses the longest skipping junction.</p>
-</div>
-<div id="figures" class="section level2 tabset">
-<h2 class="tabset">Figures</h2>
-<div id="all-matched-pairs" class="section level3">
-<h3>All matched pairs</h3>
-<p><img
-src="assets/isolaser_gtex/cerebellum/cerebellum_pair_effects.png" /></p>
-<p>Each dot is one matched variant–part–junction pair at one timepoint.
-All 8 points are included; the gene count is reported separately in each
-panel. Point labels distinguish the two HNRNPK variants.</p>
-<p><a
-href="assets/isolaser_gtex/cerebellum/cerebellum_pair_effects.pdf">Download
-PDF</a>.</p>
-</div>
-<div id="one-representative-per-gene" class="section level3">
-<h3>One representative per gene</h3>
-<p><img
-src="assets/isolaser_gtex/cerebellum/cerebellum_gene_effects.png" /></p>
-<p>This supplementary view retains 6 points across panels, one
-representative per gene and junction role at each timepoint, selected by
-the Cerebellum p-value. It illustrates the influence of repeated
-variants in one gene.</p>
-<p><a
-href="assets/isolaser_gtex/cerebellum/cerebellum_gene_effects.pdf">Download
-PDF</a>.</p>
-</div>
-</div>
-<div id="interpretation" class="section level2">
-<h2>Interpretation</h2>
-<p>All 8 of 8 comparisons agree in direction. At 6 hours, Pearson r =
-0.94 and Spearman rho = 0.80, based on only <strong>4 pairs in 3
-genes</strong>. These are descriptive correlations and provide limited
-external corroboration. They do not validate the full scan or estimate
-its FDR. HNRNPK agrees at all three timepoints; HLA-C still warrants
-mapping checks.</p>
-<p>AHI1, WDR45B and KPNA2 do not enter this comparable-event subset. An
-absent match does not disprove an association: we use GTEx significant
-pairs only, and adult Cerebellum differs from stimulated hiPSC-derived
-neurons. The event check is local and annotation-based; the available
-files do not establish the complete structure of every GTEx cluster.</p>
-</div>
-</div>
-<div id="matched-pairs-and-data" class="section level1">
-<h1>Matched pairs and data</h1>
-<p>All rows use <strong>Brain_Cerebellum</strong>. Variant positions are
-<strong>1-based</strong>, while part and junction intervals are
-<strong>0-based, half-open</strong>. dPSI is ALT minus REF inclusion,
-shown in percentage points.</p>
+<div id="data" class="section level1">
+<h1>Data</h1>
 <div id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-21.4\" data-max=\"16.9\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-1.54\" data-max=\"1.43\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1e-15\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.000204\" data-max=\"0.00694\" data-scale=\"6\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Eight Cerebellum pair-timepoint comparisons; repeated genes and variants are not independent signals.<\/caption>","data":[["ATP5MJ","HLA-C","HNRNPK","HNRNPK","HNRNPK","HNRNPK","HNRNPK","SNHG5"],["1 hr","6 hr","0 hr","0 hr","1 hr","6 hr","6 hr","6 hr"],["chr14:103915165:T&gt;C","chr6:31268790:T&gt;C","chr9:83978399:G&gt;C","chr9:83980155:C&gt;T","chr9:83980155:C&gt;T","chr9:83978399:G&gt;C","chr9:83980155:C&gt;T","chr6:85678170:G&gt;T"],["chr14:103914478-103914633:-","chr6:31269965-31270085:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr6:85677794-85677868:-"],["chr14:103913984-103914478","chr6:31270085-31270209","chr9:83978452-83980118","chr9:83978452-83980118","chr9:83978452-83980118","chr9:83978452-83980118","chr9:83978452-83980118","chr6:85677875-85677953"],["exon skipping","exon skipping","alternative splice site","alternative splice site","alternative splice site","alternative splice site","alternative splice site","exon skipping"],[10.3,-11.9,-11.4,-19.8,-18.2,-11.5,-21.4,16.9],[1.43,-1.54,-1.12,-1.23,-1.23,-1.12,-1.23,0.722],[9.5e-34,2.08e-67,4.97e-29,3.01e-43,3.01e-43,4.97e-29,3.01e-43,1.98e-16],[0.000405,0.00694,0.000711,0.000204,0.000405,0.000395,0.00183,0.00217]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Timepoint<\/th>\n      <th>Variant (1-based)<\/th>\n      <th>Exonic part (0-based)<\/th>\n      <th>GTEx junction (0-based)<\/th>\n      <th>Event type<\/th>\n      <th>Our dPSI (pp)<\/th>\n      <th>Cerebellum beta<\/th>\n      <th>GTEx nominal p<\/th>\n      <th>Our BH q<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"order":[],"dom":"Blfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[6,7,8,9]}],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
-<p>Downloads: <a
-href="assets/isolaser_gtex/cerebellum/pair_points.tsv">all matched
-pairs</a>, <a
-href="assets/isolaser_gtex/cerebellum/selection_counts.tsv">selection
-counts</a>, <a
-href="assets/isolaser_gtex/cerebellum/variant_gene_matches.tsv">same-variant/gene
-matches before the event check</a>, <a
-href="assets/isolaser_gtex/cerebellum/stats.tsv">statistics</a>, and <a
-href="assets/isolaser_gtex/cerebellum/inputs.tsv">input
-checksums</a>.</p>
-<p>Reproduce with
-<code>Rscript 10.isolaser_permutation/31.cerebellum_comparison.R</code>,
-then
-<code>Rscript 10.isolaser_permutation/29.gtex_comparable_examples.R --cerebellum</code>.
-The local output folder is
-<code>10.isolaser_permutation/out/adaptive/gtex_comparison/cerebellum/</code>.
-The earlier multi-tissue outputs remain in its parent folder.</p>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-0.504\" data-max=\"0.68\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2e-04\" data-max=\"1\" data-scale=\"5\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-1.18\" data-max=\"0.973\" data-scale=\"5\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.99\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","Before FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR","After FDR"],["0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","0 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr"],["AKAP9","ANKRD36B","ANKRD36C","AP2A2","APMAP","ASB3","ASRGL1","CDC16","CHORDC1","CNIH1","CNTN1","EXOC1","GNL3","GNL3","H2AZ2","HLA-A","HMGN1","HNRNPH3","HNRNPK","HNRNPK","NRCAM","NSFL1C","OPTN","OPTN","PEMT","PFKP","POLR2E","RPS5","TFG","TRAPPC5","TRAPPC5","ACAA1","ANKRD36B","ARHGAP12","ATP5MJ","B4GALNT1","CARS1","CHORDC1","CLIP1","DNTTIP2","DNTTIP2","DNTTIP2","DPCD","DST","DST","DST","EIF6","GALNT8","GFM1","GGCT","GTF3A","HLA-A","HLA-C","HNRNPK","IFRD1","IFT22","IFT57","IRAK1BP1","JKAMP","LEPROT","LSG1","LSG1","NDUFA2","NUTM2A-AS1","ODF2L","PBRM1","PFKP","PFKP","PFKP","ROGDI","ROGDI","RPAIN","RPL14","RPS27L","RPS5","RTF2","SNHG5","SNHG5","TAMM41","TAX1BP1","TAX1BP1","TMCO3","TMEM176B","TMEM176B","TOX4","TRAPPC5","TRAPPC5","WDR18","XPO1","YIF1A","ZFAND2A","AKAP9","ANK3","ANKRD17","ANKRD36B","ANKRD36B","AP1G1","ARHGAP12","ASRGL1","AZIN1","AZIN1","CAPRIN2","CCAR1","CHORDC1","CYB5R3","DIS3","DIS3","DNTTIP2","FAAP20","FAAP20","HLA-A","HLA-C","HLA-C","HNRNPK","HNRNPK","IARS1","IARS1","IFRD1","IFRD1","KTN1","LEPROT","LSM5","MEAF6","MRPL28","MTIF3","MTIF3","MYT1L","NDFIP2","NDUFA2","NUCB2","PFKP","PLD3","RBM23","RPL14","RPS5","SCN2A","SNHG5","SNHG5","SSR1","STK25","TM2D2","TM2D2","TRAPPC5","TRAPPC5","UNC79","ZFAND2A","ZRANB2","CHORDC1","CNIH1","HLA-A","HNRNPK","HNRNPK","RPS5","TRAPPC5","TRAPPC5","ANKRD36B","ATP5MJ","CHORDC1","DNTTIP2","DNTTIP2","HLA-A","HNRNPK","LEPROT","NDUFA2","PFKP","PFKP","RPS5","TAX1BP1","TRAPPC5","TRAPPC5","ZFAND2A","ANKRD36B","CHORDC1","DNTTIP2","HLA-A","HNRNPK","HNRNPK","LEPROT","RPS5","SNHG5","TRAPPC5","TRAPPC5","ZFAND2A"],["chr7:92062286:C&gt;T","chr2:97547720:C&gt;G","chr2:95991826:A&gt;G","chr11:1010693:C&gt;T","chr20:24992610:C&gt;A","chr2:53670387:C&gt;G","chr11:62337539:T&gt;G","chr13:114265238:T&gt;C","chr11:90223037:G&gt;A","chr14:54427577:T&gt;C","chr12:41070200:G&gt;A","chr4:55904922:G&gt;A","chr3:52686063:A&gt;C","chr3:52687288:G&gt;A","chr7:44834382:G&gt;A","chr6:29945652:C&gt;T","chr21:39348567:C&gt;T","chr10:68332165:T&gt;C","chr9:83978398:G&gt;C","chr9:83980154:C&gt;T","chr7:108232371:G&gt;A","chr20:1445747:C&gt;T","chr10:13100152:T&gt;C","chr10:13109223:G&gt;A","chr17:17506245:C&gt;T","chr10:3136622:G&gt;C","chr19:1088318:C&gt;T","chr19:58394795:T&gt;C","chr3:100748173:T&gt;C","chr19:7682406:T&gt;G","chr19:7682406:T&gt;G","chr3:38125603:A&gt;G","chr2:97547720:C&gt;G","chr10:31852531:T&gt;C","chr14:103915164:T&gt;C","chr12:57632029:G&gt;C","chr11:3006909:G&gt;A","chr11:90223037:G&gt;A","chr12:122380481:T&gt;C","chr1:93877466:A&gt;G","chr1:93877676:T&gt;C","chr1:93879159:C&gt;T","chr10:101601330:C&gt;T","chr6:56704305:A&gt;G","chr6:56704305:A&gt;G","chr6:56704305:A&gt;G","chr20:35278949:G&gt;C","chr12:4850820:C&gt;T","chr3:158644651:T&gt;C","chr7:30504743:G&gt;A","chr13:27424631:T&gt;C","chr6:29945652:C&gt;T","chr6:31269030:C&gt;G","chr9:83980154:C&gt;T","chr7:112462299:T&gt;G","chr7:101314988:T&gt;C","chr3:108218560:C&gt;T","chr6:78885379:A&gt;G","chr14:59484559:T&gt;C","chr1:65420714:T&gt;C","chr3:194666456:C&gt;T","chr3:194666570:C&gt;T","chr5:140647630:T&gt;C","chr10:87342371:A&gt;C","chr1:86372474:C&gt;T","chr3:52609668:T&gt;C","chr10:3129928:C&gt;T","chr10:3136622:G&gt;C","chr10:3136622:G&gt;C","chr16:4797167:G&gt;A","chr16:4797315:C&gt;T","chr17:5422824:C&gt;G","chr3:40462317:G&gt;A","chr15:63157480:C&gt;G","chr19:58394795:T&gt;C","chr20:56518844:A&gt;G","chr6:85678169:G&gt;T","chr6:85678390:G&gt;C","chr3:11846516:C&gt;G","chr7:27740145:G&gt;A","chr7:27740145:G&gt;A","chr13:113495575:T&gt;C","chr7:150793287:C&gt;T","chr7:150793995:T&gt;G","chr14:21477255:A&gt;G","chr19:7682406:T&gt;G","chr19:7682406:T&gt;G","chr19:991128:G&gt;A","chr2:61537938:G&gt;A","chr11:66288985:G&gt;A","chr7:1159995:T&gt;C","chr7:92084657:C&gt;T","chr10:60029513:G&gt;A","chr4:73076960:C&gt;T","chr2:97547720:C&gt;G","chr2:97560841:C&gt;G","chr16:71773328:C&gt;A","chr10:31928793:C&gt;A","chr11:62337968:T&gt;C","chr8:102863954:G&gt;A","chr8:102864096:G&gt;A","chr12:30735066:T&gt;C","chr10:68742530:G&gt;A","chr11:90223037:G&gt;A","chr22:42619709:T&gt;C","chr13:72775940:T&gt;C","chr13:72775940:T&gt;C","chr1:93877466:A&gt;G","chr1:2189678:C&gt;T","chr1:2189678:C&gt;T","chr6:29945652:C&gt;T","chr6:31268756:G&gt;A","chr6:31269030:C&gt;G","chr9:83978398:G&gt;C","chr9:83980154:C&gt;T","chr9:92210633:T&gt;A","chr9:92210683:A&gt;G","chr7:112472223:G&gt;A","chr7:112475602:C&gt;T","chr14:55679638:G&gt;A","chr1:65420714:T&gt;C","chr7:32490323:G&gt;C","chr1:37493897:G&gt;C","chr16:369091:A&gt;G","chr13:27435713:G&gt;A","chr13:27435713:G&gt;A","chr2:2172903:A&gt;G","chr13:79552632:G&gt;A","chr5:140647630:T&gt;C","chr11:17276817:G&gt;C","chr10:3136622:G&gt;C","chr19:40365893:T&gt;A","chr14:22919116:A&gt;C","chr3:40462317:G&gt;A","chr19:58394795:T&gt;C","chr2:165388719:T&gt;A","chr6:85678169:G&gt;T","chr6:85678504:C&gt;T","chr6:7310025:A&gt;G","chr2:241495393:G&gt;T","chr8:38991330:C&gt;T","chr8:38991330:C&gt;T","chr19:7682406:T&gt;G","chr19:7682406:T&gt;G","chr14:93477651:G&gt;A","chr7:1159995:T&gt;C","chr1:71070890:G&gt;C","chr11:90223037:G&gt;A","chr14:54427577:T&gt;C","chr6:29945652:C&gt;T","chr9:83978398:G&gt;C","chr9:83980154:C&gt;T","chr19:58394795:T&gt;C","chr19:7682406:T&gt;G","chr19:7682406:T&gt;G","chr2:97547720:C&gt;G","chr14:103915164:T&gt;C","chr11:90223037:G&gt;A","chr1:93877466:A&gt;G","chr1:93879159:C&gt;T","chr6:29945652:C&gt;T","chr9:83980154:C&gt;T","chr1:65420714:T&gt;C","chr5:140647630:T&gt;C","chr10:3129928:C&gt;T","chr10:3136622:G&gt;C","chr19:58394795:T&gt;C","chr7:27740145:G&gt;A","chr19:7682406:T&gt;G","chr19:7682406:T&gt;G","chr7:1159995:T&gt;C","chr2:97547720:C&gt;G","chr11:90223037:G&gt;A","chr1:93877466:A&gt;G","chr6:29945652:C&gt;T","chr9:83978398:G&gt;C","chr9:83980154:C&gt;T","chr1:65420714:T&gt;C","chr19:58394795:T&gt;C","chr6:85678169:G&gt;T","chr19:7682406:T&gt;G","chr19:7682406:T&gt;G","chr7:1159995:T&gt;C"],["chr7:92092673-92092928:+","chr2:97576413-97576446:-","chr2:95938828-95938901:-","chr11:1009027-1009099:+","chr20:24964374-24964398:-","chr2:53786284-53786820:-","chr11:62356324-62356467:+","chr13:114239309-114239349:+","chr11:90211318-90211335:-","chr14:54436078-54436126:-","chr12:40910072-40910105:+","chr4:55888887-55888932:+","chr3:52688192-52688206:+","chr3:52688192-52688206:+","chr7:44843276-44843354:-","chr6:29944616-29944634:+","chr21:39347915-39347952:-","chr10:68332216-68332235:+","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr7:108191253-108191283:-","chr20:1455037-1455132:-","chr10:13108961-13109015:+","chr10:13110179-13110273:+","chr17:17591530-17591596:-","chr10:3125096-3125249:+","chr19:1093755-1093903:-","chr19:58388417-58388480:+","chr3:100747360-100747413:+","chr19:7680878-7681026:+","chr19:7681026-7681049:+","chr3:38126161-38126341:-","chr2:97576413-97576446:-","chr10:31839304-31839319:-","chr14:103914478-103914633:-","chr12:57632540-57632581:-","chr11:3040984-3041031:-","chr11:90211318-90211335:-","chr12:122351110-122351143:-","chr1:93875665-93875783:-","chr1:93875665-93875783:-","chr1:93875665-93875783:-","chr10:101605139-101605212:+","chr6:56463045-56463156:-","chr6:56464684-56464756:-","chr6:56529447-56529774:-","chr20:35280697-35280829:-","chr12:4839296-4839361:+","chr3:158650004-158650061:+","chr7:30500535-30500680:-","chr13:27432730-27432745:+","chr6:29944616-29944634:+","chr6:31269525-31269543:-","chr9:83980118-83980152:-","chr7:112470898-112471033:+","chr7:101318123-101318213:-","chr3:108219409-108219544:-","chr6:78867891-78868088:+","chr14:59486680-59486712:+","chr1:65421327-65421459:+","chr3:194660741-194660886:-","chr3:194660741-194660886:-","chr5:140645678-140645725:-","chr10:87329771-87329843:-","chr1:86368635-86368722:-","chr3:52587435-52587510:-","chr10:3125096-3125249:+","chr10:3100920-3101000:+","chr10:3125096-3125249:+","chr16:4797840-4797861:-","chr16:4797840-4797861:-","chr17:5425970-5426082:+","chr3:40457363-40457474:+","chr15:63156786-63156973:-","chr19:58388417-58388480:+","chr20:56516934-56516989:+","chr6:85677794-85677868:-","chr6:85677191-85677215:-","chr3:11844907-11845096:-","chr7:27803108-27803180:+","chr7:27816394-27816520:+","chr13:113534044-113534240:+","chr7:150800021-150800167:-","chr7:150800021-150800167:-","chr14:21477564-21477592:+","chr19:7680878-7681026:+","chr19:7681026-7681049:+","chr19:994019-994088:+","chr2:61525269-61525333:-","chr11:66285483-66285536:-","chr7:1153224-1153241:-","chr7:92105677-92105763:+","chr10:60082149-60082176:-","chr4:73140024-73140283:-","chr2:97576413-97576446:-","chr2:97576413-97576446:-","chr16:71806685-71806728:-","chr10:31854065-31854180:-","chr11:62337889-62337966:+","chr8:102836390-102836541:-","chr8:102836390-102836541:-","chr12:30753559-30753609:-","chr10:68737844-68737889:+","chr11:90211318-90211335:-","chr22:42636584-42636598:-","chr13:72780845-72781003:-","chr13:72781288-72781356:-","chr1:93875665-93875783:-","chr1:2192646-2192844:-","chr1:2192844-2192975:-","chr6:29944616-29944634:+","chr6:31269525-31269543:-","chr6:31269525-31269543:-","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr9:92240642-92240691:-","chr9:92240642-92240691:-","chr7:112470898-112471033:+","chr7:112465638-112465838:+","chr14:55673171-55673255:+","chr1:65421327-65421459:+","chr7:32490130-32490319:-","chr1:37496706-37496736:-","chr16:370484-370498:-","chr13:27441016-27441077:-","chr13:27449851-27449918:-","chr2:1887058-1887121:-","chr13:79543536-79543557:+","chr5:140645678-140645725:-","chr11:17317583-17317706:+","chr10:3125096-3125249:+","chr19:40365661-40365717:+","chr14:22908380-22908399:-","chr3:40457363-40457474:+","chr19:58388417-58388480:+","chr2:165327154-165327202:+","chr6:85677794-85677868:-","chr6:85677794-85677868:-","chr6:7295087-7295102:-","chr2:241508442-241508504:-","chr8:38996212-38996418:-","chr8:38996212-38996418:-","chr19:7680878-7681026:+","chr19:7681026-7681049:+","chr14:93634520-93634637:+","chr7:1153224-1153241:-","chr1:71065718-71065752:-","chr11:90211318-90211335:-","chr14:54436078-54436126:-","chr6:29944616-29944634:+","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr19:58388417-58388480:+","chr19:7680878-7681026:+","chr19:7681026-7681049:+","chr2:97576413-97576446:-","chr14:103914478-103914633:-","chr11:90211318-90211335:-","chr1:93875665-93875783:-","chr1:93875665-93875783:-","chr6:29944616-29944634:+","chr9:83980118-83980152:-","chr1:65421327-65421459:+","chr5:140645678-140645725:-","chr10:3125096-3125249:+","chr10:3125096-3125249:+","chr19:58388417-58388480:+","chr7:27816394-27816520:+","chr19:7680878-7681026:+","chr19:7681026-7681049:+","chr7:1153224-1153241:-","chr2:97576413-97576446:-","chr11:90211318-90211335:-","chr1:93875665-93875783:-","chr6:29944616-29944634:+","chr9:83980118-83980152:-","chr9:83980118-83980152:-","chr1:65421327-65421459:+","chr19:58388417-58388480:+","chr6:85677794-85677868:-","chr19:7680878-7681026:+","chr19:7681026-7681049:+","chr7:1153224-1153241:-"],["92089529-92093096","97560860-97578905","95935644-95938986","1008135-1009099","24964022-24968891","53750941-53786820","62338167-62356986","114239028-114239349","90211318-90214017","54432220-54436368","40908493-40918638","55883928-55890222","52688192-52689073","52688192-52689073","44841012-44847968","29944616-29945058","39347483-39348291","68332216-68337198","83978452-83980152","83978452-83980152","108189746-108191728","1455037-1458199","13108289-13109111","13109288-13110273","17577027-17591596","3120044-3129818","1091907-1093903","58388245-58392975","100744931-100747413","7680878-7682241","7681026-7682241","38125881-38126509","97560860-97578905","31831800-31839636","103913984-103915065","57632133-57632771","3040984-3042164","90211318-90214017","122347479-122352725","93873214-93876267","93873214-93876267","93873214-93876267","101601336-101608834","56460254-56463564","56463764-56466077","56528925-56529973","35280118-35284175","4814778-4850737","158649157-158652095","30498938-30504568","27430621-27434138","29944616-29945058","31269525-31269965","83978452-83980152","112468115-112472218","101316542-101318955","108218653-108222110","78867891-78885377","59484593-59486712","65420740-65425302","194660133-194665556","194660133-194665556","140645678-140647255","87326672-87330891","86360536-86371017","52587435-52589069","3120044-3129818","3099352-3101364","3120044-3129818","4797840-4797937","4797840-4797937","5422829-5426235","40457363-40457889","63156521-63157399","58388245-58392975","56513428-56517105","85677492-85677953","85677191-85677423","11844211-11846501","27800090-27816348","27816394-27816889","113520733-113539356","150796574-150800297","150796574-150800297","21477564-21487450","7680878-7682241","7681026-7682241","992121-994212","61522683-61526419","66284966-66285700","1153224-1155452","92102826-92107292","60080618-60082614","73135265-73141740","97560860-97578905","97560860-97578905","71789482-71807800","31852597-31861394","62337574-62337966","102836390-102838743","102836390-102838743","30753559-30754688","68737048-68740628","90211318-90214017","42631450-42636714","72778380-72781288","72781003-72781604","93873214-93876267","2189781-2192844","2189781-2193638","29944616-29945058","31269525-31269965","31269525-31269965","83978452-83980152","83978452-83980152","92229126-92240855","92229126-92240855","112468115-112472218","112462378-112467980","55673012-55675834","65420740-65425302","32489344-32490319","37496604-37501803","370225-370498","27440449-27445087","27445156-27450063","1886607-1887487","79539775-79543557","140645678-140647255","17315475-17330126","3120044-3129818","40348768-40365717","22908380-22909482","40457363-40457889","58388245-58392975","165326984-165328403","85677492-85677953","85677492-85677953","7289931-7295391","241508135-241508504","38995405-38996418","38995794-38996418","7680878-7682241","7681026-7682241","93630908-93637215","1153224-1155452","71065137-71066775","90211318-90214017","54432220-54436368","29944616-29945058","83978452-83980152","83978452-83980152","58388245-58392975","7680878-7682241","7681026-7682241","97560860-97578905","103913984-103915065","90211318-90214017","93873214-93876267","93873214-93876267","29944616-29945058","83978452-83980152","65420740-65425302","140645678-140647255","3120044-3129818","3120044-3129818","58388245-58392975","27816394-27816889","7680878-7682241","7681026-7682241","1153224-1155452","97560860-97578905","90211318-90214017","93873214-93876267","29944616-29945058","83978452-83980152","83978452-83980152","65420740-65425302","58388245-58392975","85677492-85677953","7680878-7682241","7681026-7682241","1153224-1155452"],[-0.119,-0.375,0.294,0.135,0.112,0.364,-0.211,0.128,0.468,-0.101,0.328,0.389,0.147,0.18,-0.3,0.224,0.286,0.313,-0.114,-0.198,-0.122,0.19,0.148,-0.135,0.227,0.192,0.122,0.495,-0.1,0.362,0.14,0.122,-0.3,0.46,0.103,-0.455,0.146,0.519,-0.305,-0.472,-0.216,-0.349,-0.199,-0.243,0.214,-0.232,0.148,0.371,-0.107,-0.136,-0.109,0.23,0.144,-0.182,-0.444,0.106,0.102,-0.146,0.121,0.366,-0.121,0.107,-0.24,0.133,0.179,0.141,0.318,0.132,0.152,0.152,0.158,-0.133,0.274,0.297,0.538,-0.111,0.175,0.128,0.214,0.53,0.68,-0.209,-0.189,-0.302,-0.149,0.431,0.218,0.312,0.107,-0.156,0.403,-0.417,0.598,-0.195,-0.361,-0.23,-0.209,-0.267,-0.178,-0.146,-0.156,-0.214,0.25,0.538,-0.304,0.353,-0.504,-0.388,-0.112,-0.112,0.272,0.116,0.116,-0.115,-0.214,0.129,0.13,0.167,-0.119,0.131,0.377,-0.202,0.189,0.157,0.321,0.321,0.145,-0.127,-0.308,0.105,0.127,-0.145,-0.158,0.283,0.542,0.278,0.169,0.206,0.176,-0.212,0.168,0.168,0.384,0.188,0.29,0.491,-0.273,0.468,-0.101,0.224,-0.114,-0.198,0.495,0.362,0.14,-0.3,0.103,0.519,-0.472,-0.349,0.23,-0.182,0.366,-0.24,0.318,0.152,0.538,0.68,0.431,0.218,0.403,-0.361,0.538,-0.388,0.272,-0.115,-0.214,0.377,0.542,0.169,0.384,0.188,0.491],[0.78,0.37,0.95,0.93,1,0.4,0.56,0.34,0.028,0.013,0.8,0.53,0.81,0.089,0.65,0.0002,0.077,0.21,0.00071,0.0002,1,0.96,1,0.57,0.44,0.25,0.94,0.0002,0.37,0.0002,0.0015,1,0.012,0.64,0.00041,0.52,0.65,0.00041,0.11,0.00041,0.48,0.00041,0.65,0.12,0.45,0.53,0.06,0.41,0.73,0.85,1,0.00041,0.49,0.00041,1,1,1,0.37,1,0.0017,1,1,0.018,0.47,0.49,0.48,0.0073,0.067,0.0014,0.48,0.36,0.43,0.19,0.29,0.00041,0.44,0.64,0.73,1,0.12,0.0034,0.27,0.66,0.37,0.43,0.00041,0.00041,0.5,1,0.77,0.013,0.55,1,0.43,0.0097,0.41,0.66,0.35,0.66,0.86,0.88,1,1,0.0004,0.89,1,1,0.0067,1,1,0.0004,0.65,0.61,0.0004,0.0018,0.27,0.8,0.78,0.68,0.96,0.037,0.71,1,1,0.52,0.52,1,0.13,0.066,0.055,0.12,0.51,0.07,0.11,0.0004,0.13,0.0022,0.56,0.61,0.76,0.85,0.85,0.0004,0.0004,0.81,0.0004,1,0.028,0.013,0.0002,0.00071,0.0002,0.0002,0.0002,0.0015,0.012,0.00041,0.00041,0.00041,0.00041,0.00041,0.00041,0.0017,0.018,0.0073,0.0014,0.00041,0.0034,0.00041,0.00041,0.013,0.0097,0.0004,0.0067,0.0004,0.0004,0.0018,0.037,0.0004,0.0022,0.0004,0.0004,0.0004],[-0.00765,-0.134,0.091,0.132,0.0215,0.0523,0.1,-0.62,0.0779,-0.107,0.0189,0.113,0.0253,0.0225,-0.208,0.331,-0.0853,-0.0494,0.921,0.973,-0.0279,-0.0406,0.0984,-0.178,-0.0683,-0.193,0.00109,0.118,-0.0502,-0.014,0.104,-0.0607,-0.134,-0.0148,-1.02,-0.506,-0.168,0.0779,0.0747,-0.122,0.105,-0.0753,-0.371,-0.0373,0.0732,0.0351,-0.527,0.359,0.508,0.758,-0.0101,0.331,-0.665,0.973,-0.169,0.175,-0.566,0.233,-0.209,-0.027,0.291,-0.0387,0.0435,-0.166,0.0145,-0.0884,-0.0966,-0.118,-0.193,0.0965,0.027,-0.512,0.409,0.033,0.118,-0.0577,-0.693,-0.0822,-1.18,0.0552,-0.0724,0.572,0.0249,0.0522,0.302,-0.014,0.104,0.498,-0.0093,0.62,0.302,-0.0267,0.038,-0.0803,-0.134,-0.129,0.0072,-0.0705,0.00312,0.0282,0.0282,0.059,-0.193,0.0779,0.188,-0.113,0.07,-0.122,-0.247,-0.589,0.331,-0.801,-0.665,0.921,0.973,0.423,0.423,-0.179,-0.0225,0.118,-0.027,-0.389,0.122,-0.0346,-0.0319,-0.0238,-0.178,0.0983,0.0435,0.0938,-0.193,0.122,0.0155,0.409,0.118,-0.00148,-0.693,-0.678,-0.164,0.162,0.445,0.211,-0.014,0.104,-0.025,0.302,-0.257,0.0779,-0.107,0.331,0.921,0.973,0.118,-0.014,0.104,-0.134,-1.02,0.0779,-0.122,-0.0753,0.331,0.973,-0.027,0.0435,-0.0966,-0.193,0.118,-0.0724,-0.014,0.104,0.302,-0.134,0.0779,-0.122,0.331,0.921,0.973,-0.027,0.118,-0.693,-0.014,0.104,0.302],[0.92,0.21,0.25,0.15,0.87,0.71,0.3,1.2e-08,0.65,0.43,0.78,0.19,0.81,0.83,0.3,0.018,0.69,0.74,3.2e-21,8.2e-27,0.78,0.68,0.39,0.13,0.56,0.064,0.99,0.15,0.6,0.88,0.27,0.78,0.21,0.88,6.2e-11,1.8e-06,0.15,0.65,0.5,0.18,0.28,0.42,0.0056,0.59,0.063,0.69,6.2e-10,0.0016,1.7e-07,6.6e-15,0.83,0.018,0.0017,8.2e-27,0.15,0.23,0.00012,0.067,0.045,0.79,0.27,0.73,0.59,0.12,0.9,0.27,0.16,0.38,0.064,0.24,0.74,8.8e-07,5.9e-06,0.74,0.15,0.28,8.9e-15,0.44,5.5e-42,0.62,0.54,3.6e-05,0.82,0.64,0.0034,0.88,0.27,1.1e-06,0.9,1.4e-06,0.0032,0.48,0.7,0.46,0.21,0.24,0.97,0.56,0.98,0.78,0.78,0.6,0.16,0.65,0.19,0.31,0.54,0.18,0.025,1.3e-09,0.018,1.2e-07,0.0017,3.2e-21,8.2e-27,0.0015,0.0015,0.13,0.82,0.39,0.79,0.0012,0.17,0.7,0.67,0.87,0.34,0.37,0.59,0.35,0.064,0.4,0.85,5.9e-06,0.15,0.99,8.9e-15,3.5e-14,0.079,0.21,0.00017,0.056,0.88,0.27,0.78,0.0032,0.069,0.65,0.43,0.018,3.2e-21,8.2e-27,0.15,0.88,0.27,0.21,6.2e-11,0.65,0.18,0.42,0.018,8.2e-27,0.79,0.59,0.16,0.064,0.15,0.54,0.88,0.27,0.0032,0.21,0.65,0.18,0.018,3.2e-21,8.2e-27,0.79,0.15,8.9e-15,0.88,0.27,0.0032]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Set<\/th>\n      <th>Timepoint<\/th>\n      <th>Gene<\/th>\n      <th>Variant<\/th>\n      <th>Exonic part<\/th>\n      <th>GTEx junction<\/th>\n      <th>Our dPSI<\/th>\n      <th>Our BH q<\/th>\n      <th>GTEx beta<\/th>\n      <th>GTEx p<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[6,7,8,9]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<p><strong>Variant</strong>: isoLASER’s 0-based position. <strong>GTEx
+junction</strong>: 0-based, half-open intron coordinates. Download the
+<a href="assets/isolaser_gtex/fig3e_style_points.tsv">points</a> and <a
+href="assets/isolaser_gtex/fig3e_style_stats.tsv">statistics</a>.</p>
+<p>Reproduce from <code>long_read_RNA/10.isolaser_permutation/</code>
+(add <code>--before-fdr</code> to the first two commands for the
+before-FDR set):
+<code>python 27.gtex_fdr_comparison.py --prepare-full-cerebellum</code>,
+<code>Rscript 34.extract_full_cerebellum.R</code>, then
+<code>Rscript 36.plot_fig3e_style.R</code>.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -904,16 +899,17 @@ other attached packages:
 [1] DT_0.22           data.table_1.14.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.12       pillar_1.9.0      compiler_4.2.0    bslib_0.3.1      
- [5] later_1.3.0       jquerylib_0.1.4   git2r_0.30.1      highr_0.9        
+ [1] Rcpp_1.0.12       highr_0.9         pillar_1.9.0      compiler_4.2.0   
+ [5] bslib_0.3.1       later_1.3.0       jquerylib_0.1.4   git2r_0.30.1     
  [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
 [13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3  
 [17] rlang_1.1.2       cli_3.6.1         rstudioapi_0.13   crosstalk_1.2.0  
 [21] yaml_2.3.5        xfun_0.41         fastmap_1.1.0     stringr_1.5.1    
 [25] knitr_1.39        fs_1.5.2          vctrs_0.6.5       sass_0.4.1       
 [29] htmlwidgets_1.5.4 rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
-[33] fansi_1.0.3       rmarkdown_2.25    magrittr_2.0.3    promises_1.2.0.1 
-[37] htmltools_0.5.2   httpuv_1.6.5      utf8_1.2.2        stringi_1.7.6    </code></pre>
+[33] fansi_1.0.3       rmarkdown_2.25    magrittr_2.0.3    whisker_0.4      
+[37] promises_1.2.0.1  htmltools_0.5.2   httpuv_1.6.5      utf8_1.2.2       
+[41] stringi_1.7.6    </code></pre>
 </div>
 </div>
 

@@ -1,0 +1,7 @@
+set	tp	reported_snv_associations	tested_in_gtex	plotted	genes
+After our FDR cutoff (BH q < 0.05)	0hr	188	25	8	6
+After our FDR cutoff (BH q < 0.05)	1hr	181	55	16	13
+After our FDR cutoff (BH q < 0.05)	6hr	168	41	12	10
+Before our FDR cutoff	0hr	517	207	31	27
+Before our FDR cutoff	1hr	755	337	60	48
+Before our FDR cutoff	6hr	736	408	56	44

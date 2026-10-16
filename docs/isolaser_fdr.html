@@ -387,7 +387,7 @@ splicing</h1>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -398,8 +398,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -408,13 +408,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-10-14
+<strong>Last updated:</strong> 2026-10-15
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>long_read_rna/</code> <span
@@ -437,18 +437,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -539,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea282ef5554aea48040e76c5be1a2bc1296ef1875targetblanka282ef5a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2f551168ef19494120014d8ef4aeab2db4cf3636targetblank2f55116a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/a282ef5554aea48040e76c5be1a2bc1296ef1875" target="_blank">a282ef5</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/2f551168ef19494120014d8ef4aeab2db4cf3636" target="_blank">2f55116</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea282ef5554aea48040e76c5be1a2bc1296ef1875targetblanka282ef5a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2f551168ef19494120014d8ef4aeab2db4cf3636targetblank2f55116a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -557,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/a282ef5554aea48040e76c5be1a2bc1296ef1875" target="_blank">a282ef5</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/2f551168ef19494120014d8ef4aeab2db4cf3636" target="_blank">2f55116</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -571,7 +574,10 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-working directory clean
+Unstaged changes:
+    Modified:   analysis/isolaser_fdr.Rmd
+    Modified:   analysis/isolaser_gtex_comparison.Rmd
+
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not
@@ -616,6 +622,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/2f551168ef19494120014d8ef4aeab2db4cf3636/docs/isolaser_fdr.html" target="_blank">2f55116</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-14
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1146,13 +1169,27 @@ Each panel therefore also gives the number of reads that actually
 overlap the displayed window. The reported dPSI uses donor-normalized
 counts, so it need not equal the difference between the two raw pooled
 percentages.</p>
-<p>The calculations below show <strong>included / (included +
-excluded)</strong>; both counts come from transcript assignments.
-<strong>No single junction arc is the statistical test.</strong>
-isoLASER tests the allele × part-included/excluded 2×2 table, using AMI
-as the permutation statistic. dPSI describes the effect size. Donor
-tables are scaled to their mean depth and rounded before pooling; the
-6-hour calculation below each figure shows these normalized counts.</p>
+<p>The calculations below distinguish <strong>raw recorded
+counts</strong> from the <strong>normalized counts used for the joint
+test</strong>, at every timepoint. Each fraction shows included /
+(included + excluded); inclusion and exclusion come from transcript
+assignments. <strong>No single junction arc is the statistical
+test.</strong> isoLASER tests the allele × part-included/excluded 2×2
+table, using AMI as the permutation statistic. dPSI describes the effect
+size. Donor tables are scaled to their mean depth and rounded before
+pooling. <strong>Both AMI and dPSI use the normalized 2×2
+table</strong>; the permutation p-value and BH q-value are based on that
+analysis. These rescaled counts are not extra sequenced reads. The
+sashimi coverage and arcs remain raw so they describe observed
+alignments.</p>
+<p>For example, <strong>WDR45B at 1 hour</strong> has raw inclusion
+<strong>42/150 = 28.0% REF</strong> and <strong>77/206 = 37.4%
+ALT</strong>, a raw difference of <strong>+9.4 pp</strong>. The
+normalized test table instead has <strong>42 included / 109 excluded for
+REF</strong> and <strong>74 included / 133 excluded for ALT</strong>.
+Its effect is <strong>100 × (74/207 − 42/151) = +7.9 pp</strong>,
+matching the reported dPSI. Both versions are now labelled in the
+figures and shown in the tables.</p>
 <div id="ahi1-alternative-exon-usage" class="section level4">
 <h4>AHI1: alternative exon usage</h4>
 <p>The highlighted 85-base part is an annotated exon in some
@@ -1168,36 +1205,62 @@ exclusion; arcs joining it to neighboring exons support inclusion. The
 other arcs provide transcript context.</p>
 <table>
 <colgroup>
-<col width="9%" />
-<col width="35%" />
-<col width="35%" />
+<col width="10%" />
+<col width="18%" />
+<col width="26%" />
+<col width="26%" />
 <col width="19%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Timepoint</th>
-<th align="left">REF: included / (included + excluded)</th>
-<th align="left">ALT: included / (included + excluded)</th>
-<th align="right">Normalized dPSI (pp)</th>
+<th align="left">Counts</th>
+<th align="left">REF inclusion</th>
+<th align="left">ALT inclusion</th>
+<th align="right">ALT minus REF (pp)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">0 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">65 / (65 + 72) = 47.4%</td>
 <td align="left">148 / (148 + 200) = 42.5%</td>
+<td align="right">-4.9</td>
+</tr>
+<tr class="even">
+<td align="left">0 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">67 / (67 + 74) = 47.5%</td>
+<td align="left">145 / (145 + 198) = 42.3%</td>
 <td align="right">-5.2</td>
+</tr>
+<tr class="odd">
+<td align="left">1 hr</td>
+<td align="left">Raw recorded</td>
+<td align="left">82 / (82 + 58) = 58.6%</td>
+<td align="left">125 / (125 + 222) = 36.0%</td>
+<td align="right">-22.5</td>
 </tr>
 <tr class="even">
 <td align="left">1 hr</td>
-<td align="left">82 / (82 + 58) = 58.6%</td>
-<td align="left">125 / (125 + 222) = 36.0%</td>
+<td align="left">Normalized (test)</td>
+<td align="left">82 / (82 + 57) = 59.0%</td>
+<td align="left">123 / (123 + 224) = 35.4%</td>
 <td align="right">-23.5</td>
 </tr>
 <tr class="odd">
 <td align="left">6 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">140 / (140 + 154) = 47.6%</td>
 <td align="left">156 / (156 + 695) = 18.3%</td>
+<td align="right">-29.3</td>
+</tr>
+<tr class="even">
+<td align="left">6 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">140 / (140 + 154) = 47.6%</td>
+<td align="left">157 / (157 + 693) = 18.5%</td>
 <td align="right">-29.1</td>
 </tr>
 </tbody>
@@ -1266,36 +1329,62 @@ the test counts assigned inclusion as well as exclusion, including
 partial reads that do not reach this window.</p>
 <table>
 <colgroup>
-<col width="9%" />
-<col width="35%" />
-<col width="35%" />
+<col width="10%" />
+<col width="18%" />
+<col width="24%" />
+<col width="26%" />
 <col width="19%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Timepoint</th>
-<th align="left">REF: included / (included + excluded)</th>
-<th align="left">ALT: included / (included + excluded)</th>
-<th align="right">Normalized dPSI (pp)</th>
+<th align="left">Counts</th>
+<th align="left">REF inclusion</th>
+<th align="left">ALT inclusion</th>
+<th align="right">ALT minus REF (pp)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">0 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">5 / (5 + 13) = 27.8%</td>
 <td align="left">12 / (12 + 22) = 35.3%</td>
 <td align="right">+7.5</td>
 </tr>
 <tr class="even">
+<td align="left">0 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">5 / (5 + 13) = 27.8%</td>
+<td align="left">12 / (12 + 22) = 35.3%</td>
+<td align="right">+7.5</td>
+</tr>
+<tr class="odd">
 <td align="left">1 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">42 / (42 + 108) = 28.0%</td>
 <td align="left">77 / (77 + 129) = 37.4%</td>
+<td align="right">+9.4</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">42 / (42 + 109) = 27.8%</td>
+<td align="left">74 / (74 + 133) = 35.7%</td>
 <td align="right">+7.9</td>
 </tr>
 <tr class="odd">
 <td align="left">6 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">78 / (78 + 149) = 34.4%</td>
 <td align="left">186 / (186 + 184) = 50.3%</td>
+<td align="right">+15.9</td>
+</tr>
+<tr class="even">
+<td align="left">6 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">73 / (73 + 152) = 32.4%</td>
+<td align="left">188 / (188 + 185) = 50.4%</td>
 <td align="right">+18.0</td>
 </tr>
 </tbody>
@@ -1325,36 +1414,62 @@ excluded-read totals, because isoLASER uses transcript assignments for
 all informative reads.</p>
 <table>
 <colgroup>
-<col width="9%" />
-<col width="35%" />
-<col width="35%" />
+<col width="10%" />
 <col width="19%" />
+<col width="22%" />
+<col width="26%" />
+<col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Timepoint</th>
-<th align="left">REF: included / (included + excluded)</th>
-<th align="left">ALT: included / (included + excluded)</th>
-<th align="right">Normalized dPSI (pp)</th>
+<th align="left">Counts</th>
+<th align="left">REF inclusion</th>
+<th align="left">ALT inclusion</th>
+<th align="right">ALT minus REF (pp)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">0 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">2 / (2 + 46) = 4.2%</td>
 <td align="left">7 / (7 + 42) = 14.3%</td>
+<td align="right">+10.1</td>
+</tr>
+<tr class="even">
+<td align="left">0 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">3 / (3 + 44) = 6.4%</td>
+<td align="left">7 / (7 + 43) = 14.0%</td>
 <td align="right">+7.6</td>
+</tr>
+<tr class="odd">
+<td align="left">1 hr</td>
+<td align="left">Raw recorded</td>
+<td align="left">7 / (7 + 159) = 4.2%</td>
+<td align="left">8 / (8 + 111) = 6.7%</td>
+<td align="right">+2.5</td>
 </tr>
 <tr class="even">
 <td align="left">1 hr</td>
-<td align="left">7 / (7 + 159) = 4.2%</td>
-<td align="left">8 / (8 + 111) = 6.7%</td>
+<td align="left">Normalized (test)</td>
+<td align="left">7 / (7 + 161) = 4.2%</td>
+<td align="left">7 / (7 + 109) = 6.0%</td>
 <td align="right">+1.9</td>
 </tr>
 <tr class="odd">
 <td align="left">6 hr</td>
+<td align="left">Raw recorded</td>
 <td align="left">7 / (7 + 274) = 2.5%</td>
 <td align="left">28 / (28 + 192) = 12.7%</td>
+<td align="right">+10.2</td>
+</tr>
+<tr class="even">
+<td align="left">6 hr</td>
+<td align="left">Normalized (test)</td>
+<td align="left">7 / (7 + 280) = 2.4%</td>
+<td align="left">30 / (30 + 183) = 14.1%</td>
 <td align="right">+11.6</td>
 </tr>
 </tbody>
@@ -1365,12 +1480,18 @@ inclusion minus REF inclusion).</p>
 <p><a href="assets/fdr/KPNA2_sashimi.pdf">Open KPNA2 as PDF</a>.</p>
 <p><a href="assets/fdr/sashimi_summary.tsv">Download allele inclusion
 counts and window coverage</a>, <a
-href="assets/fdr/sashimi_donor_counts.tsv">per-donor count tables</a>,
-or <a href="assets/fdr/sashimi_junction_counts.tsv">the exact junction
+href="assets/fdr/sashimi_donor_counts.tsv">per-donor raw count
+tables</a>, <a
+href="assets/fdr/sashimi_normalized_counts.tsv">normalized testing
+counts</a>, <a
+href="assets/fdr/sashimi_normalization_by_donor.tsv">per-donor
+normalization</a>, or <a
+href="assets/fdr/sashimi_junction_counts.tsv">the exact junction
 counts</a>. Reproducible scripts:
 <code>10.isolaser_permutation/25.sashimi_candidates.py</code> and
-<code>26.sashimi_layout.R</code>; original calling and permutation
-results are unchanged.</p>
+<code>26.sashimi_layout.R</code>. Labels can be refreshed from the saved
+alignment plots using <code>36.refresh_sashimi_labels.R</code>; original
+calling and permutation results are unchanged.</p>
 <p>CACNA1E and PARK7 are also relevant neuronal examples in the full
 table. Both are reported at 1 hour with nominal support at another
 timepoint.</p>
@@ -1447,7 +1568,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

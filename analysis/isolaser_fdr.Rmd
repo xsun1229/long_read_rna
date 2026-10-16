@@ -49,13 +49,23 @@ interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE,
 all3 <- g[pattern == "all three timepoints"]
 sashimi_counts <- fread(file.path(A, "sashimi_summary.tsv"))
 sashimi_donors <- fread(file.path(A, "sashimi_donor_counts.tsv"))
+sashimi_normalized <- fread(file.path(A, "sashimi_normalized_counts.tsv"))
 sashimi_calculation <- function(gn) {
-  d <- sashimi_counts[gene == gn][match(c("0hr", "1hr", "6hr"), timepoint)]
   fraction <- function(i, e) sprintf("%d / (%d + %d) = %.1f%%", i, i, e, 100*i/(i+e))
-  knitr::kable(data.table(Timepoint=sub("hr", " hr", d$timepoint),
-    `REF: included / (included + excluded)`=fraction(d$REF_i, d$REF_e),
-    `ALT: included / (included + excluded)`=fraction(d$ALT_i, d$ALT_e),
-    `Normalized dPSI (pp)`=sprintf("%+.1f", 100*d$normalized_dPSI)), align="lllr")
+  z <- rbindlist(lapply(c("0hr","1hr","6hr"),function(t){
+    raw <- sashimi_counts[gene==gn & timepoint==t]
+    norm <- sashimi_normalized[gene==gn & timepoint==t]
+    stopifnot(nrow(raw)==1,nrow(norm)==1,
+      round(norm$normalized_dPSI_unrounded,3)==raw$normalized_dPSI)
+    data.table(Timepoint=sub("hr"," hr",t),Counts=c("Raw recorded","Normalized (test)"),
+      `REF inclusion`=c(fraction(raw$REF_i,raw$REF_e),
+                        fraction(norm$normalized_REF_i,norm$normalized_REF_e)),
+      `ALT inclusion`=c(fraction(raw$ALT_i,raw$ALT_e),
+                        fraction(norm$normalized_ALT_i,norm$normalized_ALT_e)),
+      `ALT minus REF (pp)`=sprintf("%+.1f",100*c(raw$ALT_inclusion-raw$REF_inclusion,
+                                               raw$normalized_dPSI)))
+  }))
+  knitr::kable(z,align="llllr")
 }
 sashimi_test_calculation <- function(gn) {
   d <- sashimi_donors[gene == gn & timepoint == "6hr" & usable %in% c("True", "TRUE", "true")]
@@ -293,12 +303,23 @@ that part. Each panel therefore also gives the number of reads that actually
 overlap the displayed window. The reported dPSI uses donor-normalized counts,
 so it need not equal the difference between the two raw pooled percentages.
 
-The calculations below show **included / (included + excluded)**; both counts
+The calculations below distinguish **raw recorded counts** from the
+**normalized counts used for the joint test**, at every timepoint. Each
+fraction shows included / (included + excluded); inclusion and exclusion
 come from transcript assignments. **No single junction arc is the statistical
 test.** isoLASER tests the allele × part-included/excluded 2×2 table, using AMI
 as the permutation statistic. dPSI describes the effect size. Donor tables are
-scaled to their mean depth and rounded before pooling; the 6-hour calculation
-below each figure shows these normalized counts.
+scaled to their mean depth and rounded before pooling. **Both AMI and dPSI
+use the normalized 2×2 table**; the permutation p-value and BH q-value are
+based on that analysis. These rescaled counts are not extra sequenced reads.
+The sashimi coverage and arcs remain raw so they describe observed alignments.
+
+For example, **WDR45B at 1 hour** has raw inclusion **42/150 = 28.0% REF**
+and **77/206 = 37.4% ALT**, a raw difference of **+9.4 pp**. The normalized
+test table instead has **42 included / 109 excluded for REF** and
+**74 included / 133 excluded for ALT**. Its effect is
+**100 × (74/207 − 42/151) = +7.9 pp**, matching the reported dPSI.
+Both versions are now labelled in the figures and shown in the tables.
 
 #### AHI1: alternative exon usage
 
@@ -392,10 +413,14 @@ sashimi_calculation("KPNA2")
 [Open KPNA2 as PDF](assets/fdr/KPNA2_sashimi.pdf).
 
 [Download allele inclusion counts and window coverage](assets/fdr/sashimi_summary.tsv),
-[per-donor count tables](assets/fdr/sashimi_donor_counts.tsv), or
+[per-donor raw count tables](assets/fdr/sashimi_donor_counts.tsv),
+[normalized testing counts](assets/fdr/sashimi_normalized_counts.tsv),
+[per-donor normalization](assets/fdr/sashimi_normalization_by_donor.tsv), or
 [the exact junction counts](assets/fdr/sashimi_junction_counts.tsv).
 Reproducible scripts: `10.isolaser_permutation/25.sashimi_candidates.py` and
-`26.sashimi_layout.R`; original calling and permutation results are unchanged.
+`26.sashimi_layout.R`. Labels can be refreshed from the saved alignment plots
+using `36.refresh_sashimi_labels.R`; original calling and permutation results
+are unchanged.
 
 CACNA1E and PARK7 are also relevant neuronal examples in the full table. Both
 are reported at 1 hour with nominal support at another timepoint.

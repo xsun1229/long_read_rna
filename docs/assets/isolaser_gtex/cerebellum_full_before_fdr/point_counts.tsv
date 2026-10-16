@@ -1,0 +1,4 @@
+tp	inclusion	skipping	total	genes	concordant	significant_gtEx	fdr_passing
+0hr	49	31	80	31	44	5	16
+1hr	84	60	144	54	82	10	30
+6hr	85	56	141	49	84	6	25

@@ -1,7 +1,7 @@
 ---
-title: "Allele-specific splicing: comparison with GTEx Cerebellum sQTLs"
+title: "Allele-specific splicing vs GTEx Cerebellum sQTLs"
 author: "XSun"
-date: "2026-10-14"
+date: "2026-10-15"
 output:
   workflowr::wflow_html:
     toc: true
@@ -13,231 +13,110 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
 library(data.table)
 library(DT)
-A <- "docs/assets/isolaser_gtex/cerebellum"
-selection <- fread(file.path(A,"selection_counts.tsv"))
-points <- fread(file.path(A,"pair_points.tsv"))
-gene_points <- fread(file.path(A,"gene_points.tsv"))
-point_counts <- fread(file.path(A,"point_counts.tsv"))
-variant_matches <- fread(file.path(A,"variant_gene_matches.tsv"))
-stats <- fread(file.path(A,"stats.tsv"))
-points[, direction_agrees := tolower(as.character(direction_agrees)) == "true"]
-fmt <- function(x) format(x,big.mark=",",scientific=FALSE,trim=TRUE)
-association_keys <- c("Gene_name","variant_qual","exonic_part")
-pair_keys <- c(association_keys,"phenotype_id")
-npairs <- uniqueN(points[, ..pair_keys])
-nassoc <- uniqueN(points[, ..association_keys])
-ngenes <- uniqueN(points$Gene_name)
-largest <- stats[view == "All matched pairs" & tp == "6hr" & role == "inclusion"]
-hn <- points[gene == "HNRNPK" & tp == "6hr" & variant_qual == "chr9:83980154:C>T"]
-sn <- points[gene == "SNHG5" & tp == "6hr"]
-variant_label <- function(x) {
-  s <- tstrsplit(x,"_",fixed=TRUE)
-  paste0(s[[1]],":",s[[2]],":",s[[3]],">",s[[4]])
-}
+A <- "docs/assets/isolaser_gtex"
+st <- fread(file.path(A, "fig3e_style_stats.tsv"))
+pts <- fread(file.path(A, "fig3e_style_points.tsv"))
+fun <- fread(file.path(A, "fig3e_style_funnel.tsv"))
+BEFORE <- "Before our FDR cutoff"; AFTER <- "After our FDR cutoff (BH q < 0.05)"
+tpl <- function(x) sub("hr", " hr", x)
+strong <- pts[set == BEFORE & pval_nominal < 1e-5]
+sigpairs <- pts[gtex_significant_pair == TRUE]
 ```
 
-We compared our [permutation-adjusted allele-specific splicing results](isolaser_fdr.html)
-with significant GTEx v8 **Cerebellum** sQTLs. The tissue is fixed for every
-point; there is no selection across tissues. The aim follows the effect-size
-comparison in the right panel of
+We compare our allelic splicing effects (isoLASER ΔPSI) with GTEx v8
+Cerebellum sQTL effects (beta), as in the right panel of
 [Fig. 3e of the isoLASER paper](https://www.nature.com/articles/s41467-025-64605-6).
+As in the paper, we use the **skipping junction** of each event, whose usage
+falls when the exonic part is included, so a **negative correlation** is
+expected.
 
-**Main finding: `r npairs` distinct matched pairs in `r ngenes` genes**, with
-`r nrow(points)` plotted comparisons across baseline, 1 hour and 6 hours.
-The genes are **HNRNPK, ATP5MJ, HLA-C and SNHG5**. All comparisons have the
-expected effect direction, but there are too few independent genes for a
-strong correlation or genome-wide validation conclusion.
+# How pairs were matched
 
-# Pair counts and selection
+- **Variant and gene:** the same SNV (position, REF and ALT; isoLASER's
+  0-based position + 1 = GTEx's) tested for the same Ensembl gene in GTEx.
+- **GTEx data:** full Cerebellum summary statistics, every tested association
+  at any p-value. 
+- **Event:** the exonic part must form an annotated exon-skipping or
+  alternative-splice-site event (the cluster types the paper used), and the
+  GTEx junction must be exactly that event's skipping junction.
+- **Points:** each point is one **pair**: an isoLASER association (variant ×
+  exonic part) and its matched GTEx skipping junction, at one timepoint.
+  Timepoints are plotted separately.
+- **Our associations:** before our FDR cutoff (isoLASER `cis` and
+  |ΔPSI| ≥ 0.10; the paper applied no FDR) and after it (permutation BH
+  q < 0.05 within each timepoint, as on the [FDR page](isolaser_fdr.html)).
 
-An isoLASER **association** is a gene × variant × exonic part. A **matched
-pair** links that association to a GTEx junction for the same variant and
-gene. The same pair can be measured at more than one timepoint; a gene can
-contribute multiple pairs.
+**Example, HNRNPK.** The C>T variant (chr9:83980154, 0-based) and the 34-base
+exonic part (gold) form an alternative splice site. GTEx measures the
+skipping junction (blue), which jumps over the part; the grey junction
+includes it. At 6 hours, ALT changes part inclusion by
+`r sprintf("%+.1f", 100*pts[set == BEFORE & tp == "6hr" & gene == "HNRNPK" & variant_qual == "chr9:83980154:C>T", dpsi])`
+percentage points, and GTEx's beta for the skipping junction is
+`r sprintf("%+.2f", pts[set == BEFORE & tp == "6hr" & gene == "HNRNPK" & variant_qual == "chr9:83980154:C>T", slope])`:
+opposite signs, as expected.
 
-```{r selection_counts}
-stage_order <- c("reported","snv","variant_gene","comparable")
-flow <- data.table(`Selection step`=c(
-  "Reported after permutation FDR and effect screen",
-  "Single-base variants eligible for matching",
-  "Same variant and gene in GTEx Cerebellum",
-  "Comparable annotated splice event"))
-for (t in c("0hr","1hr","6hr","any timepoint")) {
-  d <- selection[tp == t][match(stage_order,stage)]
-  name <- if(t == "any timepoint") "Unique across timepoints" else sub("hr"," hr",t)
-  flow[[name]] <- sprintf("%s (%s)",fmt(d$associations),fmt(d$genes))
-}
-knitr::kable(flow,align="lrrrr")
+![](assets/isolaser_gtex/comparable_event_example_skipping.png)
+
+```{r funnel}
+f <- fun[, .(Set=fifelse(set == BEFORE, "Before FDR", "After FDR"), Timepoint=tpl(tp),
+             `Our associations (SNVs)`=reported_snv_associations, `Same variant and gene tested in GTEx`=tested_in_gtex,
+             `Plotted pairs`=plotted, Genes=genes)]
+knitr::kable(f[order(-Set, Timepoint)], align="llrrrr")
 ```
 
-Cells show **isoLASER associations (genes)**. The last column deduplicates
-gene–variant–part associations across timepoints; it is not the sum of the
-timepoint columns. The input screen requires permutation BH q < 0.05,
-isoLASER's `cis` label and |dPSI| ≥ 0.10. BH is performed separately within
-each timepoint. Indels are excluded from matching.
+# Result
 
-The same-variant/gene step contains 30 distinct variant–part associations
-from `r uniqueN(variant_matches[,.(Gene_name,variant_qual)])` gene–variant pairs;
-one variant can be tested against several parts. The event check leaves
-`r nassoc` associations, each with one comparable Cerebellum junction in the
-current results, hence `r npairs` distinct matched pairs.
+![](assets/isolaser_gtex/fig3e_style.png)
 
-```{r point_counts}
-knitr::kable(point_counts[,.(Timepoint=sub("hr"," hr",tp),
-  `Inclusion-junction pairs`=inclusion,`Skipping-junction pairs`=skipping,
-  `Plotted points`=total,`Distinct genes`=genes)],align="lrrrr")
+[Download PDF](assets/isolaser_gtex/fig3e_style.pdf)
+
+```{r stats}
+s <- dcast(st[subset %in% c("all", "GTEx p < 1e-5")], set + tp ~ subset, value.var=c("n", "expected_sign", "pearson_r", "pearson_p"))
+s <- s[, .(Set=fifelse(set == BEFORE, "Before FDR", "After FDR"), Timepoint=tpl(tp),
+           `Pairs`=n_all, `All: R (p)`=sprintf("%.2f (%.2f)", pearson_r_all, pearson_p_all),
+           `All: expected sign`=sprintf("%d/%d", expected_sign_all, n_all),
+           `GTEx p < 1e-5: expected sign`=fifelse(is.na(`n_GTEx p < 1e-5`), "none", sprintf("%d/%d", `expected_sign_GTEx p < 1e-5`, `n_GTEx p < 1e-5`)))]
+knitr::kable(s[order(-Set, Timepoint)], align="llrrrr")
 ```
 
-**Five unique pairs give eight timepoint-specific points.** All current
-Cerebellum matches are **inclusion junctions**; no skipping-junction match
-passes the current filters. These points are not independent signals:
-HNRNPK contributes two variants linked to the same part, with measurements
-at multiple timepoints.
+<!-- **Expected sign**: our ΔPSI and GTEx's beta have opposite signs. -->
+<!-- **GTEx p < 1e-5**: the pairs where GTEx itself has strong evidence. -->
 
-# How comparable pairs were chosen
+<!-- - **No overall correlation.** Before FDR, R is near 0 at every timepoint; after -->
+<!--   FDR the panels have only 8–16 points and no correlation is significant. Most -->
+<!--   points (grey) have no GTEx evidence (nominal p ≥ 0.05); their beta is close -->
+<!--   to 0 and its sign is noise. -->
+<!-- - **Where GTEx has strong evidence, the direction usually agrees:** before -->
+<!--   FDR, `r sum(strong$agrees)` of `r nrow(strong)` pairs with GTEx p < 10⁻⁵ have -->
+<!--   the expected sign, including HNRNPK at all three timepoints, ATP5MJ, SNHG5 -->
+<!--   and EIF6. -->
+<!-- - **Why fewer points than the paper.** The paper's ovary panel has about 200 -->
+<!--   points, all known sQTLs ("SAVs matching known sQTLs"), from ENCODE ovary -->
+<!--   matched to GTEx ovary. Here only `r nrow(sigpairs)` plotted pairs are known -->
+<!--   GTEx sQTLs (in GTEx's significant-pair file). Only -->
+<!--   `r sprintf("%.0f–%.0f%%", 100*min(fun[set == BEFORE, tested_in_gtex/reported_snv_associations]), 100*max(fun[set == BEFORE, tested_in_gtex/reported_snv_associations]))` -->
+<!--   of our associations before FDR -->
+<!--   (`r sprintf("%.0f–%.0f%%", 100*min(fun[set == AFTER, tested_in_gtex/reported_snv_associations]), 100*max(fun[set == AFTER, tested_in_gtex/reported_snv_associations]))` -->
+<!--   after) are tested in GTEx for the same variant and gene, only some of those -->
+<!--   form a simple annotated event, and our cells (hiPSC-derived neurons) differ -->
+<!--   from adult cerebellum. -->
 
-**Overlap alone is insufficient.** GTEx tests intron/junction usage, while
-isoLASER tests inclusion of an exonic part. We require an annotated local
-relationship between the two measurements.
+# Data
 
-1. **Match variant and gene.** Use the Cerebellum significant-pair file only.
-   Require the same GRCh38 position, REF/ALT alleles and Ensembl gene ID.
-2. **Check transcript structures.** Use isoLASER's annotation and part
-   definitions. Exon-skipping matches require an included transcript with
-   both flanking junctions and an excluded transcript with the skipping
-   junction. Alternative splice-site matches require junctions sharing one
-   endpoint, with the other shifted across the part.
-3. **Assign the junction's role.** An inclusion junction occurs in at least
-   one part-including transcript and no part-excluding transcript; the
-   converse defines a skipping junction. Reject junctions present in both
-   groups, and skipping spans containing another non-overlapping annotated
-   exon. The junction need not occur in every transcript of its assigned group.
-4. **Retain matched pairs.** The primary plot keeps every distinct
-   variant–part–GTEx-junction match within Cerebellum, separately at each
-   timepoint. It does not reduce the results to one point per gene or select
-   a tissue/junction by its p-value. A secondary sensitivity plot selects one
-   representative per gene and role using the Cerebellum p-value.
-
-Coordinates are standardized before matching. isoLASER's stored variant
-position is 0-based; GTEx variant IDs are 1-based. For example,
-`chr9:83980154:C>T` and `chr9_83980155_C_T_b38` identify the same SNP.
-The GTEx intron's right endpoint is reduced by one to obtain a 0-based,
-half-open interval, following the
-[LeafCutter coordinate conversion](https://github.com/davidaknowles/leafcutter/blob/master/clustering/leafcutter_cluster_regtools.py).
-Main matches require exact endpoints. The earlier 2-base sensitivity check
-did not add any selected matches.
-
-## Example: HNRNPK
-
-![](assets/isolaser_gtex/cerebellum/comparable_event_examples.png)
-
-Gold is the 34-base part chr9:[83980118,83980152); blue is the Cerebellum
-GTEx junction chr9:[83978452,83980118), which connects to the part. The
-alternative annotated junction ends at 83980152 and excludes it. The diagram
-is schematic, not to scale; its coordinates are 0-based.
-
-For the same C>T variant at 6 hours, our ALT-minus-REF inclusion effect is
-**`r sprintf("%+.1f",100*hn$dpsi)` percentage points**, and the Cerebellum
-inclusion-junction beta is **`r sprintf("%+.2f",hn$slope)`**. Both decrease,
-as expected for an inclusion junction.
-
-SNHG5 also has an inclusion-junction match in Cerebellum: dPSI is
-`r sprintf("%+.1f",100*sn$dpsi)` points and beta is
-`r sprintf("%+.2f",sn$slope)`. These fixed-tissue estimates replace the
-different tissue/junction choices in the earlier multi-tissue comparison.
-
-[Download the HNRNPK example as PDF](assets/isolaser_gtex/cerebellum/comparable_event_examples.pdf).
-
-# Effect-size plots
-
-The x-axis is our donor-normalized **ALT minus REF part inclusion**. The
-y-axis is GTEx's ALT effect on normalized **intron usage**, from the
-[GTEx sQTL pipeline](https://github.com/broadinstitute/gtex-pipeline/blob/master/qtl/leafcutter/README.md).
-The axes have different units, so numerical equality is not expected.
-Inclusion junctions should have matching effect signs (positive correlation);
-skipping junctions would have opposite signs. All matches here are inclusion
-junctions, so only those panels are shown.
-
-## What did the paper plot?
-
-The [Fig. 3e caption and methods](https://www.nature.com/articles/s41467-025-64605-6.pdf)
-describe comparing isoLASER effects with GTEx effects for **matched
-variant–splicing associations**, not a gene-level effect summary. A gene may
-contribute multiple associations. The linked
-[public repository](https://github.com/gxiaolab/isoLASER_paper) contains the
-processing workflows; we did not find figure-specific plotting code there,
-so its exact duplicate-removal rule remains unverified. Our primary plot
-therefore shows matched pairs, with a separate gene-representative sensitivity
-view. This is an adaptation of the paper: its displayed example is ovary,
-and its described comparison uses the longest skipping junction.
-
-## Figures {.tabset}
-
-### All matched pairs
-
-![](assets/isolaser_gtex/cerebellum/cerebellum_pair_effects.png)
-
-Each dot is one matched variant–part–junction pair at one timepoint. All
-`r nrow(points)` points are included; the gene count is reported separately
-in each panel. Point labels distinguish the two HNRNPK variants.
-
-[Download PDF](assets/isolaser_gtex/cerebellum/cerebellum_pair_effects.pdf).
-
-### One representative per gene
-
-![](assets/isolaser_gtex/cerebellum/cerebellum_gene_effects.png)
-
-This supplementary view retains `r nrow(gene_points)` points across panels,
-one representative per gene and junction role at each timepoint, selected
-by the Cerebellum p-value. It illustrates the influence of repeated variants
-in one gene.
-
-[Download PDF](assets/isolaser_gtex/cerebellum/cerebellum_gene_effects.pdf).
-
-## Interpretation
-
-All `r sum(points$direction_agrees)` of `r nrow(points)` comparisons agree
-in direction. At 6 hours, Pearson r =
-`r sprintf("%.2f",largest$pearson_r)` and Spearman rho =
-`r sprintf("%.2f",largest$spearman_rho)`, based on only
-**`r largest$points` pairs in `r largest$genes` genes**. These are descriptive
-correlations and provide limited external corroboration. They do not
-validate the full scan or estimate its FDR. HNRNPK agrees at all three
-timepoints; HLA-C still warrants mapping checks.
-
-AHI1, WDR45B and KPNA2 do not enter this comparable-event subset. An absent
-match does not disprove an association: we use GTEx significant pairs only,
-and adult Cerebellum differs from stimulated hiPSC-derived neurons. The event
-check is local and annotation-based; the available files do not establish
-the complete structure of every GTEx cluster.
-
-# Matched pairs and data
-
-All rows use **Brain_Cerebellum**. Variant positions are **1-based**, while
-part and junction intervals are **0-based, half-open**. dPSI is ALT minus
-REF inclusion, shown in percentage points.
-
-```{r matched_pairs}
-points[, displayed_variant := variant_label(gtex_variant)]
-points[, junction := paste0(sub(":.*","",variant_qual),":",intron_start_0,"-",intron_end_0)]
-d <- points[order(gene,tp,variant_qual),.(Gene=gene,Timepoint=sub("hr"," hr",tp),
-  `Variant (1-based)`=displayed_variant,`Exonic part (0-based)`=exonic_part,
-  `GTEx junction (0-based)`=junction,`Event type`=event_type,
-  `Our dPSI (pp)`=round(100*dpsi,1),`Cerebellum beta`=signif(slope,3),
-  `GTEx nominal p`=signif(pval_nominal,3),`Our BH q`=signif(q_bh,3))]
-DT::datatable(as.data.frame(d),rownames=FALSE,filter="top",extensions="Buttons",
-  options=list(pageLength=10,scrollX=TRUE,order=list(),dom="Blfrtip",buttons=c("copy","csv")),
-  caption="Eight Cerebellum pair-timepoint comparisons; repeated genes and variants are not independent signals.")
+```{r points}
+d <- pts[order(-(set == BEFORE), tp, gene), .(Set=fifelse(set == BEFORE, "Before FDR", "After FDR"), Timepoint=tpl(tp), Gene=gene,
+  Variant=variant_qual, `Exonic part`=exonic_part, `GTEx junction`=paste0(intron_start_0, "-", intron_end_0),
+  `Our dPSI`=round(dpsi, 3), `Our BH q`=signif(q_bh, 2), `GTEx beta`=signif(slope, 3), `GTEx p`=signif(pval_nominal, 2))]
+DT::datatable(as.data.frame(d), rownames=FALSE, filter="top", options=list(pageLength=10, scrollX=TRUE))
 ```
 
-Downloads: [all matched pairs](assets/isolaser_gtex/cerebellum/pair_points.tsv),
-[selection counts](assets/isolaser_gtex/cerebellum/selection_counts.tsv),
-[same-variant/gene matches before the event check](assets/isolaser_gtex/cerebellum/variant_gene_matches.tsv),
-[statistics](assets/isolaser_gtex/cerebellum/stats.tsv), and
-[input checksums](assets/isolaser_gtex/cerebellum/inputs.tsv).
+**Variant**: isoLASER's 0-based position. **GTEx junction**: 0-based,
+half-open intron coordinates. Download the
+[points](assets/isolaser_gtex/fig3e_style_points.tsv) and
+[statistics](assets/isolaser_gtex/fig3e_style_stats.tsv).
 
-Reproduce with `Rscript 10.isolaser_permutation/31.cerebellum_comparison.R`,
-then `Rscript 10.isolaser_permutation/29.gtex_comparable_examples.R --cerebellum`.
-The local output folder is
-`10.isolaser_permutation/out/adaptive/gtex_comparison/cerebellum/`.
-The earlier multi-tissue outputs remain in its parent folder.
+Reproduce from `long_read_RNA/10.isolaser_permutation/` (add `--before-fdr`
+to the first two commands for the before-FDR set):
+`python 27.gtex_fdr_comparison.py --prepare-full-cerebellum`,
+`Rscript 34.extract_full_cerebellum.R`, then
+`Rscript 36.plot_fig3e_style.R`.

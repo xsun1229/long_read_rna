@@ -1,0 +1,6 @@
+subset	associations	genes	pearson_r	pearson_p	expected_sign
+all	19	15	-0.066953826918972	0.785362770702426	10
+GTEx nominal p < 0.05	6	5	-0.357259770778076	0.486909687766492	4
+GTEx nominal p < 1e-5	4	3	-0.948598209230104	0.0514017907698956	4
+in GTEx significant-pair file	0	0			0
+GTEx nominal p >= 0.05	13	10	0.430251135776192	0.142234933086823	6

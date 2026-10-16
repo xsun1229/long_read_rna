@@ -1,0 +1,17 @@
+stage	tp	associations	genes
+reported	0hr	530	191
+reported	1hr	773	288
+reported	6hr	759	285
+reported	any timepoint	1675	561
+snv	0hr	517	187
+snv	1hr	755	284
+snv	6hr	736	279
+snv	any timepoint	1632	553
+variant_gene	0hr	207	88
+variant_gene	1hr	337	142
+variant_gene	6hr	408	152
+variant_gene	any timepoint	836	311
+comparable	0hr	43	31
+comparable	1hr	72	54
+comparable	6hr	69	49
+comparable	any timepoint	148	107

@@ -1,0 +1,13 @@
+tp	role	view	points	genes	concordant	significant_gtEx	pearson_r	spearman_rho
+0hr	skipping	All matched pairs	8	6	3	0	-0.613814528763314	-0.428571428571429
+0hr	inclusion	All matched pairs	8	4	5	2	0.105877262562868	0.433766423440692
+1hr	skipping	All matched pairs	16	13	8	0	0.000665612535268825	0.364705882352941
+1hr	inclusion	All matched pairs	14	8	10	2	0.170558910600227	0.110254186348243
+6hr	skipping	All matched pairs	12	10	5	0	-0.160984300218641	0.181818181818182
+6hr	inclusion	All matched pairs	13	7	11	4	0.523919965409976	0.477245465139189
+1hr	skipping	One per gene	13	13	7	0	-0.0408452398529463	0.28021978021978
+6hr	skipping	One per gene	10	10	4	0	0.0425270009283182	0.36969696969697
+1hr	inclusion	One per gene	8	8	7	2	0.231571899153013	0.166666666666667
+6hr	inclusion	One per gene	7	7	6	1	0.507467382858329	0.357142857142857
+0hr	skipping	One per gene	6	6	2	0	-0.442510174055898	-0.2
+0hr	inclusion	One per gene	4	4	2	1	0.0636418245649575	0.4

@@ -17,7 +17,9 @@ A <- "docs/assets/isolaser_gtex"
 st <- fread(file.path(A, "fig3e_style_stats.tsv"))
 pts <- fread(file.path(A, "fig3e_style_points.tsv"))
 fun <- fread(file.path(A, "fig3e_style_funnel.tsv"))
-BEFORE <- "Before our FDR cutoff"; AFTER <- "After our FDR cutoff (BH q < 0.05)"
+cascade <- fread(file.path(A, "filter_cascade.tsv"))
+PAPER <- "Paper's cutoff"; BEFORE <- "Before FDR"; AFTER <- "After FDR"
+SET_ORDER <- c(PAPER, BEFORE, AFTER)
 tpl <- function(x) sub("hr", " hr", x)
 strong <- pts[set == BEFORE & pval_nominal < 1e-5]
 sigpairs <- pts[gtex_significant_pair == TRUE]
@@ -42,9 +44,13 @@ expected.
 - **Points:** each point is one **pair**: an isoLASER association (variant ×
   exonic part) and its matched GTEx skipping junction, at one timepoint.
   Timepoints are plotted separately.
-- **Our associations:** before our FDR cutoff (isoLASER `cis` and
-  |ΔPSI| ≥ 0.10; the paper applied no FDR) and after it (permutation BH
-  q < 0.05 within each timepoint, as on the [FDR page](isolaser_fdr.html)).
+- **Our associations**, three sets (see the next section):
+  - **Paper's cutoff:** isoLASER's own `cis` label and pooled ΔPSI, as in the
+    paper;
+  - **Before FDR:** our screen (heterozygous donors only, ≥ 30 reads, `cis`,
+    |ΔPSI| ≥ 0.10, part ≥ 10 bp, no other variant within 30 bp);
+  - **After FDR:** our screen plus permutation BH q < 0.05 within each
+    timepoint, as on the [FDR page](isolaser_fdr.html).
 
 **Example, HNRNPK.** The C>T variant (chr9:83980154, 0-based) and the 34-base
 exonic part (gold) form an alternative splice site. GTEx measures the
@@ -58,11 +64,35 @@ opposite signs, as expected.
 ![](assets/isolaser_gtex/comparable_event_example_skipping.png)
 
 ```{r funnel}
-f <- fun[, .(Set=fifelse(set == BEFORE, "Before FDR", "After FDR"), Timepoint=tpl(tp),
+f <- fun[order(match(set, SET_ORDER), tp), .(Set=set, Timepoint=tpl(tp),
              `Our associations (SNVs)`=reported_snv_associations, `Same variant and gene tested in GTEx`=tested_in_gtex,
              `Plotted pairs`=plotted, Genes=genes)]
-knitr::kable(f[order(-Set, Timepoint)], align="llrrrr")
+knitr::kable(f, align="llrrrr")
 ```
+
+**Our associations (SNVs)**: variant × exonic part associations with a
+single-base variant at that timepoint. **Same variant and gene tested in
+GTEx**: of those, the ones whose variant is tested for the same gene in GTEx
+Cerebellum. **Plotted pairs**: association × matched GTEx skipping junction.
+
+# Our cutoffs versus the paper's
+
+The paper used isoLASER's own `cis` calls. Our screen adds five filters, so it
+starts from far fewer associations (all three timepoints together):
+
+```{r cascade}
+knitr::kable(cascade[, .(Step=step, Associations=format(associations, big.mark=","), Genes=format(genes, big.mark=","),
+                         `Used in the paper`=paper)], align="lrrl")
+```
+
+**Associations**: distinct variant × exonic part pairs at any timepoint. The
+heterozygous-only rows come from the original isoLASER run's depth comparison;
+the others from the rerun used for the permutation test (the two runs agree
+closely). Each filter has a reason: below 30 reads, variant calls disagree
+more often with the genotype panel; heterozygous donors keep the comparison
+within each person, whereas pooling homozygous donors compares people; and
+clustered variant calls are excluded as a conservative precaution, which can
+also remove real variants.
 
 # Result
 
@@ -72,11 +102,11 @@ knitr::kable(f[order(-Set, Timepoint)], align="llrrrr")
 
 ```{r stats}
 s <- dcast(st[subset %in% c("all", "GTEx p < 1e-5")], set + tp ~ subset, value.var=c("n", "expected_sign", "pearson_r", "pearson_p"))
-s <- s[, .(Set=fifelse(set == BEFORE, "Before FDR", "After FDR"), Timepoint=tpl(tp),
-           `Pairs`=n_all, `All: R (p)`=sprintf("%.2f (%.2f)", pearson_r_all, pearson_p_all),
+s <- s[order(match(set, SET_ORDER), tp), .(Set=set, Timepoint=tpl(tp),
+           `Pairs`=n_all, `All: R (p)`=sprintf("%.2f (%s)", pearson_r_all, vapply(pearson_p_all, function(x) format(signif(x, 2)), "")),
            `All: expected sign`=sprintf("%d/%d", expected_sign_all, n_all),
            `GTEx p < 1e-5: expected sign`=fifelse(is.na(`n_GTEx p < 1e-5`), "none", sprintf("%d/%d", `expected_sign_GTEx p < 1e-5`, `n_GTEx p < 1e-5`)))]
-knitr::kable(s[order(-Set, Timepoint)], align="llrrrr")
+knitr::kable(s, align="llrrrr")
 ```
 
 <!-- **Expected sign**: our ΔPSI and GTEx's beta have opposite signs. -->
@@ -104,7 +134,7 @@ knitr::kable(s[order(-Set, Timepoint)], align="llrrrr")
 # Data
 
 ```{r points}
-d <- pts[order(-(set == BEFORE), tp, gene), .(Set=fifelse(set == BEFORE, "Before FDR", "After FDR"), Timepoint=tpl(tp), Gene=gene,
+d <- pts[order(match(set, SET_ORDER), tp, gene), .(Set=set, Timepoint=tpl(tp), Gene=gene,
   Variant=variant_qual, `Exonic part`=exonic_part, `GTEx junction`=paste0(intron_start_0, "-", intron_end_0),
   `Our dPSI`=round(dpsi, 3), `Our BH q`=signif(q_bh, 2), `GTEx beta`=signif(slope, 3), `GTEx p`=signif(pval_nominal, 2))]
 DT::datatable(as.data.frame(d), rownames=FALSE, filter="top", options=list(pageLength=10, scrollX=TRUE))
@@ -115,8 +145,10 @@ half-open intron coordinates. Download the
 [points](assets/isolaser_gtex/fig3e_style_points.tsv) and
 [statistics](assets/isolaser_gtex/fig3e_style_stats.tsv).
 
-Reproduce from `long_read_RNA/10.isolaser_permutation/` (add `--before-fdr`
-to the first two commands for the before-FDR set):
-`python 27.gtex_fdr_comparison.py --prepare-full-cerebellum`,
-`Rscript 34.extract_full_cerebellum.R`, then
-`Rscript 36.plot_fig3e_style.R`.
+Reproduce from `long_read_RNA/10.isolaser_permutation/`: for each set, run
+`python 27.gtex_fdr_comparison.py --prepare-full-cerebellum` and then
+`Rscript 34.extract_full_cerebellum.R`, adding `--before-fdr` or
+`--paper-cutoff` to both for those sets; then `Rscript 36.plot_fig3e_style.R`
+(figure and tables) and `Rscript 37.filter_cascade.R` (the cutoff table).
+**Our BH q** is blank for the paper's-cutoff set, which has no permutation
+test.

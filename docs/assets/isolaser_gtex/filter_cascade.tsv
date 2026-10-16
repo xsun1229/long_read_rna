@@ -1,0 +1,7 @@
+step	associations	genes	paper	source
+isoLASER cis label (homozygous donors pooled; isoLASER's default depth, >= 10 reads per donor)	23251	2101	yes (the paper's cutoff)	recording rerun
++ |dPSI| >= 0.10	11609	1664	no	recording rerun
++ exonic part >= 10 bp, no other variant within 30 bp	4261	1237	no	recording rerun
++ heterozygous donors only, recomputed (>= 10 reads per donor)	2201	731	no	original run
++ >= 30 reads per heterozygous donor	1666	561	no	original run
++ permutation FDR, BH q < 0.05 within each timepoint	375	131	no	recording rerun

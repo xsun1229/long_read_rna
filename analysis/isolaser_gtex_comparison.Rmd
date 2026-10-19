@@ -109,6 +109,43 @@ s <- s[order(match(set, SET_ORDER), tp), .(Set=set, Timepoint=tpl(tp),
 knitr::kable(s, align="llrrrr")
 ```
 
+## Direction where GTEx is significant (paper's cutoff)
+
+We take the paper's-cutoff pairs where GTEx is significant (nominal
+p < 0.05, the blue points in the top row). A pair is **consistent** when our
+ΔPSI and GTEx's beta have opposite signs, the expected negative relation for a
+skipping junction. A binomial test asks whether the share of consistent pairs
+differs from 50%, the share expected if directions were unrelated. These
+definitions are our own; the paper reports only the correlation.
+
+```{r consistency}
+blue <- pts[set == PAPER & pval_nominal < 0.05 & dpsi != 0]
+once <- blue[, .(dpsi=mean(dpsi), slope=slope[1]), by=.(Gene_name, variant_qual, exonic_part, phenotype_id)]
+bt <- function(d) {
+  k <- sum(d$dpsi * d$slope < 0); n <- nrow(d)
+  data.table(Pairs=n, Consistent=k, `Consistent (%)`=round(100 * k / n),
+             `Binomial p, two-sided`=signif(binom.test(k, n)$p.value, 2),
+             `Binomial p, one-sided`=signif(binom.test(k, n, alternative="greater")$p.value, 2))
+}
+cons <- rbind(blue[order(tp), bt(.SD), by=.(Timepoint=tpl(tp))],
+              data.table(Timepoint="All timepoints, every point", bt(blue)),
+              data.table(Timepoint="All timepoints, each pair once", bt(once)))
+knitr::kable(cons, align="lrrrrr")
+```
+
+At every timepoint slightly more than half of the pairs are consistent
+(`r paste0(range(cons[1:3, "Consistent (%)"]), collapse="–")`%), and no
+test reaches p < 0.05, whether the timepoints are tested separately or together.
+
+**Pairs**: association × GTEx skipping junction with GTEx p < 0.05.
+**Consistent**: pairs with opposite signs. **Two-sided p**: is the share
+different from 50%. **One-sided p**: is it above 50%, the direction expected.
+**Every point** counts each timepoint's points, so a pair called at two or
+three timepoints counts two or three times and the points are not
+independent. **Each pair once** counts every association × junction pair
+once, using its mean ΔPSI over the timepoints where it is called. One point
+with ΔPSI exactly 0 (CHGB, 6 hr) has no direction and is left out.
+
 <!-- **Expected sign**: our ΔPSI and GTEx's beta have opposite signs. -->
 <!-- **GTEx p < 1e-5**: the pairs where GTEx itself has strong evidence. -->
 

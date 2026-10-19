@@ -403,7 +403,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-10-16
+<strong>Last updated:</strong> 2026-10-19
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree17e5230bca321924d84db2dbf510fdd8fcf87314targetblank17e5230a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree130e99fd260ab2721450776cd7d097526fb0e703targetblank130e99fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/17e5230bca321924d84db2dbf510fdd8fcf87314" target="_blank">17e5230</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/130e99fd260ab2721450776cd7d097526fb0e703" target="_blank">130e99f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree17e5230bca321924d84db2dbf510fdd8fcf87314targetblank17e5230a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree130e99fd260ab2721450776cd7d097526fb0e703targetblank130e99fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/17e5230bca321924d84db2dbf510fdd8fcf87314" target="_blank">17e5230</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/130e99fd260ab2721450776cd7d097526fb0e703" target="_blank">130e99f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -617,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/130e99fd260ab2721450776cd7d097526fb0e703/analysis/isolaser_gtex_comparison.Rmd" target="_blank">130e99f</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-16
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/130e99fd260ab2721450776cd7d097526fb0e703/docs/isolaser_gtex_comparison.html" target="_blank">130e99f</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-16
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1006,6 +1040,91 @@ real variants.</p>
 </tr>
 </tbody>
 </table>
+<div id="direction-where-gtex-is-significant-papers-cutoff"
+class="section level2">
+<h2>Direction where GTEx is significant (paper’s cutoff)</h2>
+<p>We take the paper’s-cutoff pairs where GTEx is significant (nominal p
+&lt; 0.05, the blue points in the top row). A pair is
+<strong>consistent</strong> when our ΔPSI and GTEx’s beta have opposite
+signs, the expected negative relation for a skipping junction. A
+binomial test asks whether the share of consistent pairs differs from
+50%, the share expected if directions were unrelated. These definitions
+are our own; the paper reports only the correlation.</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="5%" />
+<col width="10%" />
+<col width="14%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="right">57</td>
+<td align="right">30</td>
+<td align="right">53</td>
+<td align="right">0.79</td>
+<td align="right">0.400</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="right">83</td>
+<td align="right">48</td>
+<td align="right">58</td>
+<td align="right">0.19</td>
+<td align="right">0.094</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="right">90</td>
+<td align="right">49</td>
+<td align="right">54</td>
+<td align="right">0.46</td>
+<td align="right">0.230</td>
+</tr>
+<tr class="even">
+<td align="left">All timepoints, every point</td>
+<td align="right">230</td>
+<td align="right">127</td>
+<td align="right">55</td>
+<td align="right">0.13</td>
+<td align="right">0.065</td>
+</tr>
+<tr class="odd">
+<td align="left">All timepoints, each pair once</td>
+<td align="right">167</td>
+<td align="right">94</td>
+<td align="right">56</td>
+<td align="right">0.12</td>
+<td align="right">0.061</td>
+</tr>
+</tbody>
+</table>
+<p>At every timepoint slightly more than half of the pairs are
+consistent (53&lt;U+2013&gt;58%), and no test reaches p &lt; 0.05,
+whether the timepoints are tested separately or together.</p>
+<p><strong>Pairs</strong>: association × GTEx skipping junction with
+GTEx p &lt; 0.05. <strong>Consistent</strong>: pairs with opposite
+signs. <strong>Two-sided p</strong>: is the share different from 50%.
+<strong>One-sided p</strong>: is it above 50%, the direction expected.
+<strong>Every point</strong> counts each timepoint’s points, so a pair
+called at two or three timepoints counts two or three times and the
+points are not independent. <strong>Each pair once</strong> counts every
+association × junction pair once, using its mean ΔPSI over the
+timepoints where it is called. One point with ΔPSI exactly 0 (CHGB, 6
+hr) has no direction and is left out.</p>
 <!-- **Expected sign**: our ΔPSI and GTEx's beta have opposite signs. -->
 <!-- **GTEx p < 1e-5**: the pairs where GTEx itself has strong evidence. -->
 <!-- - **No overall correlation.** Before FDR, R is near 0 at every timepoint; after -->
@@ -1026,6 +1145,7 @@ real variants.</p>
 <!--   after) are tested in GTEx for the same variant and gene, only some of those -->
 <!--   form a simple annotated event, and our cells (hiPSC-derived neurons) differ -->
 <!--   from adult cerebellum. -->
+</div>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>

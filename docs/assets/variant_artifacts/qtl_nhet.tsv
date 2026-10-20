@@ -1,0 +1,5 @@
+set	support	associations	eligible_1_2_donors	eligible_3_4_donors	pct_eligible_3_4
+q < 0.05	in panel	138	119	19	14
+q < 0.05	not in panel	399	160	239	60
+screen, q >= 0.05	in panel	855	783	72	8
+screen, q >= 0.05	not in panel	616	437	179	29

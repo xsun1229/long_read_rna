@@ -1,0 +1,199 @@
+---
+title: "Evidence of technical artifacts in isoLASER variant calls"
+author: "XSun"
+date: "2026-10-20"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+library(data.table)
+A <- "docs/assets/variant_artifacts"
+rd <- function(f) fread(file.path(A, f))
+cas <- rd("ctwas_cascade_counts.tsv"); pu <- rd("panel_vs_ukb.tsv"); sup <- rd("qtl_support.tsv")
+nh <- rd("qtl_nhet.tsv"); ctx <- rd("qtl_context.tsv"); chk <- rd("mapping_checks.tsv")
+ab <- rd("het_calls_ab.tsv"); cl <- rd("clusters.tsv"); q05 <- rd("q05_by_support.tsv")
+ex <- rd("examples.tsv")
+fmt <- function(n) format(n, big.mark=",", trim=TRUE)
+qs <- q05[, .(present=sum(`in panel`), absent=sum(`not in panel`))]
+panel_n <- sup[support == "in panel", snvs]; absent_n <- sup[support == "not in panel", snvs]
+qual_col <- "panel site typed or R2 >= 0.8"
+start_counts <- cas[step == "QTL set screen"][order(tp)]
+```
+
+<!-- Here, **our panel** means our 100-line TOPMed-imputed genotype panel, which -->
+<!-- includes the four donors in this project. -->
+
+<!-- **Main finding:** `r fmt(absent_n)` of `r fmt(panel_n + absent_n)` screened SNVs -->
+<!-- are absent from our panel. They account for -->
+<!-- **`r fmt(qs$absent)` of `r fmt(qs$present + qs$absent)` significant associations -->
+<!-- (`r round(100 * qs$absent / (qs$present + qs$absent))`%)** and are enriched in -->
+<!-- error-prone sequence contexts. This supports concern about technical artifacts; -->
+<!-- it does not measure how many variants are false. AHI1 and WDR45B need independent -->
+<!-- variant validation before being presented as genetic splicing QTLs. -->
+
+# 1. Where cTWAS predictors are lost
+
+We noticed this issue while preparing cTWAS models to connect our splicing
+associations with the schizophrenia (SCZ) GWAS. Each predictor uses one SNV
+associated with an exonic part, and cTWAS needs that SNV in its LD reference.
+
+We started with the **Screen before FDR** from the
+[genome-wide results](isolaser_fdr.html#genome-wide-results). Restricting the
+candidate SNVs to the UKB LD reference removed a large fraction of the
+associations. At baseline, for example,
+`r cas[tp == "0hr" & step == "single-base SNV", associations]` SNV associations
+became `r cas[tp == "0hr" & step == "variant in the UKB b38 reference", associations]`.
+This prompted us to check the coordinates, compare variants with our panel,
+and inspect their sequence context and read patterns.
+
+```{r cascade}
+lab <- c(`QTL set screen`="Screen before FDR (same as FDR page)", `single-base SNV`="Single-base SNVs",
+         `variant in the UKB b38 reference`="Variant matches UKB LD reference",
+         `not strand-ambiguous`="Remove A/T and C/G SNPs", `top QTL per part`="Choose one QTL per exonic part",
+         `SNP in the SCZ GWAS (final cTWAS traits)`="Chosen SNP also in SCZ GWAS")
+cas[, display := sprintf("%s (%s)", fmt(associations), fmt(genes))]
+wide <- dcast(cas, step ~ tp, value.var="display")[match(names(lab), step)]
+knitr::kable(wide[, .(Step=lab[step], `0 hr`=`0hr`, `1 hr`=`1hr`, `6 hr`=`6hr`)], align="lrrr")
+```
+
+**Cells show associations (genes), matching the convention on the FDR page.**
+An association is a gene x variant x exonic part at one timepoint. Several
+variants can be associated with the same part. The screen's
+`r paste(start_counts$associations, collapse=" / ")` associations therefore
+represent `r paste(start_counts$parts, collapse=" / ")` distinct exonic parts
+at 0 / 1 / 6 hr.
+After choosing one QTL per part, the association counts are also the numbers
+of cTWAS predictors.
+
+The UKB LD reference contains variants with minor allele frequency >1% in White
+British samples, so genuine rare or filtered variants may be missing.
+[Reference documentation](https://xinhe-lab.github.io/multigroup_ctwas/articles/preparing_input_data.html#reference-variants-and-ld-matrices)
+One missing SNP can remove several parts.
+
+The coordinate checks support the current conversion: all `r chk$snvs[1]` REF
+bases agree with GRCh38, and offsets of -2, -1, +1, and +2 bp yield only
+`r sum(chk[offset_bp != 0, snvs_matching_ukb])` allele-matched variant/offset pairs,
+compared with `r chk[offset_bp == 0, snvs_matching_ukb]` at the correct positions.
+
+# 2. What distinguishes variants absent from our panel?
+
+"Present in our panel" means our genotype panel has a record at the same
+position with the same two alleles. It does **not** establish that any particular
+donor is heterozygous.
+
+```{r evidence}
+pct <- function(d, group, col) paste0(d[support == group, get(col)], "%")
+hn <- nh[set == "q < 0.05"]
+evidence <- data.table(
+  Measure=c("Distinct screened SNVs", "Associations with q < 0.05",
+            "SNVs in homopolymer context", "SNVs within 10 bp of an exon edge",
+            "Significant associations with 3-4 eligible RNA donors"),
+  `Present in our panel`=c(fmt(panel_n), fmt(qs$present), pct(ctx, "in panel", "homopolymer_ge4"),
+                    pct(ctx, "in panel", "exon_edge_le10"), pct(hn, "in panel", "pct_eligible_3_4")),
+  `Absent from our panel`=c(fmt(absent_n), fmt(qs$absent), pct(ctx, "not in panel", "homopolymer_ge4"),
+                   pct(ctx, "not in panel", "exon_edge_le10"), pct(hn, "not in panel", "pct_eligible_3_4")))
+knitr::kable(evidence, align="lrr")
+```
+
+**Definitions:** homopolymer context means a run of >=4 identical A/C/G/T bases
+containing the SNV or an immediately adjacent base in a 21-base reference window.
+Exon distance uses annotated exon boundaries, not each read's actual splice junction.
+An eligible RNA donor has >=30 informative reads and alternate fraction 0.25-0.75
+for that association. These are RNA-based eligibility counts, not DNA genotypes.
+Repeated variants and selection for detectable effects prevent treating the donor
+counts as independent population-genotype observations.
+
+As a reference check, `r pu[set == "all panel SNVs", pct_in_ukb]`% of SNVs in our panel
+match UKB; the allele-frequency correlation on up to 200,000 shared sites flagged
+TYPED is `r pu$af_correlation_with_ukb_eur[1]`. This shows agreement between
+datasets, not the ancestry or genotype accuracy of each donor.
+
+# 3. Read-level patterns and concrete examples
+
+Across all PASS heterozygous RNA SNV calls with depth >=10, variants absent from
+our panel show a lower alternate-read fraction and more clustering:
+
+![](assets/variant_artifacts/ab_by_cluster.png)
+
+```{r allele-balance}
+knitr::kable(ab[, .(Group=sub("in genotype panel", "in our panel", sub("not in panel", "not in our panel", as.character(group), fixed=TRUE), fixed=TRUE), Calls=fmt(calls), Sites=fmt(sites),
+                    `Median ALT fraction`=median_ab,
+                    `% of row's sites in clusters of >=5`=fifelse(is.na(pct_sites_in_clusters_ge5), "--", as.character(pct_sites_in_clusters_ge5)))], align="lrrrr")
+```
+
+RNA allele imbalance can be biological, so departure from 0.5 is a warning sign,
+not proof of an error. A cluster contains >=3 sites linked by consecutive gaps
+<=1 kb; its total span can exceed 1 kb. Sites are pooled across donors and
+timepoints. "Nonclustered" includes single sites and two-site groups.
+
+For example, the RPLP0 cluster contains `r cl[genes == "RPLP0", sites]` sites in
+`r cl[genes == "RPLP0", span_bp]` bp, with calls from
+`r cl[genes == "RPLP0", donors]` donors. This warrants checking paralog/pseudogene
+alignments. It does not mean every site occurs in every donor. Genuine variation
+can also cluster, especially in polymorphic regions such as HLA.
+
+```{r examples}
+knitr::kable(ex[, .(Gene=gene, `Our panel`=fifelse(in_panel, "Yes", "No"), UKB=fifelse(in_ukb, "Yes", "No"),
+                    `Reference sequence (SNV in brackets)`=context,
+                    `Exon-edge distance (bp)`=edge_dist)], align="llllr")
+```
+
+For **AHI1**, changing the central C to T joins two five-T runs into 11 Ts;
+for **WDR45B**, it makes a ten-T run. These contexts and the missing records in our panel
+make the calls suspicious, but do not prove C-to-T sequencing errors.
+**HNRNPK and KPNA2** have records in our panel and UKB and are better-supported
+follow-up candidates. HNRNPK's proximity to an exon boundary does not establish causality.
+
+# 4. Potential causes
+
+These explanations are consistent with the observed patterns, but require
+read-level or independent genotype validation.
+
+- **Misalignment to a similar gene:** reads from a paralog or processed
+  pseudogene may align to the wrong copy. Differences between the copies can
+  appear as several nearby SNVs, recurring across donors.
+- **ONT basecalling errors:** difficult sequence contexts, including interrupted
+  runs of identical bases such as the AHI1 and WDR45B examples, may produce the
+  same error in a fraction of reads. A donor can then appear heterozygous in RNA
+  even if its genotype is homozygous.
+- **Splice-junction alignment errors:** an incorrectly placed exon boundary can
+  create apparent mismatches near the junction. If this occurs preferentially in
+  one isoform, it can also create an apparent allele-splicing association.
+
+**Why permutation may still find significance:** if an erroneous base call or
+alignment occurs preferentially in one isoform, called allele and splicing status
+are associated. Shuffling breaks that association and can produce a small p-value.
+The test does not establish that the called allele exists in DNA. These are known
+challenges in [long-read RNA variant calling](https://link.springer.com/article/10.1186/s13059-023-02923-y).
+
+<!-- # 5. Proposed reanalysis -->
+
+<!-- 1. **Sensitivity analysis using our panel:** start from **all tested associations**, -->
+<!--    keep SNVs recorded in our panel and flagged TYPED or imputation R2 >=0.8, and recompute -->
+<!--    BH within each timepoint using their existing permutation p-values. Apply `cis` -->
+<!--    and absolute delta-PSI >=0.10 afterwards. Do not calculate BH on the screen alone. -->
+<!--    Currently `r sum(q05[[qual_col]])` significant screen associations meet this -->
+<!--    site-quality rule (`r paste(q05[[qual_col]], collapse=" / ")` at 0 / 1 / 6 hr); -->
+<!--    these are counts under the existing q-values, not results of the proposed reanalysis. -->
+<!-- 2. **Donor-aware analysis:** use each donor's reliable genotype in our panel to determine -->
+<!--    heterozygosity, retain adequate coverage and allele support, then rebuild the -->
+<!--    observed tables and permutations. Site-level membership in our panel alone is insufficient. -->
+<!-- 3. **Validate highlighted variants:** inspect read alignments and seek independent -->
+<!--    DNA confirmation, especially for AHI1 and WDR45B. Neither filtering by our panel nor -->
+<!--    permutation alone resolves all alignment artifacts. -->
+
+This approach sacrifices some genuine variants missing from our panel. The current
+evidence supports cautious follow-up; the fraction of false variant calls remains unknown.
+
+**Data:** SNVs from the screen (`cis`, absolute delta-PSI >=0.10); associations are
+gene x SNV x exonic part x timepoint. QTL results use the recording rerun; the
+genome-wide call histogram uses the earlier Nanopore runs from the
+[variant-validation page](isolaser_variants.html). Variant IDs are isoLASER 0-based;
+VCF/UKB positions add one. Tables and figure are computed by
+`8.isolaser_validation/21.variant_artifacts.R`.
+[Download all cluster examples](assets/variant_artifacts/clusters.tsv) or
+[panel/reference checks](assets/variant_artifacts/panel_vs_ukb.tsv).

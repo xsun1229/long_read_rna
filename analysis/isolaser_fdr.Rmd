@@ -96,13 +96,27 @@ chosen permutation null; its limits are described below.
 ```{r overview}
 counts <- function(a, b) sprintf("%s (%s)", fmt(a), fmt(b))
 knitr::kable(ov[, .(Timepoint=tp, `Tested associations`=fmt(tested),
+  `Paper's cutoff`=counts(paper_associations, paper_genes),
   Screen=counts(screen_associations, screen_genes),
   `Screen + q < 0.10`=counts(q10_associations, q10_genes),
-  `Screen + q < 0.05`=counts(q05_associations, q05_genes))], align="lrrrr")
+  `Screen + q < 0.05`=counts(q05_associations, q05_genes))], align="lrrrrr")
 ```
 
-Cells under **Screen** and **Screen + q** show **associations (genes)**.
-The screen requires isoLASER's `cis` label and |ΔPSI| ≥ 0.10. At q < 0.05,
+Cells other than **Tested associations** show **associations (genes)**.
+
+- **Paper's cutoff:** isoLASER's own `cis` call with no other filter, as in
+  the isoLASER paper. It comes from isoLASER-joint, which pools every donor
+  with ≥ 10 reads, homozygous donors included. It is counted over every
+  association isoLASER reports, so it is not a subset of our tested
+  associations. Above about 2,370 pooled reads, isoLASER's `cis` threshold
+  falls below zero, so this column includes many calls with no effect.
+- **Screen** (our definition), before FDR control: among our tested
+  associations, isoLASER's `cis` rule recomputed on heterozygous donors only,
+  plus |ΔPSI| ≥ 0.10. A tested association has at least one heterozygous donor
+  (RNA allele fraction 0.25–0.75) with ≥ 30 informative reads, an exonic part
+  ≥ 10 bp, and no other tested variant within 30 bp.
+
+At q < 0.05,
 `r pct(any_tp$q05_genes / any_tp$screen_genes)` of the screen's genes remain;
 q < 0.10 adds `r fmt(any_tp$q10_genes - any_tp$q05_genes)` genes.
 These counts use the recording rerun, so they can differ slightly from the

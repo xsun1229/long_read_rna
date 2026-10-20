@@ -1,0 +1,6 @@
+set	snvs	in_ukb	pct_in_ukb	af_correlation_with_ukb_eur
+all panel SNVs	7743879	7160948	92.5	0.981
+panel MAF <= 1%	70940	30500	43	
+panel MAF > 1% to 5%	1977849	1557163	78.7	
+panel MAF > 5%	5695090	5573285	97.9	
+genotyped (TYPED) panel SNVs	4350988	4308087	99	

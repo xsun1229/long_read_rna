@@ -1,0 +1,19 @@
+tp	step	associations	parts	genes
+0hr	QTL set screen	530	467	191
+0hr	single-base SNV	517	454	187
+0hr	variant in the UKB b38 reference	235	210	97
+0hr	not strand-ambiguous	205	185	82
+0hr	top QTL per part	185	185	82
+1hr	QTL set screen	773	726	288
+1hr	single-base SNV	755	708	284
+1hr	variant in the UKB b38 reference	371	338	152
+1hr	not strand-ambiguous	301	281	139
+1hr	top QTL per part	281	281	139
+6hr	QTL set screen	759	670	285
+6hr	single-base SNV	736	647	279
+6hr	variant in the UKB b38 reference	441	362	162
+6hr	not strand-ambiguous	359	319	137
+6hr	top QTL per part	319	319	137
+0hr	SNP in the SCZ GWAS (final cTWAS traits)	138	138	68
+1hr	SNP in the SCZ GWAS (final cTWAS traits)	241	241	122
+6hr	SNP in the SCZ GWAS (final cTWAS traits)	286	286	121

@@ -1,0 +1,4 @@
+group	calls	sites	median_ab	pct_ab_lt_0.42	pct_sites_in_clusters_ge5
+in genotype panel	14758	5334	0.47	22	1.8
+not in panel: clustered	5007	1683	0.43	43	61.6
+not in panel: nonclustered	4594	2304	0.44	35	

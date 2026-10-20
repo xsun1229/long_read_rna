@@ -1,0 +1,7 @@
+step	0hr	1hr	6hr
+QTL set screen	467	726	670
+single-base SNV	454	708	647
+variant in the UKB b38 reference	210	338	362
+not strand-ambiguous	185	281	319
+top QTL per part	185	281	319
+SNP in the SCZ GWAS (final cTWAS traits)	138	241	286

@@ -68,3 +68,6 @@ donors, at 0, 1 and 6 hours after stimulation.
 * [Comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison.html) —
   how comparable variant–part/junction pairs were selected, pair counts,
   worked examples and effect-size comparisons across timepoints
+* [Evidence of technical artifacts in isoLASER variant calls](isolaser_variant_artifacts.html) -
+  Support from our panel, sequence-context and read-pattern checks, candidate examples,
+  and proposed validation and reanalysis steps

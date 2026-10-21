@@ -1,0 +1,3 @@
+tx	status	reads	REF	ALT	name	type	rank	drawn	sqanti3	lab
+ENST00000649934	excludes part	18	13	5	LMBRD1-229	protein_coding	1	TRUE		LMBRD1-229 (ENST00000649934)
+ENST00000649679	includes part	17	0	17	LMBRD1-225	protein_coding	1	TRUE		LMBRD1-225 (ENST00000649679)

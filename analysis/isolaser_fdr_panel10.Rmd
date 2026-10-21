@@ -1,0 +1,284 @@
+---
+title: "Genome-wide FDR with genotype-panel donors (rerun)"
+author: "XSun"
+date: "2026-10-21"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+A <- "docs/assets/fdr_panel10"
+ov <- fread(file.path(A, "fdr_overview.tsv"))
+vo <- fread(file.path(A, "overview_vs_original.tsv"))
+rounds <- fread(file.path(A, "adaptive_rounds.tsv"))
+cons <- fread(file.path(A, "consistency.tsv"))
+g <- fread(file.path(A, "significant_genes.tsv"))
+gc <- fread(file.path(A, "gene_changes.tsv"))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+pct <- function(x, digits=0) sprintf(paste0("%.", digits, "f%%"), 100 * x)
+counts <- function(a, b) sprintf("%s (%s)", fmt(a), fmt(b))
+any_tp <- ov[tp == "any timepoint"]; any_vo <- vo[tp == "any timepoint"]
+fold <- function(gn, t) sprintf("%.1f", 2^g[gene == gn][[paste0("logFC_", t)]])
+effect_reads <- function(d, t) fifelse(is.na(d[[paste0("dpsi_", t)]]), "no score",
+  sprintf("%+.0f (%s)", 100 * d[[paste0("dpsi_", t)]], fmt(d[[paste0("het_cov_", t)]])))
+best_q <- function(d) signif(pmin(d$q_bh_0hr, d$q_bh_1hr, d$q_bh_6hr, na.rm=TRUE), 2)
+example_table <- function(genes, why) {
+  d <- g[match(genes, gene)]
+  data.table(Gene=d$gene, `0 hr`=effect_reads(d, "0hr"), `1 hr`=effect_reads(d, "1hr"), `6 hr`=effect_reads(d, "6hr"),
+             `Best q`=best_q(d), `Het donors`=d$max_het, Relevance=why)
+}
+pattern_labels <- c("all three timepoints"="Significant at 3 timepoints",
+                    "two timepoints"="Significant at 2 timepoints",
+                    "shared, below threshold elsewhere"="One timepoint; nominal support elsewhere",
+                    "candidate timepoint-specific"="One timepoint; no nominal support elsewhere",
+                    "not testable elsewhere"="One timepoint; no usable score elsewhere")
+g[, display_pattern := unname(pattern_labels[pattern])]
+annot <- function(d) d[, .(`Neuronal GO term`=neuronal_go,
+  `Developmental disorder or autism`=fifelse(nzchar(sfari) & nzchar(ddg2p), paste0(sfari, "; ", ddg2p), paste0(sfari, ddg2p)),
+  `Expression after stimulation`=expression_response, `Splicing after stimulation`=fifelse(stim_splicing, "yes", ""))]
+interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE, filter="top", extensions="Buttons",
+  options=list(pageLength=10, lengthMenu=c(10, 25, 50), scrollX=TRUE, order=list(), dom="Blfrtip", buttons=c("copy", "csv")),
+  caption="Search or filter genes, sort columns, and export the filtered table as CSV.")
+all3 <- g[pattern == "all three timepoints"]
+new_genes <- gc[status == "rerun only", gene]
+```
+
+This page repeats the [genome-wide FDR analysis](isolaser_fdr.html) with a
+different way of choosing donors and associations. Many variant calls behind
+the original results have no support in the donors' own genotype panel (see
+[technical artifacts in isoLASER variant calls](isolaser_variant_artifacts.html)).
+The original page and its results are unchanged.
+
+**What changed (our definitions):**
+
+- **Donors:** a donor is used for an association only if our genotype panel
+  calls it heterozygous at that variant. The panel site must be directly
+  genotyped or imputed with R² ≥ 0.8, with the same two alleles. The donor also
+  needs ≥ 10 informative reads, isoLASER's own default. The original rule was
+  ≥ 30 reads and an RNA alternative-allele fraction of 0.25–0.75.
+- **Associations:** every variant × exonic part recorded in any donor. The
+  original run used only the rows of isoLASER's joint output, which drops parts
+  seen in a single donor.
+- **Tested family:** additionally ≥ 20 raw reads summed over the donors used.
+  Fewer can never give the ≥ 10 reads per allele that isoLASER needs to score
+  an association.
+- **Unchanged:** the shuffles, the scoring with isoLASER's functions, the
+  adaptive rounds, BH within each timepoint, and the `cis` / |ΔPSI| ≥ 0.10
+  screen applied afterwards.
+- **Not yet done:** calibration runs. The original calibration used a
+  different donor rule, so it does not carry over to this run.
+
+**Main result:** `r fmt(any_tp$q05_associations)` associations in
+**`r fmt(any_tp$q05_genes)` genes** have q < 0.05 and pass the screen,
+against `r fmt(any_vo$original_q05_associations)` in
+`r fmt(any_vo$original_q05_genes)` genes originally. `r nrow(all3)` genes are
+significant at all three timepoints.
+
+# Genome-wide results
+
+```{r overview}
+knitr::kable(ov[, .(Timepoint=tp, `Tested associations`=fmt(tested),
+  `Paper's cutoff`=counts(paper_associations, paper_genes),
+  Screen=counts(screen_associations, screen_genes),
+  `Screen + q < 0.10`=counts(q10_associations, q10_genes),
+  `Screen + q < 0.05`=counts(q05_associations, q05_genes))], align="lrrrrr")
+```
+
+Cells other than **Tested associations** show **associations (genes)**.
+
+- **Paper's cutoff:** isoLASER's own `cis` call with no other filter, as in the
+  isoLASER paper. It comes from isoLASER's joint output, so it is the same as on
+  the original page.
+- **Screen** (our definition), before FDR control: among the tested
+  associations, isoLASER's `cis` rule computed on the panel-heterozygous donors
+  only, plus |ΔPSI| ≥ 0.10.
+
+**Any timepoint** counts each gene or variant–part association once across
+timepoints. BH targets FDR within each timepoint's full family; the
+effect-filtered subset and the union across timepoints have no separate 5% FDR
+guarantee.
+
+# Compared with the original run
+
+```{r vs_original}
+knitr::kable(vo[, .(Timepoint=tp,
+  `Tested: original`=fmt(original_tested), `Tested: rerun`=fmt(tested),
+  `Screen + q < 0.05: original`=counts(original_q05_associations, original_q05_genes),
+  `Screen + q < 0.05: rerun`=counts(q05_associations, q05_genes))], align="lrrrr")
+```
+
+The rerun tests a similar number of associations, but far fewer reach
+q < 0.05. Most original hits used variants that are not in the panel, which
+the new donor rule cannot use.
+
+<!-- ```{r gene_changes} -->
+<!-- knitr::kable(gc[, .N, by=status][match(c("both", "original only", "rerun only"), status)][, -->
+<!--   .(`Significant genes`=c("In both runs", "Original run only", "Rerun only"), Genes=N)], align="lr") -->
+<!-- ``` -->
+
+<!-- The rerun-only genes are `r paste(new_genes, collapse=", ")`. ANKRD36C (and -->
+<!-- ANKRD36B, significant in both runs) and the pseudogene CRYBB2P1 belong to -->
+<!-- paralog or pseudogene families. Misaligned reads remain possible there even at -->
+<!-- real SNPs (our inference), so they need care. -->
+<!-- [Download the gene comparison](assets/fdr_panel10/gene_changes.tsv). -->
+
+# How the test works
+
+The test is the one described on the [original page](isolaser_fdr.html#how-the-test-works).
+Only the donor and family rules above differ. An association's eligible
+donors are fixed before shuffling, from read counts and the panel genotype,
+neither of which a shuffle changes. Eligible associations without a computable
+observed score stay in the family with p = 1.
+
+```{r rounds}
+knitr::kable(rounds[, .(Timepoint=tp, `Stopped at 1,000`=fmt(stopped_1e3),
+  `Stopped at 10,000`=fmt(stopped_1e4), `Stopped at 100,000`=fmt(stopped_1e5),
+  `Reached 1,000,000`=fmt(reached_1e6))], align="lrrrr")
+```
+
+**Stopped** means at least 20 hits at that checkpoint, or no observed score
+(p = 1). Every association with zero hits after a million shuffles has
+q < 0.05, so more shuffles would not change the results.
+
+![](assets/fdr_panel10/qq.png)
+
+Real data only; there are no calibration runs for this donor rule. The bulk
+lies below the diagonal: many associations tie with their shuffles at an AMI of
+0, which isoLASER rounds to three decimals, so their p-values are
+conservative. The upper plateau is the minimum attainable p-value.
+
+# Genes to follow up
+
+Here, **reported** means q < 0.05 plus the `cis` / effect-size screen.
+
+```{r patterns}
+pat <- g[, .N, by=pattern][match(names(pattern_labels), pattern)][!is.na(pattern)]
+knitr::kable(pat[, .(Pattern=unname(pattern_labels[pattern]), Genes=N)], align="lr")
+```
+
+For genes reported at one timepoint, the last three categories describe the
+representative association at the other timepoints: nominal p < 0.05,
+p ≥ 0.05 where scored, or no usable score. They are not tests of an allele ×
+time interaction. Among comparisons of significant associations with another
+timepoint, `r pct(cons$nominal_p_lt_0.05)` had nominal p < 0.05 there and
+`r pct(cons$same_sign)` had the same effect direction.
+
+## Examples
+
+The table follows each gene's strongest reported association.
+**0 / 1 / 6 hr** give the allelic effect in percentage points, alternative minus
+reference inclusion, with pooled informative coverage in brackets. **Best q** is
+the lowest timepoint-specific q-value for this association. **Het donors** is
+the largest number of panel-heterozygous donors used, out of four.
+
+```{r examples}
+knitr::kable(example_table(c("HNRNPK", "KPNA2"), c(
+  "Au-Kline syndrome (DDG2P), SFARI syndromic; significant at all three timepoints",
+  sprintf("Synapse (GO); significant at 6 hr only; expression up %s-fold at 6 hr", fold("KPNA2", "6hr")))), align="lrrrrrl")
+```
+
+**HNRNPK** has zero hits in a million shuffles at 0 and 1 hour, and three at
+6 hours.
+
+![](assets/fdr_panel10/HNRNPK_null.png)
+
+**KPNA2** is significant only at 6 hours. Its earlier timepoints have small
+effects and stopped after 1,000 shuffles. This makes it a candidate for a
+direct comparison over time, not evidence of a change with stimulation.
+
+![](assets/fdr_panel10/KPNA2_null.png)
+
+Grey bars show the first 1,000 shuffled scores; the blue line is the observed
+score. The p-values use the full adaptive run.
+
+### Read alignments
+
+```{r sashimi_setup}
+sashimi <- fread(file.path(A, "sashimi_summary.tsv"))
+sashimi_table <- function(gn) {
+  d <- sashimi[gene == gn][order(timepoint)]
+  frac <- function(i, e) sprintf("%d/%d (%.1f%%)", i, i + e, 100 * i / (i + e))
+  knitr::kable(d[, .(Timepoint=sub("hr", " hr", timepoint), Donors=donors,
+    `REF inclusion (raw)`=frac(REF_i, REF_e), `ALT inclusion (raw)`=frac(ALT_i, ALT_e),
+    `Test dPSI (normalized, pp)`=sprintf("%+.1f", 100 * normalized_dPSI))], align="llrrr")
+}
+```
+
+These sashimi plots use isoLASER's `nigiri_plot` renderer with the project's
+plotting fixes, as on the [original page](isolaser_fdr.html#read-alignments-at-all-three-timepoints).
+Reads are split into REF and ALT using isoLASER's recorded allele assignments
+for the exact variant × part association. Each timepoint pools only the donors
+used in this rerun's test: heterozygous in the genotype panel, with ≥ 10
+reads. The plots check that each timepoint's normalized dPSI equals the
+reported one.
+
+**How to read them:** blue is REF, orange is ALT, yellow marks the tested part.
+Coverage and the numbers on the arcs are raw alignment counts, and all six
+tracks of a gene share one scale. **Raw inclusion** counts reads whose assigned
+transcript contains the part. The test uses donor-normalized tables, so its
+dPSI can differ slightly from the raw percentages.
+
+#### HNRNPK: alternative splice site
+
+![](assets/fdr_panel10/HNRNPK_sashimi.png)
+
+```{r hnrnpk_sashimi}
+sashimi_table("HNRNPK")
+```
+
+The 34-base part is the extra stretch of an alternative 3′ splice site. ALT
+(T) reads use it far less often than REF (C) reads at every timepoint.
+[Open as PDF](assets/fdr_panel10/HNRNPK_sashimi.pdf).
+
+#### KPNA2: a retained intron segment
+
+![](assets/fdr_panel10/KPNA2_sashimi.png)
+
+```{r kpna2_sashimi}
+sashimi_table("KPNA2")
+```
+
+The 100-base part is spliced out as an intron in some transcripts and kept in
+others. An arc across the yellow band supports **removal**; continuous
+coverage through it supports retention. ALT keeps the part more often than REF,
+most clearly at 6 hours. Not every read reaches the plotted window, for
+example 221 of 281 REF reads at 6 hours, because inclusion comes from
+transcript assignment.
+[Open as PDF](assets/fdr_panel10/KPNA2_sashimi.pdf).
+
+[Download the inclusion counts](assets/fdr_panel10/sashimi_summary.tsv),
+[per-donor counts](assets/fdr_panel10/sashimi_donor_counts.tsv),
+[normalized test counts](assets/fdr_panel10/sashimi_normalized_counts.tsv) or
+[junction counts](assets/fdr_panel10/sashimi_junction_counts.tsv).
+Scripts: `10.isolaser_permutation/25.sashimi_candidates.py` and
+`36.refresh_sashimi_labels.R` with `ADAPTIVE_RULE=panel10`.
+
+## Full interactive gene table
+
+All **`r nrow(g)` reported genes**. The variant, part, timepoint effects, best q
+and donor count refer to the representative association; **Significant at**
+describes the gene across all its associations. **In original run** marks
+genes also reported on the original page.
+
+```{r all}
+interactive_table(cbind(g[, .(Gene=gene, Pattern=display_pattern, `Significant at`=sig_tps,
+  `0 hr`=effect_reads(g, "0hr"), `1 hr`=effect_reads(g, "1hr"), `6 hr`=effect_reads(g, "6hr"),
+  `Best q`=best_q(g), `Het donors`=max_het,
+  `In original run`=fifelse(gene %in% gc[status == "both", gene], "yes", "no"))], annot(g),
+  g[, .(Variant=variant_qual, `Exonic part`=exonic_part)]))
+```
+
+The annotations use the same rules as on the
+[original page](isolaser_fdr.html#full-interactive-gene-table). They help select
+examples and are not enrichment tests.
+
+**Data:** `10.isolaser_permutation/` with `ADAPTIVE_RULE=panel10`: inputs from
+`38.prepare_panel_inputs.R`, then scripts 18–22 (see that folder's README). This
+page's tables come from `11.fdr_results/3.page_tables.R` run with
+`ADAPTIVE_RULE=panel10`, which writes only to `docs/assets/fdr_panel10/`.

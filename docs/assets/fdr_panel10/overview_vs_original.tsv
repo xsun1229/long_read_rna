@@ -1,0 +1,5 @@
+tp	original_tested	original_screen_associations	original_screen_genes	original_q05_associations	original_q05_genes	tested	screen_associations	screen_genes	q05_associations	q05_genes
+0hr	37156	530	191	191	64	40164	259	119	25	12
+1hr	57517	773	288	183	73	60866	435	184	41	17
+6hr	60860	759	285	174	74	63223	425	183	35	16
+any timepoint	77954	1675	561	375	131	76939	995	396	64	26

@@ -252,6 +252,94 @@ example 221 of 281 REF reads at 6 hours, because inclusion comes from
 transcript assignment.
 [Open as PDF](assets/fdr_panel10/KPNA2_sashimi.pdf).
 
+### Further examples
+
+Two more genes with a link to neurons or to stimulation. The links come from
+gene annotations and from our stimulation splicing scan, not from this test.
+Columns as in the table above.
+
+```{r further_examples}
+knitr::kable(example_table(c("ZNF749", "PARK7"), c(
+  "Splicing after stimulation (our scan), at this exon; significant at 6 hr only",
+  "Neuron projection, neuron death (GO); the Parkinson's disease gene DJ-1; significant at 1 hr only")), align="lrrrrrl")
+```
+
+#### ZNF749: exon inclusion
+
+![](assets/fdr_panel10/ZNF749_sashimi.png)
+
+```{r znf749_sashimi}
+sashimi_table("ZNF749")
+```
+
+The part is a whole 355-base exon. REF reads splice into it from two donor
+sites in the first exon (the two arcs ending at the yellow band). At 6 hours,
+few ALT reads do. In our stimulation splicing scan, the balance between these
+two donor sites shifts between 0 and 6 hours; the allele instead changes
+whether the exon is used at all.
+
+The jump at 6 hours partly reflects which donors are used. CD_21 has a large
+effect at every timepoint (REF 92% vs ALT 15% inclusion at 0 hours, 86% vs 6%
+at 6 hours). CD_48 shows none at 0 hours, from only 8 ALT reads, and a large one
+at 6 hours (85% vs 19%). CD_36, whose effect is inconsistent (−19 pp at 0 hours,
++8 pp at 1 hour), has no reads at 6 hours.
+One panel SNP lies inside the exon (chr19:57438167), heterozygous only in
+CD_48 and on its REF haplotype. A mismatch there would push dPSI the other way,
+so it does not explain the effect.
+[Open as PDF](assets/fdr_panel10/ZNF749_sashimi.pdf).
+
+#### PARK7: alternative 5′ splice site
+
+![](assets/fdr_panel10/PARK7_sashimi.png)
+
+```{r park7_sashimi}
+sashimi_table("PARK7")
+```
+
+The first exon ends at one of two donor sites 58 bases apart, and both splice
+to the same next exon. The tested 12-base part (with the adjacent 46-base part,
+which gives the same result) is the extra stretch of the longer first exon.
+ALT (C) reads use the shorter exon more often than REF (T) reads. The
+difference has the same direction at all three timepoints and in both donors,
+and is largest at 1 hour, the only timepoint where it is significant. The
+variant lies in the first exon, 18 bases before the shorter exon's donor site.
+[Open as PDF](assets/fdr_panel10/PARK7_sashimi.pdf).
+
+#### Checked and not shown
+
+Two genes that look striking in the tables turned out to be poor examples:
+
+- **CST3** (−53 to −58 pp at every timepoint, 3 donors). Its part is the
+  13-base 5′ end of the first exon. ENST00000376925 contains it;
+  ENST00000398409 instead splices into the base just after it from an exon
+  further upstream. The ALT haplotype carries a second SNP inside this stretch
+  (chr20:23637933 T>G, typed in the panel, in phase with the tested variant in
+  all three donors). isoLASER takes inclusion from each read's transcript,
+  chosen by realigning the read to the transcript sequences. ALT reads that
+  extend just as far are assigned to the shorter transcript: among reads
+  ending at chr20:23637955–23637970 at 6 hours, 85% of REF reads and 7% of
+  ALT reads go to ENST00000376925. The effect most likely comes from this
+  mismatch, not from splicing (our inference).
+  [Plot (PDF)](assets/fdr_panel10/CST3_sashimi.pdf).
+- **LMBRD1** (+93 pp at 6 hours, 2 donors). Its variant is about 120 kb from
+  the part. At 6 hours only 8 of 76 reads reach the plotted region, so its
+  inclusion comes almost entirely from transcript assignment, not from reads
+  that cover the part. [Plot (PDF)](assets/fdr_panel10/LMBRD1_sashimi.pdf).
+
+#### Other candidates, not yet plotted
+
+```{r other_examples}
+knitr::kable(example_table(c("ALDH3A2", "ASAH1", "CHORDC1", "NAA38"), c(
+  "Sjogren-Larsson syndrome (DDG2P), with neurological symptoms",
+  "Farber disease; spinal muscular atrophy with progressive myoclonic epilepsy (DDG2P)",
+  "Significant at all three timepoints",
+  "Splicing after stimulation (our scan), at a different junction; one donor")), align="lrrrrrl")
+```
+
+These have not been checked against their read alignments. ALDH3A2 and
+CHORDC1 have their variant 9–27 kb from the part, as LMBRD1 does on a larger
+scale.
+
 [Download the inclusion counts](assets/fdr_panel10/sashimi_summary.tsv),
 [per-donor counts](assets/fdr_panel10/sashimi_donor_counts.tsv),
 [normalized test counts](assets/fdr_panel10/sashimi_normalized_counts.tsv) or

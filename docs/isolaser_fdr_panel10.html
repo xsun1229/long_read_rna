@@ -446,10 +446,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -542,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree4b73e36ecc5dd0dbc6306d293668a9c9e73b55a6targetblank4b73e36a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree5149846aa5a6796cd87ac93500cf019ec1fef2fbtargetblank5149846a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/4b73e36ecc5dd0dbc6306d293668a9c9e73b55a6" target="_blank">4b73e36</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/5149846aa5a6796cd87ac93500cf019ec1fef2fb" target="_blank">5149846</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree4b73e36ecc5dd0dbc6306d293668a9c9e73b55a6targetblank4b73e36a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree5149846aa5a6796cd87ac93500cf019ec1fef2fbtargetblank5149846a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/4b73e36ecc5dd0dbc6306d293668a9c9e73b55a6" target="_blank">4b73e36</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/5149846aa5a6796cd87ac93500cf019ec1fef2fb" target="_blank">5149846</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -574,13 +574,10 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Ignored files:
-    Ignored:    analysis/site_libs/
-
-Untracked files:
-    Untracked:  analysis/isolaser_fdr_panel10.Rmd
-    Untracked:  analysis/isolaser_fdr_panel10.knit.md
-    Untracked:  analysis/isolaser_gtex_comparison_panel10.Rmd
+Unstaged changes:
+    Modified:   analysis/isolaser_fdr_panel10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10.Rmd
+    Deleted:    analysis/isolaser_gtex_comparison_panel10.knit.md
 
 </code></pre>
 <p>
@@ -595,10 +592,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/isolaser_fdr_panel10.Rmd</code>)
+and HTML (<code>docs/isolaser_fdr_panel10.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/5149846aa5a6796cd87ac93500cf019ec1fef2fb/analysis/isolaser_fdr_panel10.Rmd" target="_blank">5149846</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-21
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/5149846aa5a6796cd87ac93500cf019ec1fef2fb/docs/isolaser_fdr_panel10.html" target="_blank">5149846</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-21
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -1047,6 +1108,263 @@ hours. Not every read reaches the plotted window, for example 221 of 281
 REF reads at 6 hours, because inclusion comes from transcript
 assignment. <a href="assets/fdr_panel10/KPNA2_sashimi.pdf">Open as
 PDF</a>.</p>
+</div>
+</div>
+<div id="further-examples" class="section level3">
+<h3>Further examples</h3>
+<p>Two more genes with a link to neurons or to stimulation. The links
+come from gene annotations and from our stimulation splicing scan, not
+from this test. Columns as in the table above.</p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="5%" />
+<col width="6%" />
+<col width="6%" />
+<col width="4%" />
+<col width="7%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+<th align="right">Best q</th>
+<th align="right">Het donors</th>
+<th align="left">Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ZNF749</td>
+<td align="right">-26 (88)</td>
+<td align="right">-17 (84)</td>
+<td align="right">-74 (127)</td>
+<td align="right">0.0019</td>
+<td align="right">3</td>
+<td align="left">Splicing after stimulation (our scan), at this exon;
+significant at 6 hr only</td>
+</tr>
+<tr class="even">
+<td align="left">PARK7</td>
+<td align="right">-7 (595)</td>
+<td align="right">-17 (980)</td>
+<td align="right">-8 (969)</td>
+<td align="right">0.0016</td>
+<td align="right">2</td>
+<td align="left">Neuron projection, neuron death (GO); the Parkinson’s
+disease gene DJ-1; significant at 1 hr only</td>
+</tr>
+</tbody>
+</table>
+<div id="znf749-exon-inclusion" class="section level4">
+<h4>ZNF749: exon inclusion</h4>
+<p><img src="assets/fdr_panel10/ZNF749_sashimi.png" /></p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="18%" />
+<col width="21%" />
+<col width="21%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">Donors</th>
+<th align="right">REF inclusion (raw)</th>
+<th align="right">ALT inclusion (raw)</th>
+<th align="right">Test dPSI (normalized, pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">CD_21,CD_36,CD_48</td>
+<td align="right">45/55 (81.8%)</td>
+<td align="right">15/32 (46.9%)</td>
+<td align="right">-25.5</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">CD_21,CD_36</td>
+<td align="right">39/50 (78.0%)</td>
+<td align="right">19/34 (55.9%)</td>
+<td align="right">-17.2</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">72/84 (85.7%)</td>
+<td align="right">6/44 (13.6%)</td>
+<td align="right">-74.1</td>
+</tr>
+</tbody>
+</table>
+<p>The part is a whole 355-base exon. REF reads splice into it from two
+donor sites in the first exon (the two arcs ending at the yellow band).
+At 6 hours, few ALT reads do. In our stimulation splicing scan, the
+balance between these two donor sites shifts between 0 and 6 hours; the
+allele instead changes whether the exon is used at all.</p>
+<p>The jump at 6 hours partly reflects which donors are used. CD_21 has
+a large effect at every timepoint (REF 92% vs ALT 15% inclusion at 0
+hours, 86% vs 6% at 6 hours). CD_48 shows none at 0 hours, from only 8
+ALT reads, and a large one at 6 hours (85% vs 19%). CD_36, whose effect
+is inconsistent (−19 pp at 0 hours, +8 pp at 1 hour), has no reads at 6
+hours. One panel SNP lies inside the exon (chr19:57438167), heterozygous
+only in CD_48 and on its REF haplotype. A mismatch there would push dPSI
+the other way, so it does not explain the effect. <a
+href="assets/fdr_panel10/ZNF749_sashimi.pdf">Open as PDF</a>.</p>
+</div>
+<div id="park7-alternative-5-splice-site" class="section level4">
+<h4>PARK7: alternative 5′ splice site</h4>
+<p><img src="assets/fdr_panel10/PARK7_sashimi.png" /></p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="13%" />
+<col width="22%" />
+<col width="22%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">Donors</th>
+<th align="right">REF inclusion (raw)</th>
+<th align="right">ALT inclusion (raw)</th>
+<th align="right">Test dPSI (normalized, pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">243/365 (66.6%)</td>
+<td align="right">136/229 (59.4%)</td>
+<td align="right">-7.3</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">473/661 (71.6%)</td>
+<td align="right">174/319 (54.5%)</td>
+<td align="right">-17.3</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">440/640 (68.8%)</td>
+<td align="right">200/329 (60.8%)</td>
+<td align="right">-8.1</td>
+</tr>
+</tbody>
+</table>
+<p>The first exon ends at one of two donor sites 58 bases apart, and
+both splice to the same next exon. The tested 12-base part (with the
+adjacent 46-base part, which gives the same result) is the extra stretch
+of the longer first exon. ALT (C) reads use the shorter exon more often
+than REF (T) reads. The difference has the same direction at all three
+timepoints and in both donors, and is largest at 1 hour, the only
+timepoint where it is significant. The variant lies in the first exon,
+18 bases before the shorter exon’s donor site. <a
+href="assets/fdr_panel10/PARK7_sashimi.pdf">Open as PDF</a>.</p>
+</div>
+<div id="checked-and-not-shown" class="section level4">
+<h4>Checked and not shown</h4>
+<p>Two genes that look striking in the tables turned out to be poor
+examples:</p>
+<ul>
+<li><strong>CST3</strong> (−53 to −58 pp at every timepoint, 3 donors).
+Its part is the 13-base 5′ end of the first exon. ENST00000376925
+contains it; ENST00000398409 instead splices into the base just after it
+from an exon further upstream. The ALT haplotype carries a second SNP
+inside this stretch (chr20:23637933 T&gt;G, typed in the panel, in phase
+with the tested variant in all three donors). isoLASER takes inclusion
+from each read’s transcript, chosen by realigning the read to the
+transcript sequences. ALT reads that extend just as far are assigned to
+the shorter transcript: among reads ending at chr20:23637955–23637970 at
+6 hours, 85% of REF reads and 7% of ALT reads go to ENST00000376925. The
+effect most likely comes from this mismatch, not from splicing (our
+inference). <a href="assets/fdr_panel10/CST3_sashimi.pdf">Plot
+(PDF)</a>.</li>
+<li><strong>LMBRD1</strong> (+93 pp at 6 hours, 2 donors). Its variant
+is about 120 kb from the part. At 6 hours only 8 of 76 reads reach the
+plotted region, so its inclusion comes almost entirely from transcript
+assignment, not from reads that cover the part. <a
+href="assets/fdr_panel10/LMBRD1_sashimi.pdf">Plot (PDF)</a>.</li>
+</ul>
+</div>
+<div id="other-candidates-not-yet-plotted" class="section level4">
+<h4>Other candidates, not yet plotted</h4>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="5%" />
+<col width="7%" />
+<col width="60%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+<th align="right">Best q</th>
+<th align="right">Het donors</th>
+<th align="left">Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ALDH3A2</td>
+<td align="right">no score</td>
+<td align="right">+46 (96)</td>
+<td align="right">no score</td>
+<td align="right">0.0016</td>
+<td align="right">2</td>
+<td align="left">Sjogren-Larsson syndrome (DDG2P), with neurological
+symptoms</td>
+</tr>
+<tr class="even">
+<td align="left">ASAH1</td>
+<td align="right">+7 (36)</td>
+<td align="right">+21 (104)</td>
+<td align="right">+8 (65)</td>
+<td align="right">0.0280</td>
+<td align="right">2</td>
+<td align="left">Farber disease; spinal muscular atrophy with
+progressive myoclonic epilepsy (DDG2P)</td>
+</tr>
+<tr class="odd">
+<td align="left">CHORDC1</td>
+<td align="right">+48 (79)</td>
+<td align="right">+52 (124)</td>
+<td align="right">+54 (242)</td>
+<td align="right">0.0016</td>
+<td align="right">2</td>
+<td align="left">Significant at all three timepoints</td>
+</tr>
+<tr class="even">
+<td align="left">NAA38</td>
+<td align="right">-36 (150)</td>
+<td align="right">-36 (225)</td>
+<td align="right">-49 (223)</td>
+<td align="right">0.0016</td>
+<td align="right">1</td>
+<td align="left">Splicing after stimulation (our scan), at a different
+junction; one donor</td>
+</tr>
+</tbody>
+</table>
+<p>These have not been checked against their read alignments. ALDH3A2
+and CHORDC1 have their variant 9–27 kb from the part, as LMBRD1 does on
+a larger scale.</p>
 <p><a href="assets/fdr_panel10/sashimi_summary.tsv">Download the
 inclusion counts</a>, <a
 href="assets/fdr_panel10/sashimi_donor_counts.tsv">per-donor counts</a>,

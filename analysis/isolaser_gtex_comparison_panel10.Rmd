@@ -116,9 +116,9 @@ strong evidence.
 As on the original page, we take pairs where GTEx is significant (nominal
 p < 0.05, the blue points). A pair is **consistent** when our ΔPSI and GTEx's
 beta have opposite signs. A binomial test asks whether the share of consistent
-pairs differs from 50%. Here we use the rerun's two sets; the paper's-cutoff
-set is the same as on the original page. These definitions are our own; the
-paper reports only the correlation.
+pairs differs from 50%. The paper's-cutoff rows repeat the original page's
+table, since that set doesn't depend on our donor rule. These definitions are
+our own; the paper reports only the correlation.
 
 ```{r consistency}
 bt <- function(d) {
@@ -127,7 +127,7 @@ bt <- function(d) {
              `Binomial p, two-sided`=if (n) signif(binom.test(k, n)$p.value, 2) else NA_real_,
              `Binomial p, one-sided`=if (n) signif(binom.test(k, n, alternative="greater")$p.value, 2) else NA_real_)
 }
-cons <- rbindlist(lapply(c(BEFORE, AFTER), function(x) {
+cons <- rbindlist(lapply(SET_ORDER, function(x) {
   blue <- pts[set == x & pval_nominal < 0.05 & dpsi != 0]
   once <- blue[, .(dpsi=mean(dpsi), slope=slope[1]), by=.(Gene_name, variant_qual, exonic_part, phenotype_id)]
   rbind(blue[order(tp), bt(.SD), by=.(Timepoint=tpl(tp))],

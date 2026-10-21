@@ -542,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2b0e0d3bcd745cd8c7f5f16705f6b2752cd53825targetblank2b0e0d3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree45459a52e6043a4167001f388ed3d026a8cc43d7targetblank45459a5a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/2b0e0d3bcd745cd8c7f5f16705f6b2752cd53825" target="_blank">2b0e0d3</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/45459a52e6043a4167001f388ed3d026a8cc43d7" target="_blank">45459a5</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree2b0e0d3bcd745cd8c7f5f16705f6b2752cd53825targetblank2b0e0d3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree45459a52e6043a4167001f388ed3d026a8cc43d7targetblank45459a5a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/2b0e0d3bcd745cd8c7f5f16705f6b2752cd53825" target="_blank">2b0e0d3</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/45459a52e6043a4167001f388ed3d026a8cc43d7" target="_blank">45459a5</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -621,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/45459a52e6043a4167001f388ed3d026a8cc43d7/analysis/isolaser_fdr_panel10.Rmd" target="_blank">45459a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-21
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/45459a52e6043a4167001f388ed3d026a8cc43d7/docs/isolaser_fdr_panel10.html" target="_blank">45459a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-21
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -922,62 +956,33 @@ attainable p-value.</p>
 </div>
 <div id="genes-to-follow-up" class="section level1">
 <h1>Genes to follow up</h1>
-<p>Here, <strong>reported</strong> means q &lt; 0.05 plus the
-<code>cis</code> / effect-size screen.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Pattern</th>
-<th align="right">Genes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Significant at 3 timepoints</td>
-<td align="right">7</td>
-</tr>
-<tr class="even">
-<td align="left">Significant at 2 timepoints</td>
-<td align="right">5</td>
-</tr>
-<tr class="odd">
-<td align="left">One timepoint; nominal support elsewhere</td>
-<td align="right">8</td>
-</tr>
-<tr class="even">
-<td align="left">One timepoint; no nominal support elsewhere</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">One timepoint; no usable score elsewhere</td>
-<td align="right">2</td>
-</tr>
-</tbody>
-</table>
-<p>For genes reported at one timepoint, the last three categories
-describe the representative association at the other timepoints: nominal
-p &lt; 0.05, p ≥ 0.05 where scored, or no usable score. They are not
-tests of an allele × time interaction. Among comparisons of significant
-associations with another timepoint, 88% had nominal p &lt; 0.05 there
-and 99% had the same effect direction.</p>
-<div id="examples" class="section level2">
-<h2>Examples</h2>
-<p>The table follows each gene’s strongest reported association.
-<strong>0 / 1 / 6 hr</strong> give the allelic effect in percentage
-points, alternative minus reference inclusion, with pooled informative
-coverage in brackets. <strong>Best q</strong> is the lowest
-timepoint-specific q-value for this association. <strong>Het
-donors</strong> is the largest number of panel-heterozygous donors used,
-out of four.</p>
+<p>We highlight genes that meet three conditions (our definitions):</p>
+<ol style="list-style-type: decimal">
+<li><strong>Reported only after stimulation:</strong> q &lt; 0.05 plus
+the <code>cis</code> / effect-size screen at 1 or 6 hours, and not at 0
+hours.</li>
+<li><strong>Neuron- or stimulation-related:</strong> a neuronal GO term,
+a brain disorder in SFARI or DDG2P, or a change in expression or
+splicing after stimulation in our data (the annotation columns of the
+full gene table below).</li>
+<li><strong>Supported by the reads:</strong> isoLASER calls a read
+“included” from the transcript the read is assigned to, not from what
+the read covers. A read <em>shows</em> the part if it has aligned bases
+inside it or a junction across it. Among the reads that show the part,
+the allelic difference must be visible.</li>
+</ol>
+<p>7 genes meet the first two conditions; two of them also pass the read
+check.</p>
 <table>
 <colgroup>
+<col width="4%" />
 <col width="5%" />
+<col width="6%" />
+<col width="6%" />
+<col width="4%" />
 <col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="5%" />
-<col width="8%" />
-<col width="59%" />
+<col width="47%" />
+<col width="16%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -988,186 +993,7 @@ out of four.</p>
 <th align="right">Best q</th>
 <th align="right">Het donors</th>
 <th align="left">Relevance</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">HNRNPK</td>
-<td align="right">-20 (303)</td>
-<td align="right">-18 (523)</td>
-<td align="right">-21 (326)</td>
-<td align="right">0.0016</td>
-<td align="right">3</td>
-<td align="left">Au-Kline syndrome (DDG2P), SFARI syndromic; significant
-at all three timepoints</td>
-</tr>
-<tr class="even">
-<td align="left">KPNA2</td>
-<td align="right">+8 (125)</td>
-<td align="right">+2 (284)</td>
-<td align="right">+12 (500)</td>
-<td align="right">0.0160</td>
-<td align="right">3</td>
-<td align="left">Synapse (GO); significant at 6 hr only; expression up
-1.9-fold at 6 hr</td>
-</tr>
-</tbody>
-</table>
-<p><strong>HNRNPK</strong> has zero hits in a million shuffles at 0 and
-1 hour, and three at 6 hours.</p>
-<p><img src="assets/fdr_panel10/HNRNPK_null.png" /></p>
-<p><strong>KPNA2</strong> is significant only at 6 hours. Its earlier
-timepoints have small effects and stopped after 1,000 shuffles. This
-makes it a candidate for a direct comparison over time, not evidence of
-a change with stimulation.</p>
-<p><img src="assets/fdr_panel10/KPNA2_null.png" /></p>
-<p>Grey bars show the first 1,000 shuffled scores; the blue line is the
-observed score. The p-values use the full adaptive run.</p>
-<div id="read-alignments" class="section level3">
-<h3>Read alignments</h3>
-<p>These sashimi plots use isoLASER’s <code>nigiri_plot</code> renderer
-with the project’s plotting fixes, as on the <a
-href="isolaser_fdr.html#read-alignments-at-all-three-timepoints">original
-page</a>. Reads are split into REF and ALT using isoLASER’s recorded
-allele assignments for the exact variant × part association. Each
-timepoint pools only the donors used in this rerun’s test: heterozygous
-in the genotype panel, with ≥ 10 reads. The plots check that each
-timepoint’s normalized dPSI equals the reported one.</p>
-<p><strong>How to read them:</strong> blue is REF, orange is ALT, yellow
-marks the tested part. Coverage and the numbers on the arcs are raw
-alignment counts, and all six tracks of a gene share one scale.
-<strong>Raw inclusion</strong> counts reads whose assigned transcript
-contains the part. The test uses donor-normalized tables, so its dPSI
-can differ slightly from the raw percentages.</p>
-<div id="hnrnpk-alternative-splice-site" class="section level4">
-<h4>HNRNPK: alternative splice site</h4>
-<p><img src="assets/fdr_panel10/HNRNPK_sashimi.png" /></p>
-<table>
-<colgroup>
-<col width="10%" />
-<col width="18%" />
-<col width="21%" />
-<col width="21%" />
-<col width="28%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Timepoint</th>
-<th align="left">Donors</th>
-<th align="right">REF inclusion (raw)</th>
-<th align="right">ALT inclusion (raw)</th>
-<th align="right">Test dPSI (normalized, pp)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">0 hr</td>
-<td align="left">CD_21,CD_36,CD_48</td>
-<td align="right">39/172 (22.7%)</td>
-<td align="right">4/130 (3.1%)</td>
-<td align="right">-19.8</td>
-</tr>
-<tr class="even">
-<td align="left">1 hr</td>
-<td align="left">CD_21,CD_36,CD_48</td>
-<td align="right">68/287 (23.7%)</td>
-<td align="right">13/236 (5.5%)</td>
-<td align="right">-18.2</td>
-</tr>
-<tr class="odd">
-<td align="left">6 hr</td>
-<td align="left">CD_21,CD_36</td>
-<td align="right">50/185 (27.0%)</td>
-<td align="right">8/140 (5.7%)</td>
-<td align="right">-21.4</td>
-</tr>
-</tbody>
-</table>
-<p>The first exon ends at one of two donor sites 34 bases apart, an
-alternative 5′ splice site, and the 34-base part is the extra stretch of
-the longer exon. ALT (T) reads use the longer exon far less often than
-REF (C) reads at every timepoint. The variant is the third-last base of
-the shorter first exon. <a
-href="assets/fdr_panel10/HNRNPK_sashimi.pdf">Open as PDF</a>.</p>
-</div>
-<div id="kpna2-a-retained-intron" class="section level4">
-<h4>KPNA2: a retained intron</h4>
-<p><img src="assets/fdr_panel10/KPNA2_sashimi.png" /></p>
-<table>
-<colgroup>
-<col width="10%" />
-<col width="18%" />
-<col width="21%" />
-<col width="21%" />
-<col width="28%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Timepoint</th>
-<th align="left">Donors</th>
-<th align="right">REF inclusion (raw)</th>
-<th align="right">ALT inclusion (raw)</th>
-<th align="right">Test dPSI (normalized, pp)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">0 hr</td>
-<td align="left">CD_21,CD_31,CD_36</td>
-<td align="right">5/60 (8.3%)</td>
-<td align="right">12/64 (18.8%)</td>
-<td align="right">+8.2</td>
-</tr>
-<tr class="even">
-<td align="left">1 hr</td>
-<td align="left">CD_21,CD_31,CD_36</td>
-<td align="right">7/166 (4.2%)</td>
-<td align="right">8/119 (6.7%)</td>
-<td align="right">+1.9</td>
-</tr>
-<tr class="odd">
-<td align="left">6 hr</td>
-<td align="left">CD_21,CD_31,CD_36</td>
-<td align="right">7/281 (2.5%)</td>
-<td align="right">28/220 (12.7%)</td>
-<td align="right">+11.6</td>
-</tr>
-</tbody>
-</table>
-<p>The 100-base part is a whole intron, spliced out in most transcripts
-and kept in KPNA2-221. An arc across the yellow band supports
-<strong>removal</strong>; continuous coverage through it supports
-retention. ALT keeps the part more often than REF, most clearly at 6
-hours. Not every read reaches the plotted window, for example 221 of 281
-REF reads at 6 hours, because inclusion comes from transcript
-assignment. <a href="assets/fdr_panel10/KPNA2_sashimi.pdf">Open as
-PDF</a>.</p>
-</div>
-</div>
-<div id="further-examples" class="section level3">
-<h3>Further examples</h3>
-<p>Two more genes with a link to neurons or to stimulation. The links
-come from gene annotations and from our stimulation splicing scan, not
-from this test. Columns as in the table above.</p>
-<table>
-<colgroup>
-<col width="4%" />
-<col width="5%" />
-<col width="6%" />
-<col width="6%" />
-<col width="4%" />
-<col width="7%" />
-<col width="64%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Gene</th>
-<th align="right">0 hr</th>
-<th align="right">1 hr</th>
-<th align="right">6 hr</th>
-<th align="right">Best q</th>
-<th align="right">Het donors</th>
-<th align="left">Relevance</th>
+<th align="right">Reads that show the part</th>
 </tr>
 </thead>
 <tbody>
@@ -1178,8 +1004,9 @@ from this test. Columns as in the table above.</p>
 <td align="right">-74 (127)</td>
 <td align="right">0.0019</td>
 <td align="right">3</td>
-<td align="left">Splicing after stimulation (our scan), at this exon;
-significant at 6 hr only</td>
+<td align="left">Splicing after stimulation (our scan), at this exon’s
+donor sites</td>
+<td align="right">6 hr: 86% vs 14%</td>
 </tr>
 <tr class="even">
 <td align="left">PARK7</td>
@@ -1189,12 +1016,80 @@ significant at 6 hr only</td>
 <td align="right">0.0016</td>
 <td align="right">2</td>
 <td align="left">Neuron projection, neuron death (GO); the Parkinson’s
-disease gene DJ-1; significant at 1 hr only</td>
+disease gene DJ-1</td>
+<td align="right">1 hr: 72% vs 54%</td>
 </tr>
 </tbody>
 </table>
-<div id="znf749-alternative-last-exon" class="section level4">
-<h4>ZNF749: alternative last exon</h4>
+<p><strong>0 / 1 / 6 hr</strong>: allelic effect in percentage points,
+alternative minus reference inclusion, with pooled informative coverage
+in brackets. <strong>Best q</strong>: the lowest timepoint-specific
+q-value. <strong>Het donors</strong>: the largest number of
+panel-heterozygous donors used, out of four. <strong>Reads that show the
+part</strong>: inclusion among those reads at the significant timepoint,
+REF vs ALT.</p>
+<p><strong>How to read each gene’s figures:</strong></p>
+<ul>
+<li><strong>Permutation test:</strong> one panel per timepoint. Grey
+bars are the first 1,000 shuffled scores; the blue line is the observed
+score (AMI). The p-value uses the full adaptive run, up to a million
+shuffles.</li>
+<li><strong>Read alignments:</strong> isoLASER’s
+<code>nigiri_plot</code> sashimi renderer with the project’s plotting
+fixes. Reads are split into REF (blue) and ALT (orange) by isoLASER’s
+allele assignments and pooled over the donors used at each timepoint
+(heterozygous in the panel, ≥ 10 reads). Yellow marks the tested part.
+Coverage and arc numbers are raw read counts, on one scale per gene.
+<strong>Raw inclusion</strong> comes from transcript assignment; the
+test uses donor-normalized tables, so its dPSI can differ slightly.</li>
+<li><strong>Isoforms and haplotypes</strong>, at 0 hours and at the
+significant timepoint, drawn like Fig. 2d of the isoLASER paper:
+<ul>
+<li><strong>Rows:</strong> annotated transcripts with their GENCODE v44
+name and Ensembl ID. <strong>Novel</strong> transcripts are IsoQuant
+models from our annotation, shown with their SQANTI3 category against
+GENCODE v44. NIC is a new combination of known splice sites; fusion
+spans two genes.</li>
+<li><strong>Which rows:</strong> the three transcripts with the most
+reads in each group are drawn, and a grey row sums the rest. Introns are
+shortened.</li>
+<li><strong>Marks:</strong> green is the tested part. Orange marks the
+tested SNP, plus the nearest in-phase SNP when that one is closer to the
+part.</li>
+<li><strong>Numbers:</strong> reads per transcript from each haplotype,
+labelled by the tested SNP’s alleles, as raw counts summed over the
+donors used. ΔPSI and q are the test’s values.</li>
+</ul></li>
+</ul>
+<div id="znf749" class="section level2">
+<h2>ZNF749</h2>
+<p>The tested part is a 355-base alternative last exon. Transcripts that
+use it end there, and the others continue to exons further downstream.
+REF (G) reads end in it far more often than ALT (C) reads. The
+difference is significant only at 6 hours (−74 pp, q = 0.002); at 0 and
+1 hours it is −26 and −17 pp and below threshold. In our stimulation
+splicing scan, the balance between the two donor sites that splice into
+this exon shifts between 0 and 6 hours. Every read that shows the exon
+agrees with isoLASER’s call (293 of 293 over all timepoints).</p>
+<p>The jump at 6 hours partly reflects which donors are used:</p>
+<ul>
+<li><strong>CD_21</strong> has a large effect at every timepoint: REF
+92% vs ALT 15% inclusion at 0 hours, 86% vs 6% at 6 hours.</li>
+<li><strong>CD_48</strong> shows no difference at 0 hours, from only 8
+ALT reads, and a large one at 6 hours (85% vs 19%).</li>
+<li><strong>CD_36</strong> has an inconsistent effect (−19 pp at 0
+hours, +8 pp at 1 hour) and no reads at 6 hours.</li>
+</ul>
+<p>One panel SNP lies inside the exon (chr19:57438167). It is
+heterozygous only in CD_48, on that donor’s REF haplotype. A mismatch
+there would push dPSI the other way, so it does not explain the
+effect.</p>
+<div id="permutation-test" class="section level4">
+<h4>Permutation test</h4>
+<p><img src="assets/fdr_panel10/ZNF749_null.png" /></p>
+</div>
+<div id="read-alignments" class="section level4">
+<h4>Read alignments</h4>
 <p><img src="assets/fdr_panel10/ZNF749_sashimi.png" /></p>
 <table>
 <colgroup>
@@ -1237,25 +1132,37 @@ disease gene DJ-1; significant at 1 hr only</td>
 </tr>
 </tbody>
 </table>
-<p>The part is a 355-base alternative last exon: transcripts that use it
-end there, and the others continue to exons further downstream. REF
-reads splice into it from two donor sites in the first exon (the two
-arcs ending at the yellow band). At 6 hours, few ALT reads do. In our
-stimulation splicing scan, the balance between these two donor sites
-shifts between 0 and 6 hours; the allele instead changes whether this
-last exon is used at all.</p>
-<p>The jump at 6 hours partly reflects which donors are used. CD_21 has
-a large effect at every timepoint (REF 92% vs ALT 15% inclusion at 0
-hours, 86% vs 6% at 6 hours). CD_48 shows none at 0 hours, from only 8
-ALT reads, and a large one at 6 hours (85% vs 19%). CD_36, whose effect
-is inconsistent (−19 pp at 0 hours, +8 pp at 1 hour), has no reads at 6
-hours. One panel SNP lies inside the exon (chr19:57438167), heterozygous
-only in CD_48 and on its REF haplotype. A mismatch there would push dPSI
-the other way, so it does not explain the effect. <a
-href="assets/fdr_panel10/ZNF749_sashimi.pdf">Open as PDF</a>.</p>
+<p><a href="assets/fdr_panel10/ZNF749_sashimi.pdf">Open as PDF</a>.</p>
 </div>
-<div id="park7-alternative-5-splice-site" class="section level4">
-<h4>PARK7: alternative 5′ splice site</h4>
+<div id="isoforms-and-haplotypes" class="section level4">
+<h4>Isoforms and haplotypes</h4>
+<p><img src="assets/fdr_panel10/isoforms_ZNF749_0hr.png" /></p>
+<p><img src="assets/fdr_panel10/isoforms_ZNF749_6hr.png" /></p>
+<p>PDFs: <a href="assets/fdr_panel10/isoforms_ZNF749_0hr.pdf">0
+hours</a>, <a href="assets/fdr_panel10/isoforms_ZNF749_6hr.pdf">6
+hours</a>.</p>
+</div>
+</div>
+<div id="park7" class="section level2">
+<h2>PARK7</h2>
+<p>The first exon ends at one of two donor sites 58 bases apart, an
+alternative 5′ splice site, and both sites splice to the same next exon.
+The tested 12-base part is the extra stretch of the longer first exon;
+the adjacent 46-base part gives the same result. ALT (C) reads use the
+shorter exon more often than REF (T) reads. The variant (rs226249) lies
+in the first exon, 18 bases before the shorter exon’s donor site.</p>
+<p>The difference has the same direction at all three timepoints and in
+both donors. It is largest at 1 hour (−17 pp, q = 0.002), the only
+significant timepoint; at 0 and 6 hours it is −7 and −8 pp. This
+describes each timepoint separately and is not a test of a change over
+time. Reads that show the part agree with isoLASER’s call in 2,466 of
+2,529 cases.</p>
+<div id="permutation-test-1" class="section level4">
+<h4>Permutation test</h4>
+<p><img src="assets/fdr_panel10/PARK7_null.png" /></p>
+</div>
+<div id="read-alignments-1" class="section level4">
+<h4>Read alignments</h4>
 <p><img src="assets/fdr_panel10/PARK7_sashimi.png" /></p>
 <table>
 <colgroup>
@@ -1298,174 +1205,132 @@ href="assets/fdr_panel10/ZNF749_sashimi.pdf">Open as PDF</a>.</p>
 </tr>
 </tbody>
 </table>
-<p>The first exon ends at one of two donor sites 58 bases apart, and
-both splice to the same next exon. The tested 12-base part (with the
-adjacent 46-base part, which gives the same result) is the extra stretch
-of the longer first exon. ALT (C) reads use the shorter exon more often
-than REF (T) reads. The difference has the same direction at all three
-timepoints and in both donors, and is largest at 1 hour, the only
-timepoint where it is significant. The variant lies in the first exon,
-18 bases before the shorter exon’s donor site. <a
-href="assets/fdr_panel10/PARK7_sashimi.pdf">Open as PDF</a>.</p>
+<p><a href="assets/fdr_panel10/PARK7_sashimi.pdf">Open as PDF</a>.</p>
 </div>
-<div id="checked-and-not-shown" class="section level4">
-<h4>Checked and not shown</h4>
-<p>Two genes that look striking in the tables turned out to be poor
-examples:</p>
+<div id="isoforms-and-haplotypes-1" class="section level4">
+<h4>Isoforms and haplotypes</h4>
+<p><img src="assets/fdr_panel10/isoforms_PARK7_0hr.png" /></p>
+<p><img src="assets/fdr_panel10/isoforms_PARK7_1hr.png" /></p>
+<p>PDFs: <a href="assets/fdr_panel10/isoforms_PARK7_0hr.pdf">0
+hours</a>, <a href="assets/fdr_panel10/isoforms_PARK7_1hr.pdf">1
+hour</a>.</p>
+</div>
+</div>
+<div id="checked-and-left-out" class="section level2">
+<h2>Checked and left out</h2>
+<p>The other genes that meet the first two conditions:</p>
 <ul>
-<li><strong>CST3</strong> (−53 to −58 pp at every timepoint, 3 donors).
-Its part is the 13-base 5′ end of the first exon. ENST00000376925
-contains it; ENST00000398409 instead splices into the base just after it
-from an exon further upstream. The ALT haplotype carries a second SNP
-inside this stretch (chr20:23637933 T&gt;G, typed in the panel, in phase
-with the tested variant in all three donors). isoLASER takes inclusion
-from each read’s transcript, chosen by realigning the read to the
-transcript sequences. ALT reads that extend just as far are assigned to
-the shorter transcript: among reads ending at chr20:23637955–23637970 at
-6 hours, 85% of REF reads and 7% of ALT reads go to ENST00000376925. The
-effect most likely comes from this mismatch, not from splicing (our
-inference). <a href="assets/fdr_panel10/CST3_sashimi.pdf">Plot
-(PDF)</a>.</li>
-<li><strong>LMBRD1</strong> (+93 pp at 6 hours, 2 donors). Its variant
-is about 120 kb from the part. At 6 hours only 8 of 76 reads reach the
-plotted region, so its inclusion comes almost entirely from transcript
-assignment, not from reads that cover the part. <a
-href="assets/fdr_panel10/LMBRD1_sashimi.pdf">Plot (PDF)</a>.</li>
+<li><strong>KPNA2</strong> (synapse GO; 6 hours, +12 pp). No read shows
+the 100-base intron retained. At every timepoint, all reads that reach
+it splice it out: at 6 hours, 194 REF and 144 ALT reads. isoLASER’s
+inclusion comes from reads assigned to KPNA2-221, the transcript that
+retains the intron; at 6 hours, 20 of the 28 ALT reads assigned to it
+visibly splice the intron out. <a
+href="assets/fdr_panel10/KPNA2_sashimi.pdf">Sashimi (PDF)</a>.</li>
+<li><strong>ASAH1</strong> (DDG2P; 1 hour, +21 pp). No read has aligned
+bases inside the part, and every read that reaches it splices across it.
+The 1-hour result also adds a second donor (CD_31) to the single donor
+used at 0 and 6 hours. <a
+href="assets/fdr_panel10/ASAH1_sashimi.pdf">Sashimi (PDF)</a>.</li>
+<li><strong>LMBRD1</strong> (DDG2P; 1 and 6 hours). The variant is about
+120 kb from the part. At 6 hours only 8 of 76 reads reach the part, and
+none includes it. <a
+href="assets/fdr_panel10/LMBRD1_sashimi.pdf">Sashimi (PDF)</a>.</li>
+<li><strong>ALDH3A2</strong> (DDG2P; 1 hour). isoLASER did not record
+this association at 0 or 6 hours, so there is no baseline to compare
+with.</li>
+<li><strong>UBE2Q2P2</strong> (splicing after stimulation; 6 hours). A
+pseudogene, where reads from similar copies can be misaligned (our
+inference). Not checked against the reads.</li>
+</ul>
+<p>Genes already reported at 0 hours are not highlighted here. Two we
+checked:</p>
+<ul>
+<li><strong>HNRNPK</strong> passes the read check. Among reads that show
+its part, REF includes it 22–27% of the time and ALT about 2%, at every
+timepoint.</li>
+<li><strong>CST3</strong> fails it. Reads show its 13-base part included
+almost always for both alleles, but isoLASER’s transcript-based
+inclusion is about 85% for REF and 27–31% for ALT. The ALT haplotype
+carries a second SNP inside the part (chr20:23637933 T&gt;G), which most
+likely biases the transcript assignment (our inference).</li>
+</ul>
+<p><strong>Data:</strong></p>
+<ul>
+<li><strong>Sashimi plots:</strong> <a
+href="assets/fdr_panel10/sashimi_summary.tsv">inclusion counts</a>, <a
+href="assets/fdr_panel10/sashimi_donor_counts.tsv">per-donor counts</a>,
+<a href="assets/fdr_panel10/sashimi_normalized_counts.tsv">normalized
+test counts</a>, <a
+href="assets/fdr_panel10/sashimi_junction_counts.tsv">junction
+counts</a>.</li>
+<li><strong>Read check:</strong> <a
+href="assets/fdr_panel10/sashimi_observed_inclusion.tsv">per gene,
+timepoint and allele</a>.</li>
+<li><strong>Reads per transcript</strong> for the isoform figures:
+ZNF749 at <a
+href="assets/fdr_panel10/isoforms_ZNF749_0hr_transcripts.tsv">0
+hours</a> and <a
+href="assets/fdr_panel10/isoforms_ZNF749_6hr_transcripts.tsv">6
+hours</a>; PARK7 at <a
+href="assets/fdr_panel10/isoforms_PARK7_0hr_transcripts.tsv">0 hours</a>
+and <a href="assets/fdr_panel10/isoforms_PARK7_1hr_transcripts.tsv">1
+hour</a>.</li>
+<li><strong>Scripts</strong>, all with
+<code>ADAPTIVE_RULE=panel10</code>:
+<ul>
+<li>in <code>10.isolaser_permutation/</code>:
+<code>24.plot_association.R</code> (permutation tests),
+<code>25.sashimi_candidates.py</code> and
+<code>36.refresh_sashimi_labels.R</code> (sashimi),
+<code>39.observed_inclusion.py</code> (read check);</li>
+<li>in <code>11.fdr_results/</code>:
+<code>4.transcript_counts.py</code>, then
+<code>7.grant_figure_transcripts.R</code> (isoform figures).</li>
+</ul></li>
 </ul>
 </div>
-<div id="other-candidates-not-yet-plotted" class="section level4">
-<h4>Other candidates, not yet plotted</h4>
+</div>
+<div id="all-reported-genes" class="section level1">
+<h1>All reported genes</h1>
+<p>Here, <strong>reported</strong> means q &lt; 0.05 plus the
+<code>cis</code> / effect-size screen.</p>
 <table>
-<colgroup>
-<col width="5%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="5%" />
-<col width="7%" />
-<col width="60%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Gene</th>
-<th align="right">0 hr</th>
-<th align="right">1 hr</th>
-<th align="right">6 hr</th>
-<th align="right">Best q</th>
-<th align="right">Het donors</th>
-<th align="left">Relevance</th>
+<th align="left">Pattern</th>
+<th align="right">Genes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">ALDH3A2</td>
-<td align="right">no score</td>
-<td align="right">+46 (96)</td>
-<td align="right">no score</td>
-<td align="right">0.0016</td>
-<td align="right">2</td>
-<td align="left">Sjogren-Larsson syndrome (DDG2P), with neurological
-symptoms</td>
+<td align="left">Significant at 3 timepoints</td>
+<td align="right">7</td>
 </tr>
 <tr class="even">
-<td align="left">ASAH1</td>
-<td align="right">+7 (36)</td>
-<td align="right">+21 (104)</td>
-<td align="right">+8 (65)</td>
-<td align="right">0.0280</td>
-<td align="right">2</td>
-<td align="left">Farber disease; spinal muscular atrophy with
-progressive myoclonic epilepsy (DDG2P)</td>
+<td align="left">Significant at 2 timepoints</td>
+<td align="right">5</td>
 </tr>
 <tr class="odd">
-<td align="left">CHORDC1</td>
-<td align="right">+48 (79)</td>
-<td align="right">+52 (124)</td>
-<td align="right">+54 (242)</td>
-<td align="right">0.0016</td>
-<td align="right">2</td>
-<td align="left">Significant at all three timepoints</td>
+<td align="left">One timepoint; nominal support elsewhere</td>
+<td align="right">8</td>
 </tr>
 <tr class="even">
-<td align="left">NAA38</td>
-<td align="right">-36 (150)</td>
-<td align="right">-36 (225)</td>
-<td align="right">-49 (223)</td>
-<td align="right">0.0016</td>
-<td align="right">1</td>
-<td align="left">Splicing after stimulation (our scan), at a different
-junction; one donor</td>
+<td align="left">One timepoint; no nominal support elsewhere</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">One timepoint; no usable score elsewhere</td>
+<td align="right">2</td>
 </tr>
 </tbody>
 </table>
-<p>These have not been checked against their read alignments. ALDH3A2
-and CHORDC1 have their variant 9–27 kb from the part, as LMBRD1 does on
-a larger scale.</p>
-<p><a href="assets/fdr_panel10/sashimi_summary.tsv">Download the
-inclusion counts</a>, <a
-href="assets/fdr_panel10/sashimi_donor_counts.tsv">per-donor counts</a>,
-<a href="assets/fdr_panel10/sashimi_normalized_counts.tsv">normalized
-test counts</a> or <a
-href="assets/fdr_panel10/sashimi_junction_counts.tsv">junction
-counts</a>. Scripts:
-<code>10.isolaser_permutation/25.sashimi_candidates.py</code> and
-<code>36.refresh_sashimi_labels.R</code> with
-<code>ADAPTIVE_RULE=panel10</code>.</p>
-</div>
-</div>
-<div id="isoforms-and-haplotypes-at-6-hours" class="section level3">
-<h3>Isoforms and haplotypes at 6 hours</h3>
-<p>The same four associations at 6 hours, drawn like Fig. 2d of the
-isoLASER paper. <strong>How to read them:</strong></p>
-<ul>
-<li><strong>Rows:</strong> annotated transcripts, labelled with the
-GENCODE v44 name and Ensembl ID. <strong>Novel</strong> marks a
-transcript model from our long-read annotation that is not in GENCODE.
-For each group, the three transcripts with the most reads are drawn; a
-grey row sums the rest. Introns are shortened.</li>
-<li><strong>Green:</strong> the tested part.</li>
-<li><strong>Numbers:</strong> reads assigned to each transcript, by
-haplotype, raw counts summed over the donors used. The columns are
-labelled by the tested SNP’s two alleles; isoLASER assigns reads to
-haplotypes by phasing.</li>
-<li><strong>Orange markers:</strong> the tested SNP, and the nearest SNP
-heterozygous and in phase in every donor used, when it is closer to the
-part.</li>
-<li><strong>ΔPSI and q:</strong> the test’s values, from
-donor-normalized tables, so they can differ slightly from the raw
-numbers.</li>
-</ul>
-<p>Each read counts for one transcript, so reads are split between
-transcripts that look alike around the part.</p>
-<p><img src="assets/fdr_panel10/isoforms_HNRNPK_6hr.png" /></p>
-<p><img src="assets/fdr_panel10/isoforms_KPNA2_6hr.png" /></p>
-<p>In KPNA2, every heterozygous panel SNP in the gene is phased the same
-way in the three donors, so T and C reads come from two whole-gene
-haplotypes. The nearest SNP to the intron, rs4638, is 135 bases
-downstream; its G allele is on the T haplotype in all three donors.</p>
-<p><img src="assets/fdr_panel10/isoforms_ZNF749_6hr.png" /></p>
-<p><img src="assets/fdr_panel10/isoforms_PARK7_6hr.png" /></p>
-<p>PARK7 is not significant at 6 hours (q = 1). See the <a
-href="assets/fdr_panel10/isoforms_PARK7_1hr.png">1-hour version</a> for
-the significant timepoint.</p>
-<p>Read counts per transcript: <a
-href="assets/fdr_panel10/isoforms_HNRNPK_6hr_transcripts.tsv">HNRNPK</a>,
-<a
-href="assets/fdr_panel10/isoforms_KPNA2_6hr_transcripts.tsv">KPNA2</a>,
-<a
-href="assets/fdr_panel10/isoforms_ZNF749_6hr_transcripts.tsv">ZNF749</a>,
-<a
-href="assets/fdr_panel10/isoforms_PARK7_6hr_transcripts.tsv">PARK7</a>.
-PDFs: <a href="assets/fdr_panel10/isoforms_HNRNPK_6hr.pdf">HNRNPK</a>,
-<a href="assets/fdr_panel10/isoforms_KPNA2_6hr.pdf">KPNA2</a>, <a
-href="assets/fdr_panel10/isoforms_ZNF749_6hr.pdf">ZNF749</a>, <a
-href="assets/fdr_panel10/isoforms_PARK7_6hr.pdf">PARK7</a>, <a
-href="assets/fdr_panel10/isoforms_PARK7_1hr.pdf">PARK7 at 1 hour</a>.
-Scripts: <code>11.fdr_results/4.transcript_counts.py</code>, then
-<code>7.grant_figure_transcripts.R</code>, both with
-<code>ADAPTIVE_RULE=panel10</code>.</p>
-</div>
-</div>
+<p>For genes reported at one timepoint, the last three categories
+describe the representative association at the other timepoints: nominal
+p &lt; 0.05, p ≥ 0.05 where scored, or no usable score. They are not
+tests of an allele × time interaction. Among comparisons of significant
+associations with another timepoint, 88% had nominal p &lt; 0.05 there
+and 99% had the same effect direction.</p>
 <div id="full-interactive-gene-table" class="section level2">
 <h2>Full interactive gene table</h2>
 <p>All <strong>26 reported genes</strong>. The variant, part, timepoint

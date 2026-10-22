@@ -62,13 +62,17 @@ Full pass over every primary read in each library.
 | Total UMIs | 59,937,336 | 74,527,527 | 79,231,979 |
 | Reads per UMI | 1.021 | 1.015 | 1.018 |
 | Mean read length | 617 bp | 610 bp | 627 bp |
-| Median read length | 578 bp | 512 bp | 541 bp |
+| Median read length | 513 bp | 501 bp | 510 bp |
 | % spliced | 19.45% | 20.17% | 19.87% |
 | % no base quality | 20.81% | 16.16% | 19.15% |
 | % chrM | 6.27% | 7.48% | 6.53% |
 
+Read lengths are from all primary reads (`0.data_prep/6.read_length_all.sbatch`,
+`samtools stats -F 0x900`). An earlier version showed medians of 578 / 512 / 541 bp,
+taken from only the first 100,000 records of each coordinate-sorted BAM.
+
 The three libraries are consistent — % spliced within 0.7
-points, read length within 17 bp. So QC thresholds and pipeline settings
+points, mean read length within 17 bp and median within 12 bp. So QC thresholds and pipeline settings
 established on one apply to all three.
 
 **Always filter with `-F 0x900`.** Secondary alignments are 26–28% of records.

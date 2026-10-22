@@ -162,7 +162,7 @@ So **installation is not on the critical path — donor demultiplexing is.**
 
 A second concern to quantify before committing: isoLASER needs a heterozygous
 SNP **and** the splicing event on the *same read*, and its pipeline discards
-reads lacking splice junctions. With our ~506 bp median read and 27% spliced
+reads lacking splice junctions. With our ~510 bp median read and ~20% spliced
 fraction, testable events per donor will be well below what the full-length
 PacBio data the method was built on yields.
 
@@ -238,5 +238,5 @@ snakemake -s isolaser_test.smk
 2. Install minimap2 into `isolaser_env` from bioconda.
 3. Download the `refdata-gex-GRCh38-2024-A` reference bundle.
 4. Demultiplex donors (vireo / souporcell) — the actual critical path.
-5. Estimate testable events per donor given the 506 bp median read length,
+5. Estimate testable events per donor given the ~510 bp median read length,
    before committing to isoLASER over junction-level intron clustering.

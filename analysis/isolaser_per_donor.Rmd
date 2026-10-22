@@ -61,7 +61,7 @@ barcodes with no donor assignment, which are dropped.
 Two things to take from this:
 
 * **98.5% of events are untestable.** A heterozygous SNP and the splicing event
-  must fall on the *same* read, and at ~506 bp median read length with
+  must fall on the *same* read, and at ~510 bp median read length with
   62–101 k reads per donor, usually they do not.
 * **Per-donor yield is very thin** — CD_21 produced zero events passing the
   filter, the others 5–18.

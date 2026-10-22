@@ -390,7 +390,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-09-08
+<strong>Last updated:</strong> 2026-10-21
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -428,10 +428,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -440,15 +440,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0665a25de4ede0281b01a8b5665b4b581a66c679targetblank0665a25a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeec3f404c78db0679021a605a0801bce4613a775ftargetblankec3f404a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/0665a25de4ede0281b01a8b5665b4b581a66c679" target="_blank">0665a25</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/ec3f404c78db0679021a605a0801bce4613a775f" target="_blank">ec3f404</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0665a25de4ede0281b01a8b5665b4b581a66c679targetblank0665a25a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeec3f404c78db0679021a605a0801bce4613a775ftargetblankec3f404a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -458,7 +458,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/0665a25de4ede0281b01a8b5665b4b581a66c679" target="_blank">0665a25</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/ec3f404c78db0679021a605a0801bce4613a775f" target="_blank">ec3f404</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -472,11 +472,11 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/isolaser.Rmd
-
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/data_summary.Rmd
+    Modified:   analysis/isolaser.Rmd
+    Modified:   analysis/isolaser_per_donor.Rmd
+    Modified:   analysis/read_structure.Rmd
 
 </code></pre>
 <p>
@@ -491,10 +491,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/isolaser.Rmd</code>) and HTML
+(<code>docs/isolaser.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/70c6cc44d27c535ebd1f681a78d6774f08124d9c/analysis/isolaser.Rmd" target="_blank">70c6cc4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-11
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/70c6cc44d27c535ebd1f681a78d6774f08124d9c/docs/isolaser.html" target="_blank">70c6cc4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-09-11
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -739,7 +803,7 @@ demultiplexing is.</strong></p>
 <p>A second concern to quantify before committing: isoLASER needs a
 heterozygous SNP <strong>and</strong> the splicing event on the <em>same
 read</em>, and its pipeline discards reads lacking splice junctions.
-With our ~506 bp median read and 27% spliced fraction, testable events
+With our ~510 bp median read and ~20% spliced fraction, testable events
 per donor will be well below what the full-length PacBio data the method
 was built on yields.</p>
 <p>Also, the paper’s own ONT guidance: exclude indels and validate
@@ -806,7 +870,7 @@ end.</li>
 bundle.</li>
 <li>Demultiplex donors (vireo / souporcell) — the actual critical
 path.</li>
-<li>Estimate testable events per donor given the 506 bp median read
+<li>Estimate testable events per donor given the ~510 bp median read
 length, before committing to isoLASER over junction-level intron
 clustering.</li>
 </ol>

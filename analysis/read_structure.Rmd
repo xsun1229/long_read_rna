@@ -175,9 +175,11 @@ Percent of reads, chr21:
 | RETAINED | 0.58 | 0.62 | 0.67 |
 | MIXED | 0.14 | 0.12 | 0.13 |
 
-The number that matters: **only 9.5% of reads carry more than one exon**
-(CONSECUTIVE + SKIP + SKIP_MINOR + RETAINED + MIXED at 0 hr). That is the
-entire population capable of informing on splicing.
+The number that matters: **only about 15% of reads carry more than one exon**:
+CONSECUTIVE + SKIP + SKIP_MINOR + RETAINED + MIXED = 14.52% / 16.05% / 15.86% at
+0 / 1 / 6 hr on chr21, and 15.03% / 16.24% / 15.72% of all primary reads
+genome-wide. That is the entire population capable of informing on splicing.
+(An earlier version of this page said 9.5%; that was an arithmetic error.)
 
 ## Junction novelty
 
@@ -279,7 +281,7 @@ annotation. A plain GENCODE run would give fewer flattened exons, fewer
 # What this implies for the two aims
 
 **Aim 1 (splicing changes during the response).** With ~60% of reads intronic
-and only 9.5% carrying multiple exons, isoform-level quantification discards
+and only about 15% carrying multiple exons, isoform-level quantification discards
 most of the data. Junction-level counting and intron retention use what is
 actually present. Intron retention in particular is well matched to nuclear RNA
 and is measured per molecule by long reads.

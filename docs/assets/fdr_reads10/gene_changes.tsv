@@ -1,0 +1,39 @@
+gene	panel10_sig_tps	panel10_pattern	sig_tps	pattern	status
+ATP5MJ	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+CRYBB2P1	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+HNRNPK	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+PARK7	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+SNHG5	6hr	not testable elsewhere	6hr	not testable elsewhere	both
+UBE2Q2P2	6hr	shared, below threshold elsewhere	0hr, 6hr	two timepoints	both
+ZNF749	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+ALDH3A2	1hr	not testable elsewhere			panel10 only
+ANKRD36B	0hr, 6hr	two timepoints			panel10 only
+ANKRD36C	0hr	candidate timepoint-specific			panel10 only
+ASAH1	1hr	candidate timepoint-specific			panel10 only
+CHORDC1	0hr, 1hr, 6hr	all three timepoints			panel10 only
+CST3	0hr, 1hr, 6hr	all three timepoints			panel10 only
+CYBA	0hr, 1hr, 6hr	all three timepoints			panel10 only
+DNTTIP2	1hr, 6hr	two timepoints			panel10 only
+HSP90B1	0hr	candidate timepoint-specific			panel10 only
+KPNA2	6hr	candidate timepoint-specific			panel10 only
+LEPROT	1hr	shared, below threshold elsewhere			panel10 only
+LMBRD1	1hr, 6hr	two timepoints			panel10 only
+NAA38	0hr, 1hr, 6hr	all three timepoints			panel10 only
+PFKP	0hr, 1hr	two timepoints			panel10 only
+RPS2	0hr	shared, below threshold elsewhere			panel10 only
+RPS27L	1hr	shared, below threshold elsewhere			panel10 only
+RPS5	0hr, 1hr, 6hr	all three timepoints			panel10 only
+TBCA	0hr, 1hr, 6hr	all three timepoints			panel10 only
+ZFAND2A	1hr, 6hr	two timepoints			panel10 only
+ATP6V0E2			0hr, 1hr	two timepoints	reads10 only
+C20orf96			1hr	shared, below threshold elsewhere	reads10 only
+ENSG00000290928			6hr	not testable elsewhere	reads10 only
+GNL3			1hr	candidate timepoint-specific	reads10 only
+HM13			0hr	shared, below threshold elsewhere	reads10 only
+LAMTOR4			6hr	shared, below threshold elsewhere	reads10 only
+LINC00888			6hr	candidate timepoint-specific	reads10 only
+LY6H			6hr	shared, below threshold elsewhere	reads10 only
+POLE4			6hr	shared, below threshold elsewhere	reads10 only
+PPA2			1hr	candidate timepoint-specific	reads10 only
+PRH1			0hr, 1hr, 6hr	all three timepoints	reads10 only
+UQCC6			1hr	shared, below threshold elsewhere	reads10 only

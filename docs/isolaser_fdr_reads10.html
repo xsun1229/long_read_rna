@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-22" />
+
+<title>Genome-wide FDR with read-based inclusion labels (rerun)</title>
+
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Genome-wide FDR with read-based inclusion
+labels (rerun)</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-22</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-22
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1640dfb8adcd18390979a10e1804eff3e0f719d1targetblank1640dfba">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/1640dfb8adcd18390979a10e1804eff3e0f719d1" target="_blank">1640dfb</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1640dfb8adcd18390979a10e1804eff3e0f719d1targetblank1640dfba"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/1640dfb8adcd18390979a10e1804eff3e0f719d1" target="_blank">1640dfb</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_fdr_reads10.Rmd
+    Untracked:  analysis/isolaser_gtex_comparison_reads10.Rmd
+
+Unstaged changes:
+    Deleted:    analysis/isolaser_fdr_panel10.knit.md
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>This page repeats the <a
+href="isolaser_fdr_panel10.html">genotype-panel rerun</a> with one
+change: <strong>each read’s inclusion label comes from its own
+alignment.</strong> The panel10 page and its results are unchanged.</p>
+<p><strong>What changed (our definitions):</strong></p>
+<ul>
+<li><strong>How isoLASER labels reads:</strong> isoLASER decides whether
+a read includes or excludes an exonic part from the transcript the read
+was assigned to, not from the read’s own alignment. A read assigned to a
+transcript that retains an intron counts as retaining it, even if the
+read splices it out. For example, isoLASER counted 28 ALT reads as
+keeping the tested KPNA2 intron of the panel10 page; in their
+alignments, 20 of them splice it out (our read check).</li>
+<li><strong>Read-based labels:</strong> a modified copy of isoLASER
+labels each read from its alignment. A read <strong>includes</strong>
+the part if at least 10 of its aligned bases fall inside it (all of
+them, for parts shorter than 10 bases), and <strong>excludes</strong> it
+if one of its splice junctions spans the whole part. Other reads (those
+that don’t reach the part) get no label and are not counted. Variant
+calls, phasing and allele assignments are unchanged: every read keeps
+the allele it had in the original run.</li>
+<li><strong>Unchanged from the panel10 rerun:</strong>
+panel-heterozygous donors with ≥ 10 reads, every recorded variant ×
+exonic part, ≥ 20 reads in the tested family, the shuffles, isoLASER’s
+scoring functions, the adaptive rounds, BH within each timepoint, and
+the <code>cis</code> / |ΔPSI| ≥ 0.10 screen.</li>
+<li><strong>Checks:</strong> the modified run’s allele assignments match
+the original run’s exactly, on all 66 chromosome × timepoint
+combinations. The unshuffled score of every tested association was
+rebuilt independently, from isoLASER’s own summary tables, and
+matched.</li>
+<li><strong>Not yet done:</strong> calibration runs.</li>
+</ul>
+<p><strong>Main result:</strong> 42 associations in <strong>19
+genes</strong> have q &lt; 0.05 and pass the screen, against 64 in 26
+genes in the panel10 rerun. 7 genes are reported in both. The reported
+effects of the panel10 rerun mostly vanish with read-based labels, while
+this rerun’s effects are already visible, in the same direction, in
+panel10 (<a
+href="#what-happened-to-each-runs-reported-associations">details</a>).</p>
+<div id="genome-wide-results" class="section level1">
+<h1>Genome-wide results</h1>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="21%" />
+<col width="15%" />
+<col width="10%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Tested associations</th>
+<th align="right">Paper’s cutoff</th>
+<th align="right">Screen</th>
+<th align="right">Screen + q &lt; 0.10</th>
+<th align="right">Screen + q &lt; 0.05</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr</td>
+<td align="right">21,695</td>
+<td align="right">6,244 (751)</td>
+<td align="right">123 (71)</td>
+<td align="right">18 (9)</td>
+<td align="right">10 (5)</td>
+</tr>
+<tr class="even">
+<td align="left">1hr</td>
+<td align="right">31,944</td>
+<td align="right">5,866 (961)</td>
+<td align="right">190 (113)</td>
+<td align="right">19 (10)</td>
+<td align="right">18 (9)</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr</td>
+<td align="right">34,250</td>
+<td align="right">6,396 (1,065)</td>
+<td align="right">216 (128)</td>
+<td align="right">29 (13)</td>
+<td align="right">24 (11)</td>
+</tr>
+<tr class="even">
+<td align="left">any timepoint</td>
+<td align="right">40,879</td>
+<td align="right">12,880 (1,719)</td>
+<td align="right">472 (256)</td>
+<td align="right">54 (25)</td>
+<td align="right">42 (19)</td>
+</tr>
+</tbody>
+</table>
+<p>Cells other than <strong>Tested associations</strong> show
+<strong>associations (genes)</strong>.</p>
+<ul>
+<li><strong>Paper’s cutoff:</strong> isoLASER’s own <code>cis</code>
+call with no other filter, as in the isoLASER paper. Here it comes from
+the joint output of the read-based run, so it differs from the panel10
+page’s.</li>
+<li><strong>Screen</strong> (our definition), before FDR control: among
+the tested associations, isoLASER’s <code>cis</code> rule computed on
+the panel-heterozygous donors only, plus |ΔPSI| ≥ 0.10.</li>
+</ul>
+<p><strong>Any timepoint</strong> counts each gene or variant–part
+association once across timepoints. BH targets FDR within each
+timepoint’s full family; the effect-filtered subset and the union across
+timepoints have no separate 5% FDR guarantee.</p>
+</div>
+<div id="compared-with-the-panel10-rerun" class="section level1">
+<h1>Compared with the panel10 rerun</h1>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="16%" />
+<col width="16%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Tested: panel10</th>
+<th align="right">Tested: reads10</th>
+<th align="right">Paper’s cutoff: panel10</th>
+<th align="right">Paper’s cutoff: reads10</th>
+<th align="right">Screen + q &lt; 0.05: panel10</th>
+<th align="right">Screen + q &lt; 0.05: reads10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr</td>
+<td align="right">40,164</td>
+<td align="right">21,695</td>
+<td align="right">10,419 (978)</td>
+<td align="right">6,244 (751)</td>
+<td align="right">25 (12)</td>
+<td align="right">10 (5)</td>
+</tr>
+<tr class="even">
+<td align="left">1hr</td>
+<td align="right">60,866</td>
+<td align="right">31,944</td>
+<td align="right">11,880 (1,362)</td>
+<td align="right">5,866 (961)</td>
+<td align="right">41 (17)</td>
+<td align="right">18 (9)</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr</td>
+<td align="right">63,223</td>
+<td align="right">34,250</td>
+<td align="right">12,086 (1,350)</td>
+<td align="right">6,396 (1,065)</td>
+<td align="right">35 (16)</td>
+<td align="right">24 (11)</td>
+</tr>
+<tr class="even">
+<td align="left">any timepoint</td>
+<td align="right">76,939</td>
+<td align="right">40,879</td>
+<td align="right">23,251 (2,101)</td>
+<td align="right">12,880 (1,719)</td>
+<td align="right">64 (26)</td>
+<td align="right">42 (19)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>panel10</strong> is the genotype-panel rerun;
+<strong>reads10</strong> is this page. About half as many associations
+are testable. Many reads were counted only because of their assigned
+transcript and never reach the part; they are no longer counted, so
+fewer associations have 20 reads.</p>
+<div id="what-happened-to-each-runs-reported-associations"
+class="section level2">
+<h2>What happened to each run’s reported associations</h2>
+<p>Each reported association (at its timepoint) is looked up in the
+other run, at the same timepoint:</p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">In the other run</th>
+<th align="right">Reported in panel10, looked up in reads10</th>
+<th align="right">Reported in reads10, looked up in panel10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Reported</td>
+<td align="right">12</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">q &lt; 0.05, fails the screen</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Tested, q ≥ 0.05</td>
+<td align="right">57</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">Tested, no score</td>
+<td align="right">2</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Not tested: under 20 reads</td>
+<td align="right">11</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Not recorded: no read labelled</td>
+<td align="right">19</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Counts are association × timepoint rows: an association reported at
+two timepoints counts twice. <strong>Not recorded</strong>: no donor has
+a read labelled for this variant × part. With read-based labels this
+means no read reaches the part with 10 aligned bases or a spanning
+junction.</p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="12%" />
+<col width="12%" />
+<col width="33%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Reported in</th>
+<th align="right">Tested in both</th>
+<th align="right">Same direction</th>
+<th align="right">Median |ΔPSI|, reporting run</th>
+<th align="right">Median |ΔPSI|, other run</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">panel10</td>
+<td align="right">69</td>
+<td align="right">45%</td>
+<td align="right">0.440</td>
+<td align="right">0.003</td>
+</tr>
+<tr class="even">
+<td align="left">reads10</td>
+<td align="right">46</td>
+<td align="right">96%</td>
+<td align="right">0.243</td>
+<td align="right">0.131</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tested in both</strong>: reported in one run and scored in
+the other at the same timepoint. <strong>Same direction</strong>: the
+ΔPSI has the same sign in both runs.</p>
+<p>The two directions of the comparison look very different:</p>
+<ul>
+<li><strong>Panel10’s reported associations</strong> mostly fall apart
+with read-based labels. Only 12 of 101 are reported again. Where both
+runs score them, the direction agrees in 45% (chance level), and the
+median effect drops from 0.44 to 0.003. Their effects came from the
+transcripts the reads were assigned to, not from the reads.</li>
+<li><strong>This run’s reported associations</strong> are visible in
+panel10 too: same direction in 96%, with a smaller median effect (0.13
+against 0.24). Transcript-based labels diluted them below
+significance.</li>
+</ul>
+<p><strong>Genes.</strong> Reported in both: ATP5MJ, CRYBB2P1, HNRNPK,
+PARK7, SNHG5, UBE2Q2P2, ZNF749. Panel10 only: ALDH3A2, ANKRD36B,
+ANKRD36C, ASAH1, CHORDC1, CST3, CYBA, DNTTIP2, HSP90B1, KPNA2, LEPROT,
+LMBRD1, NAA38, PFKP, RPS2, RPS27L, RPS5, TBCA, ZFAND2A. This run only:
+ATP6V0E2, C20orf96, ENSG00000290928, GNL3, HM13, LAMTOR4, LINC00888,
+LY6H, POLE4, PPA2, PRH1, UQCC6. <a
+href="assets/fdr_reads10/gene_changes.tsv">Download the gene
+comparison</a>, or every reported association with its status in the
+other run: <a
+href="assets/fdr_reads10/fate_panel10_reported.tsv">panel10’s</a>, <a
+href="assets/fdr_reads10/fate_reads10_reported.tsv">this run’s</a>.</p>
+</div>
+</div>
+<div id="how-the-test-works" class="section level1">
+<h1>How the test works</h1>
+<p>The test is the one described on the <a
+href="isolaser_fdr.html#how-the-test-works">original page</a>, with the
+donor and family rules of the <a
+href="isolaser_fdr_panel10.html">panel10 rerun</a>. Only the read labels
+differ.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="12%" />
+<col width="20%" />
+<col width="21%" />
+<col width="23%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="right">Stopped at 1,000</th>
+<th align="right">Stopped at 10,000</th>
+<th align="right">Stopped at 100,000</th>
+<th align="right">Reached 1,000,000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr</td>
+<td align="right">21,463</td>
+<td align="right">159</td>
+<td align="right">39</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="left">1hr</td>
+<td align="right">31,587</td>
+<td align="right">270</td>
+<td align="right">45</td>
+<td align="right">42</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr</td>
+<td align="right">33,845</td>
+<td align="right">305</td>
+<td align="right">49</td>
+<td align="right">51</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stopped</strong> means at least 20 hits at that checkpoint,
+or no observed score (p = 1). Every association with zero hits after a
+million shuffles has q &lt; 0.05, so more shuffles would not change the
+results.</p>
+<p><img src="assets/fdr_reads10/qq.png" /></p>
+<p>Real data only; there are no calibration runs for this rerun. As in
+panel10, the bulk lies below the diagonal (many ties at an AMI of 0) and
+the upper plateau is the minimum attainable p-value.</p>
+</div>
+<div id="genes-to-follow-up" class="section level1">
+<h1>Genes to follow up</h1>
+<p>We highlight genes that meet the same two conditions as on the <a
+href="isolaser_fdr_panel10.html#genes-to-follow-up">panel10 page</a>
+(our definitions):</p>
+<ol style="list-style-type: decimal">
+<li><strong>Reported only after stimulation:</strong> q &lt; 0.05 plus
+the <code>cis</code> / effect-size screen at 1 or 6 hours, and not at 0
+hours.</li>
+<li><strong>Neuron- or stimulation-related:</strong> a neuronal GO term,
+a disorder in SFARI or DDG2P, or a change in expression or splicing
+after stimulation in our data (the annotation columns of the full gene
+table below).</li>
+</ol>
+<p>6 genes meet both; four are shown. Not shown:
+<strong>C20orf96</strong> and <strong>ENSG00000290928</strong>, which
+have no score at 0 hours, so there is no 0-hour comparison. PARK7 and
+ZNF749 are also on the panel10 page; PPA2 and LY6H are new.</p>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="7%" />
+<col width="8%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="right">0 hr</th>
+<th align="right">1 hr</th>
+<th align="right">6 hr</th>
+<th align="right">Best q</th>
+<th align="right">Het donors</th>
+<th align="left">Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">PARK7</td>
+<td align="right">-8 (628)</td>
+<td align="right">-19 (1,034)</td>
+<td align="right">-10 (1,024)</td>
+<td align="right">0.0023</td>
+<td align="right">2</td>
+<td align="left">Neuron projection, neuron death (GO); the Parkinson’s
+disease gene DJ-1</td>
+</tr>
+<tr class="even">
+<td align="left">PPA2</td>
+<td align="right">+21 (72)</td>
+<td align="right">+46 (107)</td>
+<td align="right">+18 (125)</td>
+<td align="right">0.0044</td>
+<td align="right">3</td>
+<td align="left">Splicing after stimulation (our scan); a GTEx
+Cerebellum sQTL for this exon</td>
+</tr>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="right">+15 (180)</td>
+<td align="right">+14 (363)</td>
+<td align="right">+25 (362)</td>
+<td align="right">0.0014</td>
+<td align="right">2</td>
+<td align="left">Synaptic signaling (GO)</td>
+</tr>
+<tr class="even">
+<td align="left">ZNF749</td>
+<td align="right">-26 (88)</td>
+<td align="right">-8 (81)</td>
+<td align="right">-74 (127)</td>
+<td align="right">0.0014</td>
+<td align="right">3</td>
+<td align="left">Splicing after stimulation (our scan), at this exon’s
+donor sites</td>
+</tr>
+</tbody>
+</table>
+<p><strong>0 / 1 / 6 hr</strong>: allelic effect in percentage points,
+alternative minus reference inclusion, with pooled informative coverage
+in brackets. <strong>Best q</strong>: the lowest timepoint-specific
+q-value. <strong>Het donors</strong>: the largest number of
+panel-heterozygous donors used, out of four. All numbers refer to each
+gene’s representative association.</p>
+<p><strong>How to read each gene’s figures:</strong></p>
+<ul>
+<li><strong>Permutation test:</strong> one panel per timepoint. Grey
+bars are the first 1,000 shuffled scores; the blue line is the observed
+score (AMI). The p-value uses the full adaptive run, up to a million
+shuffles.</li>
+<li><strong>Read alignments:</strong> isoLASER’s
+<code>nigiri_plot</code> sashimi renderer with the project’s plotting
+fixes. Reads are split into REF (blue) and ALT (orange) and pooled over
+the donors used at each timepoint. Yellow marks the tested part.
+Coverage and arc numbers are raw read counts, on one scale per gene.
+<strong>Raw inclusion</strong> is each read’s own label, so every
+counted read reaches the part; these are the counts the test uses before
+it normalizes donors.</li>
+<li><strong>Isoforms and haplotypes</strong>, at 0 hours and at the
+significant timepoint, drawn as on the panel10 page:
+<ul>
+<li><strong>Rows:</strong> the transcripts the reads were assigned to,
+grouped by whether the transcript’s structure includes the part. With
+read-based labels, a read’s own label can differ from its transcript’s
+group.</li>
+<li><strong>Numbers:</strong> reads per transcript from each haplotype,
+raw counts summed over the donors used.</li>
+<li><strong>PSI row:</strong> each haplotype’s inclusion from the reads’
+own labels, the raw version of the test’s table. A note under the row
+gives any reads assigned to transcripts that don’t span the part: they
+count in PSI but are not drawn.</li>
+<li><strong>Test line:</strong> the test’s ΔPSI and q.</li>
+</ul></li>
+</ul>
+<div id="park7" class="section level2">
+<h2>PARK7</h2>
+<p>The tested 46-base part is the extra stretch of PARK7-201’s longer
+first exon. Its donor site lies 58 bases beyond the other transcripts’
+donor site, an alternative 5′ splice site; the panel10 page tested the
+adjacent 12-base part of the same stretch. One minor transcript
+(ENST00000465354) has this part as its whole first exon, which is why
+the figure’s automatic label reads “alternative first exon”.</p>
+<p>ALT (C) reads use the longer first exon less often than REF (T)
+reads. The effect has the same direction at all three timepoints and in
+both donors (CD_21 and CD_48), and is largest at 1 hour: −19 pp (q =
+0.002), with REF 74% vs ALT 51% and REF 73% vs ALT 57% in the two
+donors. At 0 and 6 hours it is −8 and −10 pp. The variant (rs226249)
+lies in the first exon, 18 bases before the shorter exon’s donor
+site.</p>
+<div id="permutation-test" class="section level4">
+<h4>Permutation test</h4>
+<p><img src="assets/fdr_reads10/PARK7_null.png" /></p>
+</div>
+<div id="read-alignments" class="section level4">
+<h4>Read alignments</h4>
+<p><img src="assets/fdr_reads10/PARK7_sashimi.png" /></p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="13%" />
+<col width="22%" />
+<col width="22%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">Donors</th>
+<th align="right">REF inclusion (raw)</th>
+<th align="right">ALT inclusion (raw)</th>
+<th align="right">Test dPSI (normalized, pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">261/381 (68.5%)</td>
+<td align="right">150/247 (60.7%)</td>
+<td align="right">-8.0</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">508/695 (73.1%)</td>
+<td align="right">183/339 (54.0%)</td>
+<td align="right">-19.1</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">465/669 (69.5%)</td>
+<td align="right">210/354 (59.3%)</td>
+<td align="right">-10.2</td>
+</tr>
+</tbody>
+</table>
+<p><a href="assets/fdr_reads10/PARK7_sashimi.pdf">Open as PDF</a>.</p>
+</div>
+<div id="isoforms-and-haplotypes" class="section level4">
+<h4>Isoforms and haplotypes</h4>
+<p><img src="assets/fdr_reads10/isoforms_PARK7_0hr.png" /></p>
+<p><img src="assets/fdr_reads10/isoforms_PARK7_1hr.png" /></p>
+</div>
+</div>
+<div id="ppa2" class="section level2">
+<h2>PPA2</h2>
+<p>PPA2 encodes the mitochondrial inorganic pyrophosphatase. DDG2P lists
+a PPA2-related sudden cardiac death disorder, which is not a brain
+disorder. The tested 27-base part is the last stretch of an 87-base
+cassette exon. PPA2-202 skips the whole exon, and the reads that exclude
+the part skip the whole exon: none use the exon’s shorter form.</p>
+<p>ALT (G) reads include the exon more often than REF (C) reads. The
+effect is largest at 1 hour: +46 pp (q = 0.004), from REF 33% vs ALT 77%
+raw inclusion, with +53 and +36 pp in the two donors (CD_31 and CD_48).
+At 0 and 6 hours it is +21 and +18 pp, below threshold; CD_36, with 6 to
+16 reads per allele, varies between −5 and +12 pp. The tested SNP
+(rs13787) is in a downstream exon, about 42 kb away in the genome. GTEx
+Cerebellum has a strong sQTL at the same SNP for this exon’s skipping
+junction (p = 1 × 10⁻¹⁹), with the opposite sign to our ΔPSI, as
+expected (<a href="isolaser_gtex_comparison_reads10.html">GTEx
+page</a>).</p>
+<div id="permutation-test-1" class="section level4">
+<h4>Permutation test</h4>
+<p><img src="assets/fdr_reads10/PPA2_null.png" /></p>
+</div>
+<div id="read-alignments-1" class="section level4">
+<h4>Read alignments</h4>
+<p><img src="assets/fdr_reads10/PPA2_sashimi.png" /></p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="18%" />
+<col width="21%" />
+<col width="21%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">Donors</th>
+<th align="right">REF inclusion (raw)</th>
+<th align="right">ALT inclusion (raw)</th>
+<th align="right">Test dPSI (normalized, pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">CD_31,CD_36,CD_48</td>
+<td align="right">19/39 (48.7%)</td>
+<td align="right">22/32 (68.8%)</td>
+<td align="right">+21.3</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">CD_31,CD_48</td>
+<td align="right">18/55 (32.7%)</td>
+<td align="right">41/53 (77.4%)</td>
+<td align="right">+46.3</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">CD_31,CD_36,CD_48</td>
+<td align="right">32/71 (45.1%)</td>
+<td align="right">35/54 (64.8%)</td>
+<td align="right">+18.3</td>
+</tr>
+</tbody>
+</table>
+<p><a href="assets/fdr_reads10/PPA2_sashimi.pdf">Open as PDF</a>.</p>
+</div>
+<div id="isoforms-and-haplotypes-1" class="section level4">
+<h4>Isoforms and haplotypes</h4>
+<p><img src="assets/fdr_reads10/isoforms_PPA2_0hr.png" /></p>
+<p><img src="assets/fdr_reads10/isoforms_PPA2_1hr.png" /></p>
+</div>
+</div>
+<div id="ly6h" class="section level2">
+<h2>LY6H</h2>
+<p>The tested 12-base part is the start of LY6H-201’s first exon.
+LY6H-202 and LY6H-205 start at an exon further upstream and splice past
+the part into an exon inside LY6H-201’s first exon. Read coverage ends
+at LY6H-201’s start site, so reads that include the part start there,
+and reads that exclude it splice from the upstream exon. The test
+therefore compares the use of two first exons (our reading of the
+alignments and annotation).</p>
+<p>ALT (G) reads include the part more often than REF (A) reads, so they
+use the upstream first exon less. The effect has the same direction at
+all three timepoints and in both donors (CD_21 and CD_31), and is
+largest at 6 hours: +25 pp (q = 0.001), from REF 66% vs ALT 92% raw
+inclusion, with +30 and +20 pp in the two donors. At 0 and 1 hours it is
++15 and +14 pp, below threshold. The tested SNP (rs10109061) is in the
+last exon, 1.9 kb from the part. LY6H belongs to the Ly6 family of
+GPI-anchored, neurotoxin-like proteins. Published work (not our data)
+reports that it limits surface α7 nicotinic acetylcholine receptors in
+neurons.</p>
+<div id="permutation-test-2" class="section level4">
+<h4>Permutation test</h4>
+<p><img src="assets/fdr_reads10/LY6H_null.png" /></p>
+</div>
+<div id="read-alignments-2" class="section level4">
+<h4>Read alignments</h4>
+<p><img src="assets/fdr_reads10/LY6H_sashimi.png" /></p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="13%" />
+<col width="22%" />
+<col width="22%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">Donors</th>
+<th align="right">REF inclusion (raw)</th>
+<th align="right">ALT inclusion (raw)</th>
+<th align="right">Test dPSI (normalized, pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">CD_21,CD_31</td>
+<td align="right">70/96 (72.9%)</td>
+<td align="right">73/84 (86.9%)</td>
+<td align="right">+15.0</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">CD_21,CD_31</td>
+<td align="right">131/184 (71.2%)</td>
+<td align="right">152/179 (84.9%)</td>
+<td align="right">+13.7</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">CD_21,CD_31</td>
+<td align="right">127/192 (66.1%)</td>
+<td align="right">155/169 (91.7%)</td>
+<td align="right">+25.0</td>
+</tr>
+</tbody>
+</table>
+<p><a href="assets/fdr_reads10/LY6H_sashimi.pdf">Open as PDF</a>.</p>
+</div>
+<div id="isoforms-and-haplotypes-2" class="section level4">
+<h4>Isoforms and haplotypes</h4>
+<p><img src="assets/fdr_reads10/isoforms_LY6H_0hr.png" /></p>
+<p><img src="assets/fdr_reads10/isoforms_LY6H_6hr.png" /></p>
+</div>
+</div>
+<div id="znf749" class="section level2">
+<h2>ZNF749</h2>
+<p>As on the panel10 page, the tested part is a 355-base alternative
+last exon. REF (G) reads end in it far more often than ALT (C) reads.
+The difference is significant only at 6 hours (−74 pp, q = 0.001); at 0
+and 1 hours it is −26 and −8 pp. In our stimulation splicing scan, the
+balance between the two donor sites that splice into this exon shifts
+between 0 and 6 hours.</p>
+<p>As before, the jump at 6 hours partly reflects which donors are
+used:</p>
+<ul>
+<li><strong>CD_21</strong> has a large effect at every timepoint: −72,
+−43 and −81 pp.</li>
+<li><strong>CD_48</strong> shows no difference at 0 hours (+1 pp, from 8
+ALT reads) and a large one at 6 hours (−66 pp).</li>
+<li><strong>CD_36</strong> has an inconsistent effect (−19 pp at 0
+hours, +18 pp at 1 hour) and no reads at 6 hours.</li>
+</ul>
+<div id="permutation-test-3" class="section level4">
+<h4>Permutation test</h4>
+<p><img src="assets/fdr_reads10/ZNF749_null.png" /></p>
+</div>
+<div id="read-alignments-3" class="section level4">
+<h4>Read alignments</h4>
+<p><img src="assets/fdr_reads10/ZNF749_sashimi.png" /></p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="18%" />
+<col width="21%" />
+<col width="21%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Timepoint</th>
+<th align="left">Donors</th>
+<th align="right">REF inclusion (raw)</th>
+<th align="right">ALT inclusion (raw)</th>
+<th align="right">Test dPSI (normalized, pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0 hr</td>
+<td align="left">CD_21,CD_36,CD_48</td>
+<td align="right">45/56 (80.4%)</td>
+<td align="right">15/31 (48.4%)</td>
+<td align="right">-25.5</td>
+</tr>
+<tr class="even">
+<td align="left">1 hr</td>
+<td align="left">CD_21,CD_36</td>
+<td align="right">39/51 (76.5%)</td>
+<td align="right">19/30 (63.3%)</td>
+<td align="right">-7.8</td>
+</tr>
+<tr class="odd">
+<td align="left">6 hr</td>
+<td align="left">CD_21,CD_48</td>
+<td align="right">72/84 (85.7%)</td>
+<td align="right">6/44 (13.6%)</td>
+<td align="right">-74.1</td>
+</tr>
+</tbody>
+</table>
+<p><a href="assets/fdr_reads10/ZNF749_sashimi.pdf">Open as PDF</a>.</p>
+</div>
+<div id="isoforms-and-haplotypes-3" class="section level4">
+<h4>Isoforms and haplotypes</h4>
+<p><img src="assets/fdr_reads10/isoforms_ZNF749_0hr.png" /></p>
+<p><img src="assets/fdr_reads10/isoforms_ZNF749_6hr.png" /></p>
+</div>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p><strong>Isoform figures</strong> (PDF, and reads per transcript as a
+table):</p>
+<ul>
+<li><p><strong>PARK7</strong>: 0 hr (<a
+href="assets/fdr_reads10/isoforms_PARK7_0hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_PARK7_0hr_transcripts.tsv">reads per
+transcript</a>); 1 hr (<a
+href="assets/fdr_reads10/isoforms_PARK7_1hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_PARK7_1hr_transcripts.tsv">reads per
+transcript</a>)</p></li>
+<li><p><strong>PPA2</strong>: 0 hr (<a
+href="assets/fdr_reads10/isoforms_PPA2_0hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_PPA2_0hr_transcripts.tsv">reads per
+transcript</a>); 1 hr (<a
+href="assets/fdr_reads10/isoforms_PPA2_1hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_PPA2_1hr_transcripts.tsv">reads per
+transcript</a>)</p></li>
+<li><p><strong>LY6H</strong>: 0 hr (<a
+href="assets/fdr_reads10/isoforms_LY6H_0hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_LY6H_0hr_transcripts.tsv">reads per
+transcript</a>); 6 hr (<a
+href="assets/fdr_reads10/isoforms_LY6H_6hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_LY6H_6hr_transcripts.tsv">reads per
+transcript</a>)</p></li>
+<li><p><strong>ZNF749</strong>: 0 hr (<a
+href="assets/fdr_reads10/isoforms_ZNF749_0hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_ZNF749_0hr_transcripts.tsv">reads per
+transcript</a>); 6 hr (<a
+href="assets/fdr_reads10/isoforms_ZNF749_6hr.pdf">PDF</a>, <a
+href="assets/fdr_reads10/isoforms_ZNF749_6hr_transcripts.tsv">reads per
+transcript</a>)</p></li>
+<li><p><strong>Sashimi plots:</strong> <a
+href="assets/fdr_reads10/sashimi_summary.tsv">inclusion counts</a>, <a
+href="assets/fdr_reads10/sashimi_donor_counts.tsv">per-donor counts</a>,
+<a href="assets/fdr_reads10/sashimi_normalized_counts.tsv">normalized
+test counts</a>, <a
+href="assets/fdr_reads10/sashimi_junction_counts.tsv">junction
+counts</a>.</p></li>
+<li><p><strong>Scripts:</strong>
+<code>11.fdr_results/8.reads10_examples.sh</code> runs, with
+<code>ADAPTIVE_RULE=reads10</code>, <code>24.plot_association.R</code>,
+<code>25.sashimi_candidates.py</code> and
+<code>36.refresh_sashimi_labels.R</code> (in
+<code>10.isolaser_permutation/</code>), then
+<code>4.transcript_counts.py</code> and
+<code>7.grant_figure_transcripts.R</code> (in
+<code>11.fdr_results/</code>).</p></li>
+</ul>
+</div>
+</div>
+<div id="all-reported-genes" class="section level1">
+<h1>All reported genes</h1>
+<p>Here, <strong>reported</strong> means q &lt; 0.05 plus the
+<code>cis</code> / effect-size screen.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Pattern</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Significant at 3 timepoints</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Significant at 2 timepoints</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">One timepoint; nominal support elsewhere</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">One timepoint; no nominal support elsewhere</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">One timepoint; no usable score elsewhere</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<p>For genes reported at one timepoint, the last three categories
+describe the representative association at the other timepoints: nominal
+p &lt; 0.05, p ≥ 0.05 where scored, or no usable score. They are not
+tests of an allele × time interaction. Among comparisons of significant
+associations with another timepoint, 82% had nominal p &lt; 0.05 there
+and 100% had the same effect direction.</p>
+<div id="full-interactive-gene-table" class="section level2">
+<h2>Full interactive gene table</h2>
+<p>All <strong>19 reported genes</strong>. The variant, part, timepoint
+effects, best q and donor count refer to the representative association;
+<strong>Significant at</strong> describes the gene across all its
+associations. <strong>In panel10</strong> marks genes also reported in
+the panel10 rerun.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.0014\" data-max=\"0.047\" data-scale=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"logical\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;true&quot;,&quot;false&quot;,&quot;na&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Search or filter genes, sort columns, and export the filtered table as CSV.<\/caption>","data":[["HNRNPK","PRH1","GNL3","LINC00888","PPA2","ENSG00000290928","SNHG5","C20orf96","ATP5MJ","HM13","LAMTOR4","CRYBB2P1","LY6H","PARK7","POLE4","UQCC6","ZNF749","UBE2Q2P2","ATP6V0E2"],["Significant at 3 timepoints","Significant at 3 timepoints","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","Significant at 2 timepoints","Significant at 2 timepoints"],["0hr, 1hr, 6hr","0hr, 1hr, 6hr","1hr","6hr","1hr","6hr","6hr","1hr","1hr","0hr","6hr","6hr","6hr","1hr","6hr","1hr","6hr","0hr, 6hr","0hr, 1hr"],["-21 (307)","+33 (148)","-10 (137)","-14 (39)","+21 (72)","no score","no score","no score","+9 (1,232)","+37 (73)","-16 (491)","+96 (68)","+15 (180)","-8 (628)","+7 (223)","-14 (187)","-26 (88)","+87 (30)","+12 (354)"],["-22 (525)","+45 (226)","-12 (269)","-12 (63)","+46 (107)","no score","no score","+60 (47)","+10 (2,212)","+14 (97)","-11 (864)","no score","+14 (363)","-19 (1,034)","+8 (416)","-24 (262)","-8 (81)","+40 (39)","+12 (660)"],["-26 (333)","+39 (237)","-2 (244)","-35 (103)","+18 (125)","-75 (29)","-41 (250)","+44 (33)","+9 (2,074)","+14 (117)","-12 (835)","+99 (113)","+25 (362)","-10 (1,024)","+12 (375)","-17 (257)","-74 (127)","+59 (96)","+8 (677)"],[0.0014,0.0014,0.0038,0.025,0.0044,0.013,0.0014,0.047,0.0014,0.042,0.028,0.0014,0.0014,0.0023,0.0014,0.0038,0.0014,0.0014,0.0023],[3,2,2,3,3,1,2,1,2,2,3,1,2,2,3,3,3,2,4],["yes","no","no","no","no","no","yes","no","yes","no","no","yes","no","yes","no","no","yes","yes","no"],["","","","","","","","","","","","","synaptic signaling","neuron projection; neuron death","","","","",""],["SFARI score 2, syndromic; HNRNPK-related Au-Kline syndrome","","","","PPA2-related sudden arrhythmic cardiac death after infectious or alcohol trigger","","","","","","","","","","","","","",""],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["",null,"","","yes","yes","","yes","","","","","","","","","yes","yes",""],["chr9:83980154:C&gt;T","chr12:11171576:C&gt;A","chr3:52686063:A&gt;C","chr3:183452353:C&gt;T","chr4:105396271:C&gt;G","chr17:30731844:G&gt;A","chr6:85678169:G&gt;T","chr20:279176:G&gt;A","chr14:103915164:T&gt;C","chr20:31569222:A&gt;G","chr7:100149506:G&gt;A","chr22:25459491:G&gt;A","chr8:143158441:A&gt;G","chr1:7961717:T&gt;C","chr2:74969603:A&gt;G","chr12:103951344:A&gt;G","chr19:57435555:G&gt;C","chr15:82404653:A&gt;G","chr7:149879728:A&gt;G"],["chr9:83980118-83980152:-","chr12:11121009-11121180:-","chr3:52686105-52686170:+","chr3:183452351-183452457:+","chr4:105437949-105437976:-","chr17:30735032-30735096:+","chr6:85678497-85678573:-","chr20:279330-279488:-","chr14:103914478-103914633:-","chr20:31547606-31547692:+","chr7:100148993-100149053:+","chr22:25459515-25459681:+","chr8:143160309-143160321:-","chr1:7961747-7961793:+","chr2:74958791-74958892:+","chr12:103957068-103957134:-","chr19:57438101-57438456:+","chr15:82395232-82395301:+","chr7:149878746-149878790:+"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Pattern<\/th>\n      <th>Significant at<\/th>\n      <th>0 hr<\/th>\n      <th>1 hr<\/th>\n      <th>6 hr<\/th>\n      <th>Best q<\/th>\n      <th>Het donors<\/th>\n      <th>In panel10<\/th>\n      <th>Neuronal GO term<\/th>\n      <th>Developmental disorder or autism<\/th>\n      <th>Expression after stimulation<\/th>\n      <th>Splicing after stimulation<\/th>\n      <th>Variant<\/th>\n      <th>Exonic part<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"lengthMenu":[10,25,50],"scrollX":true,"order":[],"dom":"Blfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[6,7]}],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<p><strong>0 / 1 / 6 hr</strong>: allelic effect in percentage points,
+alternative minus reference inclusion, with pooled informative coverage
+in brackets. The annotations use the same rules as on the <a
+href="isolaser_fdr.html#full-interactive-gene-table">original page</a>.
+They help select examples and are not enrichment tests.</p>
+<p><strong>Data:</strong> <code>10.isolaser_permutation/</code> with
+<code>ADAPTIVE_RULE=reads10</code>: the read-based isoLASER run from
+<code>40.make_reads_copy.py</code> and
+<code>41.reads_record.sbatch</code> /
+<code>42.reads_joint.sbatch</code>, checked by
+<code>43.check_reads_record.py</code>; inputs from
+<code>38.prepare_panel_inputs.R</code>, then scripts 18–22, with the
+independent score check <code>48</code> / <code>50</code>. This page’s
+tables come from <code>11.fdr_results/3.page_tables.R</code> with
+<code>ADAPTIVE_RULE=reads10</code>, which writes only to
+<code>docs/assets/fdr_reads10/</code>.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+ [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+ [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DT_0.22           data.table_1.14.4 workflowr_1.7.0  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.11       compiler_4.2.0    pillar_1.9.0      bslib_0.3.1      
+ [5] later_1.3.0       git2r_0.30.1      jquerylib_0.1.4   tools_4.2.0      
+ [9] getPass_0.2-2     digest_0.6.29     jsonlite_1.8.7    evaluate_0.15    
+[13] lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3   rlang_1.1.2      
+[17] cli_3.6.2         rstudioapi_0.14   crosstalk_1.2.0   yaml_2.3.5       
+[21] xfun_0.38         fastmap_1.1.0     httr_1.4.5        stringr_1.5.0    
+[25] knitr_1.42        htmlwidgets_1.6.2 sass_0.4.1        fs_1.5.2         
+[29] vctrs_0.6.1       rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
+[33] processx_3.5.3    fansi_1.0.3       rmarkdown_2.21    callr_3.7.0      
+[37] magrittr_2.0.3    whisker_0.4       ellipsis_0.3.2    ps_1.7.0         
+[41] promises_1.2.0.1  htmltools_0.5.7   httpuv_1.6.5      utf8_1.2.2       
+[45] stringi_1.7.6    </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

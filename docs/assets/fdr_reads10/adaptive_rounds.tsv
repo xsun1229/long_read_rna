@@ -1,0 +1,4 @@
+tp	tested	stopped_1e3	stopped_1e4	stopped_1e5	reached_1e6	zero_hits_1e6	shuffles_total
+0hr	21695	21463	159	39	34	7	60953000
+1hr	31944	31587	270	45	42	14	80787000
+6hr	34250	33845	305	49	51	25	92795000

@@ -1,0 +1,10 @@
+tx	status	reads	REF	ALT	REF_included	ALT_included	name	type	rank	drawn	sqanti3	lab
+ENST00000334181	excludes part	15	4	11	0	0	ZNF749-201	protein_coding	1	TRUE		ZNF749-201 (ENST00000334181)
+transcript41733.chr19.nnic	excludes part	11	3	8	0	0	transcript41733.chr19.nnic	not in GENCODE	2	TRUE	fusion	Novel, fusion (transcript41733)
+transcript41745.chr19.nnic	excludes part	10	3	7	0	0	transcript41745.chr19.nnic	not in GENCODE	3	TRUE	novel_in_catalog	Novel, NIC (transcript41745)
+transcript41744.chr19.nnic	excludes part	5	0	5	0	0	transcript41744.chr19.nnic	not in GENCODE	4	FALSE	novel_in_catalog	Novel, NIC (transcript41744)
+transcript41740.chr19.nnic	excludes part	4	1	3	0	0	transcript41740.chr19.nnic	not in GENCODE	5	FALSE	fusion	Novel, fusion (transcript41740)
+transcript41743.chr19.nnic	excludes part	3	1	2	0	0	transcript41743.chr19.nnic	not in GENCODE	6	FALSE	novel_in_catalog	Novel, NIC (transcript41743)
+ENST00000415248	excludes part	1	0	1	0	0	ZNF749-202	protein_coding	7	FALSE		ZNF749-202 (ENST00000415248)
+transcript41731.chr19.nnic	includes part	41	40	1	40	1	transcript41731.chr19.nnic	not in GENCODE	1	TRUE	novel_in_catalog	Novel, NIC (transcript41731)
+ENST00000597296	includes part	37	32	5	32	5	ZNF749-203	protein_coding_CDS_not_defined	2	TRUE		ZNF749-203 (ENST00000597296)

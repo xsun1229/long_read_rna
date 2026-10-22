@@ -1,0 +1,5 @@
+tp	panel10_tested	panel10_paper_associations	panel10_paper_genes	panel10_q05_associations	panel10_q05_genes	tested	paper_associations	paper_genes	q05_associations	q05_genes
+0hr	40164	10419	978	25	12	21695	6244	751	10	5
+1hr	60866	11880	1362	41	17	31944	5866	961	18	9
+6hr	63223	12086	1350	35	16	34250	6396	1065	24	11
+any timepoint	76939	23251	2101	64	26	40879	12880	1719	42	19

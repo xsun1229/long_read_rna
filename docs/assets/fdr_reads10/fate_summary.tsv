@@ -1,0 +1,11 @@
+reported_in	status	0hr	1hr	6hr	associations	genes
+panel10	reported	2	4	6	12	7
+panel10	tested, q >= 0.05	17	21	19	57	15
+panel10	tested, no observed score	0	2	0	2	1
+panel10	under 20 labelled reads	5	5	1	11	5
+panel10	not recorded	1	9	9	19	6
+reads10	reported	2	4	6	12	7
+reads10	q < 0.05, fails the screen	0	1	0	1	1
+reads10	tested, q >= 0.05	7	10	16	33	14
+reads10	tested, no observed score	1	2	2	5	1
+reads10	under 20 labelled reads	0	1	0	1	1

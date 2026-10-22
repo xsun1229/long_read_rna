@@ -71,3 +71,14 @@ donors, at 0, 1 and 6 hours after stimulation.
 * [Evidence of technical artifacts in isoLASER variant calls](isolaser_variant_artifacts.html) -
   Support from our panel, sequence-context and read-pattern checks, candidate examples,
   and proposed validation and reanalysis steps
+* Rerun with genotype-panel donors:
+  [genome-wide FDR](isolaser_fdr_panel10.html) and
+  [comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison_panel10.html) —
+  donors used only where our genotype panel calls them heterozygous; results,
+  comparison with the original run, and genes to follow up
+* Rerun with read-based inclusion labels:
+  [genome-wide FDR](isolaser_fdr_reads10.html) and
+  [comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison_reads10.html) —
+  each read labelled as including or excluding a part from its own alignment
+  instead of its assigned transcript; comparison with the genotype-panel rerun,
+  genes to follow up, and closer agreement with GTEx

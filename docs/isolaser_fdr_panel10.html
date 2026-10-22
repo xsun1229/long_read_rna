@@ -542,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree79006b34f9580bdb24666e917d242319fea2095dtargetblank79006b3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreee1bc6bf6d5e7456abf8cac2700cea90e2c2123bctargetblanke1bc6bfa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/79006b34f9580bdb24666e917d242319fea2095d" target="_blank">79006b3</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/e1bc6bf6d5e7456abf8cac2700cea90e2c2123bc" target="_blank">e1bc6bf</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree79006b34f9580bdb24666e917d242319fea2095dtargetblank79006b3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreee1bc6bf6d5e7456abf8cac2700cea90e2c2123bctargetblanke1bc6bfa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/79006b34f9580bdb24666e917d242319fea2095d" target="_blank">79006b3</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/e1bc6bf6d5e7456abf8cac2700cea90e2c2123bc" target="_blank">e1bc6bf</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -621,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/ec3f404c78db0679021a605a0801bce4613a775f/analysis/isolaser_fdr_panel10.Rmd" target="_blank">ec3f404</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-21
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/ec3f404c78db0679021a605a0801bce4613a775f/docs/isolaser_fdr_panel10.html" target="_blank">ec3f404</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-21
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1117,7 +1151,13 @@ tested SNP, plus the nearest in-phase SNP when that one is closer to the
 part.</li>
 <li><strong>Numbers:</strong> reads per transcript from each haplotype,
 labelled by the tested SNP’s alleles, as raw counts summed over the
-donors used. ΔPSI and q are the test’s values.</li>
+donors used.</li>
+<li><strong>PSI row:</strong> each haplotype’s inclusion from those raw
+counts: reads in transcripts that include the part, divided by all its
+reads, drawn and undrawn transcripts together.</li>
+<li><strong>Test line:</strong> ΔPSI and q are the test’s values. The
+test pools donor-normalized tables, so its ΔPSI can differ slightly from
+the difference between the two raw PSIs.</li>
 </ul></li>
 </ul>
 <div id="kpna2" class="section level2">
@@ -1600,7 +1640,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

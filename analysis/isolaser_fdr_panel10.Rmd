@@ -220,8 +220,13 @@ representative association.
   - **Marks:** green is the tested part. Orange marks the tested SNP, plus the
     nearest in-phase SNP when that one is closer to the part.
   - **Numbers:** reads per transcript from each haplotype, labelled by the
-    tested SNP's alleles, as raw counts summed over the donors used. ΔPSI and q
-    are the test's values.
+    tested SNP's alleles, as raw counts summed over the donors used.
+  - **PSI row:** each haplotype's inclusion from those raw counts: reads in
+    transcripts that include the part, divided by all its reads, drawn and
+    undrawn transcripts together.
+  - **Test line:** ΔPSI and q are the test's values. The test pools
+    donor-normalized tables, so its ΔPSI can differ slightly from the
+    difference between the two raw PSIs.
 
 ## KPNA2
 

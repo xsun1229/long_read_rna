@@ -199,7 +199,18 @@ Real data only; there are no calibration runs for this rerun.
 
 ```{r follow}
 fu <- g[!grepl("0hr", sig_tps) & (neuronal | brain_disorder | stim_expression | stim_splicing)]
+sashimi <- fread(file.path(A, "sashimi_summary.tsv"))
+sashimi_table <- function(gn) {
+  d <- sashimi[gene == gn][order(timepoint)]
+  frac <- function(i, e) sprintf("%d/%d (%.1f%%)", i, i + e, 100 * i / (i + e))
+  knitr::kable(d[, .(Timepoint=sub("hr", " hr", timepoint), Donors=donors,
+    `REF inclusion (raw)`=frac(REF_i, REF_e), `ALT inclusion (raw)`=frac(ALT_i, ALT_e),
+    `Test dPSI (normalized, pp)`=sprintf("%+.1f", 100 * normalized_dPSI))], align="llrrr")
+}
+qv <- function(gn, t) format(signif(g[gene == gn][[paste0("q_bh_", t)]], 2))
+pv <- function(gn, t) format(signif(g[gene == gn][[paste0("p_", t)]], 1))
 same <- merge(g[, .(gene, variant_qual, exonic_part)], gb[, .(gene, bv=variant_qual, bp=exonic_part)], by="gene")
+FU <- c("KPNA2", "PARK7", "ZNF749", "ASAH1", "LMBRD1")
 ```
 
 We apply the [same two conditions](isolaser_fdr_panel10.html#genes-to-follow-up)
@@ -225,10 +236,231 @@ panel-heterozygous donors used, out of four.
 
 For each of these genes the representative association, its donors and its reads
 are the same as in the panel10 rerun
-(`r sum(same$gene %in% c("KPNA2", "PARK7", "ZNF749", "ASAH1", "LMBRD1") & same$variant_qual == same$bv & same$exonic_part == same$bp)` of
-`r length(c("KPNA2", "PARK7", "ZNF749", "ASAH1", "LMBRD1"))` checked). Only the q-values change slightly with the
-larger family. Their permutation tests, read alignments and isoform figures are on the
-[panel10 page](isolaser_fdr_panel10.html#genes-to-follow-up).
+(`r sum(same$gene %in% FU & same$variant_qual == same$bv & same$exonic_part == same$bp)` of
+`r length(FU)` checked); only the q-values change slightly with the larger family.
+The figures below are drawn from this run.
+
+**How to read each gene's figures:**
+
+- **Permutation test:** one panel per timepoint. Grey bars are the first 1,000
+  shuffled scores; the blue line is the observed score (AMI). The p-value uses
+  the full adaptive run, up to a million shuffles.
+- **Read alignments:** isoLASER's `nigiri_plot` sashimi renderer with the
+  project's plotting fixes. Reads are split into REF (blue) and ALT (orange) by
+  isoLASER's allele assignments and pooled over the donors used at each
+  timepoint (heterozygous in the panel, ≥ 10 reads). Yellow marks the tested
+  part. Coverage and arc numbers are raw read counts, on one scale per gene.
+  **Raw inclusion** comes from isoLASER's transcript assignment, so a read can
+  count without reaching the plotted region. Each plot's subtitles give how many
+  reads reach it. The test uses donor-normalized tables, so its dPSI can differ
+  slightly from the raw counts.
+- **Isoforms and haplotypes**, at 0 hours and at the significant timepoint,
+  drawn like Fig. 2d of the isoLASER paper:
+  - **Rows:** annotated transcripts with their GENCODE v44 name and Ensembl ID.
+    **Novel** transcripts are IsoQuant models from our annotation, shown with
+    their SQANTI3 category against GENCODE v44. NIC is a new combination of
+    known splice sites; fusion spans two genes.
+  - **Which rows:** the three transcripts with the most reads in each group are
+    drawn, and a grey row sums the rest. Introns are shortened.
+  - **Marks:** green is the tested part. Orange marks the tested SNP, plus the
+    nearest in-phase SNP when that one is closer to the part.
+  - **Numbers:** reads per transcript from each haplotype, labelled by the
+    tested SNP's alleles, as raw counts summed over the donors used.
+  - **PSI row:** each haplotype's inclusion from those raw counts: reads in
+    transcripts that include the part, divided by all its reads, drawn and
+    undrawn transcripts together.
+  - **Test line:** ΔPSI and q are the test's values. The test pools
+    donor-normalized tables, so its ΔPSI can differ slightly from the
+    difference between the two raw PSIs.
+
+## KPNA2
+
+The tested part is a whole 100-base intron between exons 6 and 7. KPNA2-221
+keeps it, and the other annotated transcripts splice it out. isoLASER counts
+ALT (C) reads as keeping the intron more often than REF (T) reads: at 6 hours,
+12.7% vs 2.5% (+12 pp, q = `r qv("KPNA2", "6hr")`). At 0 and 1 hours the difference is +8 and
++2 pp, below threshold. The tested SNP (rs12752) is in the first exon, 7.2 kb
+upstream. In the three donors, all 20 heterozygous panel SNPs within the gene
+are phased the same way, so T and C reads come from two whole-gene haplotypes. The
+nearest SNP to the intron, rs4638, is 135 bases downstream, with G on the T
+haplotype.
+
+#### Permutation test
+
+![](assets/fdr_panel10nc/KPNA2_null.png)
+
+#### Read alignments
+
+![](assets/fdr_panel10nc/KPNA2_sashimi.png)
+
+```{r kpna2_sashimi}
+sashimi_table("KPNA2")
+```
+
+[Open as PDF](assets/fdr_panel10nc/KPNA2_sashimi.pdf).
+
+#### Isoforms and haplotypes
+
+![](assets/fdr_panel10nc/isoforms_KPNA2_0hr.png)
+
+![](assets/fdr_panel10nc/isoforms_KPNA2_6hr.png)
+
+## PARK7
+
+The first exon ends at one of two donor sites 58 bases apart, an alternative 5′
+splice site, and both sites splice to the same next exon. The tested 12-base
+part is the extra stretch of the longer first exon; the adjacent 46-base part
+gives the same result. ALT (C) reads use the shorter exon more often than REF
+(T) reads. The difference has the same direction at all three timepoints and in
+both donors, and is largest at 1 hour (−17 pp, q = `r qv("PARK7", "1hr")`), the only
+significant timepoint; at 0 and 6 hours it is −7 and −8 pp. This describes each
+timepoint separately and is not a test of a change over time. The variant
+(rs226249) lies in the first exon, 18 bases before the shorter exon's donor
+site.
+
+#### Permutation test
+
+![](assets/fdr_panel10nc/PARK7_null.png)
+
+#### Read alignments
+
+![](assets/fdr_panel10nc/PARK7_sashimi.png)
+
+```{r park7_sashimi}
+sashimi_table("PARK7")
+```
+
+[Open as PDF](assets/fdr_panel10nc/PARK7_sashimi.pdf).
+
+#### Isoforms and haplotypes
+
+![](assets/fdr_panel10nc/isoforms_PARK7_0hr.png)
+
+![](assets/fdr_panel10nc/isoforms_PARK7_1hr.png)
+
+## ZNF749
+
+The tested part is a 355-base alternative last exon. Transcripts that use it
+end there, and the others continue to exons further downstream. REF (G) reads
+end in it far more often than ALT (C) reads. The difference is significant only
+at 6 hours (−74 pp, q = `r qv("ZNF749", "6hr")`); at 0 and 1 hours it is −26 and −17 pp and below
+threshold. In our stimulation splicing scan, the balance between the two donor
+sites that splice into this exon shifts between 0 and 6 hours.
+
+The jump at 6 hours partly reflects which donors are used:
+
+- **CD_21** has a large effect at every timepoint: REF 92% vs ALT 15% inclusion
+  at 0 hours, 86% vs 6% at 6 hours.
+- **CD_48** shows no difference at 0 hours, from only 8 ALT reads, and a large
+  one at 6 hours (85% vs 19%).
+- **CD_36** has an inconsistent effect (−19 pp at 0 hours, +8 pp at 1 hour)
+  and no reads at 6 hours.
+
+#### Permutation test
+
+![](assets/fdr_panel10nc/ZNF749_null.png)
+
+#### Read alignments
+
+![](assets/fdr_panel10nc/ZNF749_sashimi.png)
+
+```{r znf749_sashimi}
+sashimi_table("ZNF749")
+```
+
+[Open as PDF](assets/fdr_panel10nc/ZNF749_sashimi.pdf).
+
+#### Isoforms and haplotypes
+
+![](assets/fdr_panel10nc/isoforms_ZNF749_0hr.png)
+
+![](assets/fdr_panel10nc/isoforms_ZNF749_6hr.png)
+
+## ASAH1
+
+The tested part is a 115-base alternative first exon: ASAH1-264 starts with it,
+and the other transcripts start at another first exon. isoLASER counts ALT (A)
+reads as using it more often than REF (G) reads at 1 hour (+21 pp,
+q = `r qv("ASAH1", "1hr")`). At 0 and 6 hours the difference is +7 and +8 pp, below threshold.
+The 1-hour test uses two donors (CD_21 and CD_31); 0 and 6 hours use CD_21
+only. The tested SNP (rs7508) is in the last exon, about 19 kb away in the
+genome, and about half of the reads reach the plotted region.
+
+#### Permutation test
+
+![](assets/fdr_panel10nc/ASAH1_null.png)
+
+#### Read alignments
+
+![](assets/fdr_panel10nc/ASAH1_sashimi.png)
+
+```{r asah1_sashimi}
+sashimi_table("ASAH1")
+```
+
+[Open as PDF](assets/fdr_panel10nc/ASAH1_sashimi.pdf).
+
+#### Isoforms and haplotypes
+
+![](assets/fdr_panel10nc/isoforms_ASAH1_0hr.png)
+
+![](assets/fdr_panel10nc/isoforms_ASAH1_1hr.png)
+
+## LMBRD1
+
+The first exon ends at one of two donor sites, an alternative 5′ splice site,
+and the 77-base part is the extra stretch of the longer first exon in
+LMBRD1-225. isoLASER counts nearly all ALT (A) reads as including it and no REF
+(G) reads: +93 pp at 6 hours (q = `r qv("LMBRD1", "6hr")`).
+
+- **0 hours:** a similar difference, +74 pp, but from 35 reads in two donors
+  and below threshold (nominal p = `r pv("LMBRD1", "0hr")`).
+- **1 hour:** +85 pp, from only one qualifying donor.
+- **The gene at 1 hour:** it is reported through a different part.
+
+The tested SNP (rs9185) is in the last exon, about 120 kb away in the genome.
+rs3752787, 113 bases from the part, is in phase with it (C on the A
+haplotype). Few reads reach the plotted region (8 of 76 at 6 hours).
+
+#### Permutation test
+
+![](assets/fdr_panel10nc/LMBRD1_null.png)
+
+#### Read alignments
+
+![](assets/fdr_panel10nc/LMBRD1_sashimi.png)
+
+```{r lmbrd1_sashimi}
+sashimi_table("LMBRD1")
+```
+
+[Open as PDF](assets/fdr_panel10nc/LMBRD1_sashimi.pdf).
+
+#### Isoforms and haplotypes
+
+![](assets/fdr_panel10nc/isoforms_LMBRD1_0hr.png)
+
+![](assets/fdr_panel10nc/isoforms_LMBRD1_6hr.png)
+
+## Data
+
+**Isoform figures** (PDF, and reads per transcript as a table):
+
+```{r iso_links, results="asis"}
+iso <- c(KPNA2="6hr", PARK7="1hr", ZNF749="6hr", ASAH1="1hr", LMBRD1="6hr")
+cat(paste0("- **", names(iso), "**: ", vapply(names(iso), function(gn) paste(vapply(c("0hr", iso[[gn]]), function(t)
+  sprintf("%s ([PDF](assets/fdr_panel10nc/isoforms_%s_%s.pdf), [reads per transcript](assets/fdr_panel10nc/isoforms_%s_%s_transcripts.tsv))",
+          sub("hr", " hr", t), gn, t, gn, t), ""), collapse="; "), ""), collapse="\n"), "\n")
+```
+
+- **Sashimi plots:** [inclusion counts](assets/fdr_panel10nc/sashimi_summary.tsv),
+  [per-donor counts](assets/fdr_panel10nc/sashimi_donor_counts.tsv),
+  [normalized test counts](assets/fdr_panel10nc/sashimi_normalized_counts.tsv),
+  [junction counts](assets/fdr_panel10nc/sashimi_junction_counts.tsv).
+- **Scripts:** `11.fdr_results/9.family_rules_examples.sh` with `ADAPTIVE_RULE=panel10nc`
+  (`24.plot_association.R`, `25.sashimi_candidates.py`, `36.refresh_sashimi_labels.R`,
+  `4.transcript_counts.py`), then `7.grant_figure_transcripts.R` (isoform figures).
+
 
 # All reported genes
 

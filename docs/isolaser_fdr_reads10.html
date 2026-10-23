@@ -446,10 +446,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -542,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1640dfb8adcd18390979a10e1804eff3e0f719d1targetblank1640dfba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree7b8c554d1f343ee9ffc56401e938dc62d0473548targetblank7b8c554a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/1640dfb8adcd18390979a10e1804eff3e0f719d1" target="_blank">1640dfb</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/7b8c554d1f343ee9ffc56401e938dc62d0473548" target="_blank">7b8c554</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1640dfb8adcd18390979a10e1804eff3e0f719d1targetblank1640dfba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree7b8c554d1f343ee9ffc56401e938dc62d0473548targetblank7b8c554a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/1640dfb8adcd18390979a10e1804eff3e0f719d1" target="_blank">1640dfb</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/7b8c554d1f343ee9ffc56401e938dc62d0473548" target="_blank">7b8c554</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -574,12 +574,9 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/isolaser_fdr_reads10.Rmd
-    Untracked:  analysis/isolaser_gtex_comparison_reads10.Rmd
-
 Unstaged changes:
-    Deleted:    analysis/isolaser_fdr_panel10.knit.md
+    Modified:   analysis/isolaser_fdr_panel10.Rmd
+    Modified:   analysis/isolaser_fdr_reads10.Rmd
 
 </code></pre>
 <p>
@@ -594,10 +591,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/isolaser_fdr_reads10.Rmd</code>)
+and HTML (<code>docs/isolaser_fdr_reads10.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/57da66d37a16efb37b8939325b10ecb8733aca78/analysis/isolaser_fdr_reads10.Rmd" target="_blank">57da66d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-22
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/57da66d37a16efb37b8939325b10ecb8733aca78/docs/isolaser_fdr_reads10.html" target="_blank">57da66d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-22
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -625,9 +686,10 @@ calls, phasing and allele assignments are unchanged: every read keeps
 the allele it had in the original run.</li>
 <li><strong>Unchanged from the panel10 rerun:</strong>
 panel-heterozygous donors with ≥ 10 reads, every recorded variant ×
-exonic part, ≥ 20 reads in the tested family, the shuffles, isoLASER’s
-scoring functions, the adaptive rounds, BH within each timepoint, and
-the <code>cis</code> / |ΔPSI| ≥ 0.10 screen.</li>
+exonic part, the tested family (≥ 20 reads over the donors used, part ≥
+10 bp, and no other candidate variant within 30 bp), the shuffles,
+isoLASER’s scoring functions, the adaptive rounds, BH within each
+timepoint, and the <code>cis</code> / |ΔPSI| ≥ 0.10 screen.</li>
 <li><strong>Checks:</strong> the modified run’s allele assignments match
 the original run’s exactly, on all 66 chromosome × timepoint
 combinations. The unshuffled score of every tested association was
@@ -1493,7 +1555,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

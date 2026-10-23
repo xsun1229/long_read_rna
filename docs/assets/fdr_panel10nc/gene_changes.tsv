@@ -1,0 +1,30 @@
+gene	base_sig_tps	base_pattern	sig_tps	pattern	status
+ALDH3A2	1hr	not testable elsewhere	1hr	not testable elsewhere	both
+ANKRD36B	0hr, 6hr	two timepoints	0hr, 1hr, 6hr	all three timepoints	both
+ANKRD36C	0hr	candidate timepoint-specific	0hr	candidate timepoint-specific	both
+ASAH1	1hr	candidate timepoint-specific	1hr	candidate timepoint-specific	both
+ATP5MJ	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+CHORDC1	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+CRYBB2P1	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+CST3	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+CYBA	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+DNTTIP2	1hr, 6hr	two timepoints	1hr, 6hr	two timepoints	both
+HNRNPK	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+HSP90B1	0hr	candidate timepoint-specific	0hr	candidate timepoint-specific	both
+KPNA2	6hr	candidate timepoint-specific	6hr	candidate timepoint-specific	both
+LEPROT	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+LMBRD1	1hr, 6hr	two timepoints	1hr, 6hr	two timepoints	both
+NAA38	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+PARK7	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+PFKP	0hr, 1hr	two timepoints	0hr, 1hr, 6hr	all three timepoints	both
+RPS2	0hr	shared, below threshold elsewhere	0hr	shared, below threshold elsewhere	both
+RPS27L	1hr	shared, below threshold elsewhere	1hr, 6hr	two timepoints	both
+RPS5	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+SNHG5	6hr	not testable elsewhere	6hr	not testable elsewhere	both
+TBCA	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+UBE2Q2P2	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+ZFAND2A	1hr, 6hr	two timepoints	1hr, 6hr	two timepoints	both
+ZNF749	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+ARF4			0hr, 1hr, 6hr	all three timepoints	this run only
+ENSG00000289047			1hr, 6hr	two timepoints	this run only
+TAX1BP1			1hr	not testable elsewhere	this run only

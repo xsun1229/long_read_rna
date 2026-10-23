@@ -1,0 +1,23 @@
+gene	base_sig_tps	base_pattern	sig_tps	pattern	status
+ATP5MJ	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+ATP6V0E2	0hr, 1hr	two timepoints	0hr, 1hr	two timepoints	both
+C20orf96	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+CRYBB2P1	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+ENSG00000290928	6hr	not testable elsewhere	6hr	not testable elsewhere	both
+GNL3	1hr	candidate timepoint-specific	1hr	candidate timepoint-specific	both
+HM13	0hr	shared, below threshold elsewhere	0hr	shared, below threshold elsewhere	both
+HNRNPK	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+LAMTOR4	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+LINC00888	6hr	candidate timepoint-specific	6hr	candidate timepoint-specific	both
+LY6H	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+PARK7	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+POLE4	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+PPA2	1hr	candidate timepoint-specific	1hr	candidate timepoint-specific	both
+PRH1	0hr, 1hr, 6hr	all three timepoints	0hr, 1hr, 6hr	all three timepoints	both
+SNHG5	6hr	not testable elsewhere	6hr	not testable elsewhere	both
+UBE2Q2P2	0hr, 6hr	two timepoints	0hr, 6hr	two timepoints	both
+UQCC6	1hr	shared, below threshold elsewhere	1hr	shared, below threshold elsewhere	both
+ZNF749	6hr	shared, below threshold elsewhere	6hr	shared, below threshold elsewhere	both
+ENSG00000289047			1hr, 6hr	two timepoints	this run only
+FLOT1			1hr	candidate timepoint-specific	this run only
+HLA-C			0hr, 6hr	two timepoints	this run only

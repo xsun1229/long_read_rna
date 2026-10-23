@@ -82,3 +82,10 @@ donors, at 0, 1 and 6 hours after stimulation.
   each read labelled as including or excluding a part from its own alignment
   instead of its assigned transcript; comparison with the genotype-panel rerun,
   genes to follow up, and closer agreement with GTEx
+* Both reruns without the clustering rule (variants with another candidate
+  within 30 bp kept): read-based labels,
+  [genome-wide FDR](isolaser_fdr_reads10nc.html) and
+  [GTEx](isolaser_gtex_comparison_reads10nc.html); genotype-panel donors,
+  [genome-wide FDR](isolaser_fdr_panel10nc.html) and
+  [GTEx](isolaser_gtex_comparison_panel10nc.html) — what the rule had removed,
+  gained and lost associations, and their neighbouring variants

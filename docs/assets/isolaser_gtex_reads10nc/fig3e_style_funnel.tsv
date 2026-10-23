@@ -1,0 +1,10 @@
+set	tp	reported_snv_associations	tested_in_gtex	plotted	genes
+Paper's cutoff	0hr	6154	1369	155	106
+Paper's cutoff	1hr	5804	2053	227	154
+Paper's cutoff	6hr	6242	2433	256	169
+Before FDR	0hr	133	113	21	13
+Before FDR	1hr	224	205	39	30
+Before FDR	6hr	263	227	26	19
+After FDR	0hr	11	10	2	1
+After FDR	1hr	20	19	4	3
+After FDR	6hr	26	18	3	2

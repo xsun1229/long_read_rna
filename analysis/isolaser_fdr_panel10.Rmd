@@ -67,7 +67,9 @@ The original page and its results are unchanged.
   seen in a single donor.
 - **Tested family:** additionally ≥ 20 raw reads summed over the donors used.
   Fewer can never give the ≥ 10 reads per allele that isoLASER needs to score
-  an association.
+  an association. As before, the part must be ≥ 10 bp and no other candidate
+  variant may lie within 30 bp; a cluster of calls is often misaligned reads
+  rather than real SNPs.
 - **Unchanged:** the shuffles, the scoring with isoLASER's functions, the
   adaptive rounds, BH within each timepoint, and the `cis` / |ΔPSI| ≥ 0.10
   screen applied afterwards.

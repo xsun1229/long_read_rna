@@ -1,0 +1,266 @@
+---
+title: "Genome-wide FDR without the clustering rule (read-based labels)"
+author: "XSun"
+date: "2026-10-23"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+A <- "docs/assets/fdr_reads10nc"; BA <- "docs/assets/fdr_reads10"
+ov <- fread(file.path(A, "fdr_overview.tsv")); vb <- fread(file.path(A, "overview_vs_base.tsv"))
+rounds <- fread(file.path(A, "adaptive_rounds.tsv")); cons <- fread(file.path(A, "consistency.tsv"))
+g <- fread(file.path(A, "significant_genes.tsv")); gb <- fread(file.path(BA, "significant_genes.tsv"))
+gc <- fread(file.path(A, "gene_changes.tsv")); cs <- fread(file.path(A, "compare_summary.tsv"))
+ga <- fread(file.path(A, "gained.tsv")); lo <- fread(file.path(A, "lost.tsv")); nts <- fread(file.path(A, "newly_tested_summary.tsv"))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+pct <- function(x, digits=0) sprintf(paste0("%.", digits, "f%%"), 100 * x)
+counts <- function(a, b) sprintf("%s (%s)", fmt(a), fmt(b))
+any_tp <- ov[tp == "any timepoint"]; any_vb <- vb[tp == "any timepoint"]
+effect_reads <- function(d, t) fifelse(is.na(d[[paste0("dpsi_", t)]]), "no score",
+  sprintf("%+.0f (%s)", 100 * d[[paste0("dpsi_", t)]], fmt(d[[paste0("het_cov_", t)]])))
+best_q <- function(d) signif(pmin(d$q_bh_0hr, d$q_bh_1hr, d$q_bh_6hr, na.rm=TRUE), 2)
+example_table <- function(genes, why) {
+  d <- g[match(genes, gene)]
+  data.table(Gene=d$gene, `0 hr`=effect_reads(d, "0hr"), `1 hr`=effect_reads(d, "1hr"), `6 hr`=effect_reads(d, "6hr"),
+             `Best q`=best_q(d), `Het donors`=d$max_het, Relevance=why)
+}
+pattern_labels <- c("all three timepoints"="Significant at 3 timepoints",
+                    "two timepoints"="Significant at 2 timepoints",
+                    "shared, below threshold elsewhere"="One timepoint; nominal support elsewhere",
+                    "candidate timepoint-specific"="One timepoint; no nominal support elsewhere",
+                    "not testable elsewhere"="One timepoint; no usable score elsewhere")
+g[, display_pattern := unname(pattern_labels[pattern])]
+annot <- function(d) d[, .(`Neuronal GO term`=neuronal_go,
+  `Developmental disorder or autism`=fifelse(nzchar(sfari) & nzchar(ddg2p), paste0(sfari, "; ", ddg2p), paste0(sfari, ddg2p)),
+  `Expression after stimulation`=expression_response, `Splicing after stimulation`=fifelse(stim_splicing, "yes", ""))]
+interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE, filter="top", extensions="Buttons",
+  options=list(pageLength=10, lengthMenu=c(10, 25, 50), scrollX=TRUE, order=list(), dom="Blfrtip", buttons=c("copy", "csv")),
+  caption="Search or filter genes, sort columns, and export the filtered table as CSV.")
+new_genes <- gc[status == "this run only", gene]; both_genes <- gc[status == "both", gene]
+n_gained <- nrow(ga); n_gained_genes <- uniqueN(ga$gene)
+nb_type <- function(d) fifelse(d$n_neighbours == 0, "none", fifelse(d$n_neighbours_unsupported == 0, "panel variants only",
+  fifelse(d$n_neighbours_in_panel == 0, "unsupported calls only", "both kinds")))
+
+```
+
+This page repeats the [read-based rerun](isolaser_fdr_reads10.html) without one rule of
+the tested family, the **clustering rule**. That rule leaves out any variant with
+another candidate variant within 30 bases. Everything else is unchanged, and the
+reads10 page and its results are unchanged.
+
+**What changed (our definitions):**
+
+- **Dropped: the clustering rule.** It was added for the original run, where
+  donors were chosen by their RNA allele fraction: a cluster of variant calls is
+  often misaligned reads rather than real SNPs. Here every tested SNP must already
+  be heterozygous in our genotype panel, so we asked whether the rule still
+  removes anything real.
+- **Unchanged:** the inclusion labels from each read's own alignment,
+  panel-heterozygous donors with ≥ 10 reads, every recorded variant × exonic part,
+  ≥ 20 reads over the donors used and a part of ≥ 10 bp in the tested family, the
+  shuffles, isoLASER's scoring functions, the adaptive rounds, BH within each
+  timepoint, and the `cis` / |ΔPSI| ≥ 0.10 screen.
+- **Checks:** before comparing, we confirmed for every chromosome × timepoint
+  that both runs are finished and current. They use the same isoLASER
+  recordings, the same association list and genotype inputs, and identical
+  unshuffled scores in round 1, so the runs differ only in the family rule. As in
+  every run, each unshuffled score was rebuilt independently, and all 66
+  chromosome × timepoint checks matched.
+- **Not yet done:** calibration runs.
+
+**Main result:** `r fmt(any_tp$q05_associations)` associations in
+**`r fmt(any_tp$q05_genes)` genes** have q < 0.05 and pass the screen,
+against `r fmt(any_vb$base_q05_associations)` in `r fmt(any_vb$base_q05_genes)`
+genes in the reads10 rerun. No association reported there is lost here.
+`r n_gained` association × timepoint results are gained, in `r n_gained_genes` genes;
+`r length(new_genes)` of these genes are not reported in the reads10 rerun at all
+(`r paste(new_genes, collapse=", ")`). All gained genes lie in the MHC, so the read-based results hardly depend on
+the clustering rule.
+
+# Genome-wide results
+
+```{r overview}
+knitr::kable(ov[, .(Timepoint=tp, `Tested associations`=fmt(tested),
+  `Paper's cutoff`=counts(paper_associations, paper_genes),
+  Screen=counts(screen_associations, screen_genes),
+  `Screen + q < 0.10`=counts(q10_associations, q10_genes),
+  `Screen + q < 0.05`=counts(q05_associations, q05_genes))], align="lrrrrr")
+```
+
+Cells other than **Tested associations** show **associations (genes)**.
+**Paper's cutoff:** isoLASER's own `cis` call with no other filter, as in the
+isoLASER paper; it does not depend on our family rules, so it is the same as on
+the reads10 page. **Screen** (our definition), before FDR control: among the
+tested associations, isoLASER's `cis` rule computed on the panel-heterozygous
+donors only, plus |ΔPSI| ≥ 0.10. **Any timepoint** counts each gene or
+association once across timepoints. BH targets FDR within each timepoint's full
+family; the effect-filtered subset and the union across timepoints have no
+separate 5% FDR guarantee.
+
+# Compared with the reads10 rerun
+
+```{r vs_base}
+knitr::kable(merge(vb, cs[, .(tp, kept, gained, lost)], by="tp", all.x=TRUE)[match(c("0hr", "1hr", "6hr", "any timepoint"), tp),
+  .(Timepoint=tp, `Tested: reads10`=fmt(base_tested), `Tested: this run`=fmt(tested),
+    `Screen + q < 0.05: reads10`=counts(base_q05_associations, base_q05_genes),
+    `Screen + q < 0.05: this run`=counts(q05_associations, q05_genes),
+    Kept=fifelse(is.na(kept), "", fmt(kept)), Gained=fifelse(is.na(gained), "", fmt(gained)), Lost=fifelse(is.na(lost), "", fmt(lost)))],
+  align="lrrrrrrr")
+```
+
+**Kept / Gained / Lost** count reported associations at each timepoint: reported
+in both runs, only here, or only in the reads10 rerun. Dropping the rule adds
+`r pct(any_vb$tested / any_vb$base_tested - 1)` more tested associations; every
+association tested in the reads10 rerun is tested here too.
+
+## Newly tested associations
+
+These are the associations the clustering rule had removed. Each one's variant
+has at least one other candidate variant within 30 bases, a **neighbour**:
+
+```{r newly}
+knitr::kable(nts[, .(Timepoint=tp, `Newly tested`=fmt(newly_tested), `Neighbours: panel variants only`=fmt(only_panel_neighbours),
+  `Neighbours: unsupported calls only`=fmt(only_unsupported_neighbours), `Neighbours: both kinds`=fmt(both_kinds))], align="lrrrr")
+```
+
+A neighbour is a **panel variant** if our genotype panel has a single matching,
+well-genotyped record (typed, or imputed with R² ≥ 0.8), whatever the donors'
+genotypes. It is an **unsupported call** if the panel has no such record, or if it
+is not a single-base variant. Most newly tested variants sit next to real panel
+variants, that is, two real SNPs close together.
+
+## Gained associations
+
+```{r gained}
+gd <- ga[order(tp, q_bh)]
+knitr::kable(gd[, .(Timepoint=sub("hr", " hr", tp), Gene=gene, Variant=variant_qual, `Exonic part`=exonic_part, `Het donors`=n_het,
+  `ΔPSI`=sprintf("%+.2f", dpsi), q=signif(q_bh, 2), `q in reads10`=fifelse(is.na(q_bh_base), "not tested", as.character(signif(q_bh_base, 2))),
+  Neighbours=nb_type(gd), MHC=fifelse(in_mhc, "yes", ""))])
+```
+
+**q in reads10**: "not tested" for associations the clustering rule
+removed; a value means the association was tested there and missed q < 0.05.
+**Neighbours** describes the candidate variants within 30 bases, as above.
+**MHC**: inside the major histocompatibility complex (chr6:28.5–33.5 Mb), the
+most polymorphic region of the genome, where reads are often misaligned.
+[Download the gained associations with each neighbour listed](assets/fdr_reads10nc/gained.tsv).
+
+All `r n_gained` gained results come from three genes in the MHC, and the
+clustering rule had removed every one of them:
+
+- **HLA-C** (0 and 6 hours) and **FLOT1** (1 hour): the only neighbour is an
+  unsupported call, the pattern the rule was designed to catch.
+- **ENSG00000289047** (1 and 6 hours): the neighbour is a panel variant that is
+  heterozygous in a donor, so this one looks more plausible, although it is in
+  the MHC too.
+
+So with read-based labels the clustering rule removes
+`r fmt(sum(nts$newly_tested))` testable associations (summed over timepoints), but
+almost no signal outside the MHC (our reading).
+
+**Genes.** Reported in both runs: `r length(both_genes)`. Only in the
+reads10 rerun: `r gc[status == "base only", .N]`. Only here:
+`r paste(new_genes, collapse=", ")`.
+[Download the gene comparison](assets/fdr_reads10nc/gene_changes.tsv).
+
+# How the test works
+
+The test is the one described on the [original page](isolaser_fdr.html#how-the-test-works),
+with the donor rule and remaining family rules of the [reads10 rerun](isolaser_fdr_reads10.html).
+
+```{r rounds}
+knitr::kable(rounds[, .(Timepoint=tp, `Stopped at 1,000`=fmt(stopped_1e3),
+  `Stopped at 10,000`=fmt(stopped_1e4), `Stopped at 100,000`=fmt(stopped_1e5),
+  `Reached 1,000,000`=fmt(reached_1e6))], align="lrrrr")
+```
+
+**Stopped** means at least 20 hits at that checkpoint, or no observed score
+(p = 1). Every association with zero hits after a million shuffles has q < 0.05,
+so more shuffles would not change the results.
+
+![](assets/fdr_reads10nc/qq.png)
+
+Real data only; there are no calibration runs for this rerun.
+
+# Genes to follow up
+
+```{r follow}
+fu <- g[!grepl("0hr", sig_tps) & (neuronal | brain_disorder | stim_expression | stim_splicing)]
+same <- merge(g[, .(gene, variant_qual, exonic_part)], gb[, .(gene, bv=variant_qual, bp=exonic_part)], by="gene")
+```
+
+We apply the [same two conditions](isolaser_fdr_reads10.html#genes-to-follow-up)
+as the reads10 page: reported only after stimulation (at 1 or 6 hours, not at 0
+hours), and neuron- or stimulation-related. `r nrow(fu)` genes meet both.
+Four are shown, the same four as on the reads10 page. Not shown:
+**C20orf96** and **ENSG00000290928**, as on that page, and the new **FLOT1**
+(synapse and synaptic-signaling GO terms), which has no score at 0 hours and lies
+in the MHC next to an unsupported call.
+
+```{r highlight}
+knitr::kable(example_table(c("PARK7", "PPA2", "LY6H", "ZNF749"), c("Neuron projection, neuron death (GO); the Parkinson's disease gene DJ-1",
+  "Splicing after stimulation (our scan); a GTEx Cerebellum sQTL for this exon", "Synaptic signaling (GO)",
+  "Splicing after stimulation (our scan), at this exon's donor sites")), align="lrrrrrl")
+```
+
+**0 / 1 / 6 hr**: allelic effect in percentage points, alternative minus
+reference inclusion, with pooled informative coverage in brackets. **Best q**:
+the lowest timepoint-specific q-value. **Het donors**: the largest number of
+panel-heterozygous donors used, out of four.
+
+For each of these genes the representative association, its donors and its reads
+are the same as in the reads10 rerun
+(`r sum(same$gene %in% c("PARK7", "PPA2", "LY6H", "ZNF749") & same$variant_qual == same$bv & same$exonic_part == same$bp)` of
+`r length(c("PARK7", "PPA2", "LY6H", "ZNF749"))` checked). Only the q-values change slightly with the
+larger family. Their permutation tests, read alignments and isoform figures are on the
+[reads10 page](isolaser_fdr_reads10.html#genes-to-follow-up).
+
+# All reported genes
+
+Here, **reported** means q < 0.05 plus the `cis` / effect-size screen.
+
+```{r patterns}
+pat <- g[, .N, by=pattern][match(names(pattern_labels), pattern)][!is.na(pattern)]
+knitr::kable(pat[, .(Pattern=unname(pattern_labels[pattern]), Genes=N)], align="lr")
+```
+
+For genes reported at one timepoint, the last three categories describe the
+representative association at the other timepoints: nominal p < 0.05, p ≥ 0.05
+where scored, or no usable score. They are not tests of an allele × time
+interaction. Among comparisons of significant associations with another
+timepoint, `r pct(cons$nominal_p_lt_0.05)` had nominal p < 0.05 there and
+`r pct(cons$same_sign)` had the same effect direction.
+
+## Full interactive gene table
+
+All **`r nrow(g)` reported genes**. The variant, part, timepoint effects, best q
+and donor count refer to the representative association; **Significant at**
+describes the gene across all its associations. **In reads10** marks genes also
+reported in the reads10 rerun.
+
+```{r all}
+interactive_table(cbind(g[, .(Gene=gene, Pattern=display_pattern, `Significant at`=sig_tps,
+  `0 hr`=effect_reads(g, "0hr"), `1 hr`=effect_reads(g, "1hr"), `6 hr`=effect_reads(g, "6hr"),
+  `Best q`=best_q(g), `Het donors`=max_het,
+  `In reads10`=fifelse(gene %in% both_genes, "yes", "no"))], annot(g),
+  g[, .(Variant=variant_qual, `Exonic part`=exonic_part)]))
+```
+
+**0 / 1 / 6 hr**: allelic effect in percentage points, alternative minus
+reference inclusion, with pooled informative coverage in brackets. The
+annotations use the same rules as on the
+[original page](isolaser_fdr.html#full-interactive-gene-table).
+
+**Data:** `10.isolaser_permutation/` with `ADAPTIVE_RULE=reads10nc`: run by
+`logs/family_rule_driver.sh reads10nc` (scripts 38 and 18–22, with the independent
+score check 48 / 50), and compared with the reads10 rerun by
+`53.compare_family_rules.R`. This page's tables come from
+`11.fdr_results/3.page_tables.R` with `ADAPTIVE_RULE=reads10nc`, which writes only
+to `docs/assets/fdr_reads10nc/`.

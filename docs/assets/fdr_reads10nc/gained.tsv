@@ -1,0 +1,6 @@
+tp	gene	Gene_name	variant_qual	exonic_part	n_het	het_cov	dpsi	q_bh	q_bh_base	base_status	neighbours_within_30bp	n_neighbours	n_neighbours_in_panel	n_neighbours_het_in_donor	n_neighbours_unsupported	in_mhc
+0hr	HLA-C	ENSG00000204525_HLA-C	chr6:31269076:T>C	chr6:31269965-31270085:-	1	105	0.25	0.0376848512040377		clustered	chr6:31269075:G>A (not in panel or poorly imputed)	1	0	0	1	TRUE
+1hr	ENSG00000289047	ENSG00000289047_ENSG00000289047	chr6:32894904:C>T	chr6:32894927-32895026:+	2	141	0.64	0.00213023316388448		clustered	chr6:32894933:A>G (heterozygous in a donor)	1	1	1	0	TRUE
+1hr	FLOT1	ENSG00000137312_FLOT1	chr6:30741579:G>A	chr6:30741867-30742146:-	2	90	-0.397	0.0226337273662726		clustered	chr6:30741586:GT>ATAG (not an SNV)	1	0	0	1	TRUE
+6hr	ENSG00000289047	ENSG00000289047_ENSG00000289047	chr6:32894904:C>T	chr6:32894927-32895026:+	2	137	0.717	0.00144955410600145		clustered	chr6:32894933:A>G (heterozygous in a donor)	1	1	1	0	TRUE
+6hr	HLA-C	ENSG00000204525_HLA-C	chr6:31269076:T>C	chr6:31269965-31270085:-	1	316	0.146	0.00670936471920671		clustered	chr6:31269075:G>A (not in panel or poorly imputed)	1	0	0	1	TRUE

@@ -72,7 +72,8 @@ panel10 page and its results are unchanged.
   Variant calls, phasing and allele assignments are unchanged: every read keeps
   the allele it had in the original run.
 - **Unchanged from the panel10 rerun:** panel-heterozygous donors with ≥ 10
-  reads, every recorded variant × exonic part, ≥ 20 reads in the tested family,
+  reads, every recorded variant × exonic part, the tested family (≥ 20 reads over
+  the donors used, part ≥ 10 bp, and no other candidate variant within 30 bp),
   the shuffles, isoLASER's scoring functions, the adaptive rounds, BH within each
   timepoint, and the `cis` / |ΔPSI| ≥ 0.10 screen.
 - **Checks:** the modified run's allele assignments match the original run's

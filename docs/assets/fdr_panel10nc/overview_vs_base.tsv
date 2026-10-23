@@ -1,0 +1,5 @@
+tp	base_tested	base_q05_associations	base_q05_genes	tested	paper_associations	paper_genes	q05_associations	q05_genes
+0hr	40164	25	12	44992	10419	978	37	13
+1hr	60866	41	17	68841	11880	1362	59	21
+6hr	63223	35	16	71861	12086	1350	51	20
+any timepoint	76939	64	26	87444	23251	2101	85	29

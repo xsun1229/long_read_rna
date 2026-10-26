@@ -173,13 +173,16 @@ contributes its nearest variant. **Neuropsychiatric disorder**, **Brain or
 behaviour** and **Either**: genes whose variant has a genome-wide Catalog entry
 in that class.
 
-# Genes with a brain-related hit
+# Read-based isoLASER
+
+`r nrow(rb[brain_hit == TRUE])` of the `r nrow(rb)` read-based genes carry a
+variant with a brain-related Catalog entry:
 
 ```{r read_based}
 knitr::kable(cand_table(rb), escape=FALSE)
 ```
 
-All four genes are read-based. **Variant (rsID)**: the variant nearest to the
+**Variant (rsID)**: the variant nearest to the
 gene's reported parts. **Timepoints**: where the association is reported.
 **Best q** and **ΔPSI (reads)**: from the gene's strongest
 association. ΔPSI is ALT minus REF inclusion in percentage points; reads are
@@ -188,11 +191,10 @@ behaviour**: the variant's Catalog entry in that class with the smallest p. All
 entries are [listed below](#all-brain-related-hits), with risk alleles and
 effects.
 
-The other `r nrow(rb[brain_hit == FALSE])` read-based genes have no
-brain-related entry: `r paste(rb[brain_hit == FALSE, gene], collapse=", ")`.
+The other `r nrow(rb[brain_hit == FALSE])` genes have no brain-related entry: `r paste(rb[brain_hit == FALSE, gene], collapse=", ")`.
 
-Each gene below shows the same items. The tested parts are those reported, with the 1-based GRCh38 coordinates of each part. The
-annotation counts use the IsoQuant annotation that isoLASER tests against. The
+Each of the four genes below shows the same items. The tested parts are those
+reported, with the 1-based GRCh38 coordinates of each part. The annotation counts use the IsoQuant annotation that isoLASER tests against. The
 gene annotation is the same as on the
 [main read-based page](isolaser_fdr_reads10nc.html#genes-to-follow-up). A short
 note on the event and the gene follows.
@@ -262,9 +264,10 @@ reported only after the clustering filter was dropped. We don't highlight it.
 
 # Transcript-based isoLASER
 
-None of the `r sv("variants", "transcript_based")` transcript-based variants has
-a brain-related Catalog entry. `r sv("variants_matched", "transcript_based")` of
-them have entries for other traits. HNRNPK's transcript-based variant is
+None of the `r nrow(tb)` transcript-based genes carries a variant with a
+brain-related Catalog entry. Of the `r sv("variants", "transcript_based")` variants
+looked up, `r sv("variants_matched", "transcript_based")` have entries for other
+traits only. HNRNPK's transcript-based variant is
 rs296887, the one without a sleep entry.
 
 # Trait classes

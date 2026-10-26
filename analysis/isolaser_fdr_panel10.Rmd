@@ -1,5 +1,5 @@
 ---
-title: "Genome-wide FDR with genotype-panel donors (rerun)"
+title: "Transcript-based isoLASER with the clustering filter: genome-wide FDR"
 author: "XSun"
 date: "2026-10-21"
 output:
@@ -48,6 +48,11 @@ interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE,
 all3 <- g[pattern == "all three timepoints"]
 new_genes <- gc[status == "rerun only", gene]
 ```
+
+> **Earlier setup.** This page keeps the clustering filter, which the current
+> analyses drop. Current pages: [read-based isoLASER](isolaser_fdr_reads10nc.html)
+> (main analysis) and [transcript-based isoLASER](isolaser_fdr_panel10nc.html).
+
 
 This page repeats the [genome-wide FDR analysis](isolaser_fdr.html) with a
 different way of choosing donors and associations. Many variant calls behind
@@ -115,7 +120,7 @@ knitr::kable(vo[, .(Timepoint=tp,
   `Screen + q < 0.05: rerun`=counts(q05_associations, q05_genes))], align="lrrrr")
 ```
 
-The rerun tests a similar number of associations, but far fewer reach
+This run tests a similar number of associations, but far fewer reach
 q < 0.05. Most original hits used variants that are not in the panel, which
 the new donor rule cannot use.
 

@@ -9,16 +9,14 @@ editor_options:
 ---
 
 Oxford Nanopore single-nucleus RNA-seq of hiPSC-derived neurons from four
-donors, at 0, 1 and 6 hours after stimulation. 
+donors, at 0, 1 and 6 hours after stimulation. The project has two aims:
 
+1. **Splicing changes during the stimulation response**, across 0, 1 and 6 hours.
+2. **Genetic variants associated with splicing**: allele-specific splicing, tested
+   with isoLASER within each donor.
 
-<!-- The project has two aims: -->
-
-<!-- 1. **Splicing changes during the stimulation response.** -->
-<!-- 2. **Genetic variants associated with splicing.** -->
-
-<!-- The first two sections describe the data and what the reads contain; they -->
-<!-- apply to both aims. -->
+The first two sections describe the data and what the reads contain; they apply
+to both aims.
 
 # Data
 
@@ -46,46 +44,61 @@ donors, at 0, 1 and 6 hours after stimulation.
 
 # Genetic variants associated with splicing (isoLASER)
 
-* [isoLASER setup and running notes](isolaser.html) —
-  what the method does, installation, and how it is run; written before the
-  first run
+We ask whether reads carrying a SNP's two alleles splice an exonic part
+differently, within donors heterozygous for it. Significance comes from a
+genome-wide permutation test with an FDR per timepoint, and GTEx Cerebellum sQTLs
+serve as an independent check.
+
+**Current analysis: read-based isoLASER**, without the clustering filter.
+
+* [Genome-wide FDR](isolaser_fdr_reads10nc.html) — results, genes to follow up
+  with their figures (PARK7, PPA2, LY6H, ZNF749), and what dropping the
+  clustering filter changed
+* [Comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison_reads10nc.html)
+* [Hits in the GWAS Catalog](isolaser_gwas_catalog.html) — which reported
+  variants are known GWAS signals for neuropsychiatric, brain or behaviour
+  traits (GNL3, LY6H)
+
+**For comparison: transcript-based isoLASER** (isoLASER's own labels), without the
+clustering filter: [genome-wide FDR](isolaser_fdr_panel10nc.html) and
+[comparison with GTEx](isolaser_gtex_comparison_panel10nc.html).
+
+The read-based effects keep their direction with transcript-based labels and agree
+with GTEx; most transcript-based-only hits disappear once reads are labelled from
+their alignments.
+
+## How the analysis developed
+
+| Step | Setup | Donors used | Inclusion labels | Clustering filter | What we learned | Pages |
+|---|---|---|---|---|---|---|
+| 1 | Original run | RNA allele fraction 0.25–0.75, ≥ 30 reads | transcript-based | yes | Most significant associations used variants absent from the donors' genotype panel | [FDR](isolaser_fdr.html), [GTEx](isolaser_gtex_comparison.html), [artifacts](isolaser_variant_artifacts.html) |
+| 2 | Transcript-based isoLASER, with filter | heterozygous in the genotype panel, ≥ 10 reads | transcript-based | yes | Panel donors remove those hits; a read check showed that isoLASER labels reads from their assigned transcript | [FDR](isolaser_fdr_panel10.html), [GTEx](isolaser_gtex_comparison_panel10.html) |
+| 3 | Read-based isoLASER, with filter | as in step 2 | read-based | yes | Read-based hits keep their direction with transcript-based labels and agree with GTEx | [FDR](isolaser_fdr_reads10.html), [GTEx](isolaser_gtex_comparison_reads10.html) |
+| 4 | Both, without filter (current) | as in step 2 | both | no | The filter removed little real signal: read-based isoLASER gains 3 MHC genes and loses none | [read-based FDR](isolaser_fdr_reads10nc.html), [GTEx](isolaser_gtex_comparison_reads10nc.html); [transcript-based FDR](isolaser_fdr_panel10nc.html), [GTEx](isolaser_gtex_comparison_panel10nc.html) |
+
+**Donors used**: which donors count for an association at a SNP. **Inclusion
+labels**: how a read is called as including or excluding the tested exonic part.
+Transcript-based labels come from the transcript isoLASER assigned the read to,
+isoLASER's default; read-based labels come from the read's own alignment, our
+modification. **Clustering filter**: variants with another candidate variant
+within 30 bp are left out.
+
+## Background and checks
+
+* [isoLASER setup and running notes](isolaser.html) — what the method does,
+  installation, and how it is run; written before the first run
 <!-- * [Per-donor and joint pilot on chr21](isolaser_per_donor.html) — -->
 <!--   why the data are split by donor, and how many events are testable at -->
 <!--   per-donor depth -->
 * [Checking isoLASER variant calls against donor genotypes](isolaser_variants.html) —
-  calls across all 22 autosomes compared with the imputed genotype panel, including
-  heterozygous sites called homozygous at low depth
-* [Genome-wide allele-specific splicing](isolaser_genome_wide.html) —
-  joint analysis across chr1–22 at all three timepoints: filters, candidate
-  genes, timepoint patterns and neuronal candidates; within-donor effects not
-  yet confirmed
+  calls across all 22 autosomes compared with the imputed genotype panel,
+  including heterozygous sites called homozygous at low depth
+* [Genome-wide allele-specific splicing](isolaser_genome_wide.html) — the first
+  screen across chr1–22, before the permutation test: filters, candidate genes and
+  timepoint patterns
 * [Permutation test for allele-specific splicing](isolaser_permutation_pilot.html) —
-  pilot on chr9 at 6 hours: how the shuffle works, the estimated FDR of the
-  genome-wide screen and of stricter cutoffs, and the HNRNPK result
-* [Genome-wide FDR for allele-specific splicing](isolaser_fdr.html) —
-  the permutation test on all chromosomes and timepoints: how it works, signals
-  before and after FDR control, and neuron- and stimulation-relevant examples
-* [Comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison.html) —
-  how comparable variant–part/junction pairs were selected, pair counts,
-  worked examples and effect-size comparisons across timepoints
-* [Evidence of technical artifacts in isoLASER variant calls](isolaser_variant_artifacts.html) -
-  Support from our panel, sequence-context and read-pattern checks, candidate examples,
-  and proposed validation and reanalysis steps
-* Rerun with genotype-panel donors:
-  [genome-wide FDR](isolaser_fdr_panel10.html) and
-  [comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison_panel10.html) —
-  donors used only where our genotype panel calls them heterozygous; results,
-  comparison with the original run, and genes to follow up
-* Rerun with read-based inclusion labels:
-  [genome-wide FDR](isolaser_fdr_reads10.html) and
-  [comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison_reads10.html) —
-  each read labelled as including or excluding a part from its own alignment
-  instead of its assigned transcript; comparison with the genotype-panel rerun,
-  genes to follow up, and closer agreement with GTEx
-* Both reruns without the clustering rule (variants with another candidate
-  within 30 bp kept): read-based labels,
-  [genome-wide FDR](isolaser_fdr_reads10nc.html) and
-  [GTEx](isolaser_gtex_comparison_reads10nc.html); genotype-panel donors,
-  [genome-wide FDR](isolaser_fdr_panel10nc.html) and
-  [GTEx](isolaser_gtex_comparison_panel10nc.html) — what the rule had removed,
-  gained and lost associations, and their neighbouring variants
+  pilot on chr9 at 6 hours: how the shuffle works and the estimated FDR of the
+  first screen
+* [Evidence of technical artifacts in isoLASER variant calls](isolaser_variant_artifacts.html) —
+  support from our panel, sequence-context and read-pattern checks, and the
+  reanalysis that led to step 2

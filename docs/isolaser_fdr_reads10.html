@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-10-22" />
 
-<title>Genome-wide FDR with read-based inclusion labels (rerun)</title>
+<title>Read-based isoLASER with the clustering filter: genome-wide FDR</title>
 
 <script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -376,8 +376,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Genome-wide FDR with read-based inclusion
-labels (rerun)</h1>
+<h1 class="title toc-ignore">Read-based isoLASER with the clustering
+filter: genome-wide FDR</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2026-10-22</h4>
 
@@ -408,7 +408,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-10-22
+<strong>Last updated:</strong> 2026-10-26
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -542,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree7b8c554d1f343ee9ffc56401e938dc62d0473548targetblank7b8c554a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree61785e0da4defa66011d0d4a2ba6ba38c8bd6617targetblank61785e0a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/7b8c554d1f343ee9ffc56401e938dc62d0473548" target="_blank">7b8c554</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/61785e0da4defa66011d0d4a2ba6ba38c8bd6617" target="_blank">61785e0</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree7b8c554d1f343ee9ffc56401e938dc62d0473548targetblank7b8c554a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree61785e0da4defa66011d0d4a2ba6ba38c8bd6617targetblank61785e0a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/7b8c554d1f343ee9ffc56401e938dc62d0473548" target="_blank">7b8c554</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/61785e0da4defa66011d0d4a2ba6ba38c8bd6617" target="_blank">61785e0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -575,8 +575,15 @@ were generated:
 </p>
 <pre><code>
 Unstaged changes:
+    Modified:   analysis/index.Rmd
     Modified:   analysis/isolaser_fdr_panel10.Rmd
+    Modified:   analysis/isolaser_fdr_panel10nc.Rmd
     Modified:   analysis/isolaser_fdr_reads10.Rmd
+    Modified:   analysis/isolaser_fdr_reads10nc.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10nc.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10nc.Rmd
 
 </code></pre>
 <p>
@@ -627,6 +634,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/2f663241336813461fee7dd093b270eac59e98b4/analysis/isolaser_fdr_reads10.Rmd" target="_blank">2f66324</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/2f663241336813461fee7dd093b270eac59e98b4/docs/isolaser_fdr_reads10.html" target="_blank">2f66324</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/xsun1229/long_read_rna/blob/57da66d37a16efb37b8939325b10ecb8733aca78/analysis/isolaser_fdr_reads10.Rmd" target="_blank">57da66d</a>
 </td>
 <td>
@@ -663,10 +704,18 @@ update
 </div>
 </div>
 </div>
-<p>This page repeats the <a
-href="isolaser_fdr_panel10.html">genotype-panel rerun</a> with one
+<blockquote>
+<p><strong>Earlier setup.</strong> This page keeps the clustering
+filter, which the current analyses drop. Current pages: <a
+href="isolaser_fdr_reads10nc.html">read-based isoLASER</a> (main
+analysis) and <a href="isolaser_fdr_panel10nc.html">transcript-based
+isoLASER</a>.</p>
+</blockquote>
+<p>This page repeats <a
+href="isolaser_fdr_panel10.html">transcript-based isoLASER</a> with one
 change: <strong>each read’s inclusion label comes from its own
-alignment.</strong> The panel10 page and its results are unchanged.</p>
+alignment.</strong> The transcript-based page and its results are
+unchanged.</p>
 <p><strong>What changed (our definitions):</strong></p>
 <ul>
 <li><strong>How isoLASER labels reads:</strong> isoLASER decides whether
@@ -674,7 +723,7 @@ a read includes or excludes an exonic part from the transcript the read
 was assigned to, not from the read’s own alignment. A read assigned to a
 transcript that retains an intron counts as retaining it, even if the
 read splices it out. For example, isoLASER counted 28 ALT reads as
-keeping the tested KPNA2 intron of the panel10 page; in their
+keeping the tested KPNA2 intron of the transcript-based page; in their
 alignments, 20 of them splice it out (our read check).</li>
 <li><strong>Read-based labels:</strong> a modified copy of isoLASER
 labels each read from its alignment. A read <strong>includes</strong>
@@ -684,7 +733,7 @@ if one of its splice junctions spans the whole part. Other reads (those
 that don’t reach the part) get no label and are not counted. Variant
 calls, phasing and allele assignments are unchanged: every read keeps
 the allele it had in the original run.</li>
-<li><strong>Unchanged from the panel10 rerun:</strong>
+<li><strong>Unchanged from the transcript-based run:</strong>
 panel-heterozygous donors with ≥ 10 reads, every recorded variant ×
 exonic part, the tested family (≥ 20 reads over the donors used, part ≥
 10 bp, and no other candidate variant within 30 bp), the shuffles,
@@ -699,10 +748,10 @@ matched.</li>
 </ul>
 <p><strong>Main result:</strong> 42 associations in <strong>19
 genes</strong> have q &lt; 0.05 and pass the screen, against 64 in 26
-genes in the panel10 rerun. 7 genes are reported in both. The reported
-effects of the panel10 rerun mostly vanish with read-based labels, while
-this rerun’s effects are already visible, in the same direction, in
-panel10 (<a
+genes in the transcript-based run. 7 genes are reported in both. The
+reported effects of the transcript-based run mostly vanish with
+read-based labels, while this run’s effects are already visible, in the
+same direction, in the transcript-based run (<a
 href="#what-happened-to-each-runs-reported-associations">details</a>).</p>
 <div id="genome-wide-results" class="section level1">
 <h1>Genome-wide results</h1>
@@ -765,8 +814,8 @@ href="#what-happened-to-each-runs-reported-associations">details</a>).</p>
 <ul>
 <li><strong>Paper’s cutoff:</strong> isoLASER’s own <code>cis</code>
 call with no other filter, as in the isoLASER paper. Here it comes from
-the joint output of the read-based run, so it differs from the panel10
-page’s.</li>
+the joint output of the read-based run, so it differs from the
+transcript-based page’s.</li>
 <li><strong>Screen</strong> (our definition), before FDR control: among
 the tested associations, isoLASER’s <code>cis</code> rule computed on
 the panel-heterozygous donors only, plus |ΔPSI| ≥ 0.10.</li>
@@ -776,27 +825,27 @@ association once across timepoints. BH targets FDR within each
 timepoint’s full family; the effect-filtered subset and the union across
 timepoints have no separate 5% FDR guarantee.</p>
 </div>
-<div id="compared-with-the-panel10-rerun" class="section level1">
-<h1>Compared with the panel10 rerun</h1>
+<div id="compared-with-the-transcript-based-run" class="section level1">
+<h1>Compared with the transcript-based run</h1>
 <table>
 <colgroup>
-<col width="9%" />
+<col width="7%" />
+<col width="13%" />
 <col width="10%" />
-<col width="10%" />
+<col width="17%" />
+<col width="14%" />
+<col width="19%" />
 <col width="16%" />
-<col width="16%" />
-<col width="18%" />
-<col width="18%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Timepoint</th>
-<th align="right">Tested: panel10</th>
-<th align="right">Tested: reads10</th>
-<th align="right">Paper’s cutoff: panel10</th>
-<th align="right">Paper’s cutoff: reads10</th>
-<th align="right">Screen + q &lt; 0.05: panel10</th>
-<th align="right">Screen + q &lt; 0.05: reads10</th>
+<th align="right">Tested: transcript-based</th>
+<th align="right">Tested: read-based</th>
+<th align="right">Paper’s cutoff: transcript-based</th>
+<th align="right">Paper’s cutoff: read-based</th>
+<th align="right">Screen + q &lt; 0.05: transcript-based</th>
+<th align="right">Screen + q &lt; 0.05: read-based</th>
 </tr>
 </thead>
 <tbody>
@@ -838,11 +887,12 @@ timepoints have no separate 5% FDR guarantee.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>panel10</strong> is the genotype-panel rerun;
-<strong>reads10</strong> is this page. About half as many associations
-are testable. Many reads were counted only because of their assigned
-transcript and never reach the part; they are no longer counted, so
-fewer associations have 20 reads.</p>
+<p><strong>Transcript-based</strong> and <strong>read-based</strong> are
+the two isoLASER versions, both with the clustering filter; this page is
+read-based. About half as many associations are testable. Many reads
+were counted only because of their assigned transcript and never reach
+the part; they are no longer counted, so fewer associations have 20
+reads.</p>
 <div id="what-happened-to-each-runs-reported-associations"
 class="section level2">
 <h2>What happened to each run’s reported associations</h2>
@@ -850,15 +900,15 @@ class="section level2">
 other run, at the same timepoint:</p>
 <table>
 <colgroup>
-<col width="26%" />
-<col width="36%" />
-<col width="36%" />
+<col width="24%" />
+<col width="37%" />
+<col width="37%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">In the other run</th>
-<th align="right">Reported in panel10, looked up in reads10</th>
-<th align="right">Reported in reads10, looked up in panel10</th>
+<th align="right">Reported transcript-based, looked up read-based</th>
+<th align="right">Reported read-based, looked up transcript-based</th>
 </tr>
 </thead>
 <tbody>
@@ -901,11 +951,11 @@ means no read reaches the part with 10 aligned bases or a spanning
 junction.</p>
 <table>
 <colgroup>
-<col width="10%" />
+<col width="14%" />
 <col width="12%" />
 <col width="12%" />
-<col width="33%" />
-<col width="30%" />
+<col width="32%" />
+<col width="28%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -918,14 +968,14 @@ junction.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">panel10</td>
+<td align="left">transcript-based</td>
 <td align="right">69</td>
 <td align="right">45%</td>
 <td align="right">0.440</td>
 <td align="right">0.003</td>
 </tr>
 <tr class="even">
-<td align="left">reads10</td>
+<td align="left">read-based</td>
 <td align="right">46</td>
 <td align="right">96%</td>
 <td align="right">0.243</td>
@@ -938,27 +988,28 @@ the other at the same timepoint. <strong>Same direction</strong>: the
 ΔPSI has the same sign in both runs.</p>
 <p>The two directions of the comparison look very different:</p>
 <ul>
-<li><strong>Panel10’s reported associations</strong> mostly fall apart
-with read-based labels. Only 12 of 101 are reported again. Where both
-runs score them, the direction agrees in 45% (chance level), and the
-median effect drops from 0.44 to 0.003. Their effects came from the
+<li><strong>Transcript-based reported associations</strong> mostly fall
+apart with read-based labels. Only 12 of 101 are reported again. Where
+both runs score them, the direction agrees in 45% (chance level), and
+the median effect drops from 0.44 to 0.003. Their effects came from the
 transcripts the reads were assigned to, not from the reads.</li>
-<li><strong>This run’s reported associations</strong> are visible in
-panel10 too: same direction in 96%, with a smaller median effect (0.13
-against 0.24). Transcript-based labels diluted them below
+<li><strong>This run’s reported associations</strong> are visible in the
+transcript-based run too: same direction in 96%, with a smaller median
+effect (0.13 against 0.24). Transcript-based labels diluted them below
 significance.</li>
 </ul>
 <p><strong>Genes.</strong> Reported in both: ATP5MJ, CRYBB2P1, HNRNPK,
-PARK7, SNHG5, UBE2Q2P2, ZNF749. Panel10 only: ALDH3A2, ANKRD36B,
-ANKRD36C, ASAH1, CHORDC1, CST3, CYBA, DNTTIP2, HSP90B1, KPNA2, LEPROT,
-LMBRD1, NAA38, PFKP, RPS2, RPS27L, RPS5, TBCA, ZFAND2A. This run only:
-ATP6V0E2, C20orf96, ENSG00000290928, GNL3, HM13, LAMTOR4, LINC00888,
-LY6H, POLE4, PPA2, PRH1, UQCC6. <a
+PARK7, SNHG5, UBE2Q2P2, ZNF749. Transcript-based only: ALDH3A2,
+ANKRD36B, ANKRD36C, ASAH1, CHORDC1, CST3, CYBA, DNTTIP2, HSP90B1, KPNA2,
+LEPROT, LMBRD1, NAA38, PFKP, RPS2, RPS27L, RPS5, TBCA, ZFAND2A. This run
+only: ATP6V0E2, C20orf96, ENSG00000290928, GNL3, HM13, LAMTOR4,
+LINC00888, LY6H, POLE4, PPA2, PRH1, UQCC6. <a
 href="assets/fdr_reads10/gene_changes.tsv">Download the gene
 comparison</a>, or every reported association with its status in the
 other run: <a
-href="assets/fdr_reads10/fate_panel10_reported.tsv">panel10’s</a>, <a
-href="assets/fdr_reads10/fate_reads10_reported.tsv">this run’s</a>.</p>
+href="assets/fdr_reads10/fate_panel10_reported.tsv">transcript-based’s</a>,
+<a href="assets/fdr_reads10/fate_reads10_reported.tsv">this
+run’s</a>.</p>
 </div>
 </div>
 <div id="how-the-test-works" class="section level1">
@@ -966,8 +1017,8 @@ href="assets/fdr_reads10/fate_reads10_reported.tsv">this run’s</a>.</p>
 <p>The test is the one described on the <a
 href="isolaser_fdr.html#how-the-test-works">original page</a>, with the
 donor and family rules of the <a
-href="isolaser_fdr_panel10.html">panel10 rerun</a>. Only the read labels
-differ.</p>
+href="isolaser_fdr_panel10.html">transcript-based run</a>. Only the read
+labels differ.</p>
 <table style="width:100%;">
 <colgroup>
 <col width="12%" />
@@ -1014,15 +1065,15 @@ or no observed score (p = 1). Every association with zero hits after a
 million shuffles has q &lt; 0.05, so more shuffles would not change the
 results.</p>
 <p><img src="assets/fdr_reads10/qq.png" /></p>
-<p>Real data only; there are no calibration runs for this rerun. As in
-panel10, the bulk lies below the diagonal (many ties at an AMI of 0) and
-the upper plateau is the minimum attainable p-value.</p>
+<p>Real data only; there are no calibration runs for this run. As in the
+transcript-based run, the bulk lies below the diagonal (many ties at an
+AMI of 0) and the upper plateau is the minimum attainable p-value.</p>
 </div>
 <div id="genes-to-follow-up" class="section level1">
 <h1>Genes to follow up</h1>
 <p>We highlight genes that meet the same two conditions as on the <a
-href="isolaser_fdr_panel10.html#genes-to-follow-up">panel10 page</a>
-(our definitions):</p>
+href="isolaser_fdr_panel10.html#genes-to-follow-up">transcript-based
+page</a> (our definitions):</p>
 <ol style="list-style-type: decimal">
 <li><strong>Reported only after stimulation:</strong> q &lt; 0.05 plus
 the <code>cis</code> / effect-size screen at 1 or 6 hours, and not at 0
@@ -1035,7 +1086,7 @@ table below).</li>
 <p>6 genes meet both; four are shown. Not shown:
 <strong>C20orf96</strong> and <strong>ENSG00000290928</strong>, which
 have no score at 0 hours, so there is no 0-hour comparison. PARK7 and
-ZNF749 are also on the panel10 page; PPA2 and LY6H are new.</p>
+ZNF749 are also on the transcript-based page; PPA2 and LY6H are new.</p>
 <table>
 <colgroup>
 <col width="5%" />
@@ -1120,7 +1171,7 @@ Coverage and arc numbers are raw read counts, on one scale per gene.
 counted read reaches the part; these are the counts the test uses before
 it normalizes donors.</li>
 <li><strong>Isoforms and haplotypes</strong>, at 0 hours and at the
-significant timepoint, drawn as on the panel10 page:
+significant timepoint, drawn as on the transcript-based page:
 <ul>
 <li><strong>Rows:</strong> the transcripts the reads were assigned to,
 grouped by whether the transcript’s structure includes the part. With
@@ -1139,10 +1190,11 @@ count in PSI but are not drawn.</li>
 <h2>PARK7</h2>
 <p>The tested 46-base part is the extra stretch of PARK7-201’s longer
 first exon. Its donor site lies 58 bases beyond the other transcripts’
-donor site, an alternative 5′ splice site; the panel10 page tested the
-adjacent 12-base part of the same stretch. One minor transcript
-(ENST00000465354) has this part as its whole first exon, which is why
-the figure’s automatic label reads “alternative first exon”.</p>
+donor site, an alternative 5′ splice site; the transcript-based page
+tested the adjacent 12-base part of the same stretch. One minor
+transcript (ENST00000465354) has this part as its whole first exon,
+which is why the figure’s automatic label reads “alternative first
+exon”.</p>
 <p>ALT (C) reads use the longer first exon less often than REF (T)
 reads. The effect has the same direction at all three timepoints and in
 both donors (CD_21 and CD_48), and is largest at 1 hour: −19 pp (q =
@@ -1356,12 +1408,12 @@ neurons.</p>
 </div>
 <div id="znf749" class="section level2">
 <h2>ZNF749</h2>
-<p>As on the panel10 page, the tested part is a 355-base alternative
-last exon. REF (G) reads end in it far more often than ALT (C) reads.
-The difference is significant only at 6 hours (−74 pp, q = 0.001); at 0
-and 1 hours it is −26 and −8 pp. In our stimulation splicing scan, the
-balance between the two donor sites that splice into this exon shifts
-between 0 and 6 hours.</p>
+<p>As on the transcript-based page, the tested part is a 355-base
+alternative last exon. REF (G) reads end in it far more often than ALT
+(C) reads. The difference is significant only at 6 hours (−74 pp, q =
+0.001); at 0 and 1 hours it is −26 and −8 pp. In our stimulation
+splicing scan, the balance between the two donor sites that splice into
+this exon shifts between 0 and 6 hours.</p>
 <p>As before, the jump at 6 hours partly reflects which donors are
 used:</p>
 <ul>
@@ -1525,10 +1577,10 @@ and 100% had the same effect direction.</p>
 <p>All <strong>19 reported genes</strong>. The variant, part, timepoint
 effects, best q and donor count refer to the representative association;
 <strong>Significant at</strong> describes the gene across all its
-associations. <strong>In panel10</strong> marks genes also reported in
-the panel10 rerun.</p>
+associations. <strong>In transcript-based</strong> marks genes also
+reported in the transcript-based run.</p>
 <div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.0014\" data-max=\"0.047\" data-scale=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"logical\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;true&quot;,&quot;false&quot;,&quot;na&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Search or filter genes, sort columns, and export the filtered table as CSV.<\/caption>","data":[["HNRNPK","PRH1","GNL3","LINC00888","PPA2","ENSG00000290928","SNHG5","C20orf96","ATP5MJ","HM13","LAMTOR4","CRYBB2P1","LY6H","PARK7","POLE4","UQCC6","ZNF749","UBE2Q2P2","ATP6V0E2"],["Significant at 3 timepoints","Significant at 3 timepoints","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","Significant at 2 timepoints","Significant at 2 timepoints"],["0hr, 1hr, 6hr","0hr, 1hr, 6hr","1hr","6hr","1hr","6hr","6hr","1hr","1hr","0hr","6hr","6hr","6hr","1hr","6hr","1hr","6hr","0hr, 6hr","0hr, 1hr"],["-21 (307)","+33 (148)","-10 (137)","-14 (39)","+21 (72)","no score","no score","no score","+9 (1,232)","+37 (73)","-16 (491)","+96 (68)","+15 (180)","-8 (628)","+7 (223)","-14 (187)","-26 (88)","+87 (30)","+12 (354)"],["-22 (525)","+45 (226)","-12 (269)","-12 (63)","+46 (107)","no score","no score","+60 (47)","+10 (2,212)","+14 (97)","-11 (864)","no score","+14 (363)","-19 (1,034)","+8 (416)","-24 (262)","-8 (81)","+40 (39)","+12 (660)"],["-26 (333)","+39 (237)","-2 (244)","-35 (103)","+18 (125)","-75 (29)","-41 (250)","+44 (33)","+9 (2,074)","+14 (117)","-12 (835)","+99 (113)","+25 (362)","-10 (1,024)","+12 (375)","-17 (257)","-74 (127)","+59 (96)","+8 (677)"],[0.0014,0.0014,0.0038,0.025,0.0044,0.013,0.0014,0.047,0.0014,0.042,0.028,0.0014,0.0014,0.0023,0.0014,0.0038,0.0014,0.0014,0.0023],[3,2,2,3,3,1,2,1,2,2,3,1,2,2,3,3,3,2,4],["yes","no","no","no","no","no","yes","no","yes","no","no","yes","no","yes","no","no","yes","yes","no"],["","","","","","","","","","","","","synaptic signaling","neuron projection; neuron death","","","","",""],["SFARI score 2, syndromic; HNRNPK-related Au-Kline syndrome","","","","PPA2-related sudden arrhythmic cardiac death after infectious or alcohol trigger","","","","","","","","","","","","","",""],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["",null,"","","yes","yes","","yes","","","","","","","","","yes","yes",""],["chr9:83980154:C&gt;T","chr12:11171576:C&gt;A","chr3:52686063:A&gt;C","chr3:183452353:C&gt;T","chr4:105396271:C&gt;G","chr17:30731844:G&gt;A","chr6:85678169:G&gt;T","chr20:279176:G&gt;A","chr14:103915164:T&gt;C","chr20:31569222:A&gt;G","chr7:100149506:G&gt;A","chr22:25459491:G&gt;A","chr8:143158441:A&gt;G","chr1:7961717:T&gt;C","chr2:74969603:A&gt;G","chr12:103951344:A&gt;G","chr19:57435555:G&gt;C","chr15:82404653:A&gt;G","chr7:149879728:A&gt;G"],["chr9:83980118-83980152:-","chr12:11121009-11121180:-","chr3:52686105-52686170:+","chr3:183452351-183452457:+","chr4:105437949-105437976:-","chr17:30735032-30735096:+","chr6:85678497-85678573:-","chr20:279330-279488:-","chr14:103914478-103914633:-","chr20:31547606-31547692:+","chr7:100148993-100149053:+","chr22:25459515-25459681:+","chr8:143160309-143160321:-","chr1:7961747-7961793:+","chr2:74958791-74958892:+","chr12:103957068-103957134:-","chr19:57438101-57438456:+","chr15:82395232-82395301:+","chr7:149878746-149878790:+"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Pattern<\/th>\n      <th>Significant at<\/th>\n      <th>0 hr<\/th>\n      <th>1 hr<\/th>\n      <th>6 hr<\/th>\n      <th>Best q<\/th>\n      <th>Het donors<\/th>\n      <th>In panel10<\/th>\n      <th>Neuronal GO term<\/th>\n      <th>Developmental disorder or autism<\/th>\n      <th>Expression after stimulation<\/th>\n      <th>Splicing after stimulation<\/th>\n      <th>Variant<\/th>\n      <th>Exonic part<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"lengthMenu":[10,25,50],"scrollX":true,"order":[],"dom":"Blfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[6,7]}],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.0014\" data-max=\"0.047\" data-scale=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"logical\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;true&quot;,&quot;false&quot;,&quot;na&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Search or filter genes, sort columns, and export the filtered table as CSV.<\/caption>","data":[["HNRNPK","PRH1","GNL3","LINC00888","PPA2","ENSG00000290928","SNHG5","C20orf96","ATP5MJ","HM13","LAMTOR4","CRYBB2P1","LY6H","PARK7","POLE4","UQCC6","ZNF749","UBE2Q2P2","ATP6V0E2"],["Significant at 3 timepoints","Significant at 3 timepoints","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no nominal support elsewhere","One timepoint; no usable score elsewhere","One timepoint; no usable score elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","One timepoint; nominal support elsewhere","Significant at 2 timepoints","Significant at 2 timepoints"],["0hr, 1hr, 6hr","0hr, 1hr, 6hr","1hr","6hr","1hr","6hr","6hr","1hr","1hr","0hr","6hr","6hr","6hr","1hr","6hr","1hr","6hr","0hr, 6hr","0hr, 1hr"],["-21 (307)","+33 (148)","-10 (137)","-14 (39)","+21 (72)","no score","no score","no score","+9 (1,232)","+37 (73)","-16 (491)","+96 (68)","+15 (180)","-8 (628)","+7 (223)","-14 (187)","-26 (88)","+87 (30)","+12 (354)"],["-22 (525)","+45 (226)","-12 (269)","-12 (63)","+46 (107)","no score","no score","+60 (47)","+10 (2,212)","+14 (97)","-11 (864)","no score","+14 (363)","-19 (1,034)","+8 (416)","-24 (262)","-8 (81)","+40 (39)","+12 (660)"],["-26 (333)","+39 (237)","-2 (244)","-35 (103)","+18 (125)","-75 (29)","-41 (250)","+44 (33)","+9 (2,074)","+14 (117)","-12 (835)","+99 (113)","+25 (362)","-10 (1,024)","+12 (375)","-17 (257)","-74 (127)","+59 (96)","+8 (677)"],[0.0014,0.0014,0.0038,0.025,0.0044,0.013,0.0014,0.047,0.0014,0.042,0.028,0.0014,0.0014,0.0023,0.0014,0.0038,0.0014,0.0014,0.0023],[3,2,2,3,3,1,2,1,2,2,3,1,2,2,3,3,3,2,4],["yes","no","no","no","no","no","yes","no","yes","no","no","yes","no","yes","no","no","yes","yes","no"],["","","","","","","","","","","","","synaptic signaling","neuron projection; neuron death","","","","",""],["SFARI score 2, syndromic; HNRNPK-related Au-Kline syndrome","","","","PPA2-related sudden arrhythmic cardiac death after infectious or alcohol trigger","","","","","","","","","","","","","",""],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["",null,"","","yes","yes","","yes","","","","","","","","","yes","yes",""],["chr9:83980154:C&gt;T","chr12:11171576:C&gt;A","chr3:52686063:A&gt;C","chr3:183452353:C&gt;T","chr4:105396271:C&gt;G","chr17:30731844:G&gt;A","chr6:85678169:G&gt;T","chr20:279176:G&gt;A","chr14:103915164:T&gt;C","chr20:31569222:A&gt;G","chr7:100149506:G&gt;A","chr22:25459491:G&gt;A","chr8:143158441:A&gt;G","chr1:7961717:T&gt;C","chr2:74969603:A&gt;G","chr12:103951344:A&gt;G","chr19:57435555:G&gt;C","chr15:82404653:A&gt;G","chr7:149879728:A&gt;G"],["chr9:83980118-83980152:-","chr12:11121009-11121180:-","chr3:52686105-52686170:+","chr3:183452351-183452457:+","chr4:105437949-105437976:-","chr17:30735032-30735096:+","chr6:85678497-85678573:-","chr20:279330-279488:-","chr14:103914478-103914633:-","chr20:31547606-31547692:+","chr7:100148993-100149053:+","chr22:25459515-25459681:+","chr8:143160309-143160321:-","chr1:7961747-7961793:+","chr2:74958791-74958892:+","chr12:103957068-103957134:-","chr19:57438101-57438456:+","chr15:82395232-82395301:+","chr7:149878746-149878790:+"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Pattern<\/th>\n      <th>Significant at<\/th>\n      <th>0 hr<\/th>\n      <th>1 hr<\/th>\n      <th>6 hr<\/th>\n      <th>Best q<\/th>\n      <th>Het donors<\/th>\n      <th>In transcript-based<\/th>\n      <th>Neuronal GO term<\/th>\n      <th>Developmental disorder or autism<\/th>\n      <th>Expression after stimulation<\/th>\n      <th>Splicing after stimulation<\/th>\n      <th>Variant<\/th>\n      <th>Exonic part<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"lengthMenu":[10,25,50],"scrollX":true,"order":[],"dom":"Blfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[6,7]}],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 <p><strong>0 / 1 / 6 hr</strong>: allelic effect in percentage points,
 alternative minus reference inclusion, with pooled informative coverage
 in brackets. The annotations use the same rules as on the <a

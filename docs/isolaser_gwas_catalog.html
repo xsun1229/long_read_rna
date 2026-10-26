@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-26" />
+
+<title>Read-based isoLASER hits in the GWAS Catalog</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Read-based isoLASER hits in the GWAS
+Catalog</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-26</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-26
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree61785e0da4defa66011d0d4a2ba6ba38c8bd6617targetblank61785e0a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/61785e0da4defa66011d0d4a2ba6ba38c8bd6617" target="_blank">61785e0</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree61785e0da4defa66011d0d4a2ba6ba38c8bd6617targetblank61785e0a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/61785e0da4defa66011d0d4a2ba6ba38c8bd6617" target="_blank">61785e0</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_gwas_catalog.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_fdr_panel10.Rmd
+    Modified:   analysis/isolaser_fdr_panel10nc.Rmd
+    Modified:   analysis/isolaser_fdr_reads10.Rmd
+    Modified:   analysis/isolaser_fdr_reads10nc.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10nc.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10nc.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>We asked whether the variants behind our allele-specific splicing
+associations are known GWAS hits for neuropsychiatric traits. For each
+variant we read its entries in the GWAS Catalog, the same list the
+Catalog shows on its page for the rsID. A shared hit means the variant
+affects both splicing and the trait in different studies. It does not
+show that the splicing change causes the trait.</p>
+<p><strong>Short answer.</strong> 4 of the 23 genes reported by
+read-based isoLASER carry a variant that is itself a genome-wide GWAS
+hit for a neuropsychiatric, brain or behaviour trait:</p>
+<ul>
+<li><strong>LY6H</strong>: smoking initiation (p = 3 ×
+10<sup>-24</sup>). LY6H modulates nicotinic acetylcholine
+receptors.</li>
+<li><strong>GNL3</strong>: intelligence. Our association also looks like
+the same splicing event as a published GNL3 splicing QTL in brain.</li>
+<li><strong>HNRNPK</strong>: a sleep health score.</li>
+<li><strong>FLOT1</strong>: major depression. It lies in the MHC, so
+this one is weak.</li>
+</ul>
+<p>None of the transcript-based variants is a brain-related hit.</p>
+<div id="how-the-lookup-works" class="section level1">
+<h1>How the lookup works</h1>
+<ol style="list-style-type: decimal">
+<li><strong>Start from our reported associations.</strong> We use the
+current runs, without the clustering filter. An association is one
+variant × exonic part at one timepoint. It is reported when q &lt; 0.05,
+isoLASER labels it cis and |ΔPSI| ≥ 0.05. Read-based isoLASER reports 71
+associations, at 43 exonic parts in 23 genes (transcript-based: 159, 68
+and 34). The other pages use 0.10; it is shown here for comparison.</li>
+<li><strong>Keep one variant per exonic part.</strong> A part often has
+several reported variants on the same haplotype. For each gene × exonic
+part, we keep the reported variant nearest to the part (distance 0 when
+inside it). This leaves 25 of 31 read-based variants.</li>
+<li><strong>Find each variant’s rsID.</strong> We take it from the
+record in our genotype panel with the same position, REF and ALT. Every
+variant has one.</li>
+<li><strong>Look up the variant in the GWAS Catalog.</strong>
+<ul>
+<li>We use the Catalog release of 2026-10-22: 1,203,840 entries for
+452,283 SNPs.</li>
+<li>We match entries by the rsID, or by the same GRCh38 position, and
+both always agree here.</li>
+<li>This gives the same list as the Catalog’s page for the rsID. For
+example, rs1108842 (GNL3) has four entries: intelligence and three for
+adiponectin levels.</li>
+<li>8 of the 25 read-based variants have at least one entry.</li>
+</ul></li>
+<li><strong>Keep genome-wide hits</strong> (p ≤ 5 × 10<sup>-8</sup>).
+The Catalog also accepts entries with p down to 10<sup>-5</sup>, but
+every entry matched here is genome-wide.</li>
+<li><strong>Keep neuropsychiatric and brain traits.</strong> Each trait
+is classed as a neuropsychiatric disorder or a brain or behaviour trait.
+The rules and the traits found are under <a href="#trait-classes">Trait
+classes</a>.</li>
+<li><strong>Summarise per gene.</strong> For each gene and class, we
+show the entry with the smallest p.</li>
+</ol>
+<table>
+<colgroup>
+<col width="38%" />
+<col width="13%" />
+<col width="17%" />
+<col width="13%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Step</th>
+<th align="left">Read-based, 0.05</th>
+<th align="left">Transcript-based, 0.05</th>
+<th align="left">Read-based, 0.10</th>
+<th align="left">Transcript-based, 0.10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1. Reported associations</td>
+<td align="left">71</td>
+<td align="left">159</td>
+<td align="left">57</td>
+<td align="left">147</td>
+</tr>
+<tr class="even">
+<td align="left">1. Exonic parts</td>
+<td align="left">43</td>
+<td align="left">68</td>
+<td align="left">39</td>
+<td align="left">62</td>
+</tr>
+<tr class="odd">
+<td align="left">1. Genes</td>
+<td align="left">23</td>
+<td align="left">34</td>
+<td align="left">22</td>
+<td align="left">29</td>
+</tr>
+<tr class="even">
+<td align="left">2. Variants (nearest to each part)</td>
+<td align="left">25</td>
+<td align="left">38</td>
+<td align="left">23</td>
+<td align="left">33</td>
+</tr>
+<tr class="odd">
+<td align="left">4. Variants with a Catalog entry</td>
+<td align="left">8</td>
+<td align="left">6</td>
+<td align="left">8</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">4. Catalog entries matched</td>
+<td align="left">24</td>
+<td align="left">18</td>
+<td align="left">24</td>
+<td align="left">17</td>
+</tr>
+<tr class="odd">
+<td align="left">5. Genome-wide (p ≤ 5 × 10<sup>-8</sup>)</td>
+<td align="left">24</td>
+<td align="left">18</td>
+<td align="left">24</td>
+<td align="left">17</td>
+</tr>
+<tr class="even">
+<td align="left">6. Neuropsychiatric disorder</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">6. Brain or behaviour</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left">4</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p>Columns are the run and the |ΔPSI| cutoff. The Catalog rows count
+entries, and one study can contribute several. The last two rows are
+subsets of the genome-wide row. Compared with 0.10, the 0.05 cutoff adds
+2 read-based variants and one gene (C11orf58). None of the added
+variants has a Catalog entry, so the hits are the same at both
+cutoffs.</p>
+<p>The Catalog records each study’s top associations, not full summary
+statistics. These are the SNPs at p &lt; 10<sup>-5</sup> that the
+authors describe as independent, or the strongest SNP within 100 kb (<a
+href="https://www.ebi.ac.uk/gwas/docs/methods/criteria/">inclusion
+criteria</a>). A study that reported a different SNP for the same signal
+is therefore not counted here.</p>
+</div>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="12%" />
+<col width="5%" />
+<col width="24%" />
+<col width="17%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Run</th>
+<th align="left">ΔPSI cutoff</th>
+<th align="right">Exonic parts</th>
+<th align="right">Genes</th>
+<th align="right">Neuropsychiatric disorder</th>
+<th align="right">Brain or behaviour</th>
+<th align="right">Either</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Read-based</td>
+<td align="left">0.05</td>
+<td align="right">43</td>
+<td align="right">23</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Transcript-based</td>
+<td align="left">0.05</td>
+<td align="right">68</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Read-based</td>
+<td align="left">0.10</td>
+<td align="right">39</td>
+<td align="right">22</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Transcript-based</td>
+<td align="left">0.10</td>
+<td align="right">62</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exonic parts</strong> and <strong>Genes</strong>: reported
+exonic parts and their genes; each part contributes its nearest variant.
+<strong>Neuropsychiatric disorder</strong>, <strong>Brain or
+behaviour</strong> and <strong>Either</strong>: genes whose variant has
+a genome-wide Catalog entry in that class.</p>
+</div>
+<div id="genes-with-a-brain-related-hit" class="section level1">
+<h1>Genes with a brain-related hit</h1>
+<table>
+<colgroup>
+<col width="2%" />
+<col width="6%" />
+<col width="5%" />
+<col width="2%" />
+<col width="6%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="left">Variant (rsID)</th>
+<th align="left">Timepoints</th>
+<th align="right">Best q</th>
+<th align="left">ΔPSI (reads)</th>
+<th align="left">Neuropsychiatric disorder</th>
+<th align="left">Brain or behaviour</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="left">rs9694368</td>
+<td align="left">6hr</td>
+<td align="right">0.0014</td>
+<td align="left">+7 pp (1,363)</td>
+<td align="left"></td>
+<td align="left">Smoking initiation (p = 3 × 10<sup>-24</sup>; Saunders
+GRB 2022)</td>
+<td align="left">our variant is the GWAS lead SNP; LY6H modulates
+nicotinic receptors</td>
+</tr>
+<tr class="even">
+<td align="left">GNL3</td>
+<td align="left">rs1108842</td>
+<td align="left">1hr</td>
+<td align="right">0.0036</td>
+<td align="left">-12 pp (269)</td>
+<td align="left"></td>
+<td align="left">Intelligence (MTAG) (p = 8 × 10<sup>-9</sup>; Hill WD
+2018)</td>
+<td align="left">same splicing event as a published GNL3 sQTL in brain
+(below)</td>
+</tr>
+<tr class="odd">
+<td align="left">HNRNPK</td>
+<td align="left">rs296888, rs296887</td>
+<td align="left">0hr, 1hr, 6hr</td>
+<td align="right">0.0014</td>
+<td align="left">+13 pp (533)</td>
+<td align="left"></td>
+<td align="left">Sleep health score (p = 2 × 10<sup>-8</sup>; Yao Y
+2022)</td>
+<td align="left">significant at all three timepoints</td>
+</tr>
+<tr class="even">
+<td align="left">FLOT1</td>
+<td align="left">rs3094125</td>
+<td align="left">1hr</td>
+<td align="right">0.0230</td>
+<td align="left">-40 pp (90)</td>
+<td align="left">Major depressive disorder (p = 2 × 10<sup>-9</sup>; Mei
+L 2021)</td>
+<td align="left"></td>
+<td align="left">MHC; reported only without the clustering filter</td>
+</tr>
+</tbody>
+</table>
+<p>All four genes are read-based. <strong>Variant (rsID)</strong>: the
+variant nearest to the gene’s reported parts.
+<strong>Timepoints</strong>: where the association is reported.
+<strong>Best q</strong> and <strong>ΔPSI (reads)</strong>: from the
+gene’s strongest association. ΔPSI is ALT minus REF inclusion in
+percentage points; reads are those from the heterozygous donors.
+<strong>Neuropsychiatric disorder</strong> and <strong>Brain or
+behaviour</strong>: the variant’s Catalog entry in that class with the
+smallest p. All entries are <a href="#all-brain-related-hits">listed
+below</a>, with risk alleles and effects.</p>
+<p>The other 19 read-based genes have no brain-related entry: ATP5MJ,
+CRYBB2P1, POLE4, SNHG5, UBE2Q2P2, ZNF749, ATP6V0E2, PARK7, PRH1, PPA2,
+ENSG00000290928, UQCC6, C11orf58, LINC00888, LAMTOR4, HM13, C20orf96,
+ENSG00000289047, HLA-C.</p>
+<p>Each gene below shows the same items. The tested parts are those
+reported, with the 1-based GRCh38 coordinates of each part. The
+annotation counts use the IsoQuant annotation that isoLASER tests
+against. The gene annotation is the same as on the <a
+href="isolaser_fdr_reads10nc.html#genes-to-follow-up">main read-based
+page</a>. A short note on the event and the gene follows.</p>
+<div id="ly6h" class="section level2">
+<h2>LY6H</h2>
+<p><strong>Tested parts and our association</strong></p>
+<ul>
+<li>chr8:143,160,268-143,160,309 (42 bases). Variant rs9694368, 1,428
+bases from the part. Reported at 6hr; strongest at 6hr: q = 0.0014, ΔPSI
++7 pp, 1,363 reads from 2 heterozygous donors. Annotated transcripts: 2
+of 5 include the part, 2 splice over it, 1 does not reach it.</li>
+<li>chr8:143,160,310-143,160,321 (12 bases). Variant rs9694368, 1,470
+bases from the part. Reported at 6hr; strongest at 6hr: q = 0.0014, ΔPSI
++23 pp, 368 reads from 2 heterozygous donors. Annotated transcripts: 1
+of 5 includes the part, 2 splice over it, 2 do not reach it.</li>
+</ul>
+<p><strong>GWAS Catalog entries of the variants</strong></p>
+<ul>
+<li>rs9694368: 2 entries; brain-related: Smoking initiation (p = 3 ×
+10<sup>-24</sup>; Saunders GRB 2022).</li>
+</ul>
+<p><strong>Gene annotation</strong>: neuronal GO term: synaptic
+signaling; autism or developmental disorder: none; expression after
+stimulation: none; splicing after stimulation: none.</p>
+<p><strong>Note.</strong> The two parts are adjacent. The 12-base part
+is the very start of LY6H-201’s first exon, and the 42-base part follows
+it. The test compares the use of two first exons. The <a
+href="isolaser_fdr_reads10nc.html#ly6h">main page</a> shows rs10109061,
+another of the gene’s three reported variants (all within 0.6 kb of each
+other). LY6H belongs to the Ly6 family of neurotoxin-like proteins and
+limits α7 nicotinic acetylcholine receptor function in neurons (<a
+href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4339353/">Puddifoot
+2015</a>; <a
+href="https://www.nature.com/articles/s41598-020-68947-7">Moriwaki
+2020</a>). Nicotine acts on these receptors, so the smoking signal fits
+the gene’s function.</p>
+</div>
+<div id="gnl3" class="section level2">
+<h2>GNL3</h2>
+<p><strong>Tested parts and our association</strong></p>
+<ul>
+<li>chr3:52,686,106-52,686,170 (65 bases). Variant rs1108842, 42 bases
+from the part. Reported at 1hr; strongest at 1hr: q = 0.0036, ΔPSI -12
+pp, 269 reads from 2 heterozygous donors. Annotated transcripts: 1 of 13
+includes the part, 8 splice over it, 4 do not reach it.</li>
+<li>chr3:52,686,177-52,686,202 (26 bases). Variant rs1108842, 113 bases
+from the part. Reported at 1hr; strongest at 1hr: q = 0.0036, ΔPSI -12
+pp, 269 reads from 2 heterozygous donors. Annotated transcripts: 3 of 13
+include the part, 8 splice over it, 2 do not reach it.</li>
+</ul>
+<p><strong>GWAS Catalog entries of the variants</strong></p>
+<ul>
+<li>rs1108842: 4 entries; brain-related: Intelligence (MTAG) (p = 8 ×
+10<sup>-9</sup>; Hill WD 2018).</li>
+</ul>
+<p><strong>Gene annotation</strong>: neuronal GO term: none; autism or
+developmental disorder: none; expression after stimulation: none;
+splicing after stimulation: none.</p>
+<p><strong>Note.</strong> The two parts are the stretch between the two
+annotated ends of exon 1: 52,686,105 in most transcripts and 52,686,202
+in ENST00000394799. The test is therefore about where exon 1 ends (our
+reading of the annotation). GNL3 lies in the 3p21.1 schizophrenia and
+bipolar disorder locus and has been prioritised as a bipolar risk gene
+there, from other SNPs (<a
+href="https://www.nature.com/articles/s41380-020-00866-5">Molecular
+Psychiatry</a>). A schizophrenia study reports that rs2590846 changes
+“an alternative exonic boundary in GNL3” in brain (<a
+href="https://www.science.org/doi/10.1126/sciadv.adw7667">Science
+Advances</a>). We read the reported coordinates as hg19, because in hg38
+they fall in NEK4; this is our inference. Moved to hg38, that junction
+(52,686,056 to 52,686,768) ends just before exon 2 and contains both of
+our parts, so both studies see variants changing where exon 1 ends. We
+read only the abstract and excerpts of that paper.</p>
+</div>
+<div id="hnrnpk" class="section level2">
+<h2>HNRNPK</h2>
+<p><strong>Tested parts and our association</strong></p>
+<ul>
+<li>chr9:83,978,373-83,978,452 (80 bases). Variant rs296888, 2,131 bases
+from the part. Reported at 0hr, 6hr; strongest at 6hr: q = 0.0014, ΔPSI
++13 pp, 533 reads from 3 heterozygous donors. Annotated transcripts: 27
+of 34 include the part, 3 splice over it, 4 do not reach it.</li>
+<li>chr9:83,980,119-83,980,152 (34 bases). Variant rs296887, 3 bases
+from the part. Reported at 0hr, 1hr, 6hr; strongest at 0hr: q = 0.0014,
+ΔPSI -21 pp, 307 reads from 3 heterozygous donors. Annotated
+transcripts: 5 of 34 include the part, 18 splice over it, 11 do not
+reach it.</li>
+</ul>
+<p><strong>GWAS Catalog entries of the variants</strong></p>
+<ul>
+<li>rs296888: 10 entries; brain-related: Sleep health score (p = 2 ×
+10<sup>-8</sup>; Yao Y 2022).</li>
+<li>rs296887: 2 entries; brain-related: none.</li>
+</ul>
+<p><strong>Gene annotation</strong>: neuronal GO term: none; autism or
+developmental disorder: SFARI score 2, syndromic; HNRNPK-related
+Au-Kline syndrome; expression after stimulation: none; splicing after
+stimulation: none.</p>
+<p><strong>Note.</strong> HNRNPK is the only one of the four genes
+reported at all three timepoints. Its two parts carry different nearest
+variants:</p>
+<ul>
+<li>an 80-base exon that most transcripts include, with rs296888;</li>
+<li>a 34-base stretch present in few transcripts, with rs296887 3 bases
+away.</li>
+</ul>
+<p>Only rs296888 has a brain-related entry. HNRNPK encodes the
+RNA-binding protein hnRNP K.</p>
+</div>
+<div id="flot1" class="section level2">
+<h2>FLOT1</h2>
+<p><strong>Tested parts and our association</strong></p>
+<ul>
+<li>chr6:30,741,868-30,742,146 (279 bases). Variant rs3094125, 288 bases
+from the part. Reported at 1hr; strongest at 1hr: q = 0.023, ΔPSI -40
+pp, 90 reads from 2 heterozygous donors. Annotated transcripts: 1 of 13
+includes the part, 10 splice over it, 2 do not reach it.</li>
+</ul>
+<p><strong>GWAS Catalog entries of the variants</strong></p>
+<ul>
+<li>rs3094125: 1 entry; brain-related: Major depressive disorder (p = 2
+× 10<sup>-9</sup>; Mei L 2021).</li>
+</ul>
+<p><strong>Gene annotation</strong>: neuronal GO term: synapse; synaptic
+signaling; autism or developmental disorder: none; expression after
+stimulation: none; splicing after stimulation: none.</p>
+<p><strong>Note.</strong> The part lies in an exon of a single annotated
+transcript; ten others splice over it. FLOT1 encodes flotillin-1, a
+lipid-raft protein. It lies in the MHC, where LD spans megabases and
+many variants have GWAS hits, and it was reported only after the
+clustering filter was dropped. We don’t highlight it.</p>
+</div>
+</div>
+<div id="transcript-based-isolaser" class="section level1">
+<h1>Transcript-based isoLASER</h1>
+<p>None of the 38 transcript-based variants has a brain-related Catalog
+entry. 6 of them have entries for other traits. HNRNPK’s
+transcript-based variant is rs296887, the one without a sleep entry.</p>
+</div>
+<div id="trait-classes" class="section level1">
+<h1>Trait classes</h1>
+<p>The grouping is ours. Each Catalog entry maps to one or more traits
+(EFO terms), and each trait gets a class:</p>
+<ul>
+<li><strong>Neuropsychiatric disorder</strong>: the Catalog’s parent
+category is “Neurological disorder” (the Catalog files psychiatric
+disorders there too). Or the trait name contains one of these:
+psychiatric, schizo, bipolar, depress, autism, attention deficit,
+anxiety, panic, obsessive, personality disorder, anorexia, bulimia,
+eating disorder, tourette, substance, addict, dependence, alcohol use
+disorder, suicid, psychos, mental.</li>
+<li><strong>Brain or behaviour</strong>: the trait name contains one of
+these: intellig, cognit, educational attainment, years of schooling,
+mathemat, reading, memory, executive, reaction time, neurotic, mood,
+worry, loneliness, well-being, happiness, feeling, risk-taking, risk
+tolerance, behavio, personality, insomnia, sleep, chronotype, smoking,
+cigarette, alcohol, drinking, cannabis, caffeine, brain, cortical,
+cortex, cerebral, hippocamp, amygdala, thalam, putamen, caudate,
+pallidum, accumbens, white matter, grey matter, gray matter,
+subcortical, intracranial, neurite, fractional anisotropy,
+antidepressant, antipsychotic, lithium, headache, migraine. A trait that
+also contains protein, level of, in blood, serum, plasma, cerebrospinal
+is excluded, so blood levels of brain proteins do not count.</li>
+</ul>
+<p>Traits in neither class are not shown: blood counts, body size,
+metabolic traits and so on. An entry whose traits fall in both classes
+counts as a neuropsychiatric disorder.</p>
+<p>Interaction and adjusted analyses also map their exposure as a trait.
+In “waist-hip ratio × smoking” or “… adjusted for smoking”, for example,
+smoking is mapped next to the main trait. Those exposure traits are
+ignored unless the main trait is itself one of them. The exposures are
+smoking, cigarette, tobacco, alcohol, drinking, physical activity, sleep
+duration, educational attainment.</p>
+<div id="traits-found-in-each-class" class="section level2 tabset">
+<h2 class="tabset">Traits found in each class</h2>
+<p>Every trait with a genome-wide entry at our variants, with the genes,
+at |ΔPSI| ≥ 0.05. <strong>Catalog entries</strong>: how many Catalog
+entries with this trait match the listed genes’ variants.</p>
+<div id="neuropsychiatric-disorder" class="section level3">
+<h3>Neuropsychiatric disorder</h3>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="20%" />
+<col width="28%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Trait</th>
+<th align="left">Read-based genes</th>
+<th align="left">Transcript-based genes</th>
+<th align="right">Catalog entries</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">major depressive disorder</td>
+<td align="left">FLOT1</td>
+<td align="left"></td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="brain-or-behaviour" class="section level3">
+<h3>Brain or behaviour</h3>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="22%" />
+<col width="30%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Trait</th>
+<th align="left">Read-based genes</th>
+<th align="left">Transcript-based genes</th>
+<th align="right">Catalog entries</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">intelligence</td>
+<td align="left">GNL3</td>
+<td align="left"></td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">sleep quality</td>
+<td align="left">HNRNPK</td>
+<td align="left"></td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">smoking initiation</td>
+<td align="left">LY6H</td>
+<td align="left"></td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="all-brain-related-hits" class="section level1 tabset">
+<h1 class="tabset">All brain-related hits</h1>
+<p>One row per gene × mapped trait (the Catalog’s EFO terms for the
+entry), with the Catalog’s details:</p>
+<ul>
+<li><strong>Reported as</strong>: the SNP the study reported. It differs
+from our rsID when dbSNP has since merged the two IDs. For FLOT1, the
+study reported rs115844366, now merged into rs3094125 at the same
+position.</li>
+<li><strong>Risk allele</strong>: “not reported” when the study gave
+none.</li>
+<li><strong>p</strong>, <strong>OR or beta</strong>,
+<strong>Study</strong> (first author and year),
+<strong>Accession</strong> (the Catalog study) and
+<strong>PubMed</strong>.</li>
+<li><strong>Entries</strong>: how many Catalog entries with this trait
+match the gene’s variant.</li>
+<li><strong>Class</strong>: see <a href="#trait-classes">Trait
+classes</a>.</li>
+</ul>
+<div id="read-based-isolaser" class="section level2">
+<h2>Read-based isoLASER</h2>
+<div id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"data":[["FLOT1","GNL3","HNRNPK","LY6H"],["rs3094125","rs1108842","rs296888","rs9694368"],["rs115844366","rs1108842","rs296888","rs9694368"],["not reported","A","not reported","G"],["neuropsychiatric disorder","brain or behaviour","brain or behaviour","brain or behaviour"],["major depressive disorder","intelligence","sleep quality","smoking initiation"],["Major depressive disorder","Intelligence (MTAG)","Sleep health score","Smoking initiation"],[2e-09,8e-09,2e-08,3e-24],["0.93062","0.016819207","0.015195","0.00888"],["Mei L 2021","Hill WD 2018","Yao Y 2022","Saunders GRB 2022"],["<a href=\"https://www.ebi.ac.uk/gwas/studies/GCST90085695\">GCST90085695<\/a>","<a href=\"https://www.ebi.ac.uk/gwas/studies/GCST005316\">GCST005316<\/a>","<a href=\"https://www.ebi.ac.uk/gwas/studies/GCST90102455\">GCST90102455<\/a>","<a href=\"https://www.ebi.ac.uk/gwas/studies/GCST90243968\">GCST90243968<\/a>"],["<a href=\"https://pubmed.ncbi.nlm.nih.gov/34634379/\">34634379<\/a>","<a href=\"https://pubmed.ncbi.nlm.nih.gov/29326435/\">29326435<\/a>","<a href=\"https://pubmed.ncbi.nlm.nih.gov/35023977/\">35023977<\/a>","<a href=\"https://pubmed.ncbi.nlm.nih.gov/36477530/\">36477530<\/a>"],[1,1,1,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gene<\/th>\n      <th>Variant<\/th>\n      <th>Reported as<\/th>\n      <th>Risk allele<\/th>\n      <th>Class<\/th>\n      <th>Trait<\/th>\n      <th>Reported trait<\/th>\n      <th>p<\/th>\n      <th>OR or beta<\/th>\n      <th>Study<\/th>\n      <th>Accession<\/th>\n      <th>PubMed<\/th>\n      <th>Entries<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"Bfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[7,12]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="transcript-based-isolaser-1" class="section level2">
+<h2>Transcript-based isoLASER</h2>
+<p>None of the transcript-based variants has a brain-related Catalog
+entry.</p>
+<!-- # Caveats and next steps -->
+<!-- - **Lead SNPs only.** The Catalog keeps each study's reported top SNPs, so a study -->
+<!--   whose top SNP is a neighbour of our variant is not counted. -->
+<!-- - **No background rate.** Running the same lookup on tested variants without an -->
+<!--   association would show whether reported variants hit neuropsychiatric traits -->
+<!--   more often than chance. -->
+<!-- - **Not colocalization.** A shared hit does not mean a shared causal variant. -->
+<!--   Colocalization with GWAS summary statistics would test this, for example GSCAN -->
+<!--   for smoking at LY6H. -->
+<!-- - **Allele direction.** The table lists the GWAS risk alleles, but we have not -->
+<!--   yet compared them with the allele that changes splicing. -->
+<p>Code: <code>long_read_RNA/14.gwas_catalog/</code>. -
+<code>1.gwas_catalog_lookup.R</code>: the lookup. -
+<code>2.page_tables.R</code>: this page’s tables and the GNL3
+checks.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DT_0.22           data.table_1.14.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12       pillar_1.9.0      compiler_4.2.0    bslib_0.3.1      
+ [5] later_1.3.0       jquerylib_0.1.4   git2r_0.30.1      highr_0.9        
+ [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
+[13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3  
+[17] rlang_1.1.2       cli_3.6.1         rstudioapi_0.13   crosstalk_1.2.0  
+[21] yaml_2.3.5        xfun_0.41         fastmap_1.1.0     stringr_1.5.1    
+[25] knitr_1.39        fs_1.5.2          vctrs_0.6.5       sass_0.4.1       
+[29] htmlwidgets_1.5.4 rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
+[33] fansi_1.0.3       rmarkdown_2.25    magrittr_2.0.3    promises_1.2.0.1 
+[37] htmltools_0.5.2   httpuv_1.6.5      utf8_1.2.2        stringi_1.7.6    </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+version	gene	trait_class	mapped_trait	rsid	best_p	example_trait	risk_allele	reported_snp	or_beta	study	accession	pubmed	associations	studies
+read_based	FLOT1	neuropsychiatric disorder	major depressive disorder	rs3094125	2E-9	Major depressive disorder	not reported	rs115844366	0.93062	Mei L 2021	GCST90085695	34634379	1	1
+read_based	GNL3	brain or behaviour	intelligence	rs1108842	8E-9	Intelligence (MTAG)	A	rs1108842	0.016819207	Hill WD 2018	GCST005316	29326435	1	1
+read_based	HNRNPK	brain or behaviour	sleep quality	rs296888	2E-8	Sleep health score	not reported	rs296888	0.015195	Yao Y 2022	GCST90102455	35023977	1	1
+read_based	LY6H	brain or behaviour	smoking initiation	rs9694368	3E-24	Smoking initiation	G	rs9694368	0.00888	Saunders GRB 2022	GCST90243968	36477530	2	1

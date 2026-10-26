@@ -1,5 +1,5 @@
 ---
-title: "Genome-wide FDR without the clustering rule (genotype-panel donors)"
+title: "Transcript-based isoLASER: genome-wide FDR"
 author: "XSun"
 date: "2026-10-23"
 output:
@@ -53,19 +53,22 @@ read_status <- function(d) { x <- rc[match(paste(d$tp, d$Gene_name, d$variant_qu
           fifelse(is.na(x$dpsi_reads), "tested, no score", sprintf("ΔPSI %+.2f, not reported", x$dpsi_reads)))) }
 ```
 
-This page repeats the [genotype-panel rerun](isolaser_fdr_panel10.html) without one rule of
-the tested family, the **clustering rule**. That rule leaves out any variant with
-another candidate variant within 30 bases. Everything else is unchanged, and the
-panel10 page and its results are unchanged.
+**Transcript-based isoLASER** labels each read as including or excluding an
+exonic part from the transcript isoLASER assigned it to, as isoLASER itself does.
+We keep it to compare with our main analysis,
+[read-based isoLASER](isolaser_fdr_reads10nc.html), which labels each read from its
+own alignment. This page is the genome-wide permutation FDR without the
+clustering filter; the [run with the filter](isolaser_fdr_panel10.html) remains as
+an earlier setup.
 
-**What changed (our definitions):**
+**Setup (our definitions):**
 
-- **Dropped: the clustering rule.** It was added for the original run, where
+- **No clustering filter.** It was added for the original run, where
   donors were chosen by their RNA allele fraction: a cluster of variant calls is
   often misaligned reads rather than real SNPs. Here every tested SNP must already
-  be heterozygous in our genotype panel, so we asked whether the rule still
-  removes anything real.
-- **Unchanged:** isoLASER's inclusion labels (from each read's assigned transcript),
+  be heterozygous in our genotype panel, so we dropped the filter; the comparison
+  below shows what it had removed.
+- **As in the filtered run:** isoLASER's inclusion labels (from each read's assigned transcript),
   panel-heterozygous donors with ≥ 10 reads, every recorded variant × exonic part,
   ≥ 20 reads over the donors used and a part of ≥ 10 bp in the tested family, the
   shuffles, isoLASER's scoring functions, the adaptive rounds, BH within each
@@ -73,7 +76,7 @@ panel10 page and its results are unchanged.
 - **Checks:** before comparing, we confirmed for every chromosome × timepoint
   that both runs are finished and current. They use the same isoLASER
   recordings, the same association list and genotype inputs, and identical
-  unshuffled scores in round 1, so the runs differ only in the family rule. As in
+  unshuffled scores in round 1, so the runs differ only in the clustering filter. As in
   every run, each unshuffled score was rebuilt independently, and all 66
   chromosome × timepoint checks matched.
 - **Not yet done:** calibration runs.
@@ -81,9 +84,9 @@ panel10 page and its results are unchanged.
 **Main result:** `r fmt(any_tp$q05_associations)` associations in
 **`r fmt(any_tp$q05_genes)` genes** have q < 0.05 and pass the screen,
 against `r fmt(any_vb$base_q05_associations)` in `r fmt(any_vb$base_q05_genes)`
-genes in the panel10 rerun. No association reported there is lost here.
+genes in the run with the clustering filter. No association reported there is lost here.
 `r n_gained` association × timepoint results are gained, in `r n_gained_genes` genes;
-`r length(new_genes)` of these genes are not reported in the panel10 rerun at all
+`r length(new_genes)` of these genes are not reported in the run with the clustering filter at all
 (`r paste(new_genes, collapse=", ")`). Most gained results belong to genes whose effects vanish with read-based
 labels (below), so they reflect transcript assignment rather than allelic
 splicing.
@@ -101,32 +104,32 @@ knitr::kable(ov[, .(Timepoint=tp, `Tested associations`=fmt(tested),
 Cells other than **Tested associations** show **associations (genes)**.
 **Paper's cutoff:** isoLASER's own `cis` call with no other filter, as in the
 isoLASER paper; it does not depend on our family rules, so it is the same as on
-the panel10 page. **Screen** (our definition), before FDR control: among the
+the page with the clustering filter. **Screen** (our definition), before FDR control: among the
 tested associations, isoLASER's `cis` rule computed on the panel-heterozygous
 donors only, plus |ΔPSI| ≥ 0.10. **Any timepoint** counts each gene or
 association once across timepoints. BH targets FDR within each timepoint's full
 family; the effect-filtered subset and the union across timepoints have no
 separate 5% FDR guarantee.
 
-# Compared with the panel10 rerun
+# Compared with the run with the clustering filter
 
 ```{r vs_base}
 knitr::kable(merge(vb, cs[, .(tp, kept, gained, lost)], by="tp", all.x=TRUE)[match(c("0hr", "1hr", "6hr", "any timepoint"), tp),
-  .(Timepoint=tp, `Tested: panel10`=fmt(base_tested), `Tested: this run`=fmt(tested),
-    `Screen + q < 0.05: panel10`=counts(base_q05_associations, base_q05_genes),
+  .(Timepoint=tp, `Tested: with filter`=fmt(base_tested), `Tested: this run`=fmt(tested),
+    `Screen + q < 0.05: with filter`=counts(base_q05_associations, base_q05_genes),
     `Screen + q < 0.05: this run`=counts(q05_associations, q05_genes),
     Kept=fifelse(is.na(kept), "", fmt(kept)), Gained=fifelse(is.na(gained), "", fmt(gained)), Lost=fifelse(is.na(lost), "", fmt(lost)))],
   align="lrrrrrrr")
 ```
 
 **Kept / Gained / Lost** count reported associations at each timepoint: reported
-in both runs, only here, or only in the panel10 rerun. Dropping the rule adds
+in both runs, only here, or only in the run with the clustering filter. Dropping the filter adds
 `r pct(any_vb$tested / any_vb$base_tested - 1)` more tested associations; every
-association tested in the panel10 rerun is tested here too.
+association tested in the run with the clustering filter is tested here too.
 
 ## Newly tested associations
 
-These are the associations the clustering rule had removed. Each one's variant
+These are the associations the clustering filter had removed. Each one's variant
 has at least one other candidate variant within 30 bases, a **neighbour**:
 
 ```{r newly}
@@ -145,11 +148,11 @@ variants, that is, two real SNPs close together.
 ```{r gained}
 gd <- ga[order(tp, q_bh)]
 knitr::kable(gd[, .(Timepoint=sub("hr", " hr", tp), Gene=gene, Variant=variant_qual, `Exonic part`=exonic_part, `Het donors`=n_het,
-  `ΔPSI`=sprintf("%+.2f", dpsi), q=signif(q_bh, 2), `q in panel10`=fifelse(is.na(q_bh_base), "not tested", as.character(signif(q_bh_base, 2))),
+  `ΔPSI`=sprintf("%+.2f", dpsi), q=signif(q_bh, 2), `q with filter`=fifelse(is.na(q_bh_base), "not tested", as.character(signif(q_bh_base, 2))),
   Neighbours=nb_type(gd), MHC=fifelse(in_mhc, "yes", ""), `With read-based labels`=read_status(gd))])
 ```
 
-**q in panel10**: "not tested" for associations the clustering rule
+**q with filter**: "not tested" for associations the clustering filter
 removed; a value means the association was tested there and missed q < 0.05.
 **Neighbours** describes the candidate variants within 30 bases, as above.
 **MHC**: inside the major histocompatibility complex (chr6:28.5–33.5 Mb), the
@@ -157,29 +160,29 @@ most polymorphic region of the genome, where reads are often misaligned.
 [Download the gained associations with each neighbour listed](assets/fdr_panel10nc/gained.tsv).
 
 Most gained results add associations, through clustered variants, to genes
-already reported in the panel10 rerun: CST3, CYBA, PFKP and ZFAND2A, plus the new
-ARF4. CST3's two variants lie inside the 13-base part tested on the panel10
-page. `r ga[!is.na(q_bh_base), .N]` gained results were tested in panel10 and
+already reported in the run with the clustering filter: CST3, CYBA, PFKP and ZFAND2A, plus the new
+ARF4. CST3's two variants lie inside the 13-base part tested on the the filtered run
+page. `r ga[!is.na(q_bh_base), .N]` gained results were tested with the filter and
 just missed q < 0.05 there (q = `r paste(range(signif(ga[!is.na(q_bh_base), q_bh_base], 2)), collapse="–")`); here they pass,
 because BH's threshold rises when many small p-values join the family.
 
-**With read-based labels** ([the same run without the clustering rule](isolaser_fdr_reads10nc.html)),
+**With read-based labels** ([the same run without the clustering filter](isolaser_fdr_reads10nc.html)),
 only `r rc[reads_status == "reported", .N]` of the `r n_gained` gained results are reported, both for
 ENSG00000289047 in the MHC. Another `r rc[reads_status == "tested, not reported", .N]` are tested there and not reported; the
 `r rc[reads_status == "tested, not reported" & !is.na(dpsi_reads), .N]` with a score have a median |ΔPSI| of
 `r sprintf("%.3f", rc[reads_status == "tested, not reported" & !is.na(dpsi_reads), median(abs(dpsi_reads))])`, against `r sprintf("%.2f", rc[reads_status == "tested, not reported" & !is.na(dpsi_reads), median(abs(dpsi))])` here. The remaining `r rc[reads_status == "not tested", .N]` cannot be tested. In this run the
-clustering rule was mostly removing transcript-assignment artefacts (our
+clustering filter was mostly removing transcript-assignment artefacts (our
 reading).
 
 **Genes.** Reported in both runs: `r length(both_genes)`. Only in the
-panel10 rerun: `r gc[status == "base only", .N]`. Only here:
+run with the clustering filter: `r gc[status == "base only", .N]`. Only here:
 `r paste(new_genes, collapse=", ")`.
 [Download the gene comparison](assets/fdr_panel10nc/gene_changes.tsv).
 
 # How the test works
 
 The test is the one described on the [original page](isolaser_fdr.html#how-the-test-works),
-with the donor rule and remaining family rules of the [panel10 rerun](isolaser_fdr_panel10.html).
+with the donor rule and remaining family rules of the [run with the clustering filter](isolaser_fdr_panel10.html).
 
 ```{r rounds}
 knitr::kable(rounds[, .(Timepoint=tp, `Stopped at 1,000`=fmt(stopped_1e3),
@@ -193,7 +196,7 @@ so more shuffles would not change the results.
 
 ![](assets/fdr_panel10nc/qq.png)
 
-Real data only; there are no calibration runs for this rerun.
+Real data only; there are no calibration runs for this run.
 
 # Genes to follow up
 
@@ -214,13 +217,13 @@ FU <- c("KPNA2", "PARK7", "ZNF749", "ASAH1", "LMBRD1")
 ```
 
 We apply the [same two conditions](isolaser_fdr_panel10.html#genes-to-follow-up)
-as the panel10 page: reported only after stimulation (at 1 or 6 hours, not at 0
+as the page with the clustering filter: reported only after stimulation (at 1 or 6 hours, not at 0
 hours), and neuron- or stimulation-related. `r nrow(fu)` genes meet both.
-Five are shown, the same five as on the panel10 page. Not shown, as there:
+Five are shown, the same five as on the page with the clustering filter. Not shown, as there:
 **ALDH3A2** (no 0-hour test) and **UBE2Q2P2** (a pseudogene). No new gene meets
 both conditions. With read-based labels only PARK7 and ZNF749 remain; KPNA2,
 ASAH1 and LMBRD1 are not supported by the reads
-([read-based rerun](isolaser_fdr_reads10.html#compared-with-the-panel10-rerun)).
+([read-based isoLASER](isolaser_fdr_reads10.html#compared-with-the-transcript-based-run)).
 
 ```{r highlight}
 knitr::kable(example_table(c("KPNA2", "PARK7", "ZNF749", "ASAH1", "LMBRD1"), c("Synapse, synaptic signaling (GO)", "Neuron projection, neuron death (GO); the Parkinson's disease gene DJ-1",
@@ -235,7 +238,7 @@ the lowest timepoint-specific q-value. **Het donors**: the largest number of
 panel-heterozygous donors used, out of four.
 
 For each of these genes the representative association, its donors and its reads
-are the same as in the panel10 rerun
+are the same as in the run with the clustering filter
 (`r sum(same$gene %in% FU & same$variant_qual == same$bv & same$exonic_part == same$bp)` of
 `r length(FU)` checked); only the q-values change slightly with the larger family.
 The figures below are drawn from this run.
@@ -482,14 +485,14 @@ timepoint, `r pct(cons$nominal_p_lt_0.05)` had nominal p < 0.05 there and
 
 All **`r nrow(g)` reported genes**. The variant, part, timepoint effects, best q
 and donor count refer to the representative association; **Significant at**
-describes the gene across all its associations. **In panel10** marks genes also
-reported in the panel10 rerun.
+describes the gene across all its associations. **With filter** marks genes also
+reported in the run with the clustering filter.
 
 ```{r all}
 interactive_table(cbind(g[, .(Gene=gene, Pattern=display_pattern, `Significant at`=sig_tps,
   `0 hr`=effect_reads(g, "0hr"), `1 hr`=effect_reads(g, "1hr"), `6 hr`=effect_reads(g, "6hr"),
   `Best q`=best_q(g), `Het donors`=max_het,
-  `In panel10`=fifelse(gene %in% both_genes, "yes", "no"))], annot(g),
+  `With filter`=fifelse(gene %in% both_genes, "yes", "no"))], annot(g),
   g[, .(Variant=variant_qual, `Exonic part`=exonic_part)]))
 ```
 
@@ -500,7 +503,7 @@ annotations use the same rules as on the
 
 **Data:** `10.isolaser_permutation/` with `ADAPTIVE_RULE=panel10nc`: run by
 `logs/family_rule_driver.sh panel10nc` (scripts 38 and 18–22, with the independent
-score check 48 / 50), and compared with the panel10 rerun by
+score check 48 / 50), and compared with the run with the clustering filter by
 `53.compare_family_rules.R`. This page's tables come from
 `11.fdr_results/3.page_tables.R` with `ADAPTIVE_RULE=panel10nc`, which writes only
 to `docs/assets/fdr_panel10nc/`.

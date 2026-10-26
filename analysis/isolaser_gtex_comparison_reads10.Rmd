@@ -1,5 +1,5 @@
 ---
-title: "Allele-specific splicing vs GTEx Cerebellum sQTLs (read-based labels)"
+title: "Read-based isoLASER with the clustering filter: comparison with GTEx Cerebellum sQTLs"
 author: "XSun"
 date: "2026-10-22"
 output:
@@ -23,10 +23,15 @@ tpl <- function(x) sub("hr", " hr", x)
 hn <- pts[set == BEFORE & tp == "6hr" & gene == "HNRNPK" & variant_qual == "chr9:83980154:C>T"]
 ```
 
-This page repeats the [GTEx comparison of the genotype-panel rerun](isolaser_gtex_comparison_panel10.html)
-for the [read-based rerun](isolaser_fdr_reads10.html), in which each read's
+> **Earlier setup.** This page keeps the clustering filter, which the current
+> analyses drop. Current pages: [read-based isoLASER](isolaser_gtex_comparison_reads10nc.html)
+> (main analysis) and [transcript-based isoLASER](isolaser_gtex_comparison_panel10nc.html).
+
+
+This page repeats the [GTEx comparison of the transcript-based isoLASER](isolaser_gtex_comparison_panel10.html)
+for the [read-based isoLASER](isolaser_fdr_reads10.html), in which each read's
 inclusion label comes from its own alignment rather than from the transcript it
-was assigned to. Donors and associations are chosen as in the panel10 rerun.
+was assigned to. Donors and associations are chosen as in the transcript-based run.
 The earlier pages and their results are unchanged.
 
 As before, we compare our allelic splicing effects (isoLASER ΔPSI) with GTEx v8
@@ -54,17 +59,17 @@ Our associations come in three sets:
 - **Paper's cutoff:** isoLASER's own `cis` label and pooled ΔPSI, as in the
   paper, from the read-based run's joint output. The labels change isoLASER's
   own calls, so this set differs from the earlier pages'.
-- **Before FDR:** the rerun's screen. The donors are panel-heterozygous with
+- **Before FDR:** this run's screen. The donors are panel-heterozygous with
   ≥ 10 reads, with ≥ 20 reads over those donors, `cis`, |ΔPSI| ≥ 0.10, part
   ≥ 10 bp, and no other candidate variant within 30 bp.
-- **After FDR:** the rerun's screen plus permutation BH q < 0.05 within each
-  timepoint, as on the [rerun's FDR page](isolaser_fdr_reads10.html).
+- **After FDR:** this run's screen plus permutation BH q < 0.05 within each
+  timepoint, as on the [this run's FDR page](isolaser_fdr_reads10.html).
 
 **Example, HNRNPK.** The C>T variant (chr9:83980154, 0-based) and the 34-base
 exonic part (gold) form an alternative splice site. GTEx measures the
 skipping junction (blue), which jumps over the part. At 6 hours, ALT changes
 part inclusion by `r sprintf("%+.1f", 100*hn$dpsi)` percentage points in the
-read-based rerun. GTEx's beta for the skipping junction is `r sprintf("%+.2f", hn$slope)`:
+read-based isoLASER. GTEx's beta for the skipping junction is `r sprintf("%+.2f", hn$slope)`:
 opposite signs, as expected.
 
 ![](assets/isolaser_gtex_reads10/comparable_event_example_skipping.png)
@@ -81,12 +86,12 @@ single-base variant at that timepoint. **Same variant and gene tested in
 GTEx**: of those, the ones whose variant GTEx Cerebellum tests for the same
 gene. **Plotted pairs**: association × matched GTEx skipping junction.
 
-As in the panel10 rerun, every SNV in the before- and after-FDR sets is in our
+As in the transcript-based run, every SNV in the before- and after-FDR sets is in our
 genotype panel, so most are tested in GTEx. Before FDR,
 `r paste(range(round(100 * fun[set == BEFORE, tested_in_gtex / reported_snv_associations])), collapse="–")`%
 are tested; after FDR,
 `r paste(range(round(100 * fun[set == AFTER, tested_in_gtex / reported_snv_associations])), collapse="–")`%.
-Fewer associations are reported than in panel10, so there are fewer pairs.
+Fewer associations are reported than in the transcript-based run, so there are fewer pairs.
 
 # Result
 
@@ -141,7 +146,7 @@ different from 50%. **One-sided p**: is it above 50%, the direction expected.
 timepoints counts several times. **Each pair once** uses each pair's mean ΔPSI
 over the timepoints where it is called.
 
-# Compared with the panel10 rerun
+# Compared with the transcript-based run
 
 ```{r vs_panel10}
 stp <- fread("docs/assets/isolaser_gtex_panel10/fig3e_style_stats.tsv")[subset == "all"]
@@ -149,13 +154,13 @@ two <- rbind(stp[, run := "panel10"], st[subset == "all"][, run := "reads10"], f
 w <- dcast(two, set + tp ~ run, value.var=c("n", "expected_sign", "pearson_r", "pearson_p"))
 rp <- function(r, p) fifelse(is.na(r), "too few", sprintf("%.2f (%s)", r, vapply(p, function(x) if (is.na(x)) "NA" else format(signif(x, 2)), "")))
 knitr::kable(w[order(match(set, SET_ORDER), tp), .(Set=set, Timepoint=tpl(tp),
-  `panel10: R (p)`=rp(pearson_r_panel10, pearson_p_panel10), `panel10: expected sign`=sprintf("%d/%d", expected_sign_panel10, n_panel10),
-  `reads10: R (p)`=rp(pearson_r_reads10, pearson_p_reads10), `reads10: expected sign`=sprintf("%d/%d", expected_sign_reads10, n_reads10))],
+  `Transcript-based: R (p)`=rp(pearson_r_panel10, pearson_p_panel10), `Transcript-based: expected sign`=sprintf("%d/%d", expected_sign_panel10, n_panel10),
+  `Read-based: R (p)`=rp(pearson_r_reads10, pearson_p_reads10), `Read-based: expected sign`=sprintf("%d/%d", expected_sign_reads10, n_reads10))],
   align="llrrrr")
 ```
 
-**panel10** is the [genotype-panel rerun's comparison](isolaser_gtex_comparison_panel10.html),
-whose paper's-cutoff set is the original isoLASER run's; **reads10** is this
+**Transcript-based** is the [transcript-based comparison](isolaser_gtex_comparison_panel10.html),
+whose paper's-cutoff set is the original isoLASER run's; **Read-based** is this
 page. Columns as in the result table above.
 
 With read-based labels, our effects agree with GTEx much better:
@@ -164,11 +169,11 @@ With read-based labels, our effects agree with GTEx much better:
   timepoint, against −0.05 to −0.15 with isoLASER's transcript-based labels,
   from fewer pairs.
 - **Before FDR:** the correlation turns negative, as expected, at all three
-  timepoints. In panel10 it was close to 0. With 19–30 pairs per timepoint, it is
+  timepoints. In the transcript-based run it was close to 0. With 19–30 pairs per timepoint, it is
   not significant at any timepoint on its own.
 - **After FDR:** all `r fun[set == AFTER, sum(plotted)]` pairs have the expected
   sign, against `r stp[set == AFTER, sum(expected_sign)]` of `r stp[set == AFTER, sum(n)]`
-  in panel10. There are too few pairs for a correlation.
+  in the transcript-based run. There are too few pairs for a correlation.
 
 GTEx Cerebellum is independent of our data, so this supports the read-based
 labels (our inference). We have not tested whether the change in correlation

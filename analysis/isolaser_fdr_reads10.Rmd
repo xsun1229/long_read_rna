@@ -1,5 +1,5 @@
 ---
-title: "Genome-wide FDR with read-based inclusion labels (rerun)"
+title: "Read-based isoLASER with the clustering filter: genome-wide FDR"
 author: "XSun"
 date: "2026-10-22"
 output:
@@ -52,9 +52,14 @@ n_rep <- function(run) fs[reported_in == run, sum(associations)]
 dir_of <- function(run) fd[reported_in == run]
 ```
 
-This page repeats the [genotype-panel rerun](isolaser_fdr_panel10.html) with
+> **Earlier setup.** This page keeps the clustering filter, which the current
+> analyses drop. Current pages: [read-based isoLASER](isolaser_fdr_reads10nc.html)
+> (main analysis) and [transcript-based isoLASER](isolaser_fdr_panel10nc.html).
+
+
+This page repeats [transcript-based isoLASER](isolaser_fdr_panel10.html) with
 one change: **each read's inclusion label comes from its own alignment.** The
-panel10 page and its results are unchanged.
+transcript-based page and its results are unchanged.
 
 **What changed (our definitions):**
 
@@ -62,7 +67,7 @@ panel10 page and its results are unchanged.
   excludes an exonic part from the transcript the read was assigned to, not from
   the read's own alignment. A read assigned to a transcript that retains an
   intron counts as retaining it, even if the read splices it out. For example,
-  isoLASER counted 28 ALT reads as keeping the tested KPNA2 intron of the panel10
+  isoLASER counted 28 ALT reads as keeping the tested KPNA2 intron of the transcript-based
   page; in their alignments, 20 of them splice it out (our read check).
 - **Read-based labels:** a modified copy of isoLASER labels each read from its
   alignment. A read **includes** the part if at least 10 of its aligned bases
@@ -71,7 +76,7 @@ panel10 page and its results are unchanged.
   reads (those that don't reach the part) get no label and are not counted.
   Variant calls, phasing and allele assignments are unchanged: every read keeps
   the allele it had in the original run.
-- **Unchanged from the panel10 rerun:** panel-heterozygous donors with ≥ 10
+- **Unchanged from the transcript-based run:** panel-heterozygous donors with ≥ 10
   reads, every recorded variant × exonic part, the tested family (≥ 20 reads over
   the donors used, part ≥ 10 bp, and no other candidate variant within 30 bp),
   the shuffles, isoLASER's scoring functions, the adaptive rounds, BH within each
@@ -85,10 +90,10 @@ panel10 page and its results are unchanged.
 **Main result:** `r fmt(any_tp$q05_associations)` associations in
 **`r fmt(any_tp$q05_genes)` genes** have q < 0.05 and pass the screen,
 against `r fmt(any_vp$panel10_q05_associations)` in
-`r fmt(any_vp$panel10_q05_genes)` genes in the panel10 rerun.
+`r fmt(any_vp$panel10_q05_genes)` genes in the transcript-based run.
 `r length(both_genes)` genes are reported in both. The reported effects of the
-panel10 rerun mostly vanish with read-based labels, while this rerun's effects
-are already visible, in the same direction, in panel10
+transcript-based run mostly vanish with read-based labels, while this run's effects
+are already visible, in the same direction, in the transcript-based run
 ([details](#what-happened-to-each-runs-reported-associations)).
 
 # Genome-wide results
@@ -105,7 +110,7 @@ Cells other than **Tested associations** show **associations (genes)**.
 
 - **Paper's cutoff:** isoLASER's own `cis` call with no other filter, as in the
   isoLASER paper. Here it comes from the joint output of the read-based run, so it
-  differs from the panel10 page's.
+  differs from the transcript-based page's.
 - **Screen** (our definition), before FDR control: among the tested
   associations, isoLASER's `cis` rule computed on the panel-heterozygous donors
   only, plus |ΔPSI| ≥ 0.10.
@@ -115,18 +120,18 @@ timepoints. BH targets FDR within each timepoint's full family; the
 effect-filtered subset and the union across timepoints have no separate 5% FDR
 guarantee.
 
-# Compared with the panel10 rerun
+# Compared with the transcript-based run
 
 ```{r vs_panel10}
 knitr::kable(vp[, .(Timepoint=tp,
-  `Tested: panel10`=fmt(panel10_tested), `Tested: reads10`=fmt(tested),
-  `Paper's cutoff: panel10`=counts(panel10_paper_associations, panel10_paper_genes),
-  `Paper's cutoff: reads10`=counts(paper_associations, paper_genes),
-  `Screen + q < 0.05: panel10`=counts(panel10_q05_associations, panel10_q05_genes),
-  `Screen + q < 0.05: reads10`=counts(q05_associations, q05_genes))], align="lrrrrrr")
+  `Tested: transcript-based`=fmt(panel10_tested), `Tested: read-based`=fmt(tested),
+  `Paper's cutoff: transcript-based`=counts(panel10_paper_associations, panel10_paper_genes),
+  `Paper's cutoff: read-based`=counts(paper_associations, paper_genes),
+  `Screen + q < 0.05: transcript-based`=counts(panel10_q05_associations, panel10_q05_genes),
+  `Screen + q < 0.05: read-based`=counts(q05_associations, q05_genes))], align="lrrrrrr")
 ```
 
-**panel10** is the genotype-panel rerun; **reads10** is this page. About half as
+**Transcript-based** and **read-based** are the two isoLASER versions, both with the clustering filter; this page is read-based. About half as
 many associations are testable. Many reads were counted only because of their
 assigned transcript and never reach the part; they are no longer counted, so
 fewer associations have 20 reads.
@@ -147,8 +152,8 @@ lab <- c("reported"="Reported", "q < 0.05, fails the screen"="q < 0.05, fails th
          "not recorded"="Not recorded: no read labelled")
 w <- dcast(fs, status ~ reported_in, value.var="associations", fill=0)
 w <- w[order(match(status, ST))]
-knitr::kable(w[, .(`In the other run`=unname(lab[status]), `Reported in panel10, looked up in reads10`=panel10,
-                   `Reported in reads10, looked up in panel10`=reads10)], align="lrr")
+knitr::kable(w[, .(`In the other run`=unname(lab[status]), `Reported transcript-based, looked up read-based`=panel10,
+                   `Reported read-based, looked up transcript-based`=reads10)], align="lrr")
 ```
 
 Counts are association × timepoint rows: an association reported at two
@@ -157,7 +162,7 @@ variant × part. With read-based labels this means no read reaches the part with
 10 aligned bases or a spanning junction.
 
 ```{r fate_direction}
-knitr::kable(fd[match(c("panel10", "reads10"), reported_in), .(`Reported in`=reported_in,
+knitr::kable(fd[match(c("panel10", "reads10"), reported_in), .(`Reported in`=c(panel10="transcript-based", reads10="read-based")[reported_in],
   `Tested in both`=pairs, `Same direction`=pct(same_sign),
   `Median |ΔPSI|, reporting run`=sprintf("%.3f", median_abs_dpsi),
   `Median |ΔPSI|, other run`=sprintf("%.3f", median_abs_other_dpsi))], align="lrrrr")
@@ -168,31 +173,31 @@ timepoint. **Same direction**: the ΔPSI has the same sign in both runs.
 
 The two directions of the comparison look very different:
 
-- **Panel10's reported associations** mostly fall apart with read-based labels.
+- **Transcript-based reported associations** mostly fall apart with read-based labels.
   Only `r f_of("panel10", "reported")$associations` of
   `r n_rep("panel10")` are reported again. Where both runs score them, the
   direction agrees in `r pct(dir_of("panel10")$same_sign)` (chance level), and
   the median effect drops from `r sprintf("%.2f", dir_of("panel10")$median_abs_dpsi)`
   to `r sprintf("%.3f", dir_of("panel10")$median_abs_other_dpsi)`. Their effects
   came from the transcripts the reads were assigned to, not from the reads.
-- **This run's reported associations** are visible in panel10 too: same
+- **This run's reported associations** are visible in the transcript-based run too: same
   direction in `r pct(dir_of("reads10")$same_sign)`, with a smaller median effect
   (`r sprintf("%.2f", dir_of("reads10")$median_abs_other_dpsi)` against
   `r sprintf("%.2f", dir_of("reads10")$median_abs_dpsi)`). Transcript-based
   labels diluted them below significance.
 
 **Genes.** Reported in both: `r paste(both_genes, collapse=", ")`.
-Panel10 only: `r paste(p10_only, collapse=", ")`. This run only:
+Transcript-based only: `r paste(p10_only, collapse=", ")`. This run only:
 `r paste(r10_only, collapse=", ")`.
 [Download the gene comparison](assets/fdr_reads10/gene_changes.tsv), or every
 reported association with its status in the other run:
-[panel10's](assets/fdr_reads10/fate_panel10_reported.tsv),
+[transcript-based's](assets/fdr_reads10/fate_panel10_reported.tsv),
 [this run's](assets/fdr_reads10/fate_reads10_reported.tsv).
 
 # How the test works
 
 The test is the one described on the [original page](isolaser_fdr.html#how-the-test-works),
-with the donor and family rules of the [panel10 rerun](isolaser_fdr_panel10.html).
+with the donor and family rules of the [transcript-based run](isolaser_fdr_panel10.html).
 Only the read labels differ.
 
 ```{r rounds}
@@ -207,7 +212,7 @@ q < 0.05, so more shuffles would not change the results.
 
 ![](assets/fdr_reads10/qq.png)
 
-Real data only; there are no calibration runs for this rerun. As in panel10, the
+Real data only; there are no calibration runs for this run. As in the transcript-based run, the
 bulk lies below the diagonal (many ties at an AMI of 0) and the upper plateau is
 the minimum attainable p-value.
 
@@ -226,7 +231,7 @@ n_two <- g[!grepl("0hr", sig_tps) & (neuronal | brain_disorder | stim_expression
 ```
 
 We highlight genes that meet the same two conditions as on the
-[panel10 page](isolaser_fdr_panel10.html#genes-to-follow-up) (our definitions):
+[transcript-based page](isolaser_fdr_panel10.html#genes-to-follow-up) (our definitions):
 
 1. **Reported only after stimulation:** q < 0.05 plus the `cis` /
    effect-size screen at 1 or 6 hours, and not at 0 hours.
@@ -236,7 +241,7 @@ We highlight genes that meet the same two conditions as on the
 
 `r n_two` genes meet both; four are shown. Not shown: **C20orf96** and
 **ENSG00000290928**, which have no score at 0 hours, so there is no 0-hour
-comparison. PARK7 and ZNF749 are also on the panel10 page; PPA2 and LY6H are new.
+comparison. PARK7 and ZNF749 are also on the transcript-based page; PPA2 and LY6H are new.
 
 ```{r highlight}
 knitr::kable(example_table(c("PARK7", "PPA2", "LY6H", "ZNF749"), c(
@@ -264,7 +269,7 @@ representative association.
   inclusion** is each read's own label, so every counted read reaches the part;
   these are the counts the test uses before it normalizes donors.
 - **Isoforms and haplotypes**, at 0 hours and at the significant timepoint,
-  drawn as on the panel10 page:
+  drawn as on the transcript-based page:
   - **Rows:** the transcripts the reads were assigned to, grouped by whether the
     transcript's structure includes the part. With read-based labels, a read's
     own label can differ from its transcript's group.
@@ -279,7 +284,7 @@ representative association.
 
 The tested 46-base part is the extra stretch of PARK7-201's longer first exon.
 Its donor site lies 58 bases beyond the other transcripts' donor site, an
-alternative 5′ splice site; the panel10 page tested the adjacent 12-base part of
+alternative 5′ splice site; the transcript-based page tested the adjacent 12-base part of
 the same stretch. One minor transcript (ENST00000465354) has this part as its
 whole first exon, which is why the figure's automatic label reads "alternative first exon".
 
@@ -387,7 +392,7 @@ sashimi_table("LY6H")
 
 ## ZNF749
 
-As on the panel10 page, the tested part is a 355-base alternative last exon.
+As on the transcript-based page, the tested part is a 355-base alternative last exon.
 REF (G) reads end in it far more often than ALT (C) reads. The difference is
 significant only at 6 hours (−74 pp, q = 0.001); at 0 and 1 hours it is −26 and
 −8 pp. In our stimulation splicing scan, the balance between the two donor sites
@@ -462,14 +467,14 @@ timepoint, `r pct(cons$nominal_p_lt_0.05)` had nominal p < 0.05 there and
 
 All **`r nrow(g)` reported genes**. The variant, part, timepoint effects, best q
 and donor count refer to the representative association; **Significant at**
-describes the gene across all its associations. **In panel10** marks genes also
-reported in the panel10 rerun.
+describes the gene across all its associations. **In transcript-based** marks genes also
+reported in the transcript-based run.
 
 ```{r all}
 interactive_table(cbind(g[, .(Gene=gene, Pattern=display_pattern, `Significant at`=sig_tps,
   `0 hr`=effect_reads(g, "0hr"), `1 hr`=effect_reads(g, "1hr"), `6 hr`=effect_reads(g, "6hr"),
   `Best q`=best_q(g), `Het donors`=max_het,
-  `In panel10`=fifelse(gene %in% both_genes, "yes", "no"))], annot(g),
+  `In transcript-based`=fifelse(gene %in% both_genes, "yes", "no"))], annot(g),
   g[, .(Variant=variant_qual, `Exonic part`=exonic_part)]))
 ```
 

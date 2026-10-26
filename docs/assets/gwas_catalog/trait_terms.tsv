@@ -1,0 +1,22 @@
+term_class	efo_term	genes_read_based	genes_transcript_based	n_genes	associations	parent
+brain or behaviour	intelligence	GNL3	""	1	1	Biological process
+brain or behaviour	sleep quality	HNRNPK	""	1	1	Other measurement
+brain or behaviour	smoking initiation	LY6H	""	1	2	Biological process
+neuropsychiatric disorder	major depressive disorder	FLOT1	""	1	1	Neurological disorder
+other	body height	HNRNPK	ATP5MC3, HNRNPK	2	4	Other measurement
+other	adiponectin measurement	GNL3	""	1	3	Other measurement
+other	atrial fibrillation	""	ASAH1	1	9	Cardiovascular disease
+other	glutaminyl-peptide cyclotransferase measurement	HLA-C	""	1	1	Other measurement
+other	immunoglobulin alpha fc receptor measurement	HLA-C	""	1	1	Other measurement
+other	inflammatory bowel disease	ENSG00000289047	ENSG00000289047	1	1	Digestive system disorder
+other	level of nucleoside diphosphate kinase 3 in blood	HNRNPK	""	1	1	Other measurement
+other	lymphocyte count	HNRNPK	HNRNPK	1	1	Hematological measurement
+other	multiple sclerosis	ENSG00000289047	ENSG00000289047	1	1	Immune system disorder
+other	platelet count	HNRNPK	""	1	2	Hematological measurement
+other	platelet-to-lymphocyte ratio	HNRNPK	""	1	1	Hematological measurement
+other	protein dj-1 measurement	PARK7	PARK7	1	1	Other measurement
+other	pulse pressure measurement	""	ANKRD36C	1	1	Cardiovascular measurement
+other	rheumatoid arthritis	ENSG00000289047	ENSG00000289047	1	2	Immune system disorder
+other	sex hormone-binding globulin measurement	HNRNPK	""	1	2	Other measurement
+other	testosterone measurement	HNRNPK	""	1	1	Lipid or lipoprotein measurement
+other	triglyceride measurement	""	ASAH1	1	2	Lipid or lipoprotein measurement

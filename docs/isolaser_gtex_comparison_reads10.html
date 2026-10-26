@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-10-22" />
 
-<title>Allele-specific splicing vs GTEx Cerebellum sQTLs (read-based labels)</title>
+<title>Read-based isoLASER with the clustering filter: comparison with GTEx Cerebellum sQTLs</title>
 
 <script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -371,8 +371,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Allele-specific splicing vs GTEx Cerebellum
-sQTLs (read-based labels)</h1>
+<h1 class="title toc-ignore">Read-based isoLASER with the clustering
+filter: comparison with GTEx Cerebellum sQTLs</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2026-10-22</h4>
 
@@ -403,7 +403,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-10-22
+<strong>Last updated:</strong> 2026-10-26
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -441,10 +441,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1640dfb8adcd18390979a10e1804eff3e0f719d1targetblank1640dfba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree61785e0da4defa66011d0d4a2ba6ba38c8bd6617targetblank61785e0a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/1640dfb8adcd18390979a10e1804eff3e0f719d1" target="_blank">1640dfb</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/61785e0da4defa66011d0d4a2ba6ba38c8bd6617" target="_blank">61785e0</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1640dfb8adcd18390979a10e1804eff3e0f719d1targetblank1640dfba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree61785e0da4defa66011d0d4a2ba6ba38c8bd6617targetblank61785e0a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/1640dfb8adcd18390979a10e1804eff3e0f719d1" target="_blank">1640dfb</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/61785e0da4defa66011d0d4a2ba6ba38c8bd6617" target="_blank">61785e0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -569,12 +569,16 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/isolaser_fdr_reads10.Rmd
-    Untracked:  analysis/isolaser_gtex_comparison_reads10.Rmd
-
 Unstaged changes:
-    Deleted:    analysis/isolaser_fdr_panel10.knit.md
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_fdr_panel10.Rmd
+    Modified:   analysis/isolaser_fdr_panel10nc.Rmd
+    Modified:   analysis/isolaser_fdr_reads10.Rmd
+    Modified:   analysis/isolaser_fdr_reads10nc.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10nc.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10nc.Rmd
 
 </code></pre>
 <p>
@@ -589,21 +593,94 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/isolaser_gtex_comparison_reads10.Rmd</code>) and HTML
+(<code>docs/isolaser_gtex_comparison_reads10.html</code>) files. If
+you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table
+below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/57da66d37a16efb37b8939325b10ecb8733aca78/analysis/isolaser_gtex_comparison_reads10.Rmd" target="_blank">57da66d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-22
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/57da66d37a16efb37b8939325b10ecb8733aca78/docs/isolaser_gtex_comparison_reads10.html" target="_blank">57da66d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-22
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
+<blockquote>
+<p><strong>Earlier setup.</strong> This page keeps the clustering
+filter, which the current analyses drop. Current pages: <a
+href="isolaser_gtex_comparison_reads10nc.html">read-based isoLASER</a>
+(main analysis) and <a
+href="isolaser_gtex_comparison_panel10nc.html">transcript-based
+isoLASER</a>.</p>
+</blockquote>
 <p>This page repeats the <a
 href="isolaser_gtex_comparison_panel10.html">GTEx comparison of the
-genotype-panel rerun</a> for the <a
-href="isolaser_fdr_reads10.html">read-based rerun</a>, in which each
+transcript-based isoLASER</a> for the <a
+href="isolaser_fdr_reads10.html">read-based isoLASER</a>, in which each
 read’s inclusion label comes from its own alignment rather than from the
 transcript it was assigned to. Donors and associations are chosen as in
-the panel10 rerun. The earlier pages and their results are
+the transcript-based run. The earlier pages and their results are
 unchanged.</p>
 <p>As before, we compare our allelic splicing effects (isoLASER ΔPSI)
 with GTEx v8 Cerebellum sQTL effects (beta), as in the right panel of <a
@@ -633,20 +710,20 @@ skipping junction, at one timepoint.</li>
 label and pooled ΔPSI, as in the paper, from the read-based run’s joint
 output. The labels change isoLASER’s own calls, so this set differs from
 the earlier pages’.</li>
-<li><strong>Before FDR:</strong> the rerun’s screen. The donors are
+<li><strong>Before FDR:</strong> this run’s screen. The donors are
 panel-heterozygous with ≥ 10 reads, with ≥ 20 reads over those donors,
 <code>cis</code>, |ΔPSI| ≥ 0.10, part ≥ 10 bp, and no other candidate
 variant within 30 bp.</li>
-<li><strong>After FDR:</strong> the rerun’s screen plus permutation BH q
+<li><strong>After FDR:</strong> this run’s screen plus permutation BH q
 &lt; 0.05 within each timepoint, as on the <a
-href="isolaser_fdr_reads10.html">rerun’s FDR page</a>.</li>
+href="isolaser_fdr_reads10.html">this run’s FDR page</a>.</li>
 </ul>
 <p><strong>Example, HNRNPK.</strong> The C&gt;T variant (chr9:83980154,
 0-based) and the 34-base exonic part (gold) form an alternative splice
 site. GTEx measures the skipping junction (blue), which jumps over the
 part. At 6 hours, ALT changes part inclusion by -26.5 percentage points
-in the read-based rerun. GTEx’s beta for the skipping junction is +0.97:
-opposite signs, as expected.</p>
+in the read-based isoLASER. GTEx’s beta for the skipping junction is
++0.97: opposite signs, as expected.</p>
 <p><img
 src="assets/isolaser_gtex_reads10/comparable_event_example_skipping.png" /></p>
 <table>
@@ -748,10 +825,11 @@ associations with a single-base variant at that timepoint. <strong>Same
 variant and gene tested in GTEx</strong>: of those, the ones whose
 variant GTEx Cerebellum tests for the same gene. <strong>Plotted
 pairs</strong>: association × matched GTEx skipping junction.</p>
-<p>As in the panel10 rerun, every SNV in the before- and after-FDR sets
-is in our genotype panel, so most are tested in GTEx. Before FDR, 89–91%
-are tested; after FDR, 71–100%. Fewer associations are reported than in
-panel10, so there are fewer pairs.</p>
+<p>As in the transcript-based run, every SNV in the before- and
+after-FDR sets is in our genotype panel, so most are tested in GTEx.
+Before FDR, 89–91% are tested; after FDR, 71–100%. Fewer associations
+are reported than in the transcript-based run, so there are fewer
+pairs.</p>
 </div>
 <div id="result" class="section level1">
 <h1>Result</h1>
@@ -1034,25 +1112,25 @@ once</strong> uses each pair’s mean ΔPSI over the timepoints where it is
 called.</p>
 </div>
 </div>
-<div id="compared-with-the-panel10-rerun" class="section level1">
-<h1>Compared with the panel10 rerun</h1>
+<div id="compared-with-the-transcript-based-run" class="section level1">
+<h1>Compared with the transcript-based run</h1>
 <table>
 <colgroup>
+<col width="12%" />
+<col width="8%" />
+<col width="19%" />
+<col width="25%" />
 <col width="14%" />
-<col width="9%" />
-<col width="14%" />
-<col width="22%" />
-<col width="15%" />
-<col width="22%" />
+<col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Set</th>
 <th align="left">Timepoint</th>
-<th align="right">panel10: R (p)</th>
-<th align="right">panel10: expected sign</th>
-<th align="right">reads10: R (p)</th>
-<th align="right">reads10: expected sign</th>
+<th align="right">Transcript-based: R (p)</th>
+<th align="right">Transcript-based: expected sign</th>
+<th align="right">Read-based: R (p)</th>
+<th align="right">Read-based: expected sign</th>
 </tr>
 </thead>
 <tbody>
@@ -1130,10 +1208,10 @@ called.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>panel10</strong> is the <a
-href="isolaser_gtex_comparison_panel10.html">genotype-panel rerun’s
+<p><strong>Transcript-based</strong> is the <a
+href="isolaser_gtex_comparison_panel10.html">transcript-based
 comparison</a>, whose paper’s-cutoff set is the original isoLASER run’s;
-<strong>reads10</strong> is this page. Columns as in the result table
+<strong>Read-based</strong> is this page. Columns as in the result table
 above.</p>
 <p>With read-based labels, our effects agree with GTEx much better:</p>
 <ul>
@@ -1141,12 +1219,12 @@ above.</p>
 −0.30 at every timepoint, against −0.05 to −0.15 with isoLASER’s
 transcript-based labels, from fewer pairs.</li>
 <li><strong>Before FDR:</strong> the correlation turns negative, as
-expected, at all three timepoints. In panel10 it was close to 0. With
-19–30 pairs per timepoint, it is not significant at any timepoint on its
-own.</li>
+expected, at all three timepoints. In the transcript-based run it was
+close to 0. With 19–30 pairs per timepoint, it is not significant at any
+timepoint on its own.</li>
 <li><strong>After FDR:</strong> all 9 pairs have the expected sign,
-against 10 of 23 in panel10. There are too few pairs for a
-correlation.</li>
+against 10 of 23 in the transcript-based run. There are too few pairs
+for a correlation.</li>
 </ul>
 <p>GTEx Cerebellum is independent of our data, so this supports the
 read-based labels (our inference). We have not tested whether the change
@@ -1183,7 +1261,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

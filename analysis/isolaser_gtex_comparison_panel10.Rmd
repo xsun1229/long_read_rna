@@ -1,5 +1,5 @@
 ---
-title: "Allele-specific splicing vs GTEx Cerebellum sQTLs (genotype-panel rerun)"
+title: "Transcript-based isoLASER with the clustering filter: comparison with GTEx Cerebellum sQTLs"
 author: "XSun"
 date: "2026-10-21"
 output:
@@ -23,9 +23,14 @@ tpl <- function(x) sub("hr", " hr", x)
 hn <- pts[set == BEFORE & tp == "6hr" & gene == "HNRNPK" & variant_qual == "chr9:83980154:C>T"]
 ```
 
+> **Earlier setup.** This page keeps the clustering filter, which the current
+> analyses drop. Current pages: [read-based isoLASER](isolaser_gtex_comparison_reads10nc.html)
+> (main analysis) and [transcript-based isoLASER](isolaser_gtex_comparison_panel10nc.html).
+
+
 This page repeats the [comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison.html)
-for the [genotype-panel rerun](isolaser_fdr_panel10.html) of our permutation
-test. In that rerun, a donor is used only if our genotype panel calls it
+for the [transcript-based isoLASER](isolaser_fdr_panel10.html) of our permutation
+test. In that run, a donor is used only if our genotype panel calls it
 heterozygous, and associations come from every recorded variant × exonic part.
 The original page and its results are unchanged.
 
@@ -54,17 +59,17 @@ Our associations come in three sets:
 - **Paper's cutoff:** isoLASER's own `cis` label and pooled ΔPSI, as in the
   paper. This set doesn't depend on our donor rule, so it is the same as on the
   original page.
-- **Before FDR:** the rerun's screen. The donors are panel-heterozygous with
+- **Before FDR:** this run's screen. The donors are panel-heterozygous with
   ≥ 10 reads, with ≥ 20 reads over those donors, `cis`, |ΔPSI| ≥ 0.10, part
   ≥ 10 bp, and no other candidate variant within 30 bp.
-- **After FDR:** the rerun's screen plus permutation BH q < 0.05 within each
-  timepoint, as on the [rerun's FDR page](isolaser_fdr_panel10.html).
+- **After FDR:** this run's screen plus permutation BH q < 0.05 within each
+  timepoint, as on the [this run's FDR page](isolaser_fdr_panel10.html).
 
 **Example, HNRNPK.** The C>T variant (chr9:83980154, 0-based) and the 34-base
 exonic part (gold) form an alternative splice site. GTEx measures the
 skipping junction (blue), which jumps over the part. At 6 hours, ALT changes
-part inclusion by `r sprintf("%+.1f", 100*hn$dpsi)` percentage points in the
-rerun. GTEx's beta for the skipping junction is `r sprintf("%+.2f", hn$slope)`:
+part inclusion by `r sprintf("%+.1f", 100*hn$dpsi)` percentage points in this
+run. GTEx's beta for the skipping junction is `r sprintf("%+.2f", hn$slope)`:
 opposite signs, as expected.
 
 ![](assets/isolaser_gtex_panel10/comparable_event_example_skipping.png)
@@ -81,7 +86,7 @@ single-base variant at that timepoint. **Same variant and gene tested in
 GTEx**: of those, the ones whose variant GTEx Cerebellum tests for the same
 gene. **Plotted pairs**: association × matched GTEx skipping junction.
 
-Every SNV in the rerun is in our genotype panel, so far more of our
+Every SNV in this run is in our genotype panel, so far more of our
 associations are tested in GTEx. Before FDR,
 `r paste(range(round(100 * fun[set == BEFORE, tested_in_gtex / reported_snv_associations])), collapse="–")`%
 are tested, against 40–55% on the original page. After FDR it is

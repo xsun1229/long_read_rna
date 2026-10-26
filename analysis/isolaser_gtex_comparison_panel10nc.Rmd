@@ -1,5 +1,5 @@
 ---
-title: "Allele-specific splicing vs GTEx Cerebellum sQTLs (no clustering rule, genotype-panel donors)"
+title: "Transcript-based isoLASER: comparison with GTEx Cerebellum sQTLs"
 author: "XSun"
 date: "2026-10-23"
 output:
@@ -23,10 +23,9 @@ tpl <- function(x) sub("hr", " hr", x)
 hn <- pts[set == BEFORE & tp == "6hr" & gene == "HNRNPK" & variant_qual == "chr9:83980154:C>T"]
 ```
 
-This page repeats the [GTEx comparison of the genotype-panel rerun](isolaser_gtex_comparison_panel10.html)
-for the [same run without the clustering rule](isolaser_fdr_panel10nc.html), which
-keeps variants that have another candidate variant within 30 bp. Everything else
-is as in the panel10 rerun. The earlier pages and their results are unchanged.
+This page compares **transcript-based isoLASER** without the clustering filter
+([FDR page](isolaser_fdr_panel10nc.html)) with GTEx v8 Cerebellum sQTLs. The
+[comparison with the filter](isolaser_gtex_comparison_panel10.html) remains as an earlier setup.
 
 As before, we compare our allelic splicing effects (isoLASER ΔPSI) with GTEx v8
 Cerebellum sQTL effects (beta), as in the right panel of
@@ -52,11 +51,11 @@ Our associations come in three sets:
 
 - **Paper's cutoff:** isoLASER's own `cis` label and pooled ΔPSI, as in the
   paper, from the original isoLASER run. It does not depend on our family rules,
-  so it is the same set as on the panel10 page.
+  so it is the same set as on the page with the clustering filter.
 - **Before FDR:** this run's screen. The donors are panel-heterozygous with
   ≥ 10 reads, with ≥ 20 reads over those donors, `cis`, |ΔPSI| ≥ 0.10 and part
   ≥ 10 bp; variants with another candidate variant within 30 bp are kept.
-- **After FDR:** the rerun's screen plus permutation BH q < 0.05 within each
+- **After FDR:** this run's screen plus permutation BH q < 0.05 within each
   timepoint, as on [this run's FDR page](isolaser_fdr_panel10nc.html).
 
 **Example, HNRNPK.** The C>T variant (chr9:83980154, 0-based) and the 34-base
@@ -80,7 +79,7 @@ single-base variant at that timepoint. **Same variant and gene tested in
 GTEx**: of those, the ones whose variant GTEx Cerebellum tests for the same
 gene. **Plotted pairs**: association × matched GTEx skipping junction.
 
-As in the panel10 rerun, every SNV in the before- and after-FDR sets is in our
+As in the run with the clustering filter, every SNV in the before- and after-FDR sets is in our
 genotype panel, so most are tested in GTEx. Before FDR,
 `r paste(range(round(100 * fun[set == BEFORE, tested_in_gtex / reported_snv_associations])), collapse="–")`%
 are tested; after FDR,
@@ -139,7 +138,7 @@ different from 50%. **One-sided p**: is it above 50%, the direction expected.
 timepoints counts several times. **Each pair once** uses each pair's mean ΔPSI
 over the timepoints where it is called.
 
-# Compared with the panel10 rerun
+# Compared with the run with the clustering filter
 
 ```{r vs_base}
 stb <- fread("docs/assets/isolaser_gtex_panel10/fig3e_style_stats.tsv")[subset == "all"]
@@ -147,12 +146,12 @@ two <- rbind(stb[, run := "base"], st[subset == "all"][, run := "here"], fill=TR
 w <- dcast(two, set + tp ~ run, value.var=c("n", "expected_sign", "pearson_r", "pearson_p"))
 rp <- function(r, p) fifelse(is.na(r), "too few", sprintf("%.2f (%s)", r, vapply(p, function(x) if (is.na(x)) "NA" else format(signif(x, 2)), "")))
 knitr::kable(w[order(match(set, SET_ORDER), tp), .(Set=set, Timepoint=tpl(tp),
-  `panel10: R (p)`=rp(pearson_r_base, pearson_p_base), `panel10: expected sign`=sprintf("%d/%d", expected_sign_base, n_base),
+  `With filter: R (p)`=rp(pearson_r_base, pearson_p_base), `With filter: expected sign`=sprintf("%d/%d", expected_sign_base, n_base),
   `This run: R (p)`=rp(pearson_r_here, pearson_p_here), `This run: expected sign`=sprintf("%d/%d", expected_sign_here, n_here))],
   align="llrrrr")
 ```
 
-**panel10** is the [genotype-panel rerun's comparison](isolaser_gtex_comparison_panel10.html); **This
+**With filter** is the [transcript-based isoLASER's comparison](isolaser_gtex_comparison_panel10.html); **This
 run** is this page. Columns as in the result table above. Before FDR this run has
 `r st[subset == "all" & set == BEFORE, sum(n)]` pairs against `r stb[set == BEFORE, sum(n)]`, with
 `r round(100 * st[subset == "all" & set == BEFORE, sum(expected_sign) / sum(n)])`% of the expected sign against
@@ -160,9 +159,9 @@ run** is this page. Columns as in the result table above. Before FDR this run ha
 `r st[subset == "all" & set == AFTER, sum(n)]` pairs against `r stb[set == AFTER, sum(n)]`, with
 `r st[subset == "all" & set == AFTER, sum(expected_sign)]` and `r stb[set == AFTER, sum(expected_sign)]` of the expected sign.
 
-Dropping the clustering rule adds pairs but no agreement. Before and after FDR
+Dropping the clustering filter adds pairs but no agreement. Before and after FDR
 the share of pairs with the expected sign stays near 50%, and the correlation
-stays near 0, as in panel10. This fits the FDR page: most gained associations
+stays near 0, as with the filter. This fits the FDR page: most gained associations
 vanish with read-based labels. The paper's-cutoff rows are the same set in both
 runs.
 
@@ -185,5 +184,5 @@ Reproduce with `long_read_RNA/10.isolaser_permutation/54.family_rules_gtex.sbatc
 (`ADAPTIVE_RULE=panel10nc`): `27.gtex_fdr_comparison.py --prepare-full-cerebellum` and
 `34.extract_full_cerebellum.R`, each for the after-FDR set and with `--before-fdr`;
 then `36.plot_fig3e_style.R` and `29.gtex_comparable_examples.R --skipping`. The
-paper's-cutoff set is the panel10 rerun's, read without being changed. Everything else
+paper's-cutoff set is the filtered run's, read without being changed. Everything else
 is written under `out/adaptive_panel10nc/` and `docs/assets/isolaser_gtex_panel10nc/`.

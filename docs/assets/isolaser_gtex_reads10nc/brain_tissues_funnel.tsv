@@ -1,10 +1,4 @@
 tissue	tp	associations	tested_in_gtex	comparable	pairs	genes
-Brain_Amygdala	0hr	12	5	6	0	0
-Brain_Amygdala	1hr	25	8	8	1	1
-Brain_Amygdala	6hr	34	15	8	1	1
-Brain_Anterior_cingulate_cortex_BA24	0hr	12	5	6	0	0
-Brain_Anterior_cingulate_cortex_BA24	1hr	25	8	8	1	1
-Brain_Anterior_cingulate_cortex_BA24	6hr	34	15	8	1	1
 Brain_Caudate_basal_ganglia	0hr	12	11	6	3	2
 Brain_Caudate_basal_ganglia	1hr	25	24	8	4	3
 Brain_Caudate_basal_ganglia	6hr	34	29	8	5	4
@@ -32,9 +26,3 @@ Brain_Nucleus_accumbens_basal_ganglia	6hr	34	29	8	5	4
 Brain_Putamen_basal_ganglia	0hr	12	11	6	3	2
 Brain_Putamen_basal_ganglia	1hr	25	24	8	4	3
 Brain_Putamen_basal_ganglia	6hr	34	29	8	5	4
-Brain_Spinal_cord_cervical_c-1	0hr	12	4	6	0	0
-Brain_Spinal_cord_cervical_c-1	1hr	25	7	8	1	1
-Brain_Spinal_cord_cervical_c-1	6hr	34	13	8	1	1
-Brain_Substantia_nigra	0hr	12	5	6	0	0
-Brain_Substantia_nigra	1hr	25	5	8	0	0
-Brain_Substantia_nigra	6hr	34	14	8	1	1

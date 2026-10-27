@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea84f532c83e8dcfdbfc8746c341077363b5514e0targetblanka84f532a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1bd9433efc9980549251154932f7df8b05455475targetblank1bd9433a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/a84f532c83e8dcfdbfc8746c341077363b5514e0" target="_blank">a84f532</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/1bd9433efc9980549251154932f7df8b05455475" target="_blank">1bd9433</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea84f532c83e8dcfdbfc8746c341077363b5514e0targetblanka84f532a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree1bd9433efc9980549251154932f7df8b05455475targetblank1bd9433a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/a84f532c83e8dcfdbfc8746c341077363b5514e0" target="_blank">a84f532</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/1bd9433efc9980549251154932f7df8b05455475" target="_blank">1bd9433</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -572,7 +572,6 @@ were generated:
 Unstaged changes:
     Modified:   analysis/isolaser_gtex_comparison_panel10nc.Rmd
     Modified:   analysis/isolaser_gtex_comparison_reads10nc.Rmd
-    Modified:   analysis/isolaser_gwas_catalog.Rmd
 
 </code></pre>
 <p>
@@ -619,6 +618,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/1bd9433efc9980549251154932f7df8b05455475/analysis/isolaser_gtex_comparison_reads10nc.Rmd" target="_blank">1bd9433</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-27
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/1bd9433efc9980549251154932f7df8b05455475/docs/isolaser_gtex_comparison_reads10nc.html" target="_blank">1bd9433</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-27
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1127,200 +1160,228 @@ once</strong> uses each pair’s mean ΔPSI over the timepoints where it is
 called.</p>
 </div>
 </div>
-<div id="all-13-gtex-brain-tissues" class="section level1">
-<h1>All 13 GTEx brain tissues</h1>
-<p>Here the comparison is repeated in all 13 GTEx v8 brain tissues, for
-the after-FDR set at the effect cutoff of our report: BH q &lt; 0.05,
-<code>cis</code> and |ΔPSI| ≥ 0.05 (71 associations over 0, 1 and 6
-hours). The matching is the same as above: the same SNV and gene, and
-the GTEx junction must be the annotated event’s skipping junction.</p>
-<ul>
-<li><strong>Full</strong> (9 tissues): GTEx’s full summary statistics,
-every tested association at any p-value, as for Cerebellum above.</li>
-<li><strong>Significant pairs only</strong> (Amygdala, Anterior
-cingulate cortex BA24, Spinal cord cervical c-1 and Substantia nigra):
-only GTEx’s significant pairs are available on the cluster. Only pairs
-GTEx calls significant can match, so these rows are not comparable with
-the full tissues.</li>
-</ul>
-<table style="width:100%;">
+<div id="nine-gtex-brain-tissues" class="section level1">
+<h1>Nine GTEx brain tissues</h1>
+<p>Here the comparison is repeated in every GTEx v8 brain tissue with
+full summary statistics on the cluster (every tested association, at any
+p-value), for the after-FDR set at the effect cutoff of our report: BH q
+&lt; 0.05, <code>cis</code> and |ΔPSI| ≥ 0.05 (71 associations over 0, 1
+and 6 hours). The matching is the same as above: the same SNV and gene,
+and the GTEx junction must be the annotated event’s skipping junction.
+The other four brain tissues (Amygdala, Anterior cingulate cortex BA24,
+Spinal cord cervical c-1 and Substantia nigra) have only GTEx’s
+significant pairs, so they are left out.</p>
+<table>
 <colgroup>
-<col width="21%" />
-<col width="15%" />
+<col width="20%" />
 <col width="18%" />
 <col width="3%" />
 <col width="3%" />
 <col width="9%" />
-<col width="9%" />
-<col width="19%" />
+<col width="17%" />
+<col width="27%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Tissue</th>
-<th align="left">GTEx data</th>
 <th align="right">Associations tested in GTEx</th>
 <th align="right">Pairs</th>
 <th align="right">Genes</th>
 <th align="right">R (p)</th>
-<th align="right">Expected sign</th>
-<th align="right">GTEx p &lt; 0.05: expected sign</th>
+<th align="right">Expected sign (binomial p)</th>
+<th align="right">GTEx p &lt; 0.05: expected sign (binomial p)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Caudate basal ganglia</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.90 (0.015)</td>
-<td align="right">6/6</td>
-<td align="right">5/5</td>
+<td align="right">6/6 (0.016)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="even">
 <td align="left">Cerebellar Hemisphere</td>
-<td align="left">full</td>
 <td align="right">58/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.83 (0.041)</td>
-<td align="right">5/6</td>
-<td align="right">5/5</td>
+<td align="right">5/6 (0.11)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="odd">
 <td align="left">Cerebellum</td>
-<td align="left">full</td>
 <td align="right">58/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.83 (0.039)</td>
-<td align="right">6/6</td>
-<td align="right">5/5</td>
+<td align="right">6/6 (0.016)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="even">
 <td align="left">Cortex</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">7</td>
 <td align="right">6</td>
 <td align="right">-0.73 (0.061)</td>
-<td align="right">7/7</td>
-<td align="right">5/5</td>
+<td align="right">7/7 (0.0078)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="odd">
 <td align="left">Frontal Cortex BA9</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.90 (0.015)</td>
-<td align="right">6/6</td>
-<td align="right">5/5</td>
+<td align="right">6/6 (0.016)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="even">
 <td align="left">Hippocampus</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.90 (0.015)</td>
-<td align="right">6/6</td>
-<td align="right">5/5</td>
+<td align="right">6/6 (0.016)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="odd">
 <td align="left">Hypothalamus</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">7</td>
 <td align="right">6</td>
 <td align="right">-0.86 (0.013)</td>
-<td align="right">7/7</td>
-<td align="right">5/5</td>
+<td align="right">7/7 (0.0078)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="even">
 <td align="left">Nucleus accumbens basal ganglia</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.87 (0.023)</td>
-<td align="right">6/6</td>
-<td align="right">5/5</td>
+<td align="right">6/6 (0.016)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 <tr class="odd">
 <td align="left">Putamen basal ganglia</td>
-<td align="left">full</td>
 <td align="right">64/71</td>
 <td align="right">6</td>
 <td align="right">5</td>
 <td align="right">-0.95 (0.004)</td>
-<td align="right">6/6</td>
-<td align="right">5/5</td>
-</tr>
-<tr class="even">
-<td align="left">Amygdala</td>
-<td align="left">significant pairs only</td>
-<td align="right">28/71</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">too few</td>
-<td align="right">2/2</td>
-<td align="right">2/2</td>
-</tr>
-<tr class="odd">
-<td align="left">Anterior cingulate cortex BA24</td>
-<td align="left">significant pairs only</td>
-<td align="right">28/71</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">too few</td>
-<td align="right">2/2</td>
-<td align="right">2/2</td>
-</tr>
-<tr class="even">
-<td align="left">Spinal cord cervical c-1</td>
-<td align="left">significant pairs only</td>
-<td align="right">24/71</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">too few</td>
-<td align="right">2/2</td>
-<td align="right">2/2</td>
-</tr>
-<tr class="odd">
-<td align="left">Substantia nigra</td>
-<td align="left">significant pairs only</td>
-<td align="right">24/71</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">too few</td>
-<td align="right">1/1</td>
-<td align="right">1/1</td>
+<td align="right">6/6 (0.016)</td>
+<td align="right">5/5 (0.031)</td>
 </tr>
 </tbody>
 </table>
-<p>Across the 9 full tissues, R is between -0.95 and -0.73, and 55 of 56
-pairs (summed over tissues) have the expected sign. This matches
-Cerebellum above: the same few associations (ATP5MJ, C11orf58, HM13,
-HNRNPK, PPA2, SNHG5) match in every brain tissue, and their effects
-agree with GTEx in direction in all of them.</p>
+<p>Across the 9 tissues, R is between -0.95 and -0.73, and 55 of 56
+pairs (summed over tissues) have the expected sign. The sign test gives
+one-sided p ≤ 0.016 in 8 of the 9 tissues. This matches Cerebellum
+above: the same few associations (ATP5MJ, C11orf58, HM13, HNRNPK, PPA2,
+SNHG5) match in every brain tissue, and their effects agree with GTEx in
+direction in all of them.</p>
 <p><strong>Associations tested in GTEx</strong>: association × timepoint
 rows whose variant GTEx reports for the same gene in that tissue, of all
-rows in the set. For the significant-pairs tissues this means a
-significant pair in the gene. <strong>Pairs</strong>: association ×
-matched GTEx skipping junction, each pair once, with its mean ΔPSI over
-the timepoints where the association is reported. <strong>R
-(p)</strong>: Pearson correlation of our ΔPSI with GTEx’s beta; a
-negative R is expected. <strong>Expected sign</strong>: pairs where our
-ΔPSI and GTEx’s beta have opposite signs. <strong>GTEx p &lt;
-0.05</strong>: the same, for pairs with GTEx nominal p &lt; 0.05. The
-tissues share many GTEx donors, so the rows are not independent.</p>
+rows in the set. <strong>Pairs</strong>: association × matched GTEx
+skipping junction, each pair once, with its mean ΔPSI over the
+timepoints where the association is reported. <strong>R (p)</strong>:
+Pearson correlation of our ΔPSI with GTEx’s beta; a negative R is
+expected. <strong>Expected sign (binomial p)</strong>: pairs where our
+ΔPSI and GTEx’s beta have opposite signs, of the pairs with ΔPSI ≠ 0,
+with a one-sided binomial test of whether that share is above 50%, as in
+<a href="#direction-where-gtex-is-significant">Direction where GTEx is
+significant</a>. With 6 or 7 pairs, all with the expected sign, the
+smallest possible p is 0.016 or 0.008. The two-sided p is in the
+per-timepoint table. <strong>GTEx p &lt; 0.05</strong>: the same, for
+pairs with GTEx nominal p &lt; 0.05. The tissues share many GTEx donors,
+so the rows are not independent.</p>
 <div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"5\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Caudate basal ganglia","Caudate basal ganglia","Caudate basal ganglia","Cerebellar Hemisphere","Cerebellar Hemisphere","Cerebellar Hemisphere","Cerebellum","Cerebellum","Cerebellum","Cortex","Cortex","Cortex","Frontal Cortex BA9","Frontal Cortex BA9","Frontal Cortex BA9","Hippocampus","Hippocampus","Hippocampus","Hypothalamus","Hypothalamus","Hypothalamus","Nucleus accumbens basal ganglia","Nucleus accumbens basal ganglia","Nucleus accumbens basal ganglia","Putamen basal ganglia","Putamen basal ganglia","Putamen basal ganglia","Amygdala","Amygdala","Amygdala","Anterior cingulate cortex BA24","Anterior cingulate cortex BA24","Anterior cingulate cortex BA24","Spinal cord cervical c-1","Spinal cord cervical c-1","Spinal cord cervical c-1","Substantia nigra","Substantia nigra","Substantia nigra"],["full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","full","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only","significant pairs only"],["0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr"],[3,4,5,3,4,5,3,4,5,4,4,5,3,4,5,3,4,5,4,4,5,3,4,5,3,4,5,0,1,1,0,1,1,0,1,1,0,0,1],["-0.97 (0.16)","-0.86 (0.14)","-0.94 (0.017)","-0.97 (0.17)","-0.83 (0.17)","-0.84 (0.073)","-0.97 (0.17)","-0.83 (0.17)","-0.83 (0.079)","-0.53 (0.47)","-0.80 (0.2)","-0.90 (0.036)","-0.96 (0.18)","-0.87 (0.13)","-0.94 (0.019)","-0.97 (0.17)","-0.86 (0.14)","-0.96 (0.0084)","-0.76 (0.24)","-0.93 (0.069)","-0.97 (0.005)","-0.97 (0.16)","-0.83 (0.17)","-0.93 (0.02)","-0.94 (0.22)","-0.93 (0.067)","-0.97 (0.0068)","too few","too few","too few","too few","too few","too few","too few","too few","too few","too few","too few","too few"],["3/3","4/4","5/5","3/3","4/4","4/5","3/3","4/4","5/5","4/4","4/4","5/5","3/3","4/4","5/5","3/3","4/4","5/5","4/4","4/4","5/5","3/3","4/4","5/5","3/3","4/4","5/5","none","1/1","1/1","none","1/1","1/1","none","1/1","1/1","none","none","1/1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Tissue<\/th>\n      <th>GTEx data<\/th>\n      <th>Timepoint<\/th>\n      <th>Pairs<\/th>\n      <th>R (p)<\/th>\n      <th>Expected sign<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":13,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,13,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3\" data-max=\"5\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.031\" data-max=\"0.19\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.062\" data-max=\"0.38\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Caudate basal ganglia","Caudate basal ganglia","Caudate basal ganglia","Cerebellar Hemisphere","Cerebellar Hemisphere","Cerebellar Hemisphere","Cerebellum","Cerebellum","Cerebellum","Cortex","Cortex","Cortex","Frontal Cortex BA9","Frontal Cortex BA9","Frontal Cortex BA9","Hippocampus","Hippocampus","Hippocampus","Hypothalamus","Hypothalamus","Hypothalamus","Nucleus accumbens basal ganglia","Nucleus accumbens basal ganglia","Nucleus accumbens basal ganglia","Putamen basal ganglia","Putamen basal ganglia","Putamen basal ganglia"],["0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","6 hr"],[3,4,5,3,4,5,3,4,5,4,4,5,3,4,5,3,4,5,4,4,5,3,4,5,3,4,5],["-0.97 (0.16)","-0.86 (0.14)","-0.94 (0.017)","-0.97 (0.17)","-0.83 (0.17)","-0.84 (0.073)","-0.97 (0.17)","-0.83 (0.17)","-0.83 (0.079)","-0.53 (0.47)","-0.80 (0.2)","-0.90 (0.036)","-0.96 (0.18)","-0.87 (0.13)","-0.94 (0.019)","-0.97 (0.17)","-0.86 (0.14)","-0.96 (0.0084)","-0.76 (0.24)","-0.93 (0.069)","-0.97 (0.005)","-0.97 (0.16)","-0.83 (0.17)","-0.93 (0.02)","-0.94 (0.22)","-0.93 (0.067)","-0.97 (0.0068)"],["3/3","4/4","5/5","3/3","4/4","4/5","3/3","4/4","5/5","4/4","4/4","5/5","3/3","4/4","5/5","3/3","4/4","5/5","4/4","4/4","5/5","3/3","4/4","5/5","3/3","4/4","5/5"],[0.12,0.062,0.031,0.12,0.062,0.19,0.12,0.062,0.031,0.062,0.062,0.031,0.12,0.062,0.031,0.12,0.062,0.031,0.062,0.062,0.031,0.12,0.062,0.031,0.12,0.062,0.031],[0.25,0.12,0.062,0.25,0.12,0.38,0.25,0.12,0.062,0.12,0.12,0.062,0.25,0.12,0.062,0.25,0.12,0.062,0.12,0.12,0.062,0.25,0.12,0.062,0.25,0.12,0.062]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Tissue<\/th>\n      <th>Timepoint<\/th>\n      <th>Pairs<\/th>\n      <th>R (p)<\/th>\n      <th>Expected sign<\/th>\n      <th>Binomial p, one-sided<\/th>\n      <th>Binomial p, two-sided<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":9,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,5,6]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[9,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <p>The same statistics for each timepoint separately. The matched pairs,
 with every tissue, are in <a
 href="assets/isolaser_gtex_reads10nc/brain_tissues_points.tsv">this
 table</a>.</p>
+<div id="scatter-plots" class="section level2 tabset">
+<h2 class="tabset">Scatter plots</h2>
+<p>One tab per tissue, drawn as for Cerebellum above: each point is a
+pair at one timepoint. Blue: GTEx nominal p &lt; 0.05; grey: p ≥ 0.05.
+The line is a least-squares fit, drawn when a panel has 3 or more
+pairs.</p>
+<div id="caudate-basal-ganglia" class="section level3">
+<h3>Caudate basal ganglia</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Caudate_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Caudate_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cerebellar-hemisphere" class="section level3">
+<h3>Cerebellar Hemisphere</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Cerebellar_Hemisphere.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Cerebellar_Hemisphere.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cerebellum" class="section level3">
+<h3>Cerebellum</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Cerebellum.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Cerebellum.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cortex" class="section level3">
+<h3>Cortex</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Cortex.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Cortex.pdf">Open
+as PDF</a></p>
+</div>
+<div id="frontal-cortex-ba9" class="section level3">
+<h3>Frontal Cortex BA9</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Frontal_Cortex_BA9.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Frontal_Cortex_BA9.pdf">Open
+as PDF</a></p>
+</div>
+<div id="hippocampus" class="section level3">
+<h3>Hippocampus</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Hippocampus.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Hippocampus.pdf">Open
+as PDF</a></p>
+</div>
+<div id="hypothalamus" class="section level3">
+<h3>Hypothalamus</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Hypothalamus.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Hypothalamus.pdf">Open
+as PDF</a></p>
+</div>
+<div id="nucleus-accumbens-basal-ganglia" class="section level3">
+<h3>Nucleus accumbens basal ganglia</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Nucleus_accumbens_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Nucleus_accumbens_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+<div id="putamen-basal-ganglia" class="section level3">
+<h3>Putamen basal ganglia</h3>
+<p><img
+src="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Putamen_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_reads10nc/brain_tissues_Brain_Putamen_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+</div>
 </div>
 <div id="compared-with-the-run-with-the-clustering-filter"
 class="section level1">

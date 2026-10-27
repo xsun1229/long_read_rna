@@ -138,7 +138,7 @@ different from 50%. **One-sided p**: is it above 50%, the direction expected.
 timepoints counts several times. **Each pair once** uses each pair's mean ΔPSI
 over the timepoints where it is called.
 
-# All 13 GTEx brain tissues
+# Nine GTEx brain tissues
 
 ```{r brain_setup}
 bs <- fread(file.path(A, "brain_tissues_stats.tsv")); bf <- fread(file.path(A, "brain_tissues_funnel.tsv"))
@@ -146,59 +146,77 @@ bp <- fread(file.path(A, "brain_tissues_points.tsv"))
 tname <- function(x) gsub("_", " ", sub("^Brain_", "", x))
 rp2 <- function(r, p) fifelse(is.na(r), "too few", sprintf("%.2f (%s)", r, vapply(p, function(x) if (is.na(x)) "NA" else format(signif(x, 2)), "")))
 kn <- function(k, n) fifelse(n == 0, "none", sprintf("%d/%d", k, n))
+knp <- function(k, n, p) fifelse(n == 0, "none", sprintf("%d/%d (%s)", k, n, vapply(p, function(x) if (is.na(x)) "NA" else format(signif(x, 2)), "")))
 n_assoc <- bf[, associations[1], by=tp][, sum(V1)]
-full <- bs[scope == "each pair once" & subset == "all" & data_type == "full"]
+full <- bs[scope == "each pair once" & subset == "all"]
 ```
 
-Here the comparison is repeated in all 13 GTEx v8 brain tissues, for the
+Here the comparison is repeated in every GTEx v8 brain tissue with full summary
+statistics on the cluster (every tested association, at any p-value), for the
 after-FDR set at the effect cutoff of our report: BH q < 0.05, `cis` and
 \|ΔPSI\| ≥ 0.05 (`r n_assoc` associations over 0, 1 and 6 hours). The matching is
 the same as above: the same SNV and gene, and the GTEx junction must be the
-annotated event's skipping junction.
-
-- **Full** (9 tissues): GTEx's full summary statistics, every tested
-  association at any p-value, as for Cerebellum above.
-- **Significant pairs only** (Amygdala, Anterior cingulate cortex BA24, Spinal
-  cord cervical c-1 and Substantia nigra): only GTEx's significant pairs are
-  available on the cluster. Only pairs GTEx calls significant can match, so these
-  rows are not comparable with the full tissues.
+annotated event's skipping junction. The other four brain tissues (Amygdala,
+Anterior cingulate cortex BA24, Spinal cord cervical c-1 and Substantia nigra)
+have only GTEx's significant pairs, so they are left out.
 
 ```{r brain_table}
-once <- dcast(bs[scope == "each pair once"], tissue + data_type ~ subset, value.var=c("n", "genes", "expected_sign", "pearson_r", "pearson_p"))
+once <- dcast(bs[scope == "each pair once"], tissue + data_type ~ subset, value.var=c("n", "genes", "n_sign", "expected_sign", "pearson_r", "pearson_p", "binom_p_one_sided"))
 tested <- bf[, .(tested=sum(tested_in_gtex), total=sum(associations)), by=tissue]
 once <- merge(once, tested, by="tissue")
-once <- once[order(data_type != "full", tissue)]
-knitr::kable(once[, .(Tissue=tname(tissue), `GTEx data`=data_type,
+once <- once[order(tissue)]
+knitr::kable(once[, .(Tissue=tname(tissue),
   `Associations tested in GTEx`=sprintf("%d/%d", tested, total), Pairs=n_all, Genes=genes_all,
-  `R (p)`=rp2(pearson_r_all, pearson_p_all), `Expected sign`=kn(expected_sign_all, n_all),
-  `GTEx p < 0.05: expected sign`=kn(`expected_sign_GTEx p < 0.05`, `n_GTEx p < 0.05`))], align="llrrrrrr")
+  `R (p)`=rp2(pearson_r_all, pearson_p_all), `Expected sign (binomial p)`=knp(expected_sign_all, n_sign_all, binom_p_one_sided_all),
+  `GTEx p < 0.05: expected sign (binomial p)`=knp(`expected_sign_GTEx p < 0.05`, `n_sign_GTEx p < 0.05`, `binom_p_one_sided_GTEx p < 0.05`))], align="lrrrrrr")
 ```
 
-Across the 9 full tissues, R is between `r sprintf("%.2f", min(full$pearson_r))` and
+Across the 9 tissues, R is between `r sprintf("%.2f", min(full$pearson_r))` and
 `r sprintf("%.2f", max(full$pearson_r))`, and `r sum(full$expected_sign)` of `r sum(full$n)` pairs (summed over
-tissues) have the expected sign. This matches Cerebellum above: the same few associations
+tissues) have the expected sign. The sign test gives one-sided p ≤ 0.016 in
+`r sum(full$binom_p_one_sided <= 0.016)` of the 9 tissues. This matches Cerebellum above: the same few associations
 (`r paste(sort(unique(bp[role == "skipping", gene])), collapse=", ")`) match in every brain tissue, and their
 effects agree with GTEx in direction in all of them.
 
 **Associations tested in GTEx**: association × timepoint rows whose variant
-GTEx reports for the same gene in that tissue, of all rows in the set. For the
-significant-pairs tissues this means a significant pair in the gene.
+GTEx reports for the same gene in that tissue, of all rows in the set.
 **Pairs**: association × matched GTEx skipping junction, each pair once, with
 its mean ΔPSI over the timepoints where the association is reported. **R (p)**:
 Pearson correlation of our ΔPSI with GTEx's beta; a negative R is expected.
-**Expected sign**: pairs where our ΔPSI and GTEx's beta have opposite signs.
-**GTEx p < 0.05**: the same, for pairs with GTEx nominal p < 0.05. The tissues
-share many GTEx donors, so the rows are not independent.
+**Expected sign (binomial p)**: pairs where our ΔPSI and GTEx's beta have
+opposite signs, of the pairs with ΔPSI ≠ 0, with a one-sided binomial test of
+whether that share is above 50%, as in
+[Direction where GTEx is significant](#direction-where-gtex-is-significant). With
+6 or 7 pairs, all with the expected sign, the smallest possible p is 0.016 or
+0.008. The two-sided p is in the per-timepoint table. **GTEx p < 0.05**: the same,
+for pairs with GTEx nominal p < 0.05. The tissues share many GTEx donors, so the
+rows are not independent.
 
 ```{r brain_tp}
-pt <- bs[scope != "each pair once" & subset == "all"][order(data_type != "full", tissue, scope)]
-DT::datatable(as.data.frame(pt[, .(Tissue=tname(tissue), `GTEx data`=data_type, Timepoint=tpl(scope), Pairs=n,
-  `R (p)`=rp2(pearson_r, pearson_p), `Expected sign`=kn(expected_sign, n))]),
-  rownames=FALSE, filter="top", options=list(pageLength=13, scrollX=TRUE))
+pt <- bs[scope != "each pair once" & subset == "all"][order(tissue, scope)]
+DT::datatable(as.data.frame(pt[, .(Tissue=tname(tissue), Timepoint=tpl(scope), Pairs=n,
+  `R (p)`=rp2(pearson_r, pearson_p), `Expected sign`=kn(expected_sign, n_sign),
+  `Binomial p, one-sided`=signif(binom_p_one_sided, 2), `Binomial p, two-sided`=signif(binom_p_two_sided, 2))]),
+  rownames=FALSE, filter="top", options=list(pageLength=9, scrollX=TRUE))
 ```
 
 The same statistics for each timepoint separately. The matched pairs, with
 every tissue, are in [this table](assets/isolaser_gtex_reads10nc/brain_tissues_points.tsv).
+
+## Scatter plots {.tabset}
+
+One tab per tissue, drawn as for Cerebellum above: each point is a pair at one
+timepoint. Blue: GTEx nominal p < 0.05; grey: p ≥ 0.05. The line is a
+least-squares fit, drawn when a panel has 3 or more pairs.
+
+```{r brain_tabs, results="asis"}
+for (t in sort(unique(bs$tissue))) {
+  cat("### ", tname(t), "\n\n", sep="")
+  cat("![](assets/isolaser_gtex_reads10nc/brain_tissues_", t, ".png)\n\n", sep="")
+  cat("[Open as PDF](assets/isolaser_gtex_reads10nc/brain_tissues_", t, ".pdf)\n\n", sep="")
+}
+```
+
 
 # Compared with the run with the clustering filter
 

@@ -1,28 +1,82 @@
-tissue	tp	associations	tested_in_gtex	comparable	pairs	genes
-Brain_Caudate_basal_ganglia	0hr	38	28	10	7	4
-Brain_Caudate_basal_ganglia	1hr	64	58	21	18	10
-Brain_Caudate_basal_ganglia	6hr	57	46	18	12	7
-Brain_Cerebellar_Hemisphere	0hr	38	25	10	8	5
-Brain_Cerebellar_Hemisphere	1hr	64	55	21	19	10
-Brain_Cerebellar_Hemisphere	6hr	57	40	18	14	9
-Brain_Cerebellum	0hr	38	25	10	9	6
-Brain_Cerebellum	1hr	64	55	21	20	11
-Brain_Cerebellum	6hr	57	41	18	14	9
-Brain_Cortex	0hr	38	25	10	6	3
-Brain_Cortex	1hr	64	55	21	15	9
-Brain_Cortex	6hr	57	41	18	12	7
-Brain_Frontal_Cortex_BA9	0hr	38	22	10	7	4
-Brain_Frontal_Cortex_BA9	1hr	64	53	21	16	10
-Brain_Frontal_Cortex_BA9	6hr	57	38	18	13	8
-Brain_Hippocampus	0hr	38	22	10	6	3
-Brain_Hippocampus	1hr	64	53	21	18	9
-Brain_Hippocampus	6hr	57	38	18	12	7
-Brain_Hypothalamus	0hr	38	28	10	6	3
-Brain_Hypothalamus	1hr	64	58	21	17	9
-Brain_Hypothalamus	6hr	57	46	18	11	6
-Brain_Nucleus_accumbens_basal_ganglia	0hr	38	28	10	7	4
-Brain_Nucleus_accumbens_basal_ganglia	1hr	64	57	21	19	10
-Brain_Nucleus_accumbens_basal_ganglia	6hr	57	45	18	13	8
-Brain_Putamen_basal_ganglia	0hr	38	25	10	6	3
-Brain_Putamen_basal_ganglia	1hr	64	55	21	18	9
-Brain_Putamen_basal_ganglia	6hr	57	42	18	12	7
+tissue	tp	reported_snv_associations	tested_in_gtex	plotted	genes	set
+Brain_Caudate_basal_ganglia	0hr	10301	2250	209	127	Paper's cutoff
+Brain_Caudate_basal_ganglia	1hr	11604	3231	298	183	Paper's cutoff
+Brain_Caudate_basal_ganglia	6hr	11736	3637	321	208	Paper's cutoff
+Brain_Cerebellar_Hemisphere	0hr	10301	2202	244	144	Paper's cutoff
+Brain_Cerebellar_Hemisphere	1hr	11604	3194	345	203	Paper's cutoff
+Brain_Cerebellar_Hemisphere	6hr	11736	3615	383	232	Paper's cutoff
+Brain_Cerebellum	0hr	10301	2200	236	137	Paper's cutoff
+Brain_Cerebellum	1hr	11604	3195	333	199	Paper's cutoff
+Brain_Cerebellum	6hr	11736	3568	380	230	Paper's cutoff
+Brain_Cortex	0hr	10301	2103	210	125	Paper's cutoff
+Brain_Cortex	1hr	11604	3052	297	181	Paper's cutoff
+Brain_Cortex	6hr	11736	3477	334	207	Paper's cutoff
+Brain_Frontal_Cortex_BA9	0hr	10301	2136	206	128	Paper's cutoff
+Brain_Frontal_Cortex_BA9	1hr	11604	3086	291	181	Paper's cutoff
+Brain_Frontal_Cortex_BA9	6hr	11736	3514	325	210	Paper's cutoff
+Brain_Hippocampus	0hr	10301	2163	204	124	Paper's cutoff
+Brain_Hippocampus	1hr	11604	3196	295	180	Paper's cutoff
+Brain_Hippocampus	6hr	11736	3587	320	197	Paper's cutoff
+Brain_Hypothalamus	0hr	10301	2177	204	131	Paper's cutoff
+Brain_Hypothalamus	1hr	11604	3124	298	187	Paper's cutoff
+Brain_Hypothalamus	6hr	11736	3575	325	209	Paper's cutoff
+Brain_Nucleus_accumbens_basal_ganglia	0hr	10301	2093	208	125	Paper's cutoff
+Brain_Nucleus_accumbens_basal_ganglia	1hr	11604	3091	299	182	Paper's cutoff
+Brain_Nucleus_accumbens_basal_ganglia	6hr	11736	3533	324	208	Paper's cutoff
+Brain_Putamen_basal_ganglia	0hr	10301	2061	206	123	Paper's cutoff
+Brain_Putamen_basal_ganglia	1hr	11604	3083	295	177	Paper's cutoff
+Brain_Putamen_basal_ganglia	6hr	11736	3473	319	202	Paper's cutoff
+Brain_Caudate_basal_ganglia	0hr	440	404	57	40	Before FDR
+Brain_Caudate_basal_ganglia	1hr	702	644	97	71	Before FDR
+Brain_Caudate_basal_ganglia	6hr	666	612	88	65	Before FDR
+Brain_Cerebellar_Hemisphere	0hr	440	396	65	44	Before FDR
+Brain_Cerebellar_Hemisphere	1hr	702	654	105	76	Before FDR
+Brain_Cerebellar_Hemisphere	6hr	666	612	105	72	Before FDR
+Brain_Cerebellum	0hr	440	401	65	44	Before FDR
+Brain_Cerebellum	1hr	702	653	104	73	Before FDR
+Brain_Cerebellum	6hr	666	604	100	70	Before FDR
+Brain_Cortex	0hr	440	401	55	39	Before FDR
+Brain_Cortex	1hr	702	644	95	71	Before FDR
+Brain_Cortex	6hr	666	599	87	65	Before FDR
+Brain_Frontal_Cortex_BA9	0hr	440	394	55	40	Before FDR
+Brain_Frontal_Cortex_BA9	1hr	702	639	96	72	Before FDR
+Brain_Frontal_Cortex_BA9	6hr	666	591	91	67	Before FDR
+Brain_Hippocampus	0hr	440	396	54	37	Before FDR
+Brain_Hippocampus	1hr	702	635	96	70	Before FDR
+Brain_Hippocampus	6hr	666	598	88	63	Before FDR
+Brain_Hypothalamus	0hr	440	407	55	39	Before FDR
+Brain_Hypothalamus	1hr	702	647	96	71	Before FDR
+Brain_Hypothalamus	6hr	666	628	91	67	Before FDR
+Brain_Nucleus_accumbens_basal_ganglia	0hr	440	404	60	42	Before FDR
+Brain_Nucleus_accumbens_basal_ganglia	1hr	702	641	97	68	Before FDR
+Brain_Nucleus_accumbens_basal_ganglia	6hr	666	603	89	65	Before FDR
+Brain_Putamen_basal_ganglia	0hr	440	359	56	38	Before FDR
+Brain_Putamen_basal_ganglia	1hr	702	634	95	66	Before FDR
+Brain_Putamen_basal_ganglia	6hr	666	604	87	63	Before FDR
+Brain_Caudate_basal_ganglia	0hr	38	28	7	4	After FDR
+Brain_Caudate_basal_ganglia	1hr	64	58	18	10	After FDR
+Brain_Caudate_basal_ganglia	6hr	57	46	12	7	After FDR
+Brain_Cerebellar_Hemisphere	0hr	38	25	8	5	After FDR
+Brain_Cerebellar_Hemisphere	1hr	64	55	19	10	After FDR
+Brain_Cerebellar_Hemisphere	6hr	57	40	14	9	After FDR
+Brain_Cerebellum	0hr	38	25	9	6	After FDR
+Brain_Cerebellum	1hr	64	55	20	11	After FDR
+Brain_Cerebellum	6hr	57	41	14	9	After FDR
+Brain_Cortex	0hr	38	25	6	3	After FDR
+Brain_Cortex	1hr	64	55	15	9	After FDR
+Brain_Cortex	6hr	57	41	12	7	After FDR
+Brain_Frontal_Cortex_BA9	0hr	38	22	7	4	After FDR
+Brain_Frontal_Cortex_BA9	1hr	64	53	16	10	After FDR
+Brain_Frontal_Cortex_BA9	6hr	57	38	13	8	After FDR
+Brain_Hippocampus	0hr	38	22	6	3	After FDR
+Brain_Hippocampus	1hr	64	53	18	9	After FDR
+Brain_Hippocampus	6hr	57	38	12	7	After FDR
+Brain_Hypothalamus	0hr	38	28	6	3	After FDR
+Brain_Hypothalamus	1hr	64	58	17	9	After FDR
+Brain_Hypothalamus	6hr	57	46	11	6	After FDR
+Brain_Nucleus_accumbens_basal_ganglia	0hr	38	28	7	4	After FDR
+Brain_Nucleus_accumbens_basal_ganglia	1hr	64	57	19	10	After FDR
+Brain_Nucleus_accumbens_basal_ganglia	6hr	57	45	13	8	After FDR
+Brain_Putamen_basal_ganglia	0hr	38	25	6	3	After FDR
+Brain_Putamen_basal_ganglia	1hr	64	55	18	9	After FDR
+Brain_Putamen_basal_ganglia	6hr	57	42	12	7	After FDR

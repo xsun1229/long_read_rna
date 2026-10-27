@@ -46,7 +46,7 @@ to both aims.
 
 We ask whether reads carrying a SNP's two alleles splice an exonic part
 differently, within donors heterozygous for it. Significance comes from a
-genome-wide permutation test with an FDR per timepoint, and GTEx Cerebellum sQTLs
+genome-wide permutation test with an FDR per timepoint, and GTEx brain sQTLs
 serve as an independent check.
 
 **Current analysis: read-based isoLASER**, without the clustering filter.
@@ -54,7 +54,8 @@ serve as an independent check.
 * [Genome-wide FDR](isolaser_fdr_reads10nc.html) — results, genes to follow up
   with their figures (PARK7, PPA2, LY6H, ZNF749), and what dropping the
   clustering filter changed
-* [Comparison with GTEx Cerebellum sQTLs](isolaser_gtex_comparison_reads10nc.html)
+* [Comparison with GTEx brain sQTLs](isolaser_gtex_comparison_reads10nc.html) — nine brain
+  tissues, three sets (paper's cutoff, before and after FDR)
 * [Hits in the GWAS Catalog](isolaser_gwas_catalog.html) — which reported
   variants are known GWAS signals for neuropsychiatric, brain or behaviour
   traits (GNL3, LY6H)

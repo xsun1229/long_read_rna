@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree49d710de211a70259fde30268c8096368b32cadftargetblank49d710da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea7f8095eeee8e7c4b0e3a27406c4766530ff630btargetblanka7f8095a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/49d710de211a70259fde30268c8096368b32cadf" target="_blank">49d710d</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/a7f8095eeee8e7c4b0e3a27406c4766530ff630b" target="_blank">a7f8095</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree49d710de211a70259fde30268c8096368b32cadftargetblank49d710da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea7f8095eeee8e7c4b0e3a27406c4766530ff630btargetblanka7f8095a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/49d710de211a70259fde30268c8096368b32cadf" target="_blank">49d710d</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/a7f8095eeee8e7c4b0e3a27406c4766530ff630b" target="_blank">a7f8095</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -558,7 +558,6 @@ were generated:
 </p>
 <pre><code>
 Unstaged changes:
-    Modified:   analysis/index.Rmd
     Modified:   analysis/isolaser_gtex_comparison_panel10nc.Rmd
     Modified:   analysis/isolaser_gtex_comparison_reads10nc.Rmd
 
@@ -607,6 +606,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/a7f8095eeee8e7c4b0e3a27406c4766530ff630b/analysis/isolaser_gtex_comparison_panel10nc.Rmd" target="_blank">a7f8095</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-27
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/a7f8095eeee8e7c4b0e3a27406c4766530ff630b/docs/isolaser_gtex_comparison_panel10nc.html" target="_blank">a7f8095</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-27
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -769,7 +802,9 @@ Ensembl gene in GTEx.</li>
 tested association at any p-value. Nine of GTEx’s 13 brain tissues have
 them on the cluster. The other four (Amygdala, Anterior cingulate cortex
 BA24, Spinal cord cervical c-1 and Substantia nigra) have only GTEx’s
-significant pairs and are left out.</li>
+significant pairs and are left out. This differs from the paper, whose
+Methods describe an overlap with GTEx’s significant pairs: here pairs
+that GTEx does not call significant (the grey points) are included.</li>
 <li><strong>Event:</strong> the exonic part must form an annotated
 exon-skipping or alternative-splice-site event, and the GTEx junction
 must be exactly that event’s skipping junction.</li>
@@ -790,8 +825,13 @@ filter.</li>
 within each timepoint, as on <a href="isolaser_fdr_panel10nc.html">this
 run’s FDR page</a>.</li>
 </ul>
-<p>The ΔPSI cutoff for the last two sets is 0.05, the cutoff of our
-report. Earlier versions of this page used 0.10 and Cerebellum only.</p>
+<p>For this GTEx comparison, we use a broader effect-size screen of
+|ΔPSI| ≥ 0.05; the main <a href="isolaser_fdr_panel10nc.html">FDR
+page</a> uses ≥ 0.10. The BH q-values were calculated over the full
+eligible family of tested associations in each timepoint, before the
+<code>cis</code> and |ΔPSI| display filters are applied, so the broader
+screen changes no q-value. It only shows more of the associations that
+already have q &lt; 0.05.</p>
 <p><strong>Example, HNRNPK.</strong> The C&gt;T variant (chr9:83980154,
 0-based) and the 34-base exonic part (gold) form an alternative splice
 site. GTEx measures the skipping junction (blue), which jumps over the
@@ -903,12 +943,26 @@ have opposite signs;</li>
 from 50% (two-sided) or is above it, the expected direction
 (one-sided).</li>
 </ul>
-We count this per timepoint, and over all timepoints in two ways.
-<strong>Every point</strong> counts each timepoint’s points, so a pair
-called at several timepoints counts several times. <strong>Each pair
-once</strong> uses each pair’s mean ΔPSI over the timepoints where it is
-called.</li>
+We count this per timepoint, and over all timepoints with <strong>each
+pair once</strong>: each pair’s mean ΔPSI over the timepoints where it
+is called, so an association reported at several timepoints counts
+once.</li>
 </ul>
+<p><strong>The binomial p-values are exploratory.</strong> The test
+assumes independent pairs, and they are not:</p>
+<ul>
+<li>pairs can come from the same gene or exonic part, so related
+variants count separately;</li>
+<li>the same associations recur in every tissue;</li>
+<li>nothing corrects for the many sets, timepoints and tissues
+tested.</li>
+</ul>
+<p>For example, after FDR the pairs with GTEx p &lt; 0.05 are 16 pairs
+at 8 exonic parts in 8 genes (ARF4, ATP5MJ, DNTTIP2, HNRNPK, PFKP,
+SNHG5, TAX1BP1, ZFAND2A), over all nine tissues, and the binomial p
+treats them as 16 independent trials. A formal test would have to
+account for dependence within genes and loci, and for multiple
+comparisons.</p>
 </div>
 <div id="results" class="section level2 tabset">
 <h2 class="tabset">Results</h2>
@@ -921,8 +975,10 @@ and their genes.</li>
 <li><strong>Correlation</strong> and <strong>Sign consistency</strong>,
 as defined above.</li>
 </ul>
-<p>Most associations in the paper’s-cutoff set are tested in GTEx, but
-only a minority form an annotated event with a matching skipping
+<p>Only a minority of the paper’s-cutoff associations are tested in GTEx
+for the same variant and gene: 20.0–31.0% across tissues and timepoints
+(Cerebellum at 0 hr: 2,200 of 10,301, 21.4%, with 236 plotted pairs).
+Fewer still form an annotated event with a matching skipping
 junction.</p>
 <div id="cerebellum-1" class="section level3">
 <h3>Cerebellum</h3>
@@ -1116,7 +1172,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -1168,15 +1225,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">230</td>
-<td align="right">127</td>
-<td align="right">55</td>
-<td align="right">0.13</td>
-<td align="right">0.065</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">167</td>
 <td align="right">94</td>
@@ -1184,7 +1232,7 @@ junction.</p>
 <td align="right">0.12</td>
 <td align="right">0.061</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">13</td>
@@ -1193,7 +1241,7 @@ junction.</p>
 <td align="right">1</td>
 <td align="right">0.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">34</td>
@@ -1202,7 +1250,7 @@ junction.</p>
 <td align="right">1</td>
 <td align="right">0.57</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">21</td>
@@ -1210,15 +1258,6 @@ junction.</p>
 <td align="right">52</td>
 <td align="right">1</td>
 <td align="right">0.5</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">68</td>
-<td align="right">35</td>
-<td align="right">51</td>
-<td align="right">0.9</td>
-<td align="right">0.45</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -1257,15 +1296,6 @@ junction.</p>
 <td align="right">0.77</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">16</td>
-<td align="right">8</td>
-<td align="right">50</td>
-<td align="right">1</td>
-<td align="right">0.6</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">8</td>
@@ -1469,7 +1499,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -1521,15 +1552,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">233</td>
-<td align="right">138</td>
-<td align="right">59</td>
-<td align="right">0.0058</td>
-<td align="right">0.0029</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">170</td>
 <td align="right">101</td>
@@ -1537,7 +1559,7 @@ junction.</p>
 <td align="right">0.017</td>
 <td align="right">0.0086</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">14</td>
@@ -1546,7 +1568,7 @@ junction.</p>
 <td align="right">0.79</td>
 <td align="right">0.4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">33</td>
@@ -1555,7 +1577,7 @@ junction.</p>
 <td align="right">1</td>
 <td align="right">0.5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">25</td>
@@ -1563,15 +1585,6 @@ junction.</p>
 <td align="right">48</td>
 <td align="right">1</td>
 <td align="right">0.65</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">72</td>
-<td align="right">37</td>
-<td align="right">51</td>
-<td align="right">0.91</td>
-<td align="right">0.45</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -1610,15 +1623,6 @@ junction.</p>
 <td align="right">0.86</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">21</td>
-<td align="right">10</td>
-<td align="right">48</td>
-<td align="right">1</td>
-<td align="right">0.67</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">12</td>
@@ -1822,7 +1826,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -1874,15 +1879,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">191</td>
-<td align="right">109</td>
-<td align="right">57</td>
-<td align="right">0.06</td>
-<td align="right">0.03</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">137</td>
 <td align="right">79</td>
@@ -1890,7 +1886,7 @@ junction.</p>
 <td align="right">0.087</td>
 <td align="right">0.044</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">10</td>
@@ -1899,7 +1895,7 @@ junction.</p>
 <td align="right">1</td>
 <td align="right">0.62</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">30</td>
@@ -1908,7 +1904,7 @@ junction.</p>
 <td align="right">0.86</td>
 <td align="right">0.43</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">25</td>
@@ -1916,15 +1912,6 @@ junction.</p>
 <td align="right">40</td>
 <td align="right">0.42</td>
 <td align="right">0.89</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">65</td>
-<td align="right">31</td>
-<td align="right">48</td>
-<td align="right">0.8</td>
-<td align="right">0.69</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -1963,15 +1950,6 @@ junction.</p>
 <td align="right">0.77</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">16</td>
-<td align="right">8</td>
-<td align="right">50</td>
-<td align="right">1</td>
-<td align="right">0.6</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">8</td>
@@ -2175,7 +2153,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -2227,15 +2206,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">206</td>
-<td align="right">130</td>
-<td align="right">63</td>
-<td align="right">0.00021</td>
-<td align="right">1e-04</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">151</td>
 <td align="right">90</td>
@@ -2243,7 +2213,7 @@ junction.</p>
 <td align="right">0.022</td>
 <td align="right">0.011</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">13</td>
@@ -2252,7 +2222,7 @@ junction.</p>
 <td align="right">0.092</td>
 <td align="right">0.046</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">28</td>
@@ -2261,7 +2231,7 @@ junction.</p>
 <td align="right">0.85</td>
 <td align="right">0.43</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">17</td>
@@ -2269,15 +2239,6 @@ junction.</p>
 <td align="right">65</td>
 <td align="right">0.33</td>
 <td align="right">0.17</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">58</td>
-<td align="right">36</td>
-<td align="right">62</td>
-<td align="right">0.087</td>
-<td align="right">0.043</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -2316,15 +2277,6 @@ junction.</p>
 <td align="right">0.031</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">15</td>
-<td align="right">15</td>
-<td align="right">100</td>
-<td align="right">6.1e-05</td>
-<td align="right">3.1e-05</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">7</td>
@@ -2528,7 +2480,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -2580,15 +2533,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">186</td>
-<td align="right">108</td>
-<td align="right">58</td>
-<td align="right">0.033</td>
-<td align="right">0.017</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">138</td>
 <td align="right">80</td>
@@ -2596,7 +2540,7 @@ junction.</p>
 <td align="right">0.073</td>
 <td align="right">0.037</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">10</td>
@@ -2605,7 +2549,7 @@ junction.</p>
 <td align="right">0.75</td>
 <td align="right">0.38</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">36</td>
@@ -2614,7 +2558,7 @@ junction.</p>
 <td align="right">0.62</td>
 <td align="right">0.8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">22</td>
@@ -2622,15 +2566,6 @@ junction.</p>
 <td align="right">45</td>
 <td align="right">0.83</td>
 <td align="right">0.74</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">68</td>
-<td align="right">32</td>
-<td align="right">47</td>
-<td align="right">0.72</td>
-<td align="right">0.73</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -2669,15 +2604,6 @@ junction.</p>
 <td align="right">0.86</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">20</td>
-<td align="right">8</td>
-<td align="right">40</td>
-<td align="right">0.5</td>
-<td align="right">0.87</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">11</td>
@@ -2881,7 +2807,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -2933,15 +2860,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">175</td>
-<td align="right">100</td>
-<td align="right">57</td>
-<td align="right">0.069</td>
-<td align="right">0.035</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">128</td>
 <td align="right">74</td>
@@ -2949,7 +2867,7 @@ junction.</p>
 <td align="right">0.093</td>
 <td align="right">0.046</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">11</td>
@@ -2958,7 +2876,7 @@ junction.</p>
 <td align="right">0.55</td>
 <td align="right">0.89</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">28</td>
@@ -2967,7 +2885,7 @@ junction.</p>
 <td align="right">1</td>
 <td align="right">0.57</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">23</td>
@@ -2975,15 +2893,6 @@ junction.</p>
 <td align="right">43</td>
 <td align="right">0.68</td>
 <td align="right">0.8</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">62</td>
-<td align="right">28</td>
-<td align="right">45</td>
-<td align="right">0.53</td>
-<td align="right">0.81</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -3022,15 +2931,6 @@ junction.</p>
 <td align="right">0.86</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">20</td>
-<td align="right">9</td>
-<td align="right">45</td>
-<td align="right">0.82</td>
-<td align="right">0.75</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">11</td>
@@ -3234,7 +3134,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -3286,15 +3187,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">187</td>
-<td align="right">110</td>
-<td align="right">59</td>
-<td align="right">0.019</td>
-<td align="right">0.0095</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">124</td>
 <td align="right">73</td>
@@ -3302,7 +3194,7 @@ junction.</p>
 <td align="right">0.059</td>
 <td align="right">0.029</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">10</td>
@@ -3311,7 +3203,7 @@ junction.</p>
 <td align="right">1</td>
 <td align="right">0.62</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">29</td>
@@ -3320,7 +3212,7 @@ junction.</p>
 <td align="right">0.71</td>
 <td align="right">0.77</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">20</td>
@@ -3328,15 +3220,6 @@ junction.</p>
 <td align="right">50</td>
 <td align="right">1</td>
 <td align="right">0.59</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">59</td>
-<td align="right">28</td>
-<td align="right">47</td>
-<td align="right">0.79</td>
-<td align="right">0.7</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -3375,15 +3258,6 @@ junction.</p>
 <td align="right">0.86</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">19</td>
-<td align="right">8</td>
-<td align="right">42</td>
-<td align="right">0.65</td>
-<td align="right">0.82</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">10</td>
@@ -3587,7 +3461,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -3639,15 +3514,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">186</td>
-<td align="right">106</td>
-<td align="right">57</td>
-<td align="right">0.067</td>
-<td align="right">0.033</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">132</td>
 <td align="right">72</td>
@@ -3655,7 +3521,7 @@ junction.</p>
 <td align="right">0.34</td>
 <td align="right">0.17</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">13</td>
@@ -3664,7 +3530,7 @@ junction.</p>
 <td align="right">0.27</td>
 <td align="right">0.95</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">30</td>
@@ -3673,7 +3539,7 @@ junction.</p>
 <td align="right">0.86</td>
 <td align="right">0.71</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">21</td>
@@ -3681,15 +3547,6 @@ junction.</p>
 <td align="right">52</td>
 <td align="right">1</td>
 <td align="right">0.5</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">64</td>
-<td align="right">29</td>
-<td align="right">45</td>
-<td align="right">0.53</td>
-<td align="right">0.81</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -3728,15 +3585,6 @@ junction.</p>
 <td align="right">0.77</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">17</td>
-<td align="right">8</td>
-<td align="right">47</td>
-<td align="right">1</td>
-<td align="right">0.69</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">9</td>
@@ -3940,7 +3788,8 @@ junction.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05)</p>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -3992,15 +3841,6 @@ junction.</p>
 </tr>
 <tr class="even">
 <td align="left">Paper’s cutoff</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">179</td>
-<td align="right">111</td>
-<td align="right">62</td>
-<td align="right">0.0016</td>
-<td align="right">0.00081</td>
-</tr>
-<tr class="odd">
-<td align="left">Paper’s cutoff</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">135</td>
 <td align="right">79</td>
@@ -4008,7 +3848,7 @@ junction.</p>
 <td align="right">0.058</td>
 <td align="right">0.029</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">0 hr</td>
 <td align="right">3</td>
@@ -4017,7 +3857,7 @@ junction.</p>
 <td align="right">0.25</td>
 <td align="right">0.12</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Before FDR</td>
 <td align="left">1 hr</td>
 <td align="right">26</td>
@@ -4026,7 +3866,7 @@ junction.</p>
 <td align="right">0.56</td>
 <td align="right">0.28</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Before FDR</td>
 <td align="left">6 hr</td>
 <td align="right">23</td>
@@ -4034,15 +3874,6 @@ junction.</p>
 <td align="right">52</td>
 <td align="right">1</td>
 <td align="right">0.5</td>
-</tr>
-<tr class="odd">
-<td align="left">Before FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">52</td>
-<td align="right">30</td>
-<td align="right">58</td>
-<td align="right">0.33</td>
-<td align="right">0.17</td>
 </tr>
 <tr class="even">
 <td align="left">Before FDR</td>
@@ -4081,15 +3912,6 @@ junction.</p>
 <td align="right">0.12</td>
 </tr>
 <tr class="even">
-<td align="left">After FDR</td>
-<td align="left">All timepoints, every point</td>
-<td align="right">8</td>
-<td align="right">8</td>
-<td align="right">100</td>
-<td align="right">0.0078</td>
-<td align="right">0.0039</td>
-</tr>
-<tr class="odd">
 <td align="left">After FDR</td>
 <td align="left">All timepoints, each pair once</td>
 <td align="right">4</td>
@@ -4177,10 +3999,11 @@ junction.</p>
 </tbody>
 </table>
 <p>Sign consistency with each pair once, by tissue: consistent pairs /
-pairs with GTEx p &lt; 0.05, with the one-sided binomial p. Across the
-nine tissues, the share of consistent pairs is 55–60% for the paper’s
-cutoff, 49–57% before FDR and 36–100% after FDR. The tissues share many
-GTEx donors, so they are not independent replications.</p>
+pairs with GTEx p &lt; 0.05, with the one-sided binomial p (exploratory;
+see <a href="#how-the-testing-works">How the testing works</a>). Across
+the nine tissues, the share of consistent pairs is 55–60% for the
+paper’s cutoff, 49–57% before FDR and 36–100% after FDR. The tissues
+share many GTEx donors, so they are not independent replications.</p>
 <p>Download the <a
 href="assets/isolaser_gtex_panel10nc/brain_tissues_points.tsv">points</a>,
 <a
@@ -4192,10 +4015,9 @@ href="assets/isolaser_gtex_panel10nc/brain_tissues_funnel.tsv">matching
 counts</a>.</p>
 <p>Reproduce with <code>long_read_RNA/10.isolaser_permutation/</code>:
 <code>27.gtex_fdr_comparison.py --prepare-full-cerebellum [--before-fdr] --min-dpsi 0.05</code>
-(<code>ADAPTIVE_panel10nc=panel10nc</code>) for the before- and
-after-FDR sets; then <code>56.gtex_brain_tissues.sbatch</code>
-(extraction, one task per tissue),
-<code>55.gtex_brain_tissues.R summarize</code> and
+(<code>ADAPTIVE_RULE=panel10nc</code>) for the before- and after-FDR
+sets; then <code>56.gtex_brain_tissues.sbatch</code> (extraction, one
+task per tissue), <code>55.gtex_brain_tissues.R summarize</code> and
 <code>57.gtex_gene_venn.R</code>. The paper’s-cutoff set is the original
 run’s (<code>out/adaptive/</code>), read without being changed.</p>
 </div>

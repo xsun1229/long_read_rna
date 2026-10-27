@@ -25,6 +25,14 @@ fp <- function(x) vapply(x, function(z) if (is.na(z)) "NA" else format(signif(z,
 rp <- function(r, p) fifelse(is.na(r), "too few", sprintf("%.2f (%s)", r, fp(p)))
 hn <- bp[set == BEFORE & tissue == "Brain_Cerebellum" & tp == "6hr" & gene == "HNRNPK" & variant_qual == "chr9:83980154:C>T"][1]
 kt <- function(d, ...) paste(knitr::kable(d, ...), collapse="\n")
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+pc <- bf[set == PAPER & reported_snv_associations > 0, tested_in_gtex / reported_snv_associations]
+paper_tested <- sprintf("%.1f&ndash;%.1f%%", 100 * min(pc), 100 * max(pc))
+cb0 <- bf[set == PAPER & tissue == "Brain_Cerebellum" & tp == "0hr"]
+# after FDR: the distinct pairs with GTEx p < 0.05 (each pair once), over all tissues
+# a pair = association x junction coordinates (GTEx's cluster IDs in phenotype_id differ between tissues)
+aft <- unique(bp[set == AFTER & pval_nominal < 0.05 & dpsi != 0, .(gene, variant_qual, exonic_part, intron_start_0, intron_end_0)])
+aft_genes <- sort(unique(aft$gene))
 ```
 
 This page compares **read-based isoLASER** without the clustering filter
@@ -42,7 +50,10 @@ part is included, so a **negative correlation** is expected.
 - **GTEx data:** the full summary statistics, every tested association at any
   p-value. Nine of GTEx's 13 brain tissues have them on the cluster. The other four
   (Amygdala, Anterior cingulate cortex BA24, Spinal cord cervical c-1 and
-  Substantia nigra) have only GTEx's significant pairs and are left out.
+  Substantia nigra) have only GTEx's significant pairs and are left out. This
+  differs from the paper, whose Methods describe an overlap with GTEx's
+  significant pairs: here pairs that GTEx does not call significant (the grey
+  points) are included.
 - **Event:** the exonic part must form an annotated exon-skipping or
   alternative-splice-site event, and the GTEx junction must be exactly that
   event's skipping junction.
@@ -59,8 +70,12 @@ Our associations come in three sets:
 - **After FDR:** the same plus permutation BH q < 0.05 within each timepoint, as
   on [this run's FDR page](isolaser_fdr_reads10nc.html).
 
-The ΔPSI cutoff for the last two sets is 0.05, the cutoff of our report. Earlier
-versions of this page used 0.10 and Cerebellum only.
+For this GTEx comparison, we use a broader effect-size screen of \|ΔPSI\| ≥ 0.05;
+the main [FDR page](isolaser_fdr_reads10nc.html) uses ≥ 0.10. The BH q-values were
+calculated over the full eligible family of tested associations in each timepoint,
+before the `cis` and \|ΔPSI\| display filters are applied, so the broader screen
+changes no q-value. It only shows more of the associations that already have
+q < 0.05.
 
 **Example, HNRNPK.** The C>T variant (chr9:83980154, 0-based) and the 34-base
 exonic part (gold) form an alternative splice site. GTEx measures the
@@ -104,10 +119,24 @@ Two tests, both on the skipping-junction pairs, for each set and tissue:
   - a binomial test asks whether the share of consistent pairs differs from 50%
     (two-sided) or is above it, the expected direction (one-sided).
 
-  We count this per timepoint, and over all timepoints in two ways. **Every
-  point** counts each timepoint's points, so a pair called at several timepoints
-  counts several times. **Each pair once** uses each pair's mean ΔPSI over the
-  timepoints where it is called.
+  We count this per timepoint, and over all timepoints with **each pair
+  once**: each pair's mean ΔPSI over the timepoints where it is called, so an
+  association reported at several timepoints counts once.
+
+**The binomial p-values are exploratory.** The test assumes independent pairs,
+and they are not:
+
+- pairs can come from the same gene or exonic part, so related variants count
+  separately;
+- the same associations recur in every tissue;
+- nothing corrects for the many sets, timepoints and tissues tested.
+
+For example, after FDR the pairs with GTEx p < 0.05 are `r nrow(aft)` pairs at
+`r uniqueN(aft[, .(gene, exonic_part)])` exonic parts in `r length(aft_genes)`
+genes (`r paste(aft_genes, collapse=", ")`), over all nine tissues. Their agreement
+is useful descriptive evidence, but the binomial p treats them as `r nrow(aft)`
+independent trials. A formal test would have to account for dependence within
+genes and loci, and for multiple comparisons.
 
 ## Results {.tabset}
 
@@ -118,8 +147,12 @@ In each tab:
   that tissue, the plotted pairs and their genes.
 - **Correlation** and **Sign consistency**, as defined above.
 
-Most associations in the paper's-cutoff set are tested in GTEx, but only a minority
-form an annotated event with a matching skipping junction.
+Only a minority of the paper's-cutoff associations are tested in GTEx for the same
+variant and gene: `r paper_tested` across tissues and timepoints (Cerebellum at
+0 hr: `r fmt(cb0$tested_in_gtex)` of `r fmt(cb0$reported_snv_associations)`,
+`r sprintf("%.1f%%", 100 * cb0$tested_in_gtex / cb0$reported_snv_associations)`,
+with `r fmt(cb0$plotted)` plotted pairs). Fewer still form an annotated event with
+a matching skipping junction.
 
 ```{r result_tabs, results="asis"}
 for (t in TISSUES) {
@@ -133,9 +166,9 @@ for (t in TISSUES) {
       `All: expected sign`=sprintf("%d/%d", expected_sign_all, n_all),
       `GTEx p < 1e-5: expected sign`=fifelse(`n_GTEx p < 1e-5` == 0, "none", sprintf("%d/%d", `expected_sign_GTEx p < 1e-5`, `n_GTEx p < 1e-5`)))],
       align="llrrrr"), "\n\n", sep="")
-  c2 <- bc[tissue == t][, ord := match(scope, c("0hr", "1hr", "6hr", "All timepoints, every point", "All timepoints, each pair once"))]
+  c2 <- bc[tissue == t & scope != "All timepoints, every point"][, ord := match(scope, c("0hr", "1hr", "6hr", "All timepoints, each pair once"))]
   c2 <- c2[order(match(set, SET_ORDER), ord)]
-  cat("**Sign consistency** (pairs with GTEx p < 0.05)\n\n", kt(c2[, .(Set=set, Timepoint=fifelse(scope %in% c("0hr", "1hr", "6hr"), tpl(scope), scope),
+  cat("**Sign consistency** (pairs with GTEx p < 0.05; the binomial p-values are exploratory)\n\n", kt(c2[, .(Set=set, Timepoint=fifelse(scope %in% c("0hr", "1hr", "6hr"), tpl(scope), scope),
       Pairs=pairs, Consistent=consistent, `Consistent (%)`=consistent_pct, `Binomial p, two-sided`=fp(binom_p_two_sided),
       `Binomial p, one-sided`=fp(binom_p_one_sided))], align="llrrrrr"), "\n\n", sep="")
 }
@@ -156,7 +189,8 @@ knitr::kable(w[, .(Tissue=tname(tissue),
 ```
 
 Sign consistency with each pair once, by tissue: consistent pairs / pairs with
-GTEx p < 0.05, with the one-sided binomial p. Across the nine tissues, the share of consistent pairs is
+GTEx p < 0.05, with the one-sided binomial p (exploratory; see
+[How the testing works](#how-the-testing-works)). Across the nine tissues, the share of consistent pairs is
 `r rng(PAPER)` for the paper's cutoff, `r rng(BEFORE)` before FDR and `r rng(AFTER)` after FDR. The tissues share many
 GTEx donors, so they are not independent replications.
 
@@ -167,7 +201,7 @@ Download the [points](assets/isolaser_gtex_reads10nc/brain_tissues_points.tsv),
 
 Reproduce with `long_read_RNA/10.isolaser_permutation/`:
 `27.gtex_fdr_comparison.py --prepare-full-cerebellum [--before-fdr] --min-dpsi 0.05`
-(`ADAPTIVE_reads10nc=reads10nc`) for the before- and after-FDR sets; then
+(`ADAPTIVE_RULE=reads10nc`) for the before- and after-FDR sets; then
 `56.gtex_brain_tissues.sbatch` (extraction, one task per tissue),
 `55.gtex_brain_tissues.R summarize` and `57.gtex_gene_venn.R`. The paper's-cutoff set is the read-based run's (`out/adaptive_reads10/`), read
 without being changed.

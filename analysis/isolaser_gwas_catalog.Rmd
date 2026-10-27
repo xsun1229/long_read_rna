@@ -19,6 +19,7 @@ A <- "docs/assets/gwas_catalog"
 ov <- fread(file.path(A, "overview.tsv")); cand <- fread(file.path(A, "candidates.tsv"), colClasses=list(character=c("np_p", "bb_p")))
 bh <- fread(file.path(A, "brain_hits.tsv"), colClasses=list(character=c("best_p", "or_beta", "pubmed")))
 ck <- fread(file.path(A, "gnl3_checks.tsv"))
+tpt <- fread(file.path(A, "timepoints.tsv"))
 parts <- fread(file.path(A, "parts.tsv")); gnotes <- fread(file.path(A, "gene_notes.tsv"), colClasses="character", na.strings=NULL)
 steps <- fread(file.path(A, "steps.tsv")); lc <- fread(file.path(A, "lookup_counts.tsv"))
 rules <- fread(file.path(A, "trait_rules.tsv")); traits <- fread(file.path(A, "trait_terms.tsv"))
@@ -30,6 +31,9 @@ sv <- function(col, ver="read_based", k=0.05) steps[version == ver & cutoff == k
 ckv <- function(k) ck[check == k, value]
 kw <- function(cl, r) gsub("|", ", ", rules[class == cl & rule == r, terms], fixed=TRUE)
 RUN <- c(read_based="Read-based", transcript_based="Transcript-based")
+ly <- tpt[gene == "LY6H" & grepl("143160309-143160321", exonic_part)]   # the 12-base part: start of LY6H-201's first exon
+lyd <- function(r, t) sprintf("%+.0f", 100 * ly[run == r & tp == t, dpsi])
+lyq <- function(r, t) signif(ly[run == r & tp == t, q_bh], 2)
 o05 <- ov[version == "read_based" & cutoff == 0.05]
 rb <- cand[version == "read_based"]; tb <- cand[version == "transcript_based"]
 c1 <- function(g, col, d=rb) d[gene == g][[col]]
@@ -52,6 +56,19 @@ hits_dt <- function(d) DT::datatable(as.data.frame(d[, .(Gene=gene, Variant=rsid
 # the same three items for every gene: its tested parts (0.05 cutoff) with our association and the
 # annotation, the variants' GWAS Catalog entries, and the gene annotation
 blank <- function(x) { x <- as.character(x); fifelse(is.na(x) | !nzchar(x), "none", x) }
+RUN_TP <- c(reads10nc="Read-based (current)", reads10="Read-based, with clustering filter", panel10nc="Transcript-based")
+tp_cell <- function(d, q) fifelse(is.na(d), "not tested", sprintf("%+.0f pp (q = %s)", 100 * d, signif(q, 2)))
+tp_table <- function(g) {
+  pr <- parts[version == "read_based" & gene == g & nearest_005 == TRUE][order(p_start)]
+  grid <- CJ(exonic_part=pr$exonic_part, run=names(RUN_TP), tp=c("0hr", "1hr", "6hr"), sorted=FALSE)
+  d <- merge(grid, tpt[gene == g, .(exonic_part, run, tp, dpsi, q_bh)], by=c("exonic_part", "run", "tp"), all.x=TRUE)
+  d[, cell := tp_cell(dpsi, q_bh)]
+  w <- dcast(d, exonic_part + run ~ tp, value.var="cell")
+  w <- merge(w, pr[, .(exonic_part, Part=sprintf("%s-%s (%d bases)", fmt(p_start), fmt(p_end), part_len), o=p_start)], by="exonic_part")
+  w[, o2 := match(run, names(RUN_TP))]
+  setorder(w, o, o2)
+  knitr::kable(w[, .(Part, Run=RUN_TP[run], `0 hr`=`0hr`, `1 hr`=`1hr`, `6 hr`=`6hr`)])
+}
 gene_block <- function(g) {
   p <- parts[version == "read_based" & gene == g & nearest_005 == TRUE][order(p_start)]
   a <- gnotes[gene == g]; b <- bh[version == "read_based" & gene == g][order(as.numeric(best_p))]
@@ -71,6 +88,8 @@ gene_block <- function(g) {
     sprintf("- %s: %d %s; brain-related: %s.", u$rsid[i], u$n_entries[i], if (u$n_entries[i] == 1) "entry" else "entries", br)
   }, "")
   cat("**Tested parts and our association**\n\n", paste(part_lines, collapse="\n"), "\n\n",
+      "**Across timepoints and runs** (&Delta;PSI and q for the same variant and part)\n\n",
+      paste(tp_table(g), collapse="\n"), "\n\n",
       "**GWAS Catalog entries of the variants**\n\n", paste(cat_lines, collapse="\n"), "\n\n",
       sprintf("**Gene annotation**: neuronal GO term: %s; autism or developmental disorder: %s; expression after stimulation: %s; splicing after stimulation: %s.\n\n",
               blank(a$neuronal_go), blank(paste(c(a$sfari, a$ddg2p)[nzchar(c(a$sfari, a$ddg2p))], collapse="; ")),
@@ -88,10 +107,26 @@ different studies. It does not show that the splicing change causes the trait.
 
 **Short answer.** `r o05$genes_either` of the `r o05$genes` genes reported by
 read-based isoLASER carry a variant that is itself a genome-wide GWAS hit for a
-neuropsychiatric, brain or behaviour trait:
+neuropsychiatric, brain or behaviour trait. **LY6H is the one to highlight:**
 
-- **LY6H**: smoking initiation (p = 3 × 10<sup>-24</sup>). LY6H modulates
-  nicotinic acetylcholine receptors.
+- Our variant, rs9694368, is the GWAS Catalog lead SNP for smoking initiation
+  (p = 3 × 10<sup>-24</sup>), and the Catalog maps that signal to LY6H.
+- LY6H limits the function of α7 nicotinic acetylcholine receptors in neurons,
+  the receptors nicotine acts on.
+- The association is about the use of LY6H-201's first exon. It has the same
+  direction at 0, 1 and 6 hours (`r lyd("reads10nc", "0hr")`,
+  `r lyd("reads10nc", "1hr")` and `r lyd("reads10nc", "6hr")` pp) and is
+  significant at 6 hours (q = `r lyq("reads10nc", "6hr")`).
+- It was also a follow-up gene in the earlier read-based run with the clustering
+  filter, with identical numbers. Both runs use the same reads, so this shows
+  the result does not depend on the filter; it is not an independent
+  replication.
+- With transcript-based labels the effect is
+  `r lyd("panel10nc", "1hr")` to `r lyd("panel10nc", "0hr")` pp (q = 1), so only
+  the read-based labels find it.
+
+The other three genes are weaker:
+
 - **GNL3**: intelligence. Our association also looks like the same splicing
   event as a published GNL3 splicing QTL in brain.
 - **HNRNPK**: a sleep health score.

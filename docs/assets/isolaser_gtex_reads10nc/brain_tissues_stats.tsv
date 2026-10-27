@@ -1,0 +1,105 @@
+tissue	scope	subset	n	genes	expected_sign	pearson_r	pearson_p	binom_p_one_sided	data_type
+Brain_Amygdala	0hr	GTEx p < 0.05	0	0	0				significant pairs only
+Brain_Amygdala	0hr	all	0	0	0				significant pairs only
+Brain_Amygdala	1hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Amygdala	1hr	all	1	1	1			0.5	significant pairs only
+Brain_Amygdala	6hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Amygdala	6hr	all	1	1	1			0.5	significant pairs only
+Brain_Amygdala	each pair once	GTEx p < 0.05	2	2	2			0.25	significant pairs only
+Brain_Amygdala	each pair once	all	2	2	2			0.25	significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	0hr	GTEx p < 0.05	0	0	0				significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	0hr	all	0	0	0				significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	1hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	1hr	all	1	1	1			0.5	significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	6hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	6hr	all	1	1	1			0.5	significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	each pair once	GTEx p < 0.05	2	2	2			0.25	significant pairs only
+Brain_Anterior_cingulate_cortex_BA24	each pair once	all	2	2	2			0.25	significant pairs only
+Brain_Caudate_basal_ganglia	0hr	GTEx p < 0.05	3	2	3	-0.96791503689928	0.161701473673567	0.125	full
+Brain_Caudate_basal_ganglia	0hr	all	3	2	3	-0.96791503689928	0.161701473673567	0.125	full
+Brain_Caudate_basal_ganglia	1hr	GTEx p < 0.05	4	3	4	-0.858420133482255	0.141579866517745	0.0625	full
+Brain_Caudate_basal_ganglia	1hr	all	4	3	4	-0.858420133482255	0.141579866517745	0.0625	full
+Brain_Caudate_basal_ganglia	6hr	GTEx p < 0.05	4	3	4	-0.940785508870363	0.059214491129637	0.0625	full
+Brain_Caudate_basal_ganglia	6hr	all	5	4	5	-0.941897532554803	0.0166649516448335	0.03125	full
+Brain_Caudate_basal_ganglia	each pair once	GTEx p < 0.05	5	4	5	-0.893236924041571	0.0411988761625865	0.03125	full
+Brain_Caudate_basal_ganglia	each pair once	all	6	5	6	-0.897067878300966	0.0153472484858429	0.015625	full
+Brain_Cerebellar_Hemisphere	0hr	GTEx p < 0.05	3	2	3	-0.965437510648809	0.167863583011661	0.125	full
+Brain_Cerebellar_Hemisphere	0hr	all	3	2	3	-0.965437510648809	0.167863583011661	0.125	full
+Brain_Cerebellar_Hemisphere	1hr	GTEx p < 0.05	4	3	4	-0.825217973063348	0.174782026936652	0.0625	full
+Brain_Cerebellar_Hemisphere	1hr	all	4	3	4	-0.825217973063348	0.174782026936652	0.0625	full
+Brain_Cerebellar_Hemisphere	6hr	GTEx p < 0.05	4	3	4	-0.853460416531149	0.146539583468852	0.0625	full
+Brain_Cerebellar_Hemisphere	6hr	all	5	4	4	-0.84279963341863	0.0730295977162207	0.1875	full
+Brain_Cerebellar_Hemisphere	each pair once	GTEx p < 0.05	5	4	5	-0.844442558483112	0.0719064103667895	0.03125	full
+Brain_Cerebellar_Hemisphere	each pair once	all	6	5	5	-0.829749955169322	0.0410102612528289	0.109375	full
+Brain_Cerebellum	0hr	GTEx p < 0.05	3	2	3	-0.966275588186062	0.165804173130925	0.125	full
+Brain_Cerebellum	0hr	all	3	2	3	-0.966275588186062	0.165804173130925	0.125	full
+Brain_Cerebellum	1hr	GTEx p < 0.05	4	3	4	-0.834175132248616	0.165824867751384	0.0625	full
+Brain_Cerebellum	1hr	all	4	3	4	-0.834175132248616	0.165824867751384	0.0625	full
+Brain_Cerebellum	6hr	GTEx p < 0.05	4	3	4	-0.843103826013549	0.156896173986451	0.0625	full
+Brain_Cerebellum	6hr	all	5	4	5	-0.834764862118067	0.0785994275280102	0.03125	full
+Brain_Cerebellum	each pair once	GTEx p < 0.05	5	4	5	-0.845624339549312	0.0711018327566788	0.03125	full
+Brain_Cerebellum	each pair once	all	6	5	6	-0.834764006336842	0.0386986867209663	0.015625	full
+Brain_Cortex	0hr	GTEx p < 0.05	3	2	3	-0.954248682269061	0.193315548464548	0.125	full
+Brain_Cortex	0hr	all	4	3	4	-0.525242386062611	0.474757613937389	0.0625	full
+Brain_Cortex	1hr	GTEx p < 0.05	4	3	4	-0.79708383513036	0.20291616486964	0.0625	full
+Brain_Cortex	1hr	all	4	3	4	-0.79708383513036	0.20291616486964	0.0625	full
+Brain_Cortex	6hr	GTEx p < 0.05	4	3	4	-0.900773259894657	0.0992267401053426	0.0625	full
+Brain_Cortex	6hr	all	5	4	5	-0.902676476012191	0.0359101157550331	0.03125	full
+Brain_Cortex	each pair once	GTEx p < 0.05	5	4	5	-0.843412409934327	0.0726100412228254	0.03125	full
+Brain_Cortex	each pair once	all	7	6	7	-0.733502754634144	0.0606303728002516	0.0078125	full
+Brain_Frontal_Cortex_BA9	0hr	GTEx p < 0.05	3	2	3	-0.962377593198795	0.175182007475631	0.125	full
+Brain_Frontal_Cortex_BA9	0hr	all	3	2	3	-0.962377593198795	0.175182007475631	0.125	full
+Brain_Frontal_Cortex_BA9	1hr	GTEx p < 0.05	4	3	4	-0.86599325471858	0.13400674528142	0.0625	full
+Brain_Frontal_Cortex_BA9	1hr	all	4	3	4	-0.86599325471858	0.13400674528142	0.0625	full
+Brain_Frontal_Cortex_BA9	6hr	GTEx p < 0.05	4	3	4	-0.9376663993959	0.0623336006041003	0.0625	full
+Brain_Frontal_Cortex_BA9	6hr	all	5	4	5	-0.937087576430325	0.0187627768162102	0.03125	full
+Brain_Frontal_Cortex_BA9	each pair once	GTEx p < 0.05	5	4	5	-0.898742065609478	0.0380862922220374	0.03125	full
+Brain_Frontal_Cortex_BA9	each pair once	all	6	5	6	-0.897357016329216	0.0152626713546972	0.015625	full
+Brain_Hippocampus	0hr	GTEx p < 0.05	3	2	3	-0.965143803740445	0.168579493385036	0.125	full
+Brain_Hippocampus	0hr	all	3	2	3	-0.965143803740445	0.168579493385036	0.125	full
+Brain_Hippocampus	1hr	GTEx p < 0.05	4	3	4	-0.858361856194093	0.141638143805907	0.0625	full
+Brain_Hippocampus	1hr	all	4	3	4	-0.858361856194093	0.141638143805907	0.0625	full
+Brain_Hippocampus	6hr	GTEx p < 0.05	4	3	4	-0.963276087149697	0.0367239128503032	0.0625	full
+Brain_Hippocampus	6hr	all	5	4	5	-0.963413334072564	0.00835449594354093	0.03125	full
+Brain_Hippocampus	each pair once	GTEx p < 0.05	5	4	5	-0.891177268522029	0.0423832322113094	0.03125	full
+Brain_Hippocampus	each pair once	all	6	5	6	-0.89707833880303	0.0153441847119368	0.015625	full
+Brain_Hypothalamus	0hr	GTEx p < 0.05	3	2	3	-0.956415430531487	0.188647753061501	0.125	full
+Brain_Hypothalamus	0hr	all	4	3	4	-0.755484908161338	0.244515091838661	0.0625	full
+Brain_Hypothalamus	1hr	GTEx p < 0.05	4	3	4	-0.930819053907299	0.0691809460927009	0.0625	full
+Brain_Hypothalamus	1hr	all	4	3	4	-0.930819053907299	0.0691809460927009	0.0625	full
+Brain_Hypothalamus	6hr	GTEx p < 0.05	4	3	4	-0.976661197133507	0.0233388028664928	0.0625	full
+Brain_Hypothalamus	6hr	all	5	4	5	-0.974048681519012	0.00499890829792755	0.03125	full
+Brain_Hypothalamus	each pair once	GTEx p < 0.05	5	4	5	-0.943171212087193	0.0161231299803211	0.03125	full
+Brain_Hypothalamus	each pair once	all	7	6	7	-0.860745717534696	0.0128760551313045	0.0078125	full
+Brain_Nucleus_accumbens_basal_ganglia	0hr	GTEx p < 0.05	3	2	3	-0.96952092457996	0.157581527412233	0.125	full
+Brain_Nucleus_accumbens_basal_ganglia	0hr	all	3	2	3	-0.96952092457996	0.157581527412233	0.125	full
+Brain_Nucleus_accumbens_basal_ganglia	1hr	GTEx p < 0.05	4	3	4	-0.830222152445436	0.169777847554564	0.0625	full
+Brain_Nucleus_accumbens_basal_ganglia	1hr	all	4	3	4	-0.830222152445436	0.169777847554564	0.0625	full
+Brain_Nucleus_accumbens_basal_ganglia	6hr	GTEx p < 0.05	4	3	4	-0.933666768388702	0.0663332316112979	0.0625	full
+Brain_Nucleus_accumbens_basal_ganglia	6hr	all	5	4	5	-0.934307780107717	0.020011442452526	0.03125	full
+Brain_Nucleus_accumbens_basal_ganglia	each pair once	GTEx p < 0.05	5	4	5	-0.871983531733441	0.053915331884253	0.03125	full
+Brain_Nucleus_accumbens_basal_ganglia	each pair once	all	6	5	6	-0.873526918354337	0.0229816642527966	0.015625	full
+Brain_Putamen_basal_ganglia	0hr	GTEx p < 0.05	3	2	3	-0.942307526680812	0.217302689825081	0.125	full
+Brain_Putamen_basal_ganglia	0hr	all	3	2	3	-0.942307526680812	0.217302689825081	0.125	full
+Brain_Putamen_basal_ganglia	1hr	GTEx p < 0.05	4	3	4	-0.933374447662603	0.0666255523373968	0.0625	full
+Brain_Putamen_basal_ganglia	1hr	all	4	3	4	-0.933374447662603	0.0666255523373968	0.0625	full
+Brain_Putamen_basal_ganglia	6hr	GTEx p < 0.05	4	3	4	-0.968375161071084	0.0316248389289164	0.0625	full
+Brain_Putamen_basal_ganglia	6hr	all	5	4	5	-0.968249517783515	0.00675896375593999	0.03125	full
+Brain_Putamen_basal_ganglia	each pair once	GTEx p < 0.05	5	4	5	-0.948632065643021	0.0138674658945053	0.03125	full
+Brain_Putamen_basal_ganglia	each pair once	all	6	5	6	-0.948024913836704	0.00398191137463791	0.015625	full
+Brain_Spinal_cord_cervical_c-1	0hr	GTEx p < 0.05	0	0	0				significant pairs only
+Brain_Spinal_cord_cervical_c-1	0hr	all	0	0	0				significant pairs only
+Brain_Spinal_cord_cervical_c-1	1hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Spinal_cord_cervical_c-1	1hr	all	1	1	1			0.5	significant pairs only
+Brain_Spinal_cord_cervical_c-1	6hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Spinal_cord_cervical_c-1	6hr	all	1	1	1			0.5	significant pairs only
+Brain_Spinal_cord_cervical_c-1	each pair once	GTEx p < 0.05	2	2	2			0.25	significant pairs only
+Brain_Spinal_cord_cervical_c-1	each pair once	all	2	2	2			0.25	significant pairs only
+Brain_Substantia_nigra	0hr	GTEx p < 0.05	0	0	0				significant pairs only
+Brain_Substantia_nigra	0hr	all	0	0	0				significant pairs only
+Brain_Substantia_nigra	1hr	GTEx p < 0.05	0	0	0				significant pairs only
+Brain_Substantia_nigra	1hr	all	0	0	0				significant pairs only
+Brain_Substantia_nigra	6hr	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Substantia_nigra	6hr	all	1	1	1			0.5	significant pairs only
+Brain_Substantia_nigra	each pair once	GTEx p < 0.05	1	1	1			0.5	significant pairs only
+Brain_Substantia_nigra	each pair once	all	1	1	1			0.5	significant pairs only

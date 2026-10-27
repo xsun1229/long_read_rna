@@ -538,15 +538,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreecb2c03b1ab07f60e2ea8e5666fba87e0dbd01203targetblankcb2c03ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea84f532c83e8dcfdbfc8746c341077363b5514e0targetblanka84f532a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/cb2c03b1ab07f60e2ea8e5666fba87e0dbd01203" target="_blank">cb2c03b</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/a84f532c83e8dcfdbfc8746c341077363b5514e0" target="_blank">a84f532</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreecb2c03b1ab07f60e2ea8e5666fba87e0dbd01203targetblankcb2c03ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea84f532c83e8dcfdbfc8746c341077363b5514e0targetblanka84f532a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -556,7 +556,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/cb2c03b1ab07f60e2ea8e5666fba87e0dbd01203" target="_blank">cb2c03b</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/a84f532c83e8dcfdbfc8746c341077363b5514e0" target="_blank">a84f532</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -622,6 +622,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/a84f532c83e8dcfdbfc8746c341077363b5514e0/analysis/isolaser_gwas_catalog.Rmd" target="_blank">a84f532</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-26
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/a84f532c83e8dcfdbfc8746c341077363b5514e0/docs/isolaser_gwas_catalog.html" target="_blank">a84f532</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-26
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/xsun1229/long_read_rna/blob/cb2c03b1ab07f60e2ea8e5666fba87e0dbd01203/analysis/isolaser_gwas_catalog.Rmd" target="_blank">cb2c03b</a>
 </td>
 <td>
@@ -666,11 +700,26 @@ affects both splicing and the trait in different studies. It does not
 show that the splicing change causes the trait.</p>
 <p><strong>Short answer.</strong> 4 of the 23 genes reported by
 read-based isoLASER carry a variant that is itself a genome-wide GWAS
-hit for a neuropsychiatric, brain or behaviour trait:</p>
+hit for a neuropsychiatric, brain or behaviour trait. <strong>LY6H is
+the one to highlight:</strong></p>
 <ul>
-<li><strong>LY6H</strong>: smoking initiation (p = 3 ×
-10<sup>-24</sup>). LY6H modulates nicotinic acetylcholine
-receptors.</li>
+<li>Our variant, rs9694368, is the GWAS Catalog lead SNP for smoking
+initiation (p = 3 × 10<sup>-24</sup>), and the Catalog maps that signal
+to LY6H.</li>
+<li>LY6H limits the function of α7 nicotinic acetylcholine receptors in
+neurons, the receptors nicotine acts on.</li>
+<li>The association is about the use of LY6H-201’s first exon. It has
+the same direction at 0, 1 and 6 hours (+17, +15 and +23 pp) and is
+significant at 6 hours (q = 0.0014).</li>
+<li>It was also a follow-up gene in the earlier read-based run with the
+clustering filter, with identical numbers. Both runs use the same reads,
+so this shows the result does not depend on the filter; it is not an
+independent replication.</li>
+<li>With transcript-based labels the effect is +1 to +6 pp (q = 1), so
+only the read-based labels find it.</li>
+</ul>
+<p>The other three genes are weaker:</p>
+<ul>
 <li><strong>GNL3</strong>: intelligence. Our association also looks like
 the same splicing event as a published GNL3 splicing QTL in brain.</li>
 <li><strong>HNRNPK</strong>: a sleep health score.</li>
@@ -987,6 +1036,70 @@ bases from the part. Reported at 6hr; strongest at 6hr: q = 0.0014, ΔPSI
 +23 pp, 368 reads from 2 heterozygous donors. Annotated transcripts: 1
 of 5 includes the part, 2 splice over it, 2 do not reach it.</li>
 </ul>
+<p><strong>Across timepoints and runs</strong> (ΔPSI and q for the same
+variant and part)</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="28%" />
+<col width="12%" />
+<col width="14%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Part</th>
+<th align="left">Run</th>
+<th align="left">0 hr</th>
+<th align="left">1 hr</th>
+<th align="left">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">143,160,268-143,160,309 (42 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">+5 pp (q = 1)</td>
+<td align="left">+4 pp (q = 0.82)</td>
+<td align="left">+7 pp (q = 0.0014)</td>
+</tr>
+<tr class="even">
+<td align="left">143,160,268-143,160,309 (42 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">+5 pp (q = 1)</td>
+<td align="left">+4 pp (q = 0.89)</td>
+<td align="left">+7 pp (q = 0.0014)</td>
+</tr>
+<tr class="odd">
+<td align="left">143,160,268-143,160,309 (42 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">+4 pp (q = 1)</td>
+<td align="left">+2 pp (q = 1)</td>
+<td align="left">+4 pp (q = 1)</td>
+</tr>
+<tr class="even">
+<td align="left">143,160,310-143,160,321 (12 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">+17 pp (q = 1)</td>
+<td align="left">+15 pp (q = 0.33)</td>
+<td align="left">+23 pp (q = 0.0014)</td>
+</tr>
+<tr class="odd">
+<td align="left">143,160,310-143,160,321 (12 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">+17 pp (q = 1)</td>
+<td align="left">+15 pp (q = 0.34)</td>
+<td align="left">+23 pp (q = 0.0014)</td>
+</tr>
+<tr class="even">
+<td align="left">143,160,310-143,160,321 (12 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">+6 pp (q = 1)</td>
+<td align="left">+1 pp (q = 1)</td>
+<td align="left">+6 pp (q = 1)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>GWAS Catalog entries of the variants</strong></p>
 <ul>
 <li>rs9694368: 2 entries; brain-related: Smoking initiation (p = 3 ×
@@ -1021,6 +1134,70 @@ from the part. Reported at 1hr; strongest at 1hr: q = 0.0036, ΔPSI -12
 pp, 269 reads from 2 heterozygous donors. Annotated transcripts: 3 of 13
 include the part, 8 splice over it, 2 do not reach it.</li>
 </ul>
+<p><strong>Across timepoints and runs</strong> (ΔPSI and q for the same
+variant and part)</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="29%" />
+<col width="12%" />
+<col width="17%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Part</th>
+<th align="left">Run</th>
+<th align="left">0 hr</th>
+<th align="left">1 hr</th>
+<th align="left">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">52,686,106-52,686,170 (65 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">-10 pp (q = 1)</td>
+<td align="left">-12 pp (q = 0.0036)</td>
+<td align="left">-2 pp (q = 1)</td>
+</tr>
+<tr class="even">
+<td align="left">52,686,106-52,686,170 (65 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">-10 pp (q = 1)</td>
+<td align="left">-12 pp (q = 0.0038)</td>
+<td align="left">-2 pp (q = 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">52,686,106-52,686,170 (65 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">-7 pp (q = 1)</td>
+<td align="left">-2 pp (q = 1)</td>
+<td align="left">+1 pp (q = 1)</td>
+</tr>
+<tr class="even">
+<td align="left">52,686,177-52,686,202 (26 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">-10 pp (q = 1)</td>
+<td align="left">-12 pp (q = 0.0036)</td>
+<td align="left">-2 pp (q = 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">52,686,177-52,686,202 (26 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">-10 pp (q = 1)</td>
+<td align="left">-12 pp (q = 0.0038)</td>
+<td align="left">-2 pp (q = 1)</td>
+</tr>
+<tr class="even">
+<td align="left">52,686,177-52,686,202 (26 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">-7 pp (q = 1)</td>
+<td align="left">-5 pp (q = 1)</td>
+<td align="left">+2 pp (q = 1)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>GWAS Catalog entries of the variants</strong></p>
 <ul>
 <li>rs1108842: 4 entries; brain-related: Intelligence (MTAG) (p = 8 ×
@@ -1059,6 +1236,70 @@ from the part. Reported at 0hr, 1hr, 6hr; strongest at 0hr: q = 0.0014,
 transcripts: 5 of 34 include the part, 18 splice over it, 11 do not
 reach it.</li>
 </ul>
+<p><strong>Across timepoints and runs</strong> (ΔPSI and q for the same
+variant and part)</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="27%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Part</th>
+<th align="left">Run</th>
+<th align="left">0 hr</th>
+<th align="left">1 hr</th>
+<th align="left">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">83,978,373-83,978,452 (80 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">+26 pp (q = 0.0061)</td>
+<td align="left">+10 pp (q = 0.29)</td>
+<td align="left">+13 pp (q = 0.0014)</td>
+</tr>
+<tr class="even">
+<td align="left">83,978,373-83,978,452 (80 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">+26 pp (q = 0.0054)</td>
+<td align="left">+10 pp (q = 0.3)</td>
+<td align="left">+13 pp (q = 0.0014)</td>
+</tr>
+<tr class="odd">
+<td align="left">83,978,373-83,978,452 (80 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">+1 pp (q = 1)</td>
+<td align="left">-0 pp (q = 1)</td>
+<td align="left">+2 pp (q = 1)</td>
+</tr>
+<tr class="even">
+<td align="left">83,980,119-83,980,152 (34 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">-21 pp (q = 0.0035)</td>
+<td align="left">-22 pp (q = 0.0021)</td>
+<td align="left">-26 pp (q = 0.0014)</td>
+</tr>
+<tr class="odd">
+<td align="left">83,980,119-83,980,152 (34 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">-21 pp (q = 0.0031)</td>
+<td align="left">-22 pp (q = 0.0023)</td>
+<td align="left">-26 pp (q = 0.0014)</td>
+</tr>
+<tr class="even">
+<td align="left">83,980,119-83,980,152 (34 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">-20 pp (q = 0.0018)</td>
+<td align="left">-18 pp (q = 0.0015)</td>
+<td align="left">-21 pp (q = 0.0054)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>GWAS Catalog entries of the variants</strong></p>
 <ul>
 <li>rs296888: 10 entries; brain-related: Sleep health score (p = 2 ×
@@ -1089,6 +1330,49 @@ from the part. Reported at 1hr; strongest at 1hr: q = 0.023, ΔPSI -40
 pp, 90 reads from 2 heterozygous donors. Annotated transcripts: 1 of 13
 includes the part, 10 splice over it, 2 do not reach it.</li>
 </ul>
+<p><strong>Across timepoints and runs</strong> (ΔPSI and q for the same
+variant and part)</p>
+<table style="width:100%;">
+<colgroup>
+<col width="30%" />
+<col width="30%" />
+<col width="9%" />
+<col width="16%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Part</th>
+<th align="left">Run</th>
+<th align="left">0 hr</th>
+<th align="left">1 hr</th>
+<th align="left">6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">30,741,868-30,742,146 (279 bases)</td>
+<td align="left">Read-based (current)</td>
+<td align="left">not tested</td>
+<td align="left">-40 pp (q = 0.023)</td>
+<td align="left">-3 pp (q = 1)</td>
+</tr>
+<tr class="even">
+<td align="left">30,741,868-30,742,146 (279 bases)</td>
+<td align="left">Read-based, with clustering filter</td>
+<td align="left">not tested</td>
+<td align="left">not tested</td>
+<td align="left">not tested</td>
+</tr>
+<tr class="odd">
+<td align="left">30,741,868-30,742,146 (279 bases)</td>
+<td align="left">Transcript-based</td>
+<td align="left">not tested</td>
+<td align="left">-16 pp (q = 1)</td>
+<td align="left">+6 pp (q = 1)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>GWAS Catalog entries of the variants</strong></p>
 <ul>
 <li>rs3094125: 1 entry; brain-related: Major depressive disorder (p = 2

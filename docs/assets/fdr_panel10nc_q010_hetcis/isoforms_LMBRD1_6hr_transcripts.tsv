@@ -1,0 +1,6 @@
+tx	status	reads	REF	ALT	name	type	rank	drawn	sqanti3	lab
+ENST00000649934	excludes part	31	29	2	LMBRD1-229	protein_coding	1	TRUE		LMBRD1-229 (ENST00000649934)
+ENST00000649673	excludes part	2	1	1	LMBRD1-224	nonsense_mediated_decay	2	TRUE		LMBRD1-224 (ENST00000649673)
+ENST00000648303	excludes part	1	1	0	LMBRD1-211	nonsense_mediated_decay	3	TRUE		LMBRD1-211 (ENST00000648303)
+ENST00000650124	excludes part	1	0	1	LMBRD1-235	nonsense_mediated_decay	4	FALSE		LMBRD1-235 (ENST00000650124)
+ENST00000649679	includes part	41	0	41	LMBRD1-225	protein_coding	1	TRUE		LMBRD1-225 (ENST00000649679)

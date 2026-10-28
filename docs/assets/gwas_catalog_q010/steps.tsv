@@ -1,0 +1,5 @@
+version	cutoff	associations	parts	genes	variants_all	variants	variants_matched	catalog_matches	gw_matches	gw_variants	gw_np	gw_bb
+read_based	0.1	71	51	28	35	29	8	24	24	8	1	4
+transcript_based	0.1	162	73	35	52	39	6	20	20	6	0	0
+read_based	0.05	87	56	30	38	32	8	24	24	8	1	4
+transcript_based	0.05	177	80	41	58	45	7	21	21	7	0	0

@@ -1,0 +1,5 @@
+version	cutoff	parts	genes	variants	parts_any_gw	genes_any_gw	genes_neuropsych	genes_brain_behaviour	genes_either
+read_based	0.1	51	28	29	10	7	1	3	4
+transcript_based	0.1	73	35	39	7	6	0	0	0
+read_based	0.05	56	30	32	12	7	1	3	4
+transcript_based	0.05	80	41	45	9	7	0	0	0

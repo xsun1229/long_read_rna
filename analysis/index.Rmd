@@ -58,9 +58,9 @@ at BH q < 0.10 and |ΔPSI| ≥ 0.05.
 * [Comparison with GTEx brain sQTLs](isolaser_gtex_comparison_reads10nc_q010.html) — nine brain
   tissues, three sets (paper's cutoff, before and after FDR), Storey's π<sub>1</sub>
   and gene-level overlap
-* [Hits in the GWAS Catalog](isolaser_gwas_catalog.html) — which reported
+* [Hits in the GWAS Catalog](isolaser_gwas_catalog_q010.html) — which reported
   variants are known GWAS signals for neuropsychiatric, brain or behaviour
-  traits (GNL3, LY6H); still at q < 0.05
+  traits (LY6H, GNL3, HNRNPK, FLOT1)
 
 **For comparison: transcript-based isoLASER** (isoLASER's own labels), without the
 clustering filter, at the same cutoffs: [genome-wide FDR](isolaser_fdr_panel10nc_q010.html) and
@@ -77,8 +77,8 @@ their alignments.
 | 1 | Original run | RNA allele fraction 0.25–0.75, ≥ 30 reads | transcript-based | yes | Most significant associations used variants absent from the donors' genotype panel | [FDR](isolaser_fdr.html), [GTEx](isolaser_gtex_comparison.html), [artifacts](isolaser_variant_artifacts.html) |
 | 2 | Transcript-based isoLASER, with filter | heterozygous in the genotype panel, ≥ 10 reads | transcript-based | yes | Panel donors remove those hits; a read check showed that isoLASER labels reads from their assigned transcript | [FDR](isolaser_fdr_panel10.html), [GTEx](isolaser_gtex_comparison_panel10.html) |
 | 3 | Read-based isoLASER, with filter | as in step 2 | read-based | yes | Read-based hits keep their direction with transcript-based labels and agree with GTEx | [FDR](isolaser_fdr_reads10.html), [GTEx](isolaser_gtex_comparison_reads10.html) |
-| 4 | Both, without filter | as in step 2 | both | no | The filter removed little real signal: read-based isoLASER gains 3 MHC genes and loses none | [read-based FDR](isolaser_fdr_reads10nc.html), [GTEx](isolaser_gtex_comparison_reads10nc.html); [transcript-based FDR](isolaser_fdr_panel10nc.html), [GTEx](isolaser_gtex_comparison_panel10nc.html) |
-| 5 | Both, without filter, at q < 0.10 and \|ΔPSI\| ≥ 0.05 (current) | as in step 2 | both | no | No earlier hit is lost: read-based isoLASER reports 30 genes (22 before), transcript-based 41 (29) | [read-based FDR](isolaser_fdr_reads10nc_q010.html), [GTEx](isolaser_gtex_comparison_reads10nc_q010.html); [transcript-based FDR](isolaser_fdr_panel10nc_q010.html), [GTEx](isolaser_gtex_comparison_panel10nc_q010.html) |
+| 4 | Both, without filter | as in step 2 | both | no | The filter removed little real signal: read-based isoLASER gains 3 MHC genes and loses none | [read-based FDR](isolaser_fdr_reads10nc.html), [GTEx](isolaser_gtex_comparison_reads10nc.html); [transcript-based FDR](isolaser_fdr_panel10nc.html), [GTEx](isolaser_gtex_comparison_panel10nc.html); [GWAS Catalog](isolaser_gwas_catalog.html) |
+| 5 | Both, without filter, at q < 0.10 and \|ΔPSI\| ≥ 0.05 (current) | as in step 2 | both | no | No earlier hit is lost: read-based isoLASER reports 30 genes (22 before), transcript-based 41 (29) | [read-based FDR](isolaser_fdr_reads10nc_q010.html), [GTEx](isolaser_gtex_comparison_reads10nc_q010.html); [transcript-based FDR](isolaser_fdr_panel10nc_q010.html), [GTEx](isolaser_gtex_comparison_panel10nc_q010.html); [GWAS Catalog](isolaser_gwas_catalog_q010.html) |
 
 Steps 1–4 report BH q < 0.05 and |ΔPSI| ≥ 0.10. **Donors used**: which donors count for an association at a SNP. **Inclusion
 labels**: how a read is called as including or excluding the tested exonic part.

@@ -1,0 +1,4 @@
+tx	status	reads	REF	ALT	REF_included	ALT_included	name	type	rank	drawn	sqanti3	lab
+ENST00000414417	excludes part	28	21	7	4	2	LY6H-202	protein_coding	1	TRUE		LY6H-202 (ENST00000414417)
+ENST00000615409	excludes part	10	6	4	2	1	LY6H-205	protein_coding	2	TRUE		LY6H-205 (ENST00000615409)
+ENST00000342752	includes part	99	46	53	46	53	LY6H-201	protein_coding	1	TRUE		LY6H-201 (ENST00000342752)

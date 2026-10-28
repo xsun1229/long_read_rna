@@ -1,0 +1,6 @@
+class	rule	terms
+neuropsychiatric disorder	EFO parent term	Neurological disorder
+neuropsychiatric disorder	trait name contains	psychiatric|schizo|bipolar|depress|autism|attention deficit|anxiety|panic|obsessive|personality disorder|anorexia|bulimia|eating disorder|tourette|substance|addict|dependence|alcohol use disorder|suicid|psychos|mental
+brain or behaviour	trait name contains	intellig|cognit|educational attainment|years of schooling|mathemat|reading|memory|executive|reaction time|neurotic|mood|worry|loneliness|well-being|happiness|feeling|risk-taking|risk tolerance|behavio|personality|insomnia|sleep|chronotype|smoking|cigarette|alcohol|drinking|cannabis|caffeine|brain|cortical|cortex|cerebral|hippocamp|amygdala|thalam|putamen|caudate|pallidum|accumbens|white matter|grey matter|gray matter|subcortical|intracranial|neurite|fractional anisotropy|antidepressant|antipsychotic|lithium|headache|migraine
+brain or behaviour	unless it also contains	protein|level of|in blood|serum|plasma|cerebrospinal
+all classes	exposure term dropped in interaction or adjusted analyses	smoking|cigarette|tobacco|alcohol|drinking|physical activity|sleep duration|educational attainment

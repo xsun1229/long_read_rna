@@ -1,0 +1,401 @@
+---
+title: "Read-based isoLASER hits in the GWAS Catalog (FDR < 0.10)"
+author: "XSun"
+date: "2026-10-28"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+# R code here uses HTML entities, not Unicode characters, so the page renders the same in any build
+# locale (in a non-UTF-8 R session, a Greek Delta in an R string comes out as <U+0394>)
+A <- "docs/assets/gwas_catalog_q010"
+cand0 <- fread(file.path("docs/assets/gwas_catalog", "candidates.tsv"), select=c("version", "gene"))   # the q < 0.05 page
+ov <- fread(file.path(A, "overview.tsv")); cand <- fread(file.path(A, "candidates.tsv"), colClasses=list(character=c("np_p", "bb_p")))
+bh <- fread(file.path(A, "brain_hits.tsv"), colClasses=list(character=c("best_p", "or_beta", "pubmed")))
+ck <- fread(file.path(A, "gnl3_checks.tsv"))
+tpt <- fread(file.path(A, "timepoints.tsv"))
+parts <- fread(file.path(A, "parts.tsv")); gnotes <- fread(file.path(A, "gene_notes.tsv"), colClasses="character", na.strings=NULL)
+steps <- fread(file.path(A, "steps.tsv")); lc <- fread(file.path(A, "lookup_counts.tsv"))
+rules <- fread(file.path(A, "trait_rules.tsv")); traits <- fread(file.path(A, "trait_terms.tsv"))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+ent <- function(x) vapply(x, function(z) if (is.na(z)) z else { cp <- utf8ToInt(enc2utf8(z)); paste(ifelse(cp > 127, sprintf("&#%d;", cp), sapply(cp, intToUtf8)), collapse="") }, "", USE.NAMES=FALSE)
+pfmt <- function(p) { x <- as.numeric(p); e <- floor(log10(x)); m <- round(x / 10^e); sprintf("%g &times; 10<sup>%d</sup>", m, e) }
+lcv <- function(k) lc[item == k, value]
+sv <- function(col, ver="read_based", k=0.05) steps[version == ver & cutoff == k][[col]]   # main cutoff: 0.05
+ckv <- function(k) ck[check == k, value]
+kw <- function(cl, r) gsub("|", ", ", rules[class == cl & rule == r, terms], fixed=TRUE)
+RUN <- c(read_based="Read-based", transcript_based="Transcript-based")
+ly <- tpt[gene == "LY6H" & grepl("143160309-143160321", exonic_part)]   # the 12-base part: start of LY6H-201's first exon
+lyd <- function(r, t) sprintf("%+.0f", 100 * ly[run == r & tp == t, dpsi])
+lyq <- function(r, t) signif(ly[run == r & tp == t, q_bh], 2)
+o05 <- ov[version == "read_based" & cutoff == 0.05]
+rb <- cand[version == "read_based"]; tb <- cand[version == "transcript_based"]
+newg <- function(ver) sort(setdiff(cand[version == ver, gene], cand0[version == ver, gene]))   # genes added by q < 0.10
+added05 <- sort(rb[at_010 == FALSE, gene])   # read-based genes reported only at |dPSI| >= 0.05
+c1 <- function(g, col, d=rb) d[gene == g][[col]]
+hit <- function(trait, p, study) fifelse(is.na(trait) | !nzchar(trait), "",
+  sprintf("%s (p = %s; %s)", ent(trait), sapply(p, function(x) if (is.na(x) || !nzchar(x)) "" else pfmt(x)), study))
+NOTES <- c(LY6H="our variant is the GWAS lead SNP; LY6H modulates nicotinic receptors",
+           GNL3="same splicing event as a published GNL3 sQTL in brain (below)",
+           HNRNPK="significant at all three timepoints",
+           FLOT1="MHC; reported only without the clustering filter")
+cand_table <- function(d) d[brain_hit == TRUE][order(match(gene, names(NOTES)))][, .(Gene=gene, `Variant (rsID)`=rsid,
+  Timepoints=tps, `Best q`=signif(q, 2), `&Delta;PSI (reads)`=sprintf("%+.0f pp (%s)", 100 * dpsi, fmt(reads)),
+  `Neuropsychiatric disorder`=hit(np_trait, np_p, np_study), `Brain or behaviour`=hit(bb_trait, bb_p, bb_study),
+  Note=fifelse(gene %in% names(NOTES), NOTES[gene], ""))]
+hits_dt <- function(d) DT::datatable(as.data.frame(d[, .(Gene=gene, Variant=rsid, `Reported as`=reported_snp, `Risk allele`=risk_allele, Class=trait_class,
+  Trait=ent(mapped_trait), `Reported trait`=ent(example_trait), p=as.numeric(best_p), `OR or beta`=or_beta, Study=study,
+  Accession=sprintf('<a href="https://www.ebi.ac.uk/gwas/studies/%s">%s</a>', accession, accession),
+  PubMed=sprintf('<a href="https://pubmed.ncbi.nlm.nih.gov/%s/">%s</a>', pubmed, pubmed),
+  Entries=associations)]), escape=FALSE, rownames=FALSE, extensions="Buttons", width="100%",
+  options=list(pageLength=10, scrollX=TRUE, dom="Bfrtip", buttons=c("copy", "csv")))
+# the same three items for every gene: its tested parts (0.05 cutoff) with our association and the
+# annotation, the variants' GWAS Catalog entries, and the gene annotation
+blank <- function(x) { x <- as.character(x); fifelse(is.na(x) | !nzchar(x), "none", x) }
+RUN_TP <- c(reads10nc="Read-based (current)", reads10="Read-based, with clustering filter", panel10nc="Transcript-based")
+tp_cell <- function(d, q) fifelse(is.na(d), "not tested", sprintf("%+.0f pp (q = %s)", 100 * d, signif(q, 2)))
+tp_table <- function(g) {
+  pr <- parts[version == "read_based" & gene == g & nearest_005 == TRUE][order(p_start)]
+  grid <- CJ(exonic_part=pr$exonic_part, run=names(RUN_TP), tp=c("0hr", "1hr", "6hr"), sorted=FALSE)
+  d <- merge(grid, tpt[gene == g, .(exonic_part, run, tp, dpsi, q_bh)], by=c("exonic_part", "run", "tp"), all.x=TRUE)
+  d[, cell := tp_cell(dpsi, q_bh)]
+  w <- dcast(d, exonic_part + run ~ tp, value.var="cell")
+  w <- merge(w, pr[, .(exonic_part, Part=sprintf("%s-%s (%d bases)", fmt(p_start), fmt(p_end), part_len), o=p_start)], by="exonic_part")
+  w[, o2 := match(run, names(RUN_TP))]
+  setorder(w, o, o2)
+  knitr::kable(w[, .(Part, Run=RUN_TP[run], `0 hr`=`0hr`, `1 hr`=`1hr`, `6 hr`=`6hr`)])
+}
+gene_block <- function(g) {
+  p <- parts[version == "read_based" & gene == g & nearest_005 == TRUE][order(p_start)]
+  a <- gnotes[gene == g]; b <- bh[version == "read_based" & gene == g][order(as.numeric(best_p))]
+  dist <- fifelse(p$dist == 0, "inside the part", sprintf("%s bases from the part", fmt(p$dist)))
+  part_lines <- sprintf(paste0("- %s:%s-%s (%d bases). Variant %s, %s. Reported at %s; strongest at %s: q = %s, ",
+    "&Delta;PSI %+.0f pp, %s reads from %d heterozygous donors. Annotated transcripts: %d of %d %s the part, ",
+    "%d %s over it, %d %s not reach it."),
+    p$p_chr, fmt(p$p_start), fmt(p$p_end), p$part_len, p$rsid, dist, gsub(",", ", ", p$tps_005), p$tp_best,
+    signif(p$min_q, 2), 100 * p$dpsi_best, fmt(p$het_cov_best), p$n_het_best, p$tx_include, p$tx_total,
+    fifelse(p$tx_include == 1, "includes", "include"), p$tx_splice_over, fifelse(p$tx_splice_over == 1, "splices", "splice"),
+    p$tx_not_reaching, fifelse(p$tx_not_reaching == 1, "does", "do"))
+  u <- unique(p[, .(rsid, n_entries)])
+  cat_lines <- vapply(seq_len(nrow(u)), function(i) {
+    x <- b[rsid == u$rsid[i]]
+    br <- if (nrow(x) == 0) "none" else paste(sprintf("%s (p = %s; %s)", ent(x$example_trait),
+      sapply(x$best_p, pfmt), x$study), collapse="; ")
+    sprintf("- %s: %d %s; brain-related: %s.", u$rsid[i], u$n_entries[i], if (u$n_entries[i] == 1) "entry" else "entries", br)
+  }, "")
+  cat("**Tested parts and our association**\n\n", paste(part_lines, collapse="\n"), "\n\n",
+      "**Across timepoints and runs** (&Delta;PSI and q for the same variant and part)\n\n",
+      paste(tp_table(g), collapse="\n"), "\n\n",
+      "**GWAS Catalog entries of the variants**\n\n", paste(cat_lines, collapse="\n"), "\n\n",
+      sprintf("**Gene annotation**: neuronal GO term: %s; autism or developmental disorder: %s; expression after stimulation: %s; splicing after stimulation: %s.\n\n",
+              blank(a$neuronal_go), blank(paste(c(a$sfari, a$ddg2p)[nzchar(c(a$sfari, a$ddg2p))], collapse="; ")),
+              blank(a$expression_response), blank(a$stimulation_splicing)), sep="")
+}
+trait_table <- function(cl) knitr::kable(traits[term_class == cl, .(Trait=ent(efo_term),
+  `Read-based genes`=genes_read_based, `Transcript-based genes`=genes_transcript_based, `Catalog entries`=associations)])
+```
+
+We asked whether the variants behind our allele-specific splicing associations
+are known GWAS hits for neuropsychiatric traits. For each variant we read its
+entries in the GWAS Catalog, the same list the Catalog shows on its page for the
+rsID. A shared hit means the variant affects both splicing and the trait in
+different studies. It does not show that the splicing change causes the trait.
+
+This page uses the current cutoffs, BH q < 0.10 and \|ΔPSI\| ≥ 0.05. The
+[earlier page](isolaser_gwas_catalog.html) used q < 0.05. The lower q adds
+`r length(newg("read_based"))` read-based genes (`r paste(newg("read_based"), collapse=", ")`)
+and `r length(newg("transcript_based"))` transcript-based genes
+(`r paste(newg("transcript_based"), collapse=", ")`). None of them carries a
+brain-related hit, so the hits below are the same as on the earlier page.
+
+**Short answer.** `r o05$genes_either` of the `r o05$genes` genes reported by
+read-based isoLASER carry a variant that is itself a genome-wide GWAS hit for a
+neuropsychiatric, brain or behaviour trait. **LY6H is the one to highlight:**
+
+- Our variant, rs9694368, is the GWAS Catalog lead SNP for smoking initiation
+  (p = 3 × 10<sup>-24</sup>), and the Catalog maps that signal to LY6H.
+- LY6H limits the function of α7 nicotinic acetylcholine receptors in neurons,
+  the receptors nicotine acts on.
+- The association is about the use of LY6H-201's first exon. It has the same
+  direction at 0, 1 and 6 hours (`r lyd("reads10nc", "0hr")`,
+  `r lyd("reads10nc", "1hr")` and `r lyd("reads10nc", "6hr")` pp) and is
+  significant at 6 hours (q = `r lyq("reads10nc", "6hr")`).
+- It was also a follow-up gene in the earlier read-based run with the clustering
+  filter, with identical numbers. Both runs use the same reads, so this shows
+  the result does not depend on the filter; it is not an independent
+  replication.
+- With transcript-based labels the effect is
+  `r lyd("panel10nc", "1hr")` to `r lyd("panel10nc", "0hr")` pp (q = 1), so only
+  the read-based labels find it.
+
+The other three genes are weaker:
+
+- **GNL3**: intelligence. Our association also looks like the same splicing
+  event as a published GNL3 splicing QTL in brain.
+- **HNRNPK**: a sleep health score.
+- **FLOT1**: major depression. It lies in the MHC, so this one is weak.
+
+None of the transcript-based variants is a brain-related hit.
+
+# How the lookup works
+
+1. **Start from our reported associations.** We use the current runs, without
+   the clustering filter. An association is one variant × exonic part at one
+   timepoint. It is reported when q < 0.10, isoLASER labels it cis and
+   \|ΔPSI\| ≥ 0.05. Read-based isoLASER reports `r sv("associations")`
+   associations, at `r sv("parts")` exonic parts in `r sv("genes")` genes
+   (transcript-based: `r sv("associations", "transcript_based")`,
+   `r sv("parts", "transcript_based")` and `r sv("genes", "transcript_based")`).
+   The earlier cutoff, \|ΔPSI\| ≥ 0.10, is shown for comparison.
+2. **Keep one variant per exonic part.** A part often has several reported
+   variants on the same haplotype. For each gene × exonic part, we keep the
+   reported variant nearest to the part (distance 0 when inside it). This leaves
+   `r sv("variants")` of `r sv("variants_all")` read-based variants.
+3. **Find each variant's rsID.** We take it from the record in our genotype panel
+   with the same position, REF and ALT. Every variant has one.
+4. **Look up the variant in the GWAS Catalog.**
+   - We use the Catalog release of 2026-10-22: `r fmt(lcv("catalog_associations"))`
+     entries for `r fmt(lcv("catalog_snps"))` SNPs.
+   - We match entries by the rsID, or by the same GRCh38 position, and both
+     always agree here.
+   - This gives the same list as the Catalog's page for the rsID. For example,
+     rs1108842 (GNL3) has four entries: intelligence and three for adiponectin
+     levels.
+   - `r sv("variants_matched")` of the `r sv("variants")` read-based variants
+     have at least one entry.
+5. **Keep genome-wide hits** (p ≤ 5 × 10<sup>-8</sup>). The Catalog also accepts
+   entries with p down to 10<sup>-5</sup>, but every entry matched here is
+   genome-wide.
+6. **Keep neuropsychiatric and brain traits.** Each trait is classed as a
+   neuropsychiatric disorder or a brain or behaviour trait. The rules and the
+   traits found are under [Trait classes](#trait-classes).
+7. **Summarise per gene.** For each gene and class, we show the entry with the
+   smallest p.
+
+```{r steps}
+lab <- c(associations="1. Reported associations", parts="1. Exonic parts", genes="1. Genes",
+         variants="2. Variants (nearest to each part)", variants_matched="4. Variants with a Catalog entry",
+         catalog_matches="4. Catalog entries matched", gw_matches="5. Genome-wide (p &le; 5 &times; 10<sup>-8</sup>)",
+         gw_np="6. Neuropsychiatric disorder", gw_bb="6. Brain or behaviour")
+m <- melt(steps, id.vars=c("version", "cutoff"), measure.vars=names(lab))
+m[, col := sprintf("%s, %.2f", RUN[version], cutoff)]
+w <- dcast(m, variable ~ col, value.var="value")
+w[, Step := lab[as.character(variable)]][, variable := NULL]
+setcolorder(w, c("Step", sprintf("%s, %.2f", RUN[c("read_based", "transcript_based")], 0.05), sprintf("%s, %.2f", RUN[c("read_based", "transcript_based")], 0.10)))
+knitr::kable(w[, lapply(.SD, function(x) if (is.numeric(x)) fmt(x) else x)])
+```
+
+Columns are the run and the \|ΔPSI\| cutoff. The Catalog rows count entries,
+and one study can contribute several. The last two rows are subsets of the
+genome-wide row. Compared with 0.10, the 0.05 cutoff adds
+`r sv("variants") - sv("variants", k=0.10)` read-based variants and
+`r length(added05)` genes (`r paste(added05, collapse=", ")`). None of the added
+variants has a Catalog entry, so the hits are the same at both cutoffs.
+
+The Catalog records each study's top associations, not full summary statistics.
+These are the SNPs at p < 10<sup>-5</sup> that the authors describe as
+independent, or the strongest SNP within 100 kb
+([inclusion criteria](https://www.ebi.ac.uk/gwas/docs/methods/criteria/)). A
+study that reported a different SNP for the same signal is therefore not counted
+here.
+
+# Overview
+
+```{r overview}
+knitr::kable(ov[order(cutoff, version), .(Run=RUN[version], `&Delta;PSI cutoff`=sprintf("%.2f", cutoff), `Exonic parts`=parts, Genes=genes,
+                    `Neuropsychiatric disorder`=genes_neuropsych, `Brain or behaviour`=genes_brain_behaviour, Either=genes_either)])
+```
+
+**Exonic parts** and **Genes**: reported exonic parts and their genes; each part
+contributes its nearest variant. **Neuropsychiatric disorder**, **Brain or
+behaviour** and **Either**: genes whose variant has a genome-wide Catalog entry
+in that class.
+
+# Read-based isoLASER
+
+`r nrow(rb[brain_hit == TRUE])` of the `r nrow(rb)` read-based genes carry a
+variant with a brain-related Catalog entry:
+
+```{r read_based}
+knitr::kable(cand_table(rb), escape=FALSE)
+```
+
+**Variant (rsID)**: the variant nearest to the
+gene's reported parts. **Timepoints**: where the association is reported.
+**Best q** and **ΔPSI (reads)**: from the gene's strongest
+association. ΔPSI is ALT minus REF inclusion in percentage points; reads are
+those from the heterozygous donors. **Neuropsychiatric disorder** and **Brain or
+behaviour**: the variant's Catalog entry in that class with the smallest p. All
+entries are [listed below](#all-brain-related-hits), with risk alleles and
+effects.
+
+The other `r nrow(rb[brain_hit == FALSE])` genes have no brain-related entry: `r paste(rb[brain_hit == FALSE, gene], collapse=", ")`.
+
+Each of the four genes below shows the same items. The tested parts are those
+reported, with the 1-based GRCh38 coordinates of each part. The annotation counts use the IsoQuant annotation that isoLASER tests against. The
+gene annotation is the same as on the
+[main read-based page](isolaser_fdr_reads10nc_q010.html#genes-to-follow-up). A short
+note on the event and the gene follows.
+
+## LY6H
+
+```{r block_ly6h, results="asis"}
+gene_block("LY6H")
+```
+
+**Note.** The two parts are adjacent. The 12-base part is the very start of
+LY6H-201's first exon, and the 42-base part follows it. The test compares the
+use of two first exons. The [main page](isolaser_fdr_reads10nc_q010.html#ly6h)
+shows rs10109061, another of the gene's three reported variants (all within
+0.6 kb of each other). LY6H belongs to the Ly6 family of neurotoxin-like proteins
+and limits α7 nicotinic acetylcholine receptor function in neurons
+([Puddifoot 2015](https://pmc.ncbi.nlm.nih.gov/articles/PMC4339353/);
+[Moriwaki 2020](https://www.nature.com/articles/s41598-020-68947-7)). Nicotine
+acts on these receptors, so the smoking signal fits the gene's function.
+
+## GNL3
+
+```{r block_gnl3, results="asis"}
+gene_block("GNL3")
+```
+
+**Note.** The two parts are the stretch between the two annotated ends of exon 1:
+52,686,105 in most transcripts and 52,686,202 in ENST00000394799. The test is
+therefore about where exon 1 ends (our reading of the annotation). GNL3 lies in
+the 3p21.1 schizophrenia and bipolar disorder locus and has been prioritised as a
+bipolar risk gene there, from other SNPs
+([Molecular Psychiatry](https://www.nature.com/articles/s41380-020-00866-5)). A
+schizophrenia study reports that rs2590846 changes "an alternative exonic boundary
+in GNL3" in brain
+([Science Advances](https://www.science.org/doi/10.1126/sciadv.adw7667)).
+We read the reported coordinates as hg19, because in hg38 they fall in NEK4; this
+is our inference. Moved to hg38, that junction
+(`r paste(fmt(as.integer(strsplit(ckv("published junction hg38"), "-")[[1]])), collapse=" to ")`) ends just before exon 2 and
+contains both of our parts, so both studies see variants changing where exon 1
+ends. We read only the abstract and excerpts of that paper.
+
+## HNRNPK
+
+```{r block_hnrnpk, results="asis"}
+gene_block("HNRNPK")
+```
+
+**Note.** HNRNPK is the only one of the four genes reported at all three
+timepoints. Its two parts carry different nearest variants:
+
+- an 80-base exon that most transcripts include, with rs296888;
+- a 34-base stretch present in few transcripts, with rs296887 3 bases away.
+
+Only rs296888 has a brain-related entry. HNRNPK encodes the RNA-binding protein
+hnRNP K.
+
+## FLOT1
+
+```{r block_flot1, results="asis"}
+gene_block("FLOT1")
+```
+
+**Note.** The part lies in an exon of a single annotated transcript; ten others
+splice over it. FLOT1 encodes flotillin-1, a lipid-raft protein. It lies in the
+MHC, where LD spans megabases and many variants have GWAS hits, and it was
+reported only after the clustering filter was dropped. We don't highlight it.
+
+# Transcript-based isoLASER
+
+None of the `r nrow(tb)` transcript-based genes carries a variant with a
+brain-related Catalog entry. Of the `r sv("variants", "transcript_based")` variants
+looked up, `r sv("variants_matched", "transcript_based")` have entries for other
+traits only. HNRNPK's transcript-based variant is
+rs296887, the one without a sleep entry.
+
+# Trait classes
+
+The grouping is ours. Each Catalog entry maps to one or more traits (EFO terms),
+and each trait gets a class:
+
+- **Neuropsychiatric disorder**: the Catalog's parent category is
+  "`r rules[class == "neuropsychiatric disorder" & rule == "EFO parent term", terms]`"
+  (the Catalog files psychiatric disorders there too). Or the trait name contains
+  one of these: `r kw("neuropsychiatric disorder", "trait name contains")`.
+- **Brain or behaviour**: the trait name contains one of these:
+  `r kw("brain or behaviour", "trait name contains")`. A trait that also contains
+  `r kw("brain or behaviour", "unless it also contains")` is excluded, so blood
+  levels of brain proteins do not count.
+
+Traits in neither class are not shown: blood counts, body size, metabolic
+traits and so on. An entry whose traits fall in both classes counts as a
+neuropsychiatric disorder.
+
+Interaction and adjusted analyses also map their exposure as a trait. In "waist-hip
+ratio × smoking" or "... adjusted for smoking", for example, smoking is mapped
+next to the main trait. Those exposure traits are ignored unless the main trait is
+itself one of them. The exposures are
+`r kw("all classes", "exposure term dropped in interaction or adjusted analyses")`.
+
+## Traits found in each class {.tabset}
+
+Every trait with a genome-wide entry at our variants, with the genes, at
+\|ΔPSI\| ≥ 0.05. **Catalog entries**: how many
+Catalog entries with this trait match the listed genes' variants.
+
+### Neuropsychiatric disorder
+
+```{r traits_np}
+trait_table("neuropsychiatric disorder")
+```
+
+### Brain or behaviour
+
+```{r traits_bb}
+trait_table("brain or behaviour")
+```
+
+# All brain-related hits {.tabset}
+
+One row per gene × mapped trait (the Catalog's EFO terms for the entry), with
+the Catalog's details:
+
+- **Reported as**: the SNP the study reported. It differs from our rsID when
+  dbSNP has since merged the two IDs. For FLOT1, the study reported rs115844366,
+  now merged into rs3094125 at the same position.
+- **Risk allele**: "not reported" when the study gave none.
+- **p**, **OR or beta**, **Study** (first author and year), **Accession** (the Catalog study) and
+  **PubMed**.
+- **Entries**: how many Catalog entries with this trait match the gene's
+  variant.
+- **Class**: see [Trait classes](#trait-classes).
+
+## Read-based isoLASER
+
+```{r all_hits_read}
+hits_dt(bh[version == "read_based"])
+```
+
+## Transcript-based isoLASER
+
+None of the transcript-based variants has a brain-related Catalog entry.
+
+<!-- # Caveats and next steps -->
+
+<!-- - **Lead SNPs only.** The Catalog keeps each study's reported top SNPs, so a study -->
+<!--   whose top SNP is a neighbour of our variant is not counted. -->
+<!-- - **No background rate.** Running the same lookup on tested variants without an -->
+<!--   association would show whether reported variants hit neuropsychiatric traits -->
+<!--   more often than chance. -->
+<!-- - **Not colocalization.** A shared hit does not mean a shared causal variant. -->
+<!--   Colocalization with GWAS summary statistics would test this, for example GSCAN -->
+<!--   for smoking at LY6H. -->
+<!-- - **Allele direction.** The table lists the GWAS risk alleles, but we have not -->
+<!--   yet compared them with the allele that changes splicing. -->
+
+Code: `long_read_RNA/14.gwas_catalog/`.
+- `1.gwas_catalog_lookup.R`: the lookup, run with `Q=0.10` (outputs in `out_q010/`).
+- `2.page_tables.R`: this page's tables and the GNL3 checks, run with `Q=0.10`
+  (`docs/assets/gwas_catalog_q010/`).

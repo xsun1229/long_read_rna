@@ -1,0 +1,5 @@
+check	value
+hg19 - hg38 offset (rs1108842, rs2590846)	34016
+published junction hg38	52686056-52686768
+GNL3 parts inside the published junction	TRUE
+published junction ends just before exon 2 (52,686,769)	TRUE

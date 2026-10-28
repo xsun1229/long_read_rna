@@ -1,0 +1,55 @@
+tissue	rule	run	set	tp	associations	matched	matched_share	multi_junction	frac_p05	pi1	pi0_method
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	73	0.108308605341246	3	0.191780821917808	0.75086986495663	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	122	0.107111501316945	1	0.327868852459016	0.758965306446211	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	108	0.0972972972972973	1	0.277777777777778	0.390207774711738	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	54	0.122727272727273	3	0.185185185185185	0.641970050283031	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	96	0.136752136752137	1	0.3125	0.734694209285593	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	87	0.130630630630631	1	0.275862068965517	0.259045188338693	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	80	0.118694362017804	3	0.2125	0	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	132	0.115891132572432	0	0.333333333333333	0.0620869690817104	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	126	0.113513513513514	2	0.246031746031746	0	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	62	0.140909090909091	3	0.225806451612903	0	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	105	0.14957264957265	0	0.314285714285714	0.208698338736415	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	103	0.154654654654655	2	0.233009708737864	0.0734131381267611	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	79	0.117210682492582	3	0.240506329113924	0.527563259287693	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	130	0.114135206321335	1	0.330769230769231	0.56491864166071	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	121	0.109009009009009	1	0.231404958677686	0.466193481995073	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	62	0.140909090909091	3	0.209677419354839	0.461158871926423	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	103	0.146723646723647	1	0.320388349514563	0.605341419323049	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	99	0.148648648648649	1	0.202020202020202	0.338274915409236	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	69	0.102373887240356	3	0.231884057971015	0.171085477905188	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	114	0.100087796312555	1	0.324561403508772	0.500340372958795	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	107	0.0963963963963964	1	0.233644859813084	0.228498920038316	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	52	0.118181818181818	3	0.230769230769231	0.137957676456508	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	94	0.133903133903134	1	0.297872340425532	0.452797815573407	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	86	0.129129129129129	1	0.186046511627907	0.119978969405634	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	70	0.103857566765579	3	0.185714285714286	0.19271093993989	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	118	0.10359964881475	1	0.389830508474576	0.408108556896158	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	111	0.1	1	0.27027027027027	0.261261261261261	lambda 0.5
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	52	0.118181818181818	3	0.173076923076923	0.0772151657054657	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	95	0.135327635327635	1	0.378947368421053	0.387787567292957	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	90	0.135135135135135	1	0.233333333333333	0.244444444444444	lambda 0.5
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	70	0.103857566765579	2	0.228571428571429	0.678866802116071	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	121	0.106233538191396	1	0.322314049586777	0.282584850979288	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	110	0.0990990990990991	1	0.272727272727273	0.544537530106668	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	52	0.118181818181818	2	0.211538461538462	0.77602062495489	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	95	0.135327635327635	1	0.294736842105263	0.403384674866251	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	87	0.130630630630631	1	0.252873563218391	0.599852253413735	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	71	0.105341246290801	2	0.23943661971831	0.0534693013805142	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	117	0.102721685689201	1	0.316239316239316	0.296947635761699	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	111	0.1	1	0.243243243243243	0.290136766802275	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	53	0.120454545454545	2	0.188679245283019	0	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	95	0.135327635327635	1	0.305263157894737	0.302646050848757	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	90	0.135135135135135	1	0.211111111111111	0.175605447385182	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	76	0.112759643916914	3	0.223684210526316	0.530922707122734	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	119	0.104477611940299	1	0.34453781512605	0.564296651126562	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	109	0.0981981981981982	1	0.256880733944954	0.376146788990826	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	57	0.129545454545455	3	0.228070175438597	0.358070736073208	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	96	0.136752136752137	1	0.3125	0.624362943527619	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	88	0.132132132132132	1	0.227272727272727	0.409090909090909	lambda 0.5
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	0hr	674	71	0.105341246290801	3	0.0985915492957746	0.111609884575489	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	1hr	1139	120	0.105355575065847	1	0.291666666666667	0.108263386273162	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	isoLASER cis, het donors	6hr	1110	108	0.0972972972972973	1	0.268518518518519	0.34808544802739	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	0hr	440	53	0.120454545454545	3	0.0566037735849057	0.243192389306034	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	1hr	702	94	0.133903133903134	1	0.276595744680851	0.0480641154253013	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	6hr	666	86	0.129129129129129	1	0.267441860465116	0.419484989566488	smoother

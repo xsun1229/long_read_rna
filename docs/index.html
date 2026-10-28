@@ -361,15 +361,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0491017f4be46006c24a0e9c4f32b46acbb6314ctargetblank0491017a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea43035e3a37a3c2658a8b1528f4dd9849c68581atargetblanka43035ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/0491017f4be46006c24a0e9c4f32b46acbb6314c" target="_blank">0491017</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/a43035e3a37a3c2658a8b1528f4dd9849c68581a" target="_blank">a43035e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree0491017f4be46006c24a0e9c4f32b46acbb6314ctargetblank0491017a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea43035e3a37a3c2658a8b1528f4dd9849c68581atargetblanka43035ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -379,7 +379,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/0491017f4be46006c24a0e9c4f32b46acbb6314c" target="_blank">0491017</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/a43035e3a37a3c2658a8b1528f4dd9849c68581a" target="_blank">a43035e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -394,10 +394,13 @@ were generated:
 </p>
 <pre><code>
 Untracked files:
-    Untracked:  analysis/isolaser_gwas_catalog_q010.Rmd
+    Untracked:  analysis/isolaser_fdr_panel10nc_q010_hetcis.Rmd
+    Untracked:  analysis/isolaser_fdr_reads10nc_q010_hetcis.Rmd
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_panel10nc_q010_hetcis.Rmd
+    Modified:   analysis/isolaser_gtex_comparison_reads10nc_q010_hetcis.Rmd
 
 </code></pre>
 <p>
@@ -442,6 +445,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/a43035e3a37a3c2658a8b1528f4dd9849c68581a/analysis/index.Rmd" target="_blank">a43035e</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-28
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/a43035e3a37a3c2658a8b1528f4dd9849c68581a/docs/index.html" target="_blank">a43035e</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-28
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1231,13 +1268,14 @@ brain sQTLs serve as an independent check.</p>
 <p><strong>Current analysis: read-based isoLASER</strong>, without the
 clustering filter, reported at BH q &lt; 0.10 and |ΔPSI| ≥ 0.05.</p>
 <ul>
-<li><a href="isolaser_fdr_reads10nc_q010.html">Genome-wide FDR</a> —
-results, the genes gained over the earlier cutoffs, and genes to follow
-up with their figures (LY6H, PARK7, PPA2, ZNF749)</li>
-<li><a href="isolaser_gtex_comparison_reads10nc_q010.html">Comparison
-with GTEx brain sQTLs</a> — nine brain tissues, three sets (paper’s
-cutoff, before and after FDR), Storey’s π<sub>1</sub> and gene-level
-overlap</li>
+<li><a href="isolaser_fdr_reads10nc_q010_hetcis.html">Genome-wide
+FDR</a> — results, the genes gained over the earlier cutoffs, and genes
+to follow up with their figures (LY6H, PARK7, PPA2, ZNF749)</li>
+<li><a
+href="isolaser_gtex_comparison_reads10nc_q010_hetcis.html">Comparison
+with GTEx brain sQTLs</a> — nine brain tissues, three nested sets
+(isoLASER’s <code>cis</code> cutoff on heterozygous donors, then before
+and after FDR), Storey’s π<sub>1</sub> and gene-level overlap</li>
 <li><a href="isolaser_gwas_catalog_q010.html">Hits in the GWAS
 Catalog</a> — which reported variants are known GWAS signals for
 neuropsychiatric, brain or behaviour traits (LY6H, GNL3, HNRNPK,
@@ -1245,8 +1283,9 @@ FLOT1)</li>
 </ul>
 <p><strong>For comparison: transcript-based isoLASER</strong>
 (isoLASER’s own labels), without the clustering filter, at the same
-cutoffs: <a href="isolaser_fdr_panel10nc_q010.html">genome-wide FDR</a>
-and <a href="isolaser_gtex_comparison_panel10nc_q010.html">comparison
+cutoffs: <a href="isolaser_fdr_panel10nc_q010_hetcis.html">genome-wide
+FDR</a> and <a
+href="isolaser_gtex_comparison_panel10nc_q010_hetcis.html">comparison
 with GTEx</a>.</p>
 <p>The read-based effects keep their direction with transcript-based
 labels and agree with GTEx; most transcript-based-only hits disappear
@@ -1325,8 +1364,7 @@ href="isolaser_gwas_catalog.html">GWAS Catalog</a></td>
 </tr>
 <tr class="odd">
 <td>5</td>
-<td>Both, without filter, at q &lt; 0.10 and |ΔPSI| ≥ 0.05
-(current)</td>
+<td>Both, without filter, at q &lt; 0.10 and |ΔPSI| ≥ 0.05</td>
 <td>as in step 2</td>
 <td>both</td>
 <td>no</td>
@@ -1337,6 +1375,23 @@ href="isolaser_gtex_comparison_reads10nc_q010.html">GTEx</a>; <a
 href="isolaser_fdr_panel10nc_q010.html">transcript-based FDR</a>, <a
 href="isolaser_gtex_comparison_panel10nc_q010.html">GTEx</a>; <a
 href="isolaser_gwas_catalog_q010.html">GWAS Catalog</a></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>As step 5, but the comparison set is isoLASER’s <code>cis</code>
+cutoff on the heterozygous donors, not its joint output (current)</td>
+<td>as in step 2</td>
+<td>both</td>
+<td>no</td>
+<td>The joint output’s <code>cis</code> calls still used variants absent
+from the genotype panel. On heterozygous donors, read-based effects
+still agree with GTEx; transcript-based effects do not</td>
+<td><a href="isolaser_fdr_reads10nc_q010_hetcis.html">read-based
+FDR</a>, <a
+href="isolaser_gtex_comparison_reads10nc_q010_hetcis.html">GTEx</a>; <a
+href="isolaser_fdr_panel10nc_q010_hetcis.html">transcript-based FDR</a>,
+<a href="isolaser_gtex_comparison_panel10nc_q010_hetcis.html">GTEx</a>;
+<a href="isolaser_gwas_catalog_q010.html">GWAS Catalog</a></td>
 </tr>
 </tbody>
 </table>

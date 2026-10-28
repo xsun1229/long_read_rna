@@ -149,12 +149,14 @@ In each tab:
   that tissue, the plotted pairs and their genes.
 - **Correlation** and **Sign consistency**, as defined above.
 
-Only a minority of the cis set's associations are tested in GTEx for the same
-variant and gene: `r paper_tested` across tissues and timepoints (Cerebellum at
-0 hr: `r fmt(cb0$tested_in_gtex)` of `r fmt(cb0$reported_snv_associations)`,
+Most of the cis set's associations are tested in GTEx for the same variant and
+gene: `r paper_tested` across tissues and timepoints (Cerebellum at 0 hr:
+`r fmt(cb0$tested_in_gtex)` of `r fmt(cb0$reported_snv_associations)`,
 `r sprintf("%.1f%%", 100 * cb0$tested_in_gtex / cb0$reported_snv_associations)`,
-with `r fmt(cb0$plotted)` plotted pairs). Fewer still form an annotated event with
-a matching skipping junction.
+with `r fmt(cb0$plotted)` plotted pairs). Fewer form an annotated event with a
+matching skipping junction. For the paper's cutoff on the
+[earlier version](isolaser_gtex_comparison_panel10nc_q010.html), only a minority were
+tested, because many of its variants are not in the donors' genotype panel.
 
 ```{r result_tabs, results="asis"}
 for (t in TISSUES) {

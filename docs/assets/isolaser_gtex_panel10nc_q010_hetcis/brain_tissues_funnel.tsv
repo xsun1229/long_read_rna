@@ -1,0 +1,82 @@
+tissue	tp	reported_snv_associations	tested_in_gtex	plotted	genes	set
+Brain_Caudate_basal_ganglia	0hr	674	595	76	51	isoLASER cis, het donors
+Brain_Caudate_basal_ganglia	1hr	1139	956	123	88	isoLASER cis, het donors
+Brain_Caudate_basal_ganglia	6hr	1110	951	109	77	isoLASER cis, het donors
+Brain_Cerebellar_Hemisphere	0hr	674	551	83	54	isoLASER cis, het donors
+Brain_Cerebellar_Hemisphere	1hr	1139	934	132	94	isoLASER cis, het donors
+Brain_Cerebellar_Hemisphere	6hr	1110	910	128	85	isoLASER cis, het donors
+Brain_Cerebellum	0hr	674	556	82	53	isoLASER cis, het donors
+Brain_Cerebellum	1hr	1139	934	131	91	isoLASER cis, het donors
+Brain_Cerebellum	6hr	1110	905	122	82	isoLASER cis, het donors
+Brain_Cortex	0hr	674	555	72	48	isoLASER cis, het donors
+Brain_Cortex	1hr	1139	898	115	84	isoLASER cis, het donors
+Brain_Cortex	6hr	1110	873	108	77	isoLASER cis, het donors
+Brain_Frontal_Cortex_BA9	0hr	674	548	73	50	isoLASER cis, het donors
+Brain_Frontal_Cortex_BA9	1hr	1139	892	119	87	isoLASER cis, het donors
+Brain_Frontal_Cortex_BA9	6hr	1110	857	112	79	isoLASER cis, het donors
+Brain_Hippocampus	0hr	674	585	72	47	isoLASER cis, het donors
+Brain_Hippocampus	1hr	1139	945	122	87	isoLASER cis, het donors
+Brain_Hippocampus	6hr	1110	925	111	76	isoLASER cis, het donors
+Brain_Hypothalamus	0hr	674	585	73	49	isoLASER cis, het donors
+Brain_Hypothalamus	1hr	1139	921	118	85	isoLASER cis, het donors
+Brain_Hypothalamus	6hr	1110	928	112	80	isoLASER cis, het donors
+Brain_Nucleus_accumbens_basal_ganglia	0hr	674	560	79	53	isoLASER cis, het donors
+Brain_Nucleus_accumbens_basal_ganglia	1hr	1139	894	120	83	isoLASER cis, het donors
+Brain_Nucleus_accumbens_basal_ganglia	6hr	1110	885	110	77	isoLASER cis, het donors
+Brain_Putamen_basal_ganglia	0hr	674	549	74	48	isoLASER cis, het donors
+Brain_Putamen_basal_ganglia	1hr	1139	940	121	83	isoLASER cis, het donors
+Brain_Putamen_basal_ganglia	6hr	1110	931	109	76	isoLASER cis, het donors
+Brain_Caudate_basal_ganglia	0hr	440	404	57	40	Before FDR
+Brain_Caudate_basal_ganglia	1hr	702	644	97	71	Before FDR
+Brain_Caudate_basal_ganglia	6hr	666	612	88	65	Before FDR
+Brain_Cerebellar_Hemisphere	0hr	440	396	65	44	Before FDR
+Brain_Cerebellar_Hemisphere	1hr	702	654	105	76	Before FDR
+Brain_Cerebellar_Hemisphere	6hr	666	612	105	72	Before FDR
+Brain_Cerebellum	0hr	440	401	65	44	Before FDR
+Brain_Cerebellum	1hr	702	653	104	73	Before FDR
+Brain_Cerebellum	6hr	666	604	100	70	Before FDR
+Brain_Cortex	0hr	440	401	55	39	Before FDR
+Brain_Cortex	1hr	702	644	95	71	Before FDR
+Brain_Cortex	6hr	666	599	87	65	Before FDR
+Brain_Frontal_Cortex_BA9	0hr	440	394	55	40	Before FDR
+Brain_Frontal_Cortex_BA9	1hr	702	639	96	72	Before FDR
+Brain_Frontal_Cortex_BA9	6hr	666	591	91	67	Before FDR
+Brain_Hippocampus	0hr	440	396	54	37	Before FDR
+Brain_Hippocampus	1hr	702	635	96	70	Before FDR
+Brain_Hippocampus	6hr	666	598	88	63	Before FDR
+Brain_Hypothalamus	0hr	440	407	55	39	Before FDR
+Brain_Hypothalamus	1hr	702	647	96	71	Before FDR
+Brain_Hypothalamus	6hr	666	628	91	67	Before FDR
+Brain_Nucleus_accumbens_basal_ganglia	0hr	440	404	60	42	Before FDR
+Brain_Nucleus_accumbens_basal_ganglia	1hr	702	641	97	68	Before FDR
+Brain_Nucleus_accumbens_basal_ganglia	6hr	666	603	89	65	Before FDR
+Brain_Putamen_basal_ganglia	0hr	440	359	56	38	Before FDR
+Brain_Putamen_basal_ganglia	1hr	702	634	95	66	Before FDR
+Brain_Putamen_basal_ganglia	6hr	666	604	87	63	Before FDR
+Brain_Caudate_basal_ganglia	0hr	43	33	10	7	After FDR
+Brain_Caudate_basal_ganglia	1hr	75	67	20	11	After FDR
+Brain_Caudate_basal_ganglia	6hr	59	48	12	7	After FDR
+Brain_Cerebellar_Hemisphere	0hr	43	30	11	8	After FDR
+Brain_Cerebellar_Hemisphere	1hr	75	65	21	11	After FDR
+Brain_Cerebellar_Hemisphere	6hr	59	42	14	9	After FDR
+Brain_Cerebellum	0hr	43	30	12	9	After FDR
+Brain_Cerebellum	1hr	75	65	22	12	After FDR
+Brain_Cerebellum	6hr	59	43	14	9	After FDR
+Brain_Cortex	0hr	43	30	9	6	After FDR
+Brain_Cortex	1hr	75	64	16	10	After FDR
+Brain_Cortex	6hr	59	43	12	7	After FDR
+Brain_Frontal_Cortex_BA9	0hr	43	27	10	7	After FDR
+Brain_Frontal_Cortex_BA9	1hr	75	62	17	11	After FDR
+Brain_Frontal_Cortex_BA9	6hr	59	40	13	8	After FDR
+Brain_Hippocampus	0hr	43	27	9	6	After FDR
+Brain_Hippocampus	1hr	75	62	20	10	After FDR
+Brain_Hippocampus	6hr	59	40	12	7	After FDR
+Brain_Hypothalamus	0hr	43	33	9	6	After FDR
+Brain_Hypothalamus	1hr	75	67	19	10	After FDR
+Brain_Hypothalamus	6hr	59	48	11	6	After FDR
+Brain_Nucleus_accumbens_basal_ganglia	0hr	43	33	10	7	After FDR
+Brain_Nucleus_accumbens_basal_ganglia	1hr	75	66	21	11	After FDR
+Brain_Nucleus_accumbens_basal_ganglia	6hr	59	47	13	8	After FDR
+Brain_Putamen_basal_ganglia	0hr	43	30	9	6	After FDR
+Brain_Putamen_basal_ganglia	1hr	75	64	20	10	After FDR
+Brain_Putamen_basal_ganglia	6hr	59	44	12	7	After FDR

@@ -52,19 +52,19 @@ serve as an independent check.
 **Current analysis: read-based isoLASER**, without the clustering filter, reported
 at BH q < 0.10 and |ΔPSI| ≥ 0.05.
 
-* [Genome-wide FDR](isolaser_fdr_reads10nc_q010.html) — results, the genes
+* [Genome-wide FDR](isolaser_fdr_reads10nc_q010_hetcis.html) — results, the genes
   gained over the earlier cutoffs, and genes to follow up with their figures
   (LY6H, PARK7, PPA2, ZNF749)
-* [Comparison with GTEx brain sQTLs](isolaser_gtex_comparison_reads10nc_q010.html) — nine brain
-  tissues, three sets (paper's cutoff, before and after FDR), Storey's π<sub>1</sub>
-  and gene-level overlap
+* [Comparison with GTEx brain sQTLs](isolaser_gtex_comparison_reads10nc_q010_hetcis.html) — nine brain
+  tissues, three nested sets (isoLASER's `cis` cutoff on heterozygous donors, then
+  before and after FDR), Storey's π<sub>1</sub> and gene-level overlap
 * [Hits in the GWAS Catalog](isolaser_gwas_catalog_q010.html) — which reported
   variants are known GWAS signals for neuropsychiatric, brain or behaviour
   traits (LY6H, GNL3, HNRNPK, FLOT1)
 
 **For comparison: transcript-based isoLASER** (isoLASER's own labels), without the
-clustering filter, at the same cutoffs: [genome-wide FDR](isolaser_fdr_panel10nc_q010.html) and
-[comparison with GTEx](isolaser_gtex_comparison_panel10nc_q010.html).
+clustering filter, at the same cutoffs: [genome-wide FDR](isolaser_fdr_panel10nc_q010_hetcis.html) and
+[comparison with GTEx](isolaser_gtex_comparison_panel10nc_q010_hetcis.html).
 
 The read-based effects keep their direction with transcript-based labels and agree
 with GTEx; most transcript-based-only hits disappear once reads are labelled from
@@ -78,7 +78,8 @@ their alignments.
 | 2 | Transcript-based isoLASER, with filter | heterozygous in the genotype panel, ≥ 10 reads | transcript-based | yes | Panel donors remove those hits; a read check showed that isoLASER labels reads from their assigned transcript | [FDR](isolaser_fdr_panel10.html), [GTEx](isolaser_gtex_comparison_panel10.html) |
 | 3 | Read-based isoLASER, with filter | as in step 2 | read-based | yes | Read-based hits keep their direction with transcript-based labels and agree with GTEx | [FDR](isolaser_fdr_reads10.html), [GTEx](isolaser_gtex_comparison_reads10.html) |
 | 4 | Both, without filter | as in step 2 | both | no | The filter removed little real signal: read-based isoLASER gains 3 MHC genes and loses none | [read-based FDR](isolaser_fdr_reads10nc.html), [GTEx](isolaser_gtex_comparison_reads10nc.html); [transcript-based FDR](isolaser_fdr_panel10nc.html), [GTEx](isolaser_gtex_comparison_panel10nc.html); [GWAS Catalog](isolaser_gwas_catalog.html) |
-| 5 | Both, without filter, at q < 0.10 and \|ΔPSI\| ≥ 0.05 (current) | as in step 2 | both | no | No earlier hit is lost: read-based isoLASER reports 30 genes (22 before), transcript-based 41 (29) | [read-based FDR](isolaser_fdr_reads10nc_q010.html), [GTEx](isolaser_gtex_comparison_reads10nc_q010.html); [transcript-based FDR](isolaser_fdr_panel10nc_q010.html), [GTEx](isolaser_gtex_comparison_panel10nc_q010.html); [GWAS Catalog](isolaser_gwas_catalog_q010.html) |
+| 5 | Both, without filter, at q < 0.10 and \|ΔPSI\| ≥ 0.05 | as in step 2 | both | no | No earlier hit is lost: read-based isoLASER reports 30 genes (22 before), transcript-based 41 (29) | [read-based FDR](isolaser_fdr_reads10nc_q010.html), [GTEx](isolaser_gtex_comparison_reads10nc_q010.html); [transcript-based FDR](isolaser_fdr_panel10nc_q010.html), [GTEx](isolaser_gtex_comparison_panel10nc_q010.html); [GWAS Catalog](isolaser_gwas_catalog_q010.html) |
+| 6 | As step 5, but the comparison set is isoLASER's `cis` cutoff on the heterozygous donors, not its joint output (current) | as in step 2 | both | no | The joint output's `cis` calls still used variants absent from the genotype panel. On heterozygous donors, read-based effects still agree with GTEx; transcript-based effects do not | [read-based FDR](isolaser_fdr_reads10nc_q010_hetcis.html), [GTEx](isolaser_gtex_comparison_reads10nc_q010_hetcis.html); [transcript-based FDR](isolaser_fdr_panel10nc_q010_hetcis.html), [GTEx](isolaser_gtex_comparison_panel10nc_q010_hetcis.html); [GWAS Catalog](isolaser_gwas_catalog_q010.html) |
 
 Steps 1–4 report BH q < 0.05 and |ΔPSI| ≥ 0.10. **Donors used**: which donors count for an association at a SNP. **Inclusion
 labels**: how a read is called as including or excluding the tested exonic part.

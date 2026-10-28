@@ -1,0 +1,82 @@
+tissue	rule	run	set	tp	universe	ours_all	ours	gtex	both	ours_only	gtex_only
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1463	148	131	286	48	83	238
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	1463	106	96	286	38	58	248
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	0hr	1463	12	11	286	7	4	279
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2059	242	219	393	73	146	320
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	2059	176	165	393	59	106	334
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	1hr	2059	13	12	393	8	4	385
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2089	282	252	377	80	172	297
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	2089	204	189	377	61	128	316
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	6hr	2089	18	13	377	6	7	371
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1457	148	127	384	52	75	332
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	0hr	1457	106	95	384	47	48	337
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	After FDR	0hr	1457	12	11	384	7	4	377
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2056	242	220	534	85	135	449
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	1hr	2056	176	164	534	68	96	466
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	After FDR	1hr	2056	13	12	534	9	3	525
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2095	282	247	501	93	154	408
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	6hr	2095	204	188	501	70	118	431
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	After FDR	6hr	2095	18	12	501	9	3	492
+Brain_Cerebellum	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1456	148	126	431	63	63	368
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	0hr	1456	106	95	431	54	41	377
+Brain_Cerebellum	reads10nc	Read-based isoLASER	After FDR	0hr	1456	12	11	431	8	3	423
+Brain_Cerebellum	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2047	242	219	602	91	128	511
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	1hr	2047	176	164	602	68	96	534
+Brain_Cerebellum	reads10nc	Read-based isoLASER	After FDR	1hr	2047	13	12	602	10	2	592
+Brain_Cerebellum	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2078	282	247	571	101	146	470
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	6hr	2078	204	186	571	70	116	501
+Brain_Cerebellum	reads10nc	Read-based isoLASER	After FDR	6hr	2078	18	12	571	9	3	562
+Brain_Cortex	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1456	148	130	335	53	77	282
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	0hr	1456	106	98	335	42	56	293
+Brain_Cortex	reads10nc	Read-based isoLASER	After FDR	0hr	1456	12	11	335	7	4	328
+Brain_Cortex	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2054	242	219	448	77	142	371
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	1hr	2054	176	167	448	60	107	388
+Brain_Cortex	reads10nc	Read-based isoLASER	After FDR	1hr	2054	13	12	448	9	3	439
+Brain_Cortex	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2093	282	248	422	86	162	336
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	6hr	2093	204	187	422	63	124	359
+Brain_Cortex	reads10nc	Read-based isoLASER	After FDR	6hr	2093	18	13	422	8	5	414
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1453	148	131	280	50	81	230
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	0hr	1453	106	99	280	44	55	236
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	After FDR	0hr	1453	12	11	280	7	4	273
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2063	242	218	379	71	147	308
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	1hr	2063	176	166	379	55	111	324
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	After FDR	1hr	2063	13	12	379	9	3	370
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2099	282	247	354	79	168	275
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	6hr	2099	204	186	354	62	124	292
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	After FDR	6hr	2099	18	13	354	8	5	346
+Brain_Hippocampus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1454	148	130	210	41	89	169
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	0hr	1454	106	96	210	34	62	176
+Brain_Hippocampus	reads10nc	Read-based isoLASER	After FDR	0hr	1454	12	11	210	6	5	204
+Brain_Hippocampus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2050	242	219	283	57	162	226
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	1hr	2050	176	165	283	45	120	238
+Brain_Hippocampus	reads10nc	Read-based isoLASER	After FDR	1hr	2050	13	12	283	6	6	277
+Brain_Hippocampus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2080	282	250	262	59	191	203
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	6hr	2080	204	188	262	44	144	218
+Brain_Hippocampus	reads10nc	Read-based isoLASER	After FDR	6hr	2080	18	13	262	6	7	256
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1477	148	132	234	47	85	187
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	0hr	1477	106	97	234	40	57	194
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	After FDR	0hr	1477	12	11	234	7	4	227
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2090	242	219	328	59	160	269
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	1hr	2090	176	165	328	47	118	281
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	After FDR	1hr	2090	13	12	328	8	4	320
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2130	282	252	312	68	184	244
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	6hr	2130	204	189	312	51	138	261
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	After FDR	6hr	2130	18	13	312	6	7	306
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1458	148	130	304	49	81	255
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	1458	106	97	304	41	56	263
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	0hr	1458	12	11	304	7	4	297
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2068	242	216	417	75	141	342
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	2068	176	165	417	60	105	357
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	1hr	2068	13	12	417	9	3	408
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2104	282	246	396	82	164	314
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	2104	204	186	396	62	124	334
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	6hr	2104	18	13	396	8	5	388
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	1432	148	128	226	42	86	184
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	1432	106	94	226	35	59	191
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	0hr	1432	12	11	226	6	5	220
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	2030	242	218	307	54	164	253
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	2030	176	164	307	44	120	263
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	1hr	2030	13	12	307	6	6	301
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	2062	282	246	287	59	187	228
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	2062	204	186	287	41	145	246
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	6hr	2062	18	13	287	6	7	281

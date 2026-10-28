@@ -1,0 +1,55 @@
+tissue	rule	run	set	tp	associations	matched	matched_share	multi_junction	frac_p05	pi1	pi0_method
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	38	0.107042253521127	0	0.447368421052632	0.631578947368421	lambda 0.5
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	85	0.129573170731707	0	0.411764705882353	0.644422663209896	smoother
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	60	0.0837988826815642	1	0.383333333333333	0.4	lambda 0.5
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	194	24	0.123711340206186	0	0.458333333333333	0.5	lambda 0.5
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	359	59	0.164345403899721	0	0.389830508474576	0.469995943720309	smoother
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	403	35	0.086848635235732	1	0.4	0.314285714285714	lambda 0.5
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	40	0.112676056338028	2	0.425	0.321254464141917	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	82	0.125	0	0.414634146341463	0	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	68	0.0949720670391061	1	0.411764705882353	0.243793271939345	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	2	0.5	0.384615384615385	lambda 0.5
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.368421052631579	0.160092922328854	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	6hr	403	41	0.101736972704715	1	0.463414634146342	0.51219512195122	lambda 0.5
+Brain_Cerebellum	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	37	0.104225352112676	2	0.513513513513514	0.45945945945946	lambda 0.5
+Brain_Cerebellum	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	83	0.126524390243902	0	0.493975903614458	0.76949429685245	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	64	0.0893854748603352	1	0.40625	0.305081436817322	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	0hr	194	24	0.123711340206186	2	0.541666666666667	0.416666666666667	lambda 0.5
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.473684210526316	0.649436410587089	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	6hr	403	39	0.0967741935483871	1	0.41025641025641	0.224831441316547	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	39	0.109859154929577	2	0.512820512820513	0.435897435897436	lambda 0.5
+Brain_Cortex	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	80	0.121951219512195	0	0.4125	0	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	61	0.085195530726257	1	0.409836065573771	0.0108803702290766	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	2	0.576923076923077	0.461538461538462	lambda 0.5
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.421052631578947	0	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	6hr	403	37	0.0918114143920596	1	0.45945945945946	0.450402410839181	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	39	0.109859154929577	2	0.41025641025641	0.384615384615385	lambda 0.5
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	83	0.126524390243902	0	0.421686746987952	0.462013158522714	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	63	0.0879888268156425	1	0.412698412698413	0.502746422529733	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	0hr	194	25	0.128865979381443	2	0.44	0.28	lambda 0.5
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	1hr	359	58	0.161559888579387	0	0.413793103448276	0.478285543798682	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	6hr	403	39	0.0967741935483871	1	0.435897435897436	0.367388863009591	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	40	0.112676056338028	2	0.45	0.75	lambda 0.5
+Brain_Hippocampus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	84	0.128048780487805	0	0.392857142857143	0.413876462193352	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	65	0.0907821229050279	1	0.4	0.644778150880045	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	0hr	194	25	0.128865979381443	2	0.48	0.76	lambda 0.5
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	1hr	359	58	0.161559888579387	0	0.396551724137931	0.467560769680985	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	6hr	403	38	0.0942928039702233	1	0.473684210526316	0.578947368421053	lambda 0.5
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	39	0.109859154929577	0	0.41025641025641	0.229930522312007	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	81	0.123475609756098	0	0.382716049382716	0.620005743187511	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	62	0.0865921787709497	1	0.354838709677419	0.504419768096542	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	0	0.461538461538462	0.384615384615385	lambda 0.5
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	1hr	359	59	0.164345403899721	0	0.372881355932203	0.53726376513057	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	6hr	403	37	0.0918114143920596	1	0.378378378378378	0.513513513513514	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	40	0.112676056338028	2	0.375	0.239489553211107	smoother
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	86	0.13109756097561	0	0.36046511627907	0.641835042452594	smoother
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	62	0.0865921787709497	1	0.451612903225806	0.725756602302802	smoother
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	2	0.423076923076923	0.461538461538462	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	359	60	0.167130919220056	0	0.333333333333333	0.7	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	403	38	0.0942928039702233	1	0.552631578947369	0.631578947368421	lambda 0.5
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	0hr	355	38	0.107042253521127	0	0.315789473684211	0.079399344510429	smoother
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	1hr	656	83	0.126524390243902	0	0.397590361445783	0.598489976352736	smoother
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	isoLASER cis, het donors	6hr	716	60	0.0837988826815642	1	0.35	0.379001161420739	smoother
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	194	24	0.123711340206186	0	0.375	0.416666666666667	lambda 0.5
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.43859649122807	0.473684210526316	lambda 0.5
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	403	35	0.086848635235732	1	0.4	0.593712393136997	smoother

@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeb3d3beeedb6de229f605d04e99948c167176b41ctargetblankb3d3beea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeebb5540c60290010e25a377bc031fdd5544eec60targetblankebb5540a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/b3d3beeedb6de229f605d04e99948c167176b41c" target="_blank">b3d3bee</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/ebb5540c60290010e25a377bc031fdd5544eec60" target="_blank">ebb5540</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeb3d3beeedb6de229f605d04e99948c167176b41ctargetblankb3d3beea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeebb5540c60290010e25a377bc031fdd5544eec60targetblankebb5540a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/b3d3beeedb6de229f605d04e99948c167176b41c" target="_blank">b3d3bee</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/ebb5540c60290010e25a377bc031fdd5544eec60" target="_blank">ebb5540</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -606,6 +606,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/ebb5540c60290010e25a377bc031fdd5544eec60/analysis/isolaser_gtex_comparison_panel10nc_q010.Rmd" target="_blank">ebb5540</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-28
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/ebb5540c60290010e25a377bc031fdd5544eec60/docs/isolaser_gtex_comparison_panel10nc_q010.html" target="_blank">ebb5540</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-28
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3898,57 +3932,28 @@ associations (Storey’s π<sub>1</sub>)</h1>
 <p>For each association in the paper’s-cutoff and before-FDR sets, we
 take the GTEx p-value of its event’s skipping junction for our SNV, as
 in the scatter plots, and estimate Storey’s π<sub>1</sub> from these
-p-values. This is exploratory.</p>
-<ul>
-<li><strong>What it estimates:</strong> GTEx p-values of associations
+p-values, for each timepoint separately. When GTEx tests several
+skipping junctions of the event (2% of matched associations), we use the
+one shared by the most annotated transcripts that skip the part, chosen
+without looking at GTEx p-values. This is exploratory.</p>
+<p><strong>What it estimates:</strong> GTEx p-values of associations
 with no effect in GTEx are spread evenly between 0 and 1, and real
 effects tend to produce smaller p-values when GTEx has sufficient power.
 The estimator measures the flat part, π<sub>0</sub>, from the larger
-p-values. π<sub>1</sub> = 1 − π<sub>0</sub> is the estimated proportion
-of non-null associations among those GTEx tests. We use
-<code>qvalue::pi0est</code> with its default smoother, or with λ = 0.5
-when there are fewer than 30 p-values, for each timepoint
-separately.</li>
-<li><strong>One junction per association</strong> (our rule): some
-events have several skipping junctions that GTEx tests (2% of matched
-associations). We then use the junction shared by the most annotated
-transcripts that skip the part, and the shortest intron on ties. The
-choice does not look at GTEx p-values, so under the null the p-value
-stays uniform.</li>
-<li><strong>What it is not:</strong>
-<ul>
-<li>It is not the share of associations that are significant in
-GTEx.</li>
-<li>It does not check direction: a non-null GTEx effect can go either
-way. Direction is checked under <a href="#testing">Testing</a> and in
-the after-FDR tables below.</li>
-<li>1 − π<sub>1</sub> estimates the null proportion among matched GTEx
-tests. Limited power can make weak non-null effects look null and
-underestimate π<sub>1</sub>. Therefore, π<sub>1</sub> cannot distinguish
-false positives in our study from context-specific effects or effects
-that GTEx has insufficient power to detect.</li>
-</ul></li>
-<li><strong>Limits:</strong>
-<ul>
-<li>Only associations GTEx tests enter, a minority (see <a
-href="#results">Results</a>).</li>
-<li>The p-values are not independent. One gene can contribute several
-variants, often in linkage disequilibrium; the same association recurs
-at several timepoints; and the nine tissues come from overlapping GTEx
-donors. The estimates are noisier than their number of p-values
-suggests, and the tissues are not independent replications.</li>
-<li>With λ = 0.5, π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)),
-so one p-value moves it by 2/n. This applies to 2 of the 27 before-FDR
-estimates.</li>
-</ul></li>
-<li><strong>After FDR:</strong> only 9–22 associations are matched per
+p-values, and π<sub>1</sub> = 1 − π<sub>0</sub> is the estimated
+proportion of non-null associations among matched GTEx tests. Limited
+power can make weak non-null effects look null and underestimate
+π<sub>1</sub>, so π<sub>1</sub> cannot distinguish false positives in
+our study from context-specific effects or effects that GTEx has
+insufficient power to detect. It also ignores direction, which is
+checked under <a href="#testing">Testing</a>.</p>
+<p><strong>After FDR:</strong> only 9–22 associations are matched per
 tissue and timepoint, too few for a stable π<sub>1</sub>: one p-value
 crossing 0.5 moves it by 2/n, 0.22 at n = 9. Each tab lists them
 instead, with their GTEx p-value and direction. <strong>Expected
 direction</strong> means GTEx’s beta has the opposite sign to our ΔPSI
 at every timepoint where the association is reported, as in the
-sign-consistency test.</li>
-</ul>
+sign-consistency test.</p>
 <div id="cerebellum-2" class="section level2">
 <h2>Cerebellum</h2>
 <p><strong>π<sub>1</sub>: paper’s cutoff and before FDR</strong></p>
@@ -4030,6 +4035,14 @@ sign-consistency test.</li>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 12 of 43, 22 of 75 and 14 of 59
 associations. Of the 26 distinct ones, 8 have GTEx p &lt; 0.05, 4 of
@@ -4402,6 +4415,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 11 of 43, 21 of 75 and 14 of 59
 associations. Of the 24 distinct ones, 13 have GTEx p &lt; 0.05, 7 of
@@ -4754,6 +4775,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 10 of 43, 20 of 75 and 12 of 59
 associations. Of the 23 distinct ones, 8 have GTEx p &lt; 0.05, 4 of
@@ -5096,6 +5125,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 9 of 43, 16 of 75 and 12 of 59
 associations. Of the 19 distinct ones, 7 have GTEx p &lt; 0.05, 7 of
@@ -5398,6 +5435,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 10 of 43, 17 of 75 and 13 of 59
 associations. Of the 20 distinct ones, 11 have GTEx p &lt; 0.05, 4 of
@@ -5710,6 +5755,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 9 of 43, 20 of 75 and 12 of 59
 associations. Of the 23 distinct ones, 11 have GTEx p &lt; 0.05, 5 of
@@ -6052,6 +6105,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 9 of 43, 19 of 75 and 11 of 59
 associations. Of the 22 distinct ones, 10 have GTEx p &lt; 0.05, 4 of
@@ -6384,6 +6445,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 10 of 43, 21 of 75 and 13 of 59
 associations. Of the 24 distinct ones, 9 have GTEx p &lt; 0.05, 4 of
@@ -6736,6 +6805,14 @@ them in the expected direction.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Estimator</strong>: how <code>qvalue::pi0est</code> estimated
+π<sub>0</sub>. <strong>smoother</strong> (its default, used with 30 or
+more p-values): π<sub>0</sub> is computed at each λ from 0.05 to 0.95 as
+#(p &gt; λ) / (n(1 − λ)), the share of p-values above λ scaled to the
+whole range; a spline is fitted through these values and read at λ =
+0.95. <strong>λ = 0.5</strong> (fewer than 30 p-values, too few for the
+spline): π<sub>1</sub> = max(0, 1 − #(p &gt; 0.5) / (0.5 n)), so one
+p-value moves it by 2/n.</p>
 <p><strong>After FDR: each matched association</strong></p>
 <p>Matched at 0, 1 and 6 hr: 9 of 43, 20 of 75 and 12 of 59
 associations. Of the 23 distinct ones, 4 have GTEx p &lt; 0.05, 4 of
@@ -7231,7 +7308,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

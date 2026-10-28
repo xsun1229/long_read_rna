@@ -1,0 +1,7 @@
+tx	status	reads	REF	ALT	REF_included	ALT_included	name	type	rank	drawn	sqanti3	lab
+ENST00000348706	excludes part	28	19	9	1	1	PPA2-202	protein_coding	1	TRUE		PPA2-202 (ENST00000348706)
+ENST00000354147	excludes part	1	1	0	0	0	PPA2-204	protein_coding	2	TRUE		PPA2-204 (ENST00000354147)
+ENST00000341695	includes part	55	23	32	9	29	PPA2-201	protein_coding	1	TRUE		PPA2-201 (ENST00000341695)
+ENST00000351450	includes part	11	3	8	3	7	PPA2-203	nonsense_mediated_decay	2	TRUE		PPA2-203 (ENST00000351450)
+ENST00000509031	includes part	10	6	4	3	4	PPA2-216	nonsense_mediated_decay	3	TRUE		PPA2-216 (ENST00000509031)
+transcript15366.chr4.nic	includes part	3	3	0	2	0	transcript15366.chr4.nic	not in GENCODE	4	FALSE	incomplete-splice_match	Novel, ISM (transcript15366)

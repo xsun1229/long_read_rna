@@ -1,0 +1,5062 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-28" />
+
+<title>Transcript-based isoLASER: comparison with GTEx brain sQTLs (FDR &lt; 0.10)</title>
+
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Transcript-based isoLASER: comparison with
+GTEx brain sQTLs (FDR &lt; 0.10)</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-28</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-28
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea3717c1869122b4acc4315a77586c91add2fef40targetblanka3717c1a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/a3717c1869122b4acc4315a77586c91add2fef40" target="_blank">a3717c1</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea3717c1869122b4acc4315a77586c91add2fef40targetblanka3717c1a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/a3717c1869122b4acc4315a77586c91add2fef40" target="_blank">a3717c1</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_fdr_panel10nc_q010.Rmd
+    Untracked:  analysis/isolaser_fdr_reads10nc_q010.Rmd
+    Untracked:  analysis/isolaser_gtex_comparison_panel10nc_q010.Rmd
+    Untracked:  analysis/isolaser_gtex_comparison_reads10nc_q010.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>This page compares <strong>transcript-based isoLASER</strong> without
+the clustering filter (<a href="isolaser_fdr_panel10nc_q010.html">FDR
+page</a>) with GTEx v8 sQTLs in the nine brain tissues that have full
+summary statistics. As in the right panel of <a
+href="https://www.nature.com/articles/s41467-025-64605-6">Fig. 3e of the
+isoLASER paper</a>, we compare our allelic splicing effects (isoLASER
+ΔPSI) with GTEx sQTL effects (beta), using each event’s <strong>skipping
+junction</strong>. Its usage falls when the exonic part is included, so
+a <strong>negative correlation</strong> is expected.</p>
+<div id="how-pairs-were-matched" class="section level1">
+<h1>How pairs were matched</h1>
+<ul>
+<li><strong>Variant and gene:</strong> the same SNV (position, REF and
+ALT; isoLASER’s 0-based position + 1 = GTEx’s), tested for the same
+Ensembl gene in GTEx.</li>
+<li><strong>GTEx data:</strong> the full summary statistics, every
+tested association at any p-value. Nine of GTEx’s 13 brain tissues have
+them on the cluster. The other four (Amygdala, Anterior cingulate cortex
+BA24, Spinal cord cervical c-1 and Substantia nigra) have only GTEx’s
+significant pairs and are left out. This differs from the paper, whose
+Methods describe an overlap with GTEx’s significant pairs: here pairs
+that GTEx does not call significant (the grey points) are included.</li>
+<li><strong>Event:</strong> the exonic part must form an annotated
+exon-skipping or alternative-splice-site event, and the GTEx junction
+must be exactly that event’s skipping junction.</li>
+<li><strong>Points:</strong> each point is one <strong>pair</strong>: an
+isoLASER association (variant × exonic part) and its matched GTEx
+skipping junction, at one timepoint.</li>
+</ul>
+<p>Our associations come in three sets:</p>
+<ul>
+<li><strong>Paper’s cutoff:</strong> isoLASER’s own <code>cis</code>
+label and pooled ΔPSI, as in the paper, from the original isoLASER run.
+It does not depend on our filters.</li>
+<li><strong>Before FDR:</strong> this run’s screen. The donors are
+panel-heterozygous with ≥ 10 reads, with ≥ 20 reads over those donors,
+<code>cis</code>, |ΔPSI| ≥ 0.05 and part ≥ 10 bp. There is no clustering
+filter.</li>
+<li><strong>After FDR:</strong> the same plus permutation BH q &lt; 0.10
+within each timepoint, as on <a
+href="isolaser_fdr_panel10nc_q010.html">this run’s FDR page</a>.</li>
+</ul>
+<p>The cutoffs are those of this run’s <a
+href="isolaser_fdr_panel10nc_q010.html">FDR page</a>: |ΔPSI| ≥ 0.05 and
+BH q &lt; 0.10. The BH q-values were calculated over the full eligible
+family of tested associations in each timepoint, before the
+<code>cis</code> and |ΔPSI| display filters are applied, so the
+effect-size screen changes no q-value. An <a
+href="isolaser_gtex_comparison_panel10nc.html">earlier version</a> of
+this page used q &lt; 0.05.</p>
+<p><strong>Example, HNRNPK.</strong> The C&gt;T variant (chr9:83980154,
+0-based) and the 34-base exonic part (gold) form an alternative splice
+site. GTEx measures the skipping junction (blue), which jumps over the
+part. At 6 hours, ALT changes part inclusion by -21.4 percentage points
+in this run. GTEx Cerebellum’s beta for the skipping junction is +0.97:
+opposite signs, as expected.</p>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/comparable_event_example_skipping.png" /></p>
+</div>
+<div id="scatter-plots" class="section level1 tabset">
+<h1 class="tabset">Scatter plots</h1>
+<p>One tab per tissue. Rows are the three sets and columns the
+timepoints; each panel title gives the pairs, genes, Pearson R and
+p. Blue: GTEx nominal p &lt; 0.05; grey: p ≥ 0.05. The line is a
+least-squares fit, drawn when a panel has 3 or more pairs.</p>
+<div id="cerebellum" class="section level2">
+<h2>Cerebellum</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Cerebellum.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Cerebellum.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cerebellar-hemisphere" class="section level2">
+<h2>Cerebellar Hemisphere</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Cerebellar_Hemisphere.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Cerebellar_Hemisphere.pdf">Open
+as PDF</a></p>
+</div>
+<div id="caudate-basal-ganglia" class="section level2">
+<h2>Caudate basal ganglia</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Caudate_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Caudate_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cortex" class="section level2">
+<h2>Cortex</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Cortex.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Cortex.pdf">Open
+as PDF</a></p>
+</div>
+<div id="frontal-cortex-ba9" class="section level2">
+<h2>Frontal Cortex BA9</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Frontal_Cortex_BA9.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Frontal_Cortex_BA9.pdf">Open
+as PDF</a></p>
+</div>
+<div id="hippocampus" class="section level2">
+<h2>Hippocampus</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Hippocampus.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Hippocampus.pdf">Open
+as PDF</a></p>
+</div>
+<div id="hypothalamus" class="section level2">
+<h2>Hypothalamus</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Hypothalamus.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Hypothalamus.pdf">Open
+as PDF</a></p>
+</div>
+<div id="nucleus-accumbens-basal-ganglia" class="section level2">
+<h2>Nucleus accumbens basal ganglia</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Nucleus_accumbens_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Nucleus_accumbens_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+<div id="putamen-basal-ganglia" class="section level2">
+<h2>Putamen basal ganglia</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Putamen_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_Brain_Putamen_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+</div>
+<div id="testing" class="section level1">
+<h1>Testing</h1>
+<div id="how-the-testing-works" class="section level2">
+<h2>How the testing works</h2>
+<p>Two tests, both on the skipping-junction pairs, for each set and
+tissue:</p>
+<ul>
+<li><strong>Correlation</strong> (as in the paper): the Pearson
+correlation of our ΔPSI with GTEx’s beta, for each timepoint. A negative
+R is expected. <strong>Expected sign</strong> counts the pairs where the
+two have opposite signs. <strong>GTEx p &lt; 1e-5</strong> repeats the
+count for pairs where GTEx itself has strong evidence.</li>
+<li><strong>Sign consistency</strong> (our definition; the paper reports
+only the correlation):
+<ul>
+<li>we take the pairs where GTEx is significant (nominal p &lt; 0.05,
+the blue points) and our ΔPSI is not 0;</li>
+<li>a pair is <strong>consistent</strong> when our ΔPSI and GTEx’s beta
+have opposite signs;</li>
+<li>a binomial test asks whether the share of consistent pairs differs
+from 50% (two-sided) or is above it, the expected direction
+(one-sided).</li>
+</ul>
+We count this per timepoint, and over all timepoints with <strong>each
+pair once</strong>: each pair’s mean ΔPSI over the timepoints where it
+is called, so an association reported at several timepoints counts
+once.</li>
+</ul>
+<p><strong>The binomial p-values are exploratory.</strong> The test
+assumes independent pairs, and they are not:</p>
+<ul>
+<li>pairs can come from the same gene or exonic part, so related
+variants count separately;</li>
+<li>the same associations recur in every tissue;</li>
+<li>nothing corrects for the many sets, timepoints and tissues
+tested.</li>
+</ul>
+<p>For example, after FDR the pairs with GTEx p &lt; 0.05 are 17 pairs
+at 8 exonic parts in 8 genes (ARF4, ATP5MJ, DNTTIP2, HNRNPK, PFKP,
+SNHG5, TAX1BP1, ZFAND2A), over all nine tissues, and the binomial p
+treats them as 17 independent trials. A formal test would have to
+account for dependence within genes and loci, and for multiple
+comparisons.</p>
+</div>
+<div id="results" class="section level2 tabset">
+<h2 class="tabset">Results</h2>
+<p>In each tab:</p>
+<ul>
+<li><strong>Pairs matched</strong>: per set and timepoint, our
+associations (variant × exonic part, single-base variants), those whose
+variant GTEx tests for the same gene in that tissue, the plotted pairs
+and their genes.</li>
+<li><strong>Correlation</strong> and <strong>Sign consistency</strong>,
+as defined above.</li>
+</ul>
+<p>Only a minority of the paper’s-cutoff associations are tested in GTEx
+for the same variant and gene: 20.0–31.0% across tissues and timepoints
+(Cerebellum at 0 hr: 2,200 of 10,301, 21.4%, with 236 plotted pairs).
+Fewer still form an annotated event with a matching skipping
+junction.</p>
+<div id="cerebellum-1" class="section level3">
+<h3>Cerebellum</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2200</td>
+<td align="right">236</td>
+<td align="right">137</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3195</td>
+<td align="right">333</td>
+<td align="right">199</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3568</td>
+<td align="right">380</td>
+<td align="right">230</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">401</td>
+<td align="right">65</td>
+<td align="right">44</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">653</td>
+<td align="right">104</td>
+<td align="right">73</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">604</td>
+<td align="right">100</td>
+<td align="right">70</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">30</td>
+<td align="right">12</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">65</td>
+<td align="right">22</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">43</td>
+<td align="right">14</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">236</td>
+<td align="right">-0.05 (0.42)</td>
+<td align="right">131/236</td>
+<td align="right">10/18</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">333</td>
+<td align="right">-0.15 (0.0058)</td>
+<td align="right">183/333</td>
+<td align="right">24/37</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">380</td>
+<td align="right">-0.15 (0.0035)</td>
+<td align="right">206/380</td>
+<td align="right">28/39</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">65</td>
+<td align="right">0.16 (0.21)</td>
+<td align="right">27/65</td>
+<td align="right">4/4</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">104</td>
+<td align="right">-0.02 (0.85)</td>
+<td align="right">57/104</td>
+<td align="right">10/16</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">100</td>
+<td align="right">0.02 (0.86)</td>
+<td align="right">55/100</td>
+<td align="right">7/9</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">12</td>
+<td align="right">-0.15 (0.65)</td>
+<td align="right">6/12</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">22</td>
+<td align="right">0.03 (0.89)</td>
+<td align="right">13/22</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">14</td>
+<td align="right">-0.07 (0.81)</td>
+<td align="right">6/14</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">57</td>
+<td align="right">30</td>
+<td align="right">53</td>
+<td align="right">0.79</td>
+<td align="right">0.4</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">83</td>
+<td align="right">48</td>
+<td align="right">58</td>
+<td align="right">0.19</td>
+<td align="right">0.094</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">90</td>
+<td align="right">49</td>
+<td align="right">54</td>
+<td align="right">0.46</td>
+<td align="right">0.23</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">167</td>
+<td align="right">94</td>
+<td align="right">56</td>
+<td align="right">0.12</td>
+<td align="right">0.061</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">13</td>
+<td align="right">7</td>
+<td align="right">54</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">34</td>
+<td align="right">17</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">21</td>
+<td align="right">11</td>
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">52</td>
+<td align="right">29</td>
+<td align="right">56</td>
+<td align="right">0.49</td>
+<td align="right">0.24</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">7</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">7</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">8</td>
+<td align="right">4</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.64</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cerebellar-hemisphere-1" class="section level3">
+<h3>Cerebellar Hemisphere</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2202</td>
+<td align="right">244</td>
+<td align="right">144</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3194</td>
+<td align="right">345</td>
+<td align="right">203</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3615</td>
+<td align="right">383</td>
+<td align="right">232</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">396</td>
+<td align="right">65</td>
+<td align="right">44</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">654</td>
+<td align="right">105</td>
+<td align="right">76</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">612</td>
+<td align="right">105</td>
+<td align="right">72</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">30</td>
+<td align="right">11</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">65</td>
+<td align="right">21</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">42</td>
+<td align="right">14</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="10%" />
+<col width="6%" />
+<col width="14%" />
+<col width="20%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">244</td>
+<td align="right">-0.11 (0.09)</td>
+<td align="right">138/244</td>
+<td align="right">9/15</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">345</td>
+<td align="right">-0.07 (0.21)</td>
+<td align="right">176/345</td>
+<td align="right">23/31</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">383</td>
+<td align="right">-0.03 (0.5)</td>
+<td align="right">190/383</td>
+<td align="right">20/25</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">65</td>
+<td align="right">0.11 (0.38)</td>
+<td align="right">32/65</td>
+<td align="right">4/5</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">105</td>
+<td align="right">-0.06 (0.51)</td>
+<td align="right">62/105</td>
+<td align="right">9/11</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">105</td>
+<td align="right">0.02 (0.84)</td>
+<td align="right">58/105</td>
+<td align="right">6/7</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">11</td>
+<td align="right">-0.19 (0.57)</td>
+<td align="right">6/11</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">21</td>
+<td align="right">0.09 (0.7)</td>
+<td align="right">11/21</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">14</td>
+<td align="right">-0.06 (0.83)</td>
+<td align="right">6/14</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">47</td>
+<td align="right">26</td>
+<td align="right">55</td>
+<td align="right">0.56</td>
+<td align="right">0.28</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">88</td>
+<td align="right">52</td>
+<td align="right">59</td>
+<td align="right">0.11</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">98</td>
+<td align="right">60</td>
+<td align="right">61</td>
+<td align="right">0.033</td>
+<td align="right">0.017</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">170</td>
+<td align="right">101</td>
+<td align="right">59</td>
+<td align="right">0.017</td>
+<td align="right">0.0086</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">14</td>
+<td align="right">8</td>
+<td align="right">57</td>
+<td align="right">0.79</td>
+<td align="right">0.4</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">33</td>
+<td align="right">17</td>
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">25</td>
+<td align="right">12</td>
+<td align="right">48</td>
+<td align="right">1</td>
+<td align="right">0.65</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">51</td>
+<td align="right">27</td>
+<td align="right">53</td>
+<td align="right">0.78</td>
+<td align="right">0.39</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">12</td>
+<td align="right">6</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.61</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">38</td>
+<td align="right">0.73</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">13</td>
+<td align="right">7</td>
+<td align="right">54</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="caudate-basal-ganglia-1" class="section level3">
+<h3>Caudate basal ganglia</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2250</td>
+<td align="right">209</td>
+<td align="right">127</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3231</td>
+<td align="right">298</td>
+<td align="right">183</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3637</td>
+<td align="right">321</td>
+<td align="right">208</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">404</td>
+<td align="right">57</td>
+<td align="right">40</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">644</td>
+<td align="right">97</td>
+<td align="right">71</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">612</td>
+<td align="right">88</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">33</td>
+<td align="right">10</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">67</td>
+<td align="right">20</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">48</td>
+<td align="right">12</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+<col width="20%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">209</td>
+<td align="right">-0.03 (0.63)</td>
+<td align="right">112/209</td>
+<td align="right">13/19</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">298</td>
+<td align="right">-0.09 (0.14)</td>
+<td align="right">155/298</td>
+<td align="right">18/28</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">321</td>
+<td align="right">-0.13 (0.023)</td>
+<td align="right">157/321</td>
+<td align="right">19/25</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">57</td>
+<td align="right">0.19 (0.15)</td>
+<td align="right">31/57</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">97</td>
+<td align="right">0.06 (0.54)</td>
+<td align="right">52/97</td>
+<td align="right">7/12</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">88</td>
+<td align="right">0.15 (0.16)</td>
+<td align="right">36/88</td>
+<td align="right">5/6</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">-0.03 (0.93)</td>
+<td align="right">5/10</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">20</td>
+<td align="right">0.33 (0.15)</td>
+<td align="right">8/20</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">0.16 (0.62)</td>
+<td align="right">4/12</td>
+<td align="right">2/2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">46</td>
+<td align="right">24</td>
+<td align="right">52</td>
+<td align="right">0.88</td>
+<td align="right">0.44</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">73</td>
+<td align="right">42</td>
+<td align="right">58</td>
+<td align="right">0.24</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">72</td>
+<td align="right">43</td>
+<td align="right">60</td>
+<td align="right">0.12</td>
+<td align="right">0.062</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">137</td>
+<td align="right">79</td>
+<td align="right">58</td>
+<td align="right">0.087</td>
+<td align="right">0.044</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">5</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.62</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">30</td>
+<td align="right">16</td>
+<td align="right">53</td>
+<td align="right">0.86</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">25</td>
+<td align="right">10</td>
+<td align="right">40</td>
+<td align="right">0.42</td>
+<td align="right">0.89</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">49</td>
+<td align="right">25</td>
+<td align="right">51</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">7</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">7</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">8</td>
+<td align="right">4</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.64</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cortex-1" class="section level3">
+<h3>Cortex</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2103</td>
+<td align="right">210</td>
+<td align="right">125</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3052</td>
+<td align="right">297</td>
+<td align="right">181</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3477</td>
+<td align="right">334</td>
+<td align="right">207</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">401</td>
+<td align="right">55</td>
+<td align="right">39</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">644</td>
+<td align="right">95</td>
+<td align="right">71</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">599</td>
+<td align="right">87</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">30</td>
+<td align="right">9</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">64</td>
+<td align="right">16</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">43</td>
+<td align="right">12</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">210</td>
+<td align="right">-0.14 (0.038)</td>
+<td align="right">116/210</td>
+<td align="right">14/19</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">297</td>
+<td align="right">-0.17 (0.0035)</td>
+<td align="right">152/297</td>
+<td align="right">22/32</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">334</td>
+<td align="right">-0.19 (0.00056)</td>
+<td align="right">174/334</td>
+<td align="right">22/26</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">55</td>
+<td align="right">-0.08 (0.56)</td>
+<td align="right">29/55</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">95</td>
+<td align="right">-0.01 (0.9)</td>
+<td align="right">41/95</td>
+<td align="right">10/14</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">87</td>
+<td align="right">-0.00 (0.96)</td>
+<td align="right">37/87</td>
+<td align="right">6/7</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">-0.39 (0.3)</td>
+<td align="right">7/9</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">16</td>
+<td align="right">-0.02 (0.93)</td>
+<td align="right">5/16</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">-0.19 (0.55)</td>
+<td align="right">5/12</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">41</td>
+<td align="right">27</td>
+<td align="right">66</td>
+<td align="right">0.06</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">82</td>
+<td align="right">51</td>
+<td align="right">62</td>
+<td align="right">0.035</td>
+<td align="right">0.018</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">83</td>
+<td align="right">52</td>
+<td align="right">63</td>
+<td align="right">0.028</td>
+<td align="right">0.014</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">151</td>
+<td align="right">90</td>
+<td align="right">60</td>
+<td align="right">0.022</td>
+<td align="right">0.011</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">13</td>
+<td align="right">10</td>
+<td align="right">77</td>
+<td align="right">0.092</td>
+<td align="right">0.046</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">28</td>
+<td align="right">15</td>
+<td align="right">54</td>
+<td align="right">0.85</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">17</td>
+<td align="right">11</td>
+<td align="right">65</td>
+<td align="right">0.33</td>
+<td align="right">0.17</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">46</td>
+<td align="right">26</td>
+<td align="right">57</td>
+<td align="right">0.46</td>
+<td align="right">0.23</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">100</td>
+<td align="right">0.031</td>
+<td align="right">0.016</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">100</td>
+<td align="right">0.062</td>
+<td align="right">0.031</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">100</td>
+<td align="right">0.062</td>
+<td align="right">0.031</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">100</td>
+<td align="right">0.016</td>
+<td align="right">0.0078</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="frontal-cortex-ba9-1" class="section level3">
+<h3>Frontal Cortex BA9</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2136</td>
+<td align="right">206</td>
+<td align="right">128</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3086</td>
+<td align="right">291</td>
+<td align="right">181</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3514</td>
+<td align="right">325</td>
+<td align="right">210</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">394</td>
+<td align="right">55</td>
+<td align="right">40</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">639</td>
+<td align="right">96</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">591</td>
+<td align="right">91</td>
+<td align="right">67</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">27</td>
+<td align="right">10</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">62</td>
+<td align="right">17</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">40</td>
+<td align="right">13</td>
+<td align="right">8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+<col width="20%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">206</td>
+<td align="right">0.05 (0.48)</td>
+<td align="right">99/206</td>
+<td align="right">13/20</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">291</td>
+<td align="right">0.03 (0.61)</td>
+<td align="right">145/291</td>
+<td align="right">21/31</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">325</td>
+<td align="right">-0.10 (0.071)</td>
+<td align="right">171/325</td>
+<td align="right">17/25</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">55</td>
+<td align="right">0.23 (0.092)</td>
+<td align="right">22/55</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">96</td>
+<td align="right">0.22 (0.033)</td>
+<td align="right">38/96</td>
+<td align="right">8/13</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">91</td>
+<td align="right">0.08 (0.42)</td>
+<td align="right">41/91</td>
+<td align="right">5/7</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">-0.20 (0.58)</td>
+<td align="right">4/10</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">17</td>
+<td align="right">0.31 (0.23)</td>
+<td align="right">7/17</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">13</td>
+<td align="right">0.13 (0.67)</td>
+<td align="right">5/13</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">36</td>
+<td align="right">21</td>
+<td align="right">58</td>
+<td align="right">0.41</td>
+<td align="right">0.2</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">81</td>
+<td align="right">44</td>
+<td align="right">54</td>
+<td align="right">0.51</td>
+<td align="right">0.25</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">69</td>
+<td align="right">43</td>
+<td align="right">62</td>
+<td align="right">0.053</td>
+<td align="right">0.027</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">138</td>
+<td align="right">80</td>
+<td align="right">58</td>
+<td align="right">0.073</td>
+<td align="right">0.037</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">6</td>
+<td align="right">60</td>
+<td align="right">0.75</td>
+<td align="right">0.38</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">36</td>
+<td align="right">16</td>
+<td align="right">44</td>
+<td align="right">0.62</td>
+<td align="right">0.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">22</td>
+<td align="right">10</td>
+<td align="right">45</td>
+<td align="right">0.83</td>
+<td align="right">0.74</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">51</td>
+<td align="right">26</td>
+<td align="right">51</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">10</td>
+<td align="right">3</td>
+<td align="right">30</td>
+<td align="right">0.34</td>
+<td align="right">0.95</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">38</td>
+<td align="right">0.73</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="right">36</td>
+<td align="right">0.55</td>
+<td align="right">0.89</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="hippocampus-1" class="section level3">
+<h3>Hippocampus</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2163</td>
+<td align="right">204</td>
+<td align="right">124</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3196</td>
+<td align="right">295</td>
+<td align="right">180</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3587</td>
+<td align="right">320</td>
+<td align="right">197</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">396</td>
+<td align="right">54</td>
+<td align="right">37</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">635</td>
+<td align="right">96</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">598</td>
+<td align="right">88</td>
+<td align="right">63</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">27</td>
+<td align="right">9</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">62</td>
+<td align="right">20</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">40</td>
+<td align="right">12</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">204</td>
+<td align="right">-0.03 (0.67)</td>
+<td align="right">99/204</td>
+<td align="right">6/11</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">295</td>
+<td align="right">-0.08 (0.19)</td>
+<td align="right">157/295</td>
+<td align="right">17/26</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">320</td>
+<td align="right">-0.17 (0.0022)</td>
+<td align="right">178/320</td>
+<td align="right">14/17</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">54</td>
+<td align="right">0.27 (0.051)</td>
+<td align="right">25/54</td>
+<td align="right">none</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">96</td>
+<td align="right">0.11 (0.28)</td>
+<td align="right">44/96</td>
+<td align="right">4/6</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">88</td>
+<td align="right">0.15 (0.16)</td>
+<td align="right">41/88</td>
+<td align="right">3/4</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">-0.13 (0.75)</td>
+<td align="right">5/9</td>
+<td align="right">none</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">20</td>
+<td align="right">0.36 (0.12)</td>
+<td align="right">9/20</td>
+<td align="right">none</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">0.23 (0.47)</td>
+<td align="right">4/12</td>
+<td align="right">1/1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">36</td>
+<td align="right">17</td>
+<td align="right">47</td>
+<td align="right">0.87</td>
+<td align="right">0.69</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">70</td>
+<td align="right">42</td>
+<td align="right">60</td>
+<td align="right">0.12</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">69</td>
+<td align="right">41</td>
+<td align="right">59</td>
+<td align="right">0.15</td>
+<td align="right">0.074</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">128</td>
+<td align="right">74</td>
+<td align="right">58</td>
+<td align="right">0.093</td>
+<td align="right">0.046</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="right">36</td>
+<td align="right">0.55</td>
+<td align="right">0.89</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">28</td>
+<td align="right">14</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">23</td>
+<td align="right">10</td>
+<td align="right">43</td>
+<td align="right">0.68</td>
+<td align="right">0.8</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">45</td>
+<td align="right">22</td>
+<td align="right">49</td>
+<td align="right">1</td>
+<td align="right">0.62</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">10</td>
+<td align="right">4</td>
+<td align="right">40</td>
+<td align="right">0.75</td>
+<td align="right">0.83</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">38</td>
+<td align="right">0.73</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">11</td>
+<td align="right">5</td>
+<td align="right">45</td>
+<td align="right">1</td>
+<td align="right">0.73</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="hypothalamus-1" class="section level3">
+<h3>Hypothalamus</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2177</td>
+<td align="right">204</td>
+<td align="right">131</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3124</td>
+<td align="right">298</td>
+<td align="right">187</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3575</td>
+<td align="right">325</td>
+<td align="right">209</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">407</td>
+<td align="right">55</td>
+<td align="right">39</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">647</td>
+<td align="right">96</td>
+<td align="right">71</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">628</td>
+<td align="right">91</td>
+<td align="right">67</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">33</td>
+<td align="right">9</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">67</td>
+<td align="right">19</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">48</td>
+<td align="right">11</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">204</td>
+<td align="right">-0.04 (0.55)</td>
+<td align="right">94/204</td>
+<td align="right">9/16</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">298</td>
+<td align="right">-0.12 (0.037)</td>
+<td align="right">142/298</td>
+<td align="right">18/28</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">325</td>
+<td align="right">-0.20 (0.00024)</td>
+<td align="right">183/325</td>
+<td align="right">18/24</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">55</td>
+<td align="right">0.23 (0.096)</td>
+<td align="right">21/55</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">96</td>
+<td align="right">0.12 (0.26)</td>
+<td align="right">42/96</td>
+<td align="right">7/12</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">91</td>
+<td align="right">0.04 (0.72)</td>
+<td align="right">43/91</td>
+<td align="right">5/7</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">-0.36 (0.34)</td>
+<td align="right">5/9</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">19</td>
+<td align="right">0.16 (0.52)</td>
+<td align="right">9/19</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">11</td>
+<td align="right">0.03 (0.93)</td>
+<td align="right">4/11</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">44</td>
+<td align="right">22</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.56</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">72</td>
+<td align="right">42</td>
+<td align="right">58</td>
+<td align="right">0.19</td>
+<td align="right">0.097</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">71</td>
+<td align="right">46</td>
+<td align="right">65</td>
+<td align="right">0.017</td>
+<td align="right">0.0085</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">124</td>
+<td align="right">73</td>
+<td align="right">59</td>
+<td align="right">0.059</td>
+<td align="right">0.029</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">5</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.62</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">29</td>
+<td align="right">13</td>
+<td align="right">45</td>
+<td align="right">0.71</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">20</td>
+<td align="right">10</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.59</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">42</td>
+<td align="right">22</td>
+<td align="right">52</td>
+<td align="right">0.88</td>
+<td align="right">0.44</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">9</td>
+<td align="right">3</td>
+<td align="right">33</td>
+<td align="right">0.51</td>
+<td align="right">0.91</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">38</td>
+<td align="right">0.73</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">10</td>
+<td align="right">4</td>
+<td align="right">40</td>
+<td align="right">0.75</td>
+<td align="right">0.83</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="nucleus-accumbens-basal-ganglia-1" class="section level3">
+<h3>Nucleus accumbens basal ganglia</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2093</td>
+<td align="right">208</td>
+<td align="right">125</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3091</td>
+<td align="right">299</td>
+<td align="right">182</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3533</td>
+<td align="right">324</td>
+<td align="right">208</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">404</td>
+<td align="right">60</td>
+<td align="right">42</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">641</td>
+<td align="right">97</td>
+<td align="right">68</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">603</td>
+<td align="right">89</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">33</td>
+<td align="right">10</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">66</td>
+<td align="right">21</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">47</td>
+<td align="right">13</td>
+<td align="right">8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">208</td>
+<td align="right">-0.07 (0.34)</td>
+<td align="right">103/208</td>
+<td align="right">15/20</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">299</td>
+<td align="right">-0.07 (0.24)</td>
+<td align="right">147/299</td>
+<td align="right">21/32</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">324</td>
+<td align="right">-0.19 (0.00071)</td>
+<td align="right">164/324</td>
+<td align="right">20/25</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">60</td>
+<td align="right">0.17 (0.18)</td>
+<td align="right">26/60</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">97</td>
+<td align="right">0.13 (0.21)</td>
+<td align="right">40/97</td>
+<td align="right">10/17</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">89</td>
+<td align="right">0.04 (0.71)</td>
+<td align="right">35/89</td>
+<td align="right">6/8</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">-0.15 (0.68)</td>
+<td align="right">3/10</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">21</td>
+<td align="right">0.17 (0.45)</td>
+<td align="right">6/21</td>
+<td align="right">3/3</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">13</td>
+<td align="right">-0.02 (0.94)</td>
+<td align="right">3/13</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">48</td>
+<td align="right">24</td>
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0.56</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">69</td>
+<td align="right">40</td>
+<td align="right">58</td>
+<td align="right">0.23</td>
+<td align="right">0.11</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">69</td>
+<td align="right">42</td>
+<td align="right">61</td>
+<td align="right">0.091</td>
+<td align="right">0.046</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">132</td>
+<td align="right">72</td>
+<td align="right">55</td>
+<td align="right">0.34</td>
+<td align="right">0.17</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">13</td>
+<td align="right">4</td>
+<td align="right">31</td>
+<td align="right">0.27</td>
+<td align="right">0.95</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">30</td>
+<td align="right">14</td>
+<td align="right">47</td>
+<td align="right">0.86</td>
+<td align="right">0.71</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">21</td>
+<td align="right">11</td>
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">47</td>
+<td align="right">23</td>
+<td align="right">49</td>
+<td align="right">1</td>
+<td align="right">0.61</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">75</td>
+<td align="right">0.62</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">38</td>
+<td align="right">0.73</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">7</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">9</td>
+<td align="right">4</td>
+<td align="right">44</td>
+<td align="right">1</td>
+<td align="right">0.75</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="putamen-basal-ganglia-1" class="section level3">
+<h3>Putamen basal ganglia</h3>
+<p><strong>Pairs matched</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="22%" />
+<col width="34%" />
+<col width="13%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Our associations (SNVs)</th>
+<th align="right">Same variant and gene tested in GTEx</th>
+<th align="right">Plotted pairs</th>
+<th align="right">Genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">10301</td>
+<td align="right">2061</td>
+<td align="right">206</td>
+<td align="right">123</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">11604</td>
+<td align="right">3083</td>
+<td align="right">295</td>
+<td align="right">177</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">11736</td>
+<td align="right">3473</td>
+<td align="right">319</td>
+<td align="right">202</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">440</td>
+<td align="right">359</td>
+<td align="right">56</td>
+<td align="right">38</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">702</td>
+<td align="right">634</td>
+<td align="right">95</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">666</td>
+<td align="right">604</td>
+<td align="right">87</td>
+<td align="right">63</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">43</td>
+<td align="right">30</td>
+<td align="right">9</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">75</td>
+<td align="right">64</td>
+<td align="right">20</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">59</td>
+<td align="right">44</td>
+<td align="right">12</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correlation</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">All: R (p)</th>
+<th align="right">All: expected sign</th>
+<th align="right">GTEx p &lt; 1e-5: expected sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">206</td>
+<td align="right">-0.07 (0.3)</td>
+<td align="right">110/206</td>
+<td align="right">10/16</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">295</td>
+<td align="right">-0.06 (0.33)</td>
+<td align="right">140/295</td>
+<td align="right">17/27</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">319</td>
+<td align="right">-0.16 (0.0055)</td>
+<td align="right">176/319</td>
+<td align="right">17/21</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">56</td>
+<td align="right">-0.05 (0.74)</td>
+<td align="right">28/56</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">95</td>
+<td align="right">0.09 (0.38)</td>
+<td align="right">44/95</td>
+<td align="right">6/9</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">87</td>
+<td align="right">0.07 (0.53)</td>
+<td align="right">42/87</td>
+<td align="right">5/6</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">-0.47 (0.2)</td>
+<td align="right">7/9</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">20</td>
+<td align="right">0.07 (0.77)</td>
+<td align="right">10/20</td>
+<td align="right">2/2</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">-0.11 (0.74)</td>
+<td align="right">6/12</td>
+<td align="right">3/3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign consistency</strong> (pairs with GTEx p &lt; 0.05; the
+binomial p-values are exploratory)</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="25%" />
+<col width="4%" />
+<col width="9%" />
+<col width="12%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Pairs</th>
+<th align="right">Consistent</th>
+<th align="right">Consistent (%)</th>
+<th align="right">Binomial p, two-sided</th>
+<th align="right">Binomial p, one-sided</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">34</td>
+<td align="right">19</td>
+<td align="right">56</td>
+<td align="right">0.61</td>
+<td align="right">0.3</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">68</td>
+<td align="right">42</td>
+<td align="right">62</td>
+<td align="right">0.068</td>
+<td align="right">0.034</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">77</td>
+<td align="right">50</td>
+<td align="right">65</td>
+<td align="right">0.012</td>
+<td align="right">0.0058</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">135</td>
+<td align="right">79</td>
+<td align="right">59</td>
+<td align="right">0.058</td>
+<td align="right">0.029</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">100</td>
+<td align="right">0.25</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">26</td>
+<td align="right">15</td>
+<td align="right">58</td>
+<td align="right">0.56</td>
+<td align="right">0.28</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">23</td>
+<td align="right">12</td>
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">43</td>
+<td align="right">24</td>
+<td align="right">56</td>
+<td align="right">0.54</td>
+<td align="right">0.27</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">100</td>
+<td align="right">0.25</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">100</td>
+<td align="right">0.25</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">100</td>
+<td align="right">0.25</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">All timepoints, each pair once</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">100</td>
+<td align="right">0.12</td>
+<td align="right">0.062</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="summary-across-tissues" class="section level2">
+<h2>Summary across tissues</h2>
+<table>
+<colgroup>
+<col width="42%" />
+<col width="22%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Tissue</th>
+<th align="right">Paper’s cutoff</th>
+<th align="right">Before FDR</th>
+<th align="right">After FDR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cerebellum</td>
+<td align="right">94/167 (0.061)</td>
+<td align="right">29/52 (0.24)</td>
+<td align="right">4/8 (0.64)</td>
+</tr>
+<tr class="even">
+<td align="left">Cerebellar Hemisphere</td>
+<td align="right">101/170 (0.0086)</td>
+<td align="right">27/51 (0.39)</td>
+<td align="right">7/13 (0.5)</td>
+</tr>
+<tr class="odd">
+<td align="left">Caudate basal ganglia</td>
+<td align="right">79/137 (0.044)</td>
+<td align="right">25/49 (0.5)</td>
+<td align="right">4/8 (0.64)</td>
+</tr>
+<tr class="even">
+<td align="left">Cortex</td>
+<td align="right">90/151 (0.011)</td>
+<td align="right">26/46 (0.23)</td>
+<td align="right">7/7 (0.0078)</td>
+</tr>
+<tr class="odd">
+<td align="left">Frontal Cortex BA9</td>
+<td align="right">80/138 (0.037)</td>
+<td align="right">26/51 (0.5)</td>
+<td align="right">4/11 (0.89)</td>
+</tr>
+<tr class="even">
+<td align="left">Hippocampus</td>
+<td align="right">74/128 (0.046)</td>
+<td align="right">22/45 (0.62)</td>
+<td align="right">5/11 (0.73)</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypothalamus</td>
+<td align="right">73/124 (0.029)</td>
+<td align="right">22/42 (0.44)</td>
+<td align="right">4/10 (0.83)</td>
+</tr>
+<tr class="even">
+<td align="left">Nucleus accumbens basal ganglia</td>
+<td align="right">72/132 (0.17)</td>
+<td align="right">23/47 (0.61)</td>
+<td align="right">4/9 (0.75)</td>
+</tr>
+<tr class="odd">
+<td align="left">Putamen basal ganglia</td>
+<td align="right">79/135 (0.029)</td>
+<td align="right">24/43 (0.27)</td>
+<td align="right">4/4 (0.062)</td>
+</tr>
+</tbody>
+</table>
+<p>Sign consistency with each pair once, by tissue: consistent pairs /
+pairs with GTEx p &lt; 0.05, with the one-sided binomial p (exploratory;
+see <a href="#how-the-testing-works">How the testing works</a>). Across
+the nine tissues, the share of consistent pairs is 55–60% for the
+paper’s cutoff, 49–57% before FDR and 36–100% after FDR. The tissues
+share many GTEx donors, so they are not independent replications.</p>
+<p>Download the <a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_points.tsv">points</a>,
+<a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_stats.tsv">correlation
+statistics</a>, <a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_consistency.tsv">sign
+consistency</a> and <a
+href="assets/isolaser_gtex_panel10nc_q010/brain_tissues_funnel.tsv">matching
+counts</a>.</p>
+<p>Reproduce with <code>long_read_RNA/10.isolaser_permutation/</code>:
+<code>27.gtex_fdr_comparison.py --prepare-full-cerebellum --min-dpsi 0.05 --before-fdr</code>
+and <code>... --min-dpsi 0.05 --max-q 0.10</code>
+(<code>ADAPTIVE_RULE=panel10nc</code>) for the before- and after-FDR
+sets; then <code>56.gtex_brain_tissues.sbatch</code> (extraction, one
+task per tissue), and with <code>AFTER_Q=0.10</code>:
+<code>55.gtex_brain_tissues.R summarize</code>,
+<code>58.gtex_pi1.R</code> and <code>57.gtex_gene_venn.R</code>. The
+paper’s-cutoff set is the original run’s (<code>out/adaptive/</code>),
+read without being changed.</p>
+</div>
+</div>
+<div id="storeys-π1-how-many-of-our-findings-gtex-also-sees"
+class="section level1 tabset">
+<h1 class="tabset">Storey’s π<sub>1</sub>: how many of our findings GTEx
+also sees</h1>
+<p>We take our associations in each set at each timepoint and look up
+each one in GTEx. From their GTEx p-values we estimate Storey’s
+π<sub>1</sub>, the share of our associations that are real sQTLs in
+GTEx.</p>
+<ul>
+<li><strong>If none of our findings were real in GTEx</strong>, their
+GTEx p-values would be spread evenly between 0 and 1.</li>
+<li><strong>If all were</strong>, they would pile up near 0.</li>
+</ul>
+<p>The estimator measures the flat part, π<sub>0</sub>, from the larger
+p-values, and π<sub>1</sub> = 1 − π<sub>0</sub>; 1 − π<sub>1</sub> is
+the share without a detectable GTEx signal. We use
+<code>qvalue::pi0est</code> with its default smoother, or with λ = 0.5
+when there are fewer than 30 p-values. Each timepoint is estimated
+separately.</p>
+<ul>
+<li><strong>Same junction</strong> (main): the GTEx p-value of the
+annotated event’s skipping junction for our SNV, as in the scatter
+plots. Each association has one prespecified junction, so the p-value is
+uniform under the null.</li>
+<li><strong>Any junction</strong> (a lower bound): our SNV and gene at
+any junction, using the smallest p corrected for the gene’s k junctions,
+1 − (1 − min p)<sup>k</sup> (Šidák). This covers more associations, but
+a gene’s junctions are correlated, so this p-value is conservative and
+π<sub>1</sub> is underestimated.</li>
+</ul>
+<p>Read π<sub>1</sub> with three limits in mind:</p>
+<ul>
+<li><strong>It is imprecise with few p-values.</strong> That is the case
+for the after-FDR set in particular.</li>
+<li><strong>It covers only associations GTEx can test:</strong> a
+minority, as shown under <a href="#results">Results</a>.</li>
+<li><strong>A missing GTEx signal is not necessarily a new
+finding.</strong> It can also reflect GTEx’s power, adult tissue against
+our neurons, stimulation-specific effects, or the different splicing
+measures.</li>
+</ul>
+<div id="cerebellum-2" class="section level2">
+<h2>Cerebellum</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">231</td>
+<td align="right">0.69</td>
+<td align="right">635</td>
+<td align="right">0.19</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">327</td>
+<td align="right">0.45</td>
+<td align="right">884</td>
+<td align="right">0.22</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">374</td>
+<td align="right">0.29</td>
+<td align="right">934</td>
+<td align="right">0.37</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">62</td>
+<td align="right">0.46</td>
+<td align="right">198</td>
+<td align="right">0.17</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">103</td>
+<td align="right">0.60</td>
+<td align="right">308</td>
+<td align="right">0.48</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">99</td>
+<td align="right">0.34</td>
+<td align="right">294</td>
+<td align="right">0.46</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">12</td>
+<td align="right">0.33</td>
+<td align="right">20</td>
+<td align="right">0.40</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">22</td>
+<td align="right">0.36</td>
+<td align="right">34</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">14</td>
+<td align="right">0.43</td>
+<td align="right">25</td>
+<td align="right">0.68</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cerebellar-hemisphere-2" class="section level2">
+<h2>Cerebellar Hemisphere</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">238</td>
+<td align="right">0.00</td>
+<td align="right">637</td>
+<td align="right">0.29</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">339</td>
+<td align="right">0.17</td>
+<td align="right">887</td>
+<td align="right">0.20</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">377</td>
+<td align="right">0.08</td>
+<td align="right">939</td>
+<td align="right">0.35</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">62</td>
+<td align="right">0.00</td>
+<td align="right">196</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">105</td>
+<td align="right">0.21</td>
+<td align="right">309</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">103</td>
+<td align="right">0.07</td>
+<td align="right">296</td>
+<td align="right">0.21</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">11</td>
+<td align="right">0.00</td>
+<td align="right">20</td>
+<td align="right">0.40</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">21</td>
+<td align="right">0.52</td>
+<td align="right">34</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">14</td>
+<td align="right">0.29</td>
+<td align="right">24</td>
+<td align="right">0.67</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="caudate-basal-ganglia-2" class="section level2">
+<h2>Caudate basal ganglia</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">202</td>
+<td align="right">0.57</td>
+<td align="right">646</td>
+<td align="right">0.20</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">292</td>
+<td align="right">0.69</td>
+<td align="right">901</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">315</td>
+<td align="right">0.40</td>
+<td align="right">954</td>
+<td align="right">0.21</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">54</td>
+<td align="right">0.65</td>
+<td align="right">200</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">96</td>
+<td align="right">0.73</td>
+<td align="right">308</td>
+<td align="right">0.19</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">87</td>
+<td align="right">0.26</td>
+<td align="right">297</td>
+<td align="right">0.36</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">0.80</td>
+<td align="right">23</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">20</td>
+<td align="right">0.70</td>
+<td align="right">36</td>
+<td align="right">0.72</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">0.83</td>
+<td align="right">28</td>
+<td align="right">0.86</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cortex-2" class="section level2">
+<h2>Cortex</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">205</td>
+<td align="right">0.35</td>
+<td align="right">636</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">293</td>
+<td align="right">0.54</td>
+<td align="right">890</td>
+<td align="right">0.23</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">329</td>
+<td align="right">0.54</td>
+<td align="right">941</td>
+<td align="right">0.32</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">52</td>
+<td align="right">0.14</td>
+<td align="right">197</td>
+<td align="right">0.17</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">94</td>
+<td align="right">0.45</td>
+<td align="right">304</td>
+<td align="right">0.30</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">86</td>
+<td align="right">0.12</td>
+<td align="right">293</td>
+<td align="right">0.29</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">0.78</td>
+<td align="right">20</td>
+<td align="right">0.70</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">16</td>
+<td align="right">0.88</td>
+<td align="right">33</td>
+<td align="right">0.76</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">1.00</td>
+<td align="right">25</td>
+<td align="right">0.68</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="frontal-cortex-ba9-2" class="section level2">
+<h2>Frontal Cortex BA9</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">200</td>
+<td align="right">0.34</td>
+<td align="right">629</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">287</td>
+<td align="right">0.34</td>
+<td align="right">882</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">320</td>
+<td align="right">0.36</td>
+<td align="right">935</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">52</td>
+<td align="right">0.08</td>
+<td align="right">194</td>
+<td align="right">0.25</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">95</td>
+<td align="right">0.39</td>
+<td align="right">301</td>
+<td align="right">0.19</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">90</td>
+<td align="right">0.27</td>
+<td align="right">289</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">0.20</td>
+<td align="right">19</td>
+<td align="right">0.16</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">17</td>
+<td align="right">0.41</td>
+<td align="right">32</td>
+<td align="right">0.50</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">13</td>
+<td align="right">0.54</td>
+<td align="right">23</td>
+<td align="right">0.48</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="hippocampus-2" class="section level2">
+<h2>Hippocampus</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">199</td>
+<td align="right">0.47</td>
+<td align="right">632</td>
+<td align="right">0.11</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">290</td>
+<td align="right">0.30</td>
+<td align="right">884</td>
+<td align="right">0.22</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">314</td>
+<td align="right">0.26</td>
+<td align="right">938</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">52</td>
+<td align="right">0.78</td>
+<td align="right">194</td>
+<td align="right">0.39</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">95</td>
+<td align="right">0.40</td>
+<td align="right">300</td>
+<td align="right">0.35</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">87</td>
+<td align="right">0.60</td>
+<td align="right">291</td>
+<td align="right">0.08</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">0.00</td>
+<td align="right">19</td>
+<td align="right">0.26</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">20</td>
+<td align="right">0.40</td>
+<td align="right">32</td>
+<td align="right">0.59</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">0.33</td>
+<td align="right">23</td>
+<td align="right">0.57</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="hypothalamus-2" class="section level2">
+<h2>Hypothalamus</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">199</td>
+<td align="right">0.18</td>
+<td align="right">643</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">293</td>
+<td align="right">0.36</td>
+<td align="right">895</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">319</td>
+<td align="right">0.38</td>
+<td align="right">961</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">53</td>
+<td align="right">0.00</td>
+<td align="right">201</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">95</td>
+<td align="right">0.30</td>
+<td align="right">308</td>
+<td align="right">0.14</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">90</td>
+<td align="right">0.18</td>
+<td align="right">302</td>
+<td align="right">0.14</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">0.56</td>
+<td align="right">23</td>
+<td align="right">0.22</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">19</td>
+<td align="right">0.47</td>
+<td align="right">36</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">11</td>
+<td align="right">0.82</td>
+<td align="right">28</td>
+<td align="right">0.29</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="nucleus-accumbens-basal-ganglia-2" class="section level2">
+<h2>Nucleus accumbens basal ganglia</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">201</td>
+<td align="right">0.38</td>
+<td align="right">633</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">293</td>
+<td align="right">0.45</td>
+<td align="right">890</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">318</td>
+<td align="right">0.48</td>
+<td align="right">945</td>
+<td align="right">0.17</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">57</td>
+<td align="right">0.35</td>
+<td align="right">200</td>
+<td align="right">0.25</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">96</td>
+<td align="right">0.62</td>
+<td align="right">306</td>
+<td align="right">0.39</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">88</td>
+<td align="right">0.41</td>
+<td align="right">293</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">10</td>
+<td align="right">1.00</td>
+<td align="right">23</td>
+<td align="right">0.48</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">21</td>
+<td align="right">0.62</td>
+<td align="right">35</td>
+<td align="right">0.21</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">13</td>
+<td align="right">0.85</td>
+<td align="right">27</td>
+<td align="right">0.56</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="putamen-basal-ganglia-2" class="section level2">
+<h2>Putamen basal ganglia</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="16%" />
+<col width="21%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: p-values</th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">199</td>
+<td align="right">0.00</td>
+<td align="right">631</td>
+<td align="right">0.26</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">287</td>
+<td align="right">0.18</td>
+<td align="right">876</td>
+<td align="right">0.07</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">313</td>
+<td align="right">0.43</td>
+<td align="right">942</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">53</td>
+<td align="right">0.24</td>
+<td align="right">194</td>
+<td align="right">0.26</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">94</td>
+<td align="right">0.05</td>
+<td align="right">301</td>
+<td align="right">0.19</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">86</td>
+<td align="right">0.42</td>
+<td align="right">291</td>
+<td align="right">0.16</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9</td>
+<td align="right">0.11</td>
+<td align="right">22</td>
+<td align="right">0.18</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">20</td>
+<td align="right">0.20</td>
+<td align="right">34</td>
+<td align="right">0.23</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">12</td>
+<td align="right">0.17</td>
+<td align="right">25</td>
+<td align="right">0.44</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="summary-across-tissues-1" class="section level2">
+<h2>Summary across tissues</h2>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="7%" />
+<col width="19%" />
+<col width="25%" />
+<col width="35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Set</th>
+<th align="left">Timepoint</th>
+<th align="right">Same junction: p-values</th>
+<th align="right">Same junction: π<sub>1</sub></th>
+<th align="right">Any junction: π<sub>1</sub> (lower bound)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">0 hr</td>
+<td align="right">199–238</td>
+<td align="right">0.00–0.69</td>
+<td align="right">0.00–0.29</td>
+</tr>
+<tr class="even">
+<td align="left">Paper’s cutoff</td>
+<td align="left">1 hr</td>
+<td align="right">287–339</td>
+<td align="right">0.17–0.69</td>
+<td align="right">0.00–0.23</td>
+</tr>
+<tr class="odd">
+<td align="left">Paper’s cutoff</td>
+<td align="left">6 hr</td>
+<td align="right">313–377</td>
+<td align="right">0.08–0.54</td>
+<td align="right">0.00–0.37</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">0 hr</td>
+<td align="right">52–62</td>
+<td align="right">0.00–0.78</td>
+<td align="right">0.00–0.39</td>
+</tr>
+<tr class="odd">
+<td align="left">Before FDR</td>
+<td align="left">1 hr</td>
+<td align="right">94–105</td>
+<td align="right">0.05–0.73</td>
+<td align="right">0.14–0.48</td>
+</tr>
+<tr class="even">
+<td align="left">Before FDR</td>
+<td align="left">6 hr</td>
+<td align="right">86–103</td>
+<td align="right">0.07–0.60</td>
+<td align="right">0.00–0.46</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">0 hr</td>
+<td align="right">9–12</td>
+<td align="right">0.00–1.00</td>
+<td align="right">0.16–0.70</td>
+</tr>
+<tr class="even">
+<td align="left">After FDR</td>
+<td align="left">1 hr</td>
+<td align="right">16–22</td>
+<td align="right">0.20–0.88</td>
+<td align="right">0.00–0.76</td>
+</tr>
+<tr class="odd">
+<td align="left">After FDR</td>
+<td align="left">6 hr</td>
+<td align="right">11–14</td>
+<td align="right">0.17–1.00</td>
+<td align="right">0.29–0.86</td>
+</tr>
+</tbody>
+</table>
+<p>The ranges are across the nine tissues. Download <a
+href="assets/isolaser_gtex_panel10nc_q010/pi1.tsv">all estimates</a>
+(made by <code>58.gtex_pi1.R</code>).</p>
+</div>
+</div>
+<div id="gene-level-overlap-with-gtex-sgenes"
+class="section level1 tabset">
+<h1 class="tabset">Gene-level overlap with GTEx sGenes</h1>
+<p>One tab per tissue, with the same layout as the scatter plots: rows
+are the three sets and columns the timepoints. The numbers in each panel
+are:</p>
+<ul>
+<li><strong>isoLASER genes only</strong>: genes with at least one
+association of the set at that timepoint that are not GTEx sGenes;</li>
+<li><strong>both</strong>: genes that are both;</li>
+<li><strong>GTEx sGenes only</strong>: GTEx sGenes of the tissue
+(gene-level q &lt; 0.05) without an association of ours.</li>
+</ul>
+<p>Each panel is restricted to genes tested in both studies at that
+timepoint: in our permutation run and by GTEx in that tissue. This
+overlap is at the gene level. A gene counts as shared when GTEx finds an
+sQTL in it through any variant and junction, not necessarily our SNV or
+our event. The scatter plots require both, so their gene counts are
+smaller.</p>
+<div id="cerebellum-3" class="section level2">
+<h2>Cerebellum</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Cerebellum.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Cerebellum.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cerebellar-hemisphere-3" class="section level2">
+<h2>Cerebellar Hemisphere</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Cerebellar_Hemisphere.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Cerebellar_Hemisphere.pdf">Open
+as PDF</a></p>
+</div>
+<div id="caudate-basal-ganglia-3" class="section level2">
+<h2>Caudate basal ganglia</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Caudate_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Caudate_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+<div id="cortex-3" class="section level2">
+<h2>Cortex</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Cortex.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Cortex.pdf">Open as
+PDF</a></p>
+</div>
+<div id="frontal-cortex-ba9-3" class="section level2">
+<h2>Frontal Cortex BA9</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Frontal_Cortex_BA9.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Frontal_Cortex_BA9.pdf">Open
+as PDF</a></p>
+</div>
+<div id="hippocampus-3" class="section level2">
+<h2>Hippocampus</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Hippocampus.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Hippocampus.pdf">Open
+as PDF</a></p>
+</div>
+<div id="hypothalamus-3" class="section level2">
+<h2>Hypothalamus</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Hypothalamus.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Hypothalamus.pdf">Open
+as PDF</a></p>
+</div>
+<div id="nucleus-accumbens-basal-ganglia-3" class="section level2">
+<h2>Nucleus accumbens basal ganglia</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Nucleus_accumbens_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Nucleus_accumbens_basal_ganglia.pdf">Open
+as PDF</a></p>
+</div>
+<div id="putamen-basal-ganglia-3" class="section level2">
+<h2>Putamen basal ganglia</h2>
+<p><img
+src="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Putamen_basal_ganglia.png" /></p>
+<p><a
+href="assets/isolaser_gtex_panel10nc_q010/venn_Brain_Putamen_basal_ganglia.pdf">Open
+as PDF</a></p>
+<p>Download the <a
+href="assets/isolaser_gtex_panel10nc_q010/venn_counts.tsv">gene
+counts</a> for every tissue, set and timepoint (made by
+<code>57.gtex_gene_venn.R</code>).</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=C.UTF-8    LC_NUMERIC=C        LC_TIME=C          
+ [4] LC_COLLATE=C        LC_MONETARY=C       LC_MESSAGES=C      
+ [7] LC_PAPER=C          LC_NAME=C           LC_ADDRESS=C       
+[10] LC_TELEPHONE=C      LC_MEASUREMENT=C    LC_IDENTIFICATION=C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] data.table_1.14.4 workflowr_1.7.0  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.11      compiler_4.2.0   pillar_1.9.0     bslib_0.3.1     
+ [5] later_1.3.0      git2r_0.30.1     jquerylib_0.1.4  tools_4.2.0     
+ [9] getPass_0.2-2    digest_0.6.29    jsonlite_1.8.7   evaluate_0.15   
+[13] lifecycle_1.0.4  tibble_3.2.1     pkgconfig_2.0.3  rlang_1.1.2     
+[17] cli_3.6.2        rstudioapi_0.14  yaml_2.3.5       xfun_0.38       
+[21] fastmap_1.1.0    httr_1.4.5       stringr_1.5.0    knitr_1.42      
+[25] sass_0.4.1       fs_1.5.2         vctrs_0.6.1      rprojroot_2.0.3 
+[29] glue_1.6.2       R6_2.5.1         processx_3.5.3   fansi_1.0.3     
+[33] rmarkdown_2.21   callr_3.7.0      magrittr_2.0.3   whisker_0.4     
+[37] ps_1.7.0         promises_1.2.0.1 htmltools_0.5.7  httpuv_1.6.5    
+[41] utf8_1.2.2       stringi_1.7.6   </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

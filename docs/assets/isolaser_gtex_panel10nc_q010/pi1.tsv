@@ -1,0 +1,82 @@
+tissue	rule	run	set	tp	snv_genes	tested	tested_share	pi1_any	pi0_method_any	frac_p05_any	matched	pi1_matched	pi0_method_matched
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	646	0.306888361045131	0.195866797786878	smoother	0.309597523219814	202	0.565113820094622	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	901	0.363746467501009	0	smoother	0.335183129855716	292	0.692789558320961	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	954	0.382671480144404	0.214934729855778	smoother	0.327044025157233	315	0.395682287881626	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	200	0.91743119266055	0.125872919333868	smoother	0.38	54	0.645716742083741	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	308	0.922155688622755	0.18536652818388	smoother	0.37012987012987	96	0.734694209285593	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	297	0.905487804878049	0.356741117591288	smoother	0.31986531986532	87	0.259045188338693	smoother
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	23	0.821428571428571	0.565217391304348	lambda 0.5	0.304347826086957	10	0.8	lambda 0.5
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	36	0.878048780487805	0.722222222222222	lambda 0.5	0.416666666666667	20	0.7	lambda 0.5
+Brain_Caudate_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	28	0.8	0.857142857142857	lambda 0.5	0.464285714285714	12	0.833333333333333	lambda 0.5
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	637	0.302612826603325	0.292182491673623	smoother	0.373626373626374	238	0	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	887	0.358094469115866	0.202160111843548	smoother	0.377677564825254	339	0.172993359093854	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	939	0.376654632972322	0.347076359437882	smoother	0.36741214057508	377	0.0778652129245727	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	196	0.89908256880734	0.147929172007287	smoother	0.418367346938776	62	0	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	309	0.925149700598802	0.434038415367886	smoother	0.449838187702265	105	0.208698338736415	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	296	0.902439024390244	0.2104112974701	smoother	0.385135135135135	103	0.0734131381267611	smoother
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	20	0.714285714285714	0.4	lambda 0.5	0.5	11	0	lambda 0.5
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	34	0.829268292682927	0.119218348712011	smoother	0.588235294117647	21	0.523809523809524	lambda 0.5
+Brain_Cerebellar_Hemisphere	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	24	0.685714285714286	0.666666666666667	lambda 0.5	0.708333333333333	14	0.285714285714286	lambda 0.5
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	635	0.30166270783848	0.189124283308899	smoother	0.382677165354331	231	0.687450479011593	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	884	0.356883326604764	0.220136613437494	smoother	0.386877828054299	327	0.447890021216076	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	934	0.374649017248295	0.366047919491305	smoother	0.390792291220557	374	0.292271506289548	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	198	0.908256880733945	0.171082089167111	smoother	0.444444444444444	62	0.457090367621856	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	308	0.922155688622755	0.476139838569642	smoother	0.467532467532468	103	0.604422989461292	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	294	0.896341463414634	0.460183159409105	smoother	0.452380952380952	99	0.338248519113767	smoother
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	20	0.714285714285714	0.4	lambda 0.5	0.45	12	0.333333333333333	lambda 0.5
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	34	0.829268292682927	0	smoother	0.588235294117647	22	0.363636363636364	lambda 0.5
+Brain_Cerebellum	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	25	0.714285714285714	0.68	lambda 0.5	0.68	14	0.428571428571429	lambda 0.5
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	636	0.302137767220903	0.151258173716073	smoother	0.349056603773585	205	0.346261936682922	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	890	0.359305611626968	0.22574022165344	smoother	0.342696629213483	293	0.543635582213097	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	941	0.377456879261933	0.316467013819887	smoother	0.348565356004251	329	0.542816340216607	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	197	0.903669724770642	0.167189350406928	smoother	0.431472081218274	52	0.137183101007277	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	304	0.910179640718563	0.297780878680349	smoother	0.384868421052632	94	0.452797815573407	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	293	0.893292682926829	0.289940029254514	smoother	0.354948805460751	86	0.120415078663817	smoother
+Brain_Cortex	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	20	0.714285714285714	0.7	lambda 0.5	0.5	9	0.777777777777778	lambda 0.5
+Brain_Cortex	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	33	0.804878048780488	0.757575757575758	lambda 0.5	0.484848484848485	16	0.875	lambda 0.5
+Brain_Cortex	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	25	0.714285714285714	0.68	lambda 0.5	0.64	12	1	lambda 0.5
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	629	0.298812351543943	0	smoother	0.321144674085851	200	0.340129369270683	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	882	0.356075898264029	0.131575643260114	smoother	0.348072562358277	287	0.34002195650817	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	935	0.375050140393101	0.00409609400632105	smoother	0.316577540106952	320	0.362507033923741	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	194	0.889908256880734	0.253926390134307	smoother	0.417525773195876	52	0.0775126622266612	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	301	0.901197604790419	0.189956474090195	smoother	0.411960132890365	95	0.387787567292957	smoother
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	289	0.88109756097561	0	smoother	0.342560553633218	90	0.266666666666667	lambda 0.5
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	19	0.678571428571429	0.157894736842105	lambda 0.5	0.368421052631579	10	0.2	lambda 0.5
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	32	0.780487804878049	0.496342853288147	smoother	0.40625	17	0.411764705882353	lambda 0.5
+Brain_Frontal_Cortex_BA9	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	23	0.657142857142857	0.478260869565217	lambda 0.5	0.521739130434783	13	0.538461538461538	lambda 0.5
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	632	0.300237529691211	0.11049997625872	smoother	0.291139240506329	199	0.472209117742171	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	884	0.356883326604764	0.218510717618624	smoother	0.319004524886878	290	0.299898769119464	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	938	0.376253509827517	0.0220663764619031	smoother	0.299573560767591	314	0.256571872626719	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	194	0.889908256880734	0.391689329182251	smoother	0.38659793814433	52	0.77602062495489	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	300	0.898203592814371	0.347761788049468	smoother	0.376666666666667	95	0.403575022785762	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	291	0.887195121951219	0.0799727776735474	smoother	0.323024054982818	87	0.599389288777413	smoother
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	19	0.678571428571429	0.263157894736842	lambda 0.5	0.473684210526316	9	0	lambda 0.5
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	32	0.780487804878049	0.589947243979484	smoother	0.5625	20	0.4	lambda 0.5
+Brain_Hippocampus	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	23	0.657142857142857	0.565217391304348	lambda 0.5	0.521739130434783	12	0.333333333333333	lambda 0.5
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	643	0.305463182897862	0	smoother	0.290824261275272	199	0.178939594123652	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	895	0.361324182478805	0.0505311034067372	smoother	0.313966480446927	293	0.360093470333651	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	961	0.385479342158043	0.0144980204174395	smoother	0.289281997918835	319	0.382608556149704	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	201	0.922018348623853	0	smoother	0.333333333333333	53	0	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	308	0.922155688622755	0.141664783758856	smoother	0.327922077922078	95	0.302646050848757	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	302	0.920731707317073	0.138460937336487	smoother	0.294701986754967	90	0.175605447385182	smoother
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	23	0.821428571428571	0.217391304347826	lambda 0.5	0.217391304347826	9	0.555555555555556	lambda 0.5
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	36	0.878048780487805	0.020753746548506	smoother	0.333333333333333	19	0.473684210526316	lambda 0.5
+Brain_Hypothalamus	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	28	0.8	0.285714285714286	lambda 0.5	0.357142857142857	11	0.818181818181818	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	633	0.300712589073634	0.0502712583518483	smoother	0.327014218009479	201	0.377239324007369	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	890	0.359305611626968	0.116230419554752	smoother	0.321348314606742	293	0.449539996592532	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	945	0.379061371841155	0.167538590349544	smoother	0.320634920634921	318	0.475466399735851	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	200	0.91743119266055	0.248383417610449	smoother	0.365	57	0.352372594197601	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	306	0.916167664670659	0.393034948360352	smoother	0.392156862745098	96	0.624362943527619	smoother
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	293	0.893292682926829	0.127205760026973	smoother	0.331058020477816	88	0.409090909090909	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	23	0.821428571428571	0.478260869565217	lambda 0.5	0.347826086956522	10	1	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	35	0.853658536585366	0.212043931328773	smoother	0.4	21	0.619047619047619	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	27	0.771428571428571	0.555555555555556	lambda 0.5	0.444444444444444	13	0.846153846153846	lambda 0.5
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	0hr	2105	631	0.299762470308789	0.260680401225399	smoother	0.27892234548336	199	0	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	1hr	2477	876	0.353653613241825	0.0718883329373111	smoother	0.278538812785388	287	0.184006182013859	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Paper's cutoff	6hr	2493	942	0.377858002406739	0.0551920285740836	smoother	0.286624203821656	313	0.428631764859015	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	0hr	218	194	0.889908256880734	0.264435471037132	smoother	0.376288659793814	53	0.242618399545214	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	1hr	334	301	0.901197604790419	0.188807224595731	smoother	0.332225913621262	94	0.0472591540040178	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	Before FDR	6hr	328	291	0.887195121951219	0.156053899009335	smoother	0.305841924398625	86	0.419484989566488	smoother
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	0hr	28	22	0.785714285714286	0.181818181818182	lambda 0.5	0.5	9	0.111111111111111	lambda 0.5
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	1hr	41	34	0.829268292682927	0.227320305879333	smoother	0.441176470588235	20	0.2	lambda 0.5
+Brain_Putamen_basal_ganglia	panel10nc	Transcript-based isoLASER	After FDR	6hr	35	25	0.714285714285714	0.44	lambda 0.5	0.48	12	0.166666666666667	lambda 0.5

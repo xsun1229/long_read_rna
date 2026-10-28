@@ -311,7 +311,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-10-27
+<strong>Last updated:</strong> 2026-10-28
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -361,15 +361,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree49d710de211a70259fde30268c8096368b32cadftargetblank49d710da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea3717c1869122b4acc4315a77586c91add2fef40targetblanka3717c1a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/49d710de211a70259fde30268c8096368b32cadf" target="_blank">49d710d</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/a3717c1869122b4acc4315a77586c91add2fef40" target="_blank">a3717c1</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree49d710de211a70259fde30268c8096368b32cadftargetblank49d710da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreea3717c1869122b4acc4315a77586c91add2fef40targetblanka3717c1a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -379,7 +379,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/49d710de211a70259fde30268c8096368b32cadf" target="_blank">49d710d</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/a3717c1869122b4acc4315a77586c91add2fef40" target="_blank">a3717c1</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -393,10 +393,14 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_fdr_panel10nc_q010.Rmd
+    Untracked:  analysis/isolaser_fdr_reads10nc_q010.Rmd
+    Untracked:  analysis/isolaser_gtex_comparison_panel10nc_q010.Rmd
+    Untracked:  analysis/isolaser_gtex_comparison_reads10nc_q010.Rmd
+
 Unstaged changes:
     Modified:   analysis/index.Rmd
-    Modified:   analysis/isolaser_gtex_comparison_panel10nc.Rmd
-    Modified:   analysis/isolaser_gtex_comparison_reads10nc.Rmd
 
 </code></pre>
 <p>
@@ -441,6 +445,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/a7f8095eeee8e7c4b0e3a27406c4766530ff630b/analysis/index.Rmd" target="_blank">a7f8095</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-27
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/a7f8095eeee8e7c4b0e3a27406c4766530ff630b/docs/index.html" target="_blank">a7f8095</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-10-27
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1160,23 +1198,24 @@ part differently, within donors heterozygous for it. Significance comes
 from a genome-wide permutation test with an FDR per timepoint, and GTEx
 brain sQTLs serve as an independent check.</p>
 <p><strong>Current analysis: read-based isoLASER</strong>, without the
-clustering filter.</p>
+clustering filter, reported at BH q &lt; 0.10 and |ΔPSI| ≥ 0.05.</p>
 <ul>
-<li><a href="isolaser_fdr_reads10nc.html">Genome-wide FDR</a> — results,
-genes to follow up with their figures (PARK7, PPA2, LY6H, ZNF749), and
-what dropping the clustering filter changed</li>
-<li><a href="isolaser_gtex_comparison_reads10nc.html">Comparison with
-GTEx brain sQTLs</a> — nine brain tissues, three sets (paper’s cutoff,
-before and after FDR)</li>
+<li><a href="isolaser_fdr_reads10nc_q010.html">Genome-wide FDR</a> —
+results, the genes gained over the earlier cutoffs, and genes to follow
+up with their figures (LY6H, PARK7, PPA2, ZNF749)</li>
+<li><a href="isolaser_gtex_comparison_reads10nc_q010.html">Comparison
+with GTEx brain sQTLs</a> — nine brain tissues, three sets (paper’s
+cutoff, before and after FDR), Storey’s π<sub>1</sub> and gene-level
+overlap</li>
 <li><a href="isolaser_gwas_catalog.html">Hits in the GWAS Catalog</a> —
 which reported variants are known GWAS signals for neuropsychiatric,
-brain or behaviour traits (GNL3, LY6H)</li>
+brain or behaviour traits (GNL3, LY6H); still at q &lt; 0.05</li>
 </ul>
 <p><strong>For comparison: transcript-based isoLASER</strong>
-(isoLASER’s own labels), without the clustering filter: <a
-href="isolaser_fdr_panel10nc.html">genome-wide FDR</a> and <a
-href="isolaser_gtex_comparison_panel10nc.html">comparison with
-GTEx</a>.</p>
+(isoLASER’s own labels), without the clustering filter, at the same
+cutoffs: <a href="isolaser_fdr_panel10nc_q010.html">genome-wide FDR</a>
+and <a href="isolaser_gtex_comparison_panel10nc_q010.html">comparison
+with GTEx</a>.</p>
 <p>The read-based effects keep their direction with transcript-based
 labels and agree with GTEx; most transcript-based-only hits disappear
 once reads are labelled from their alignments.</p>
@@ -1240,7 +1279,7 @@ href="isolaser_gtex_comparison_reads10.html">GTEx</a></td>
 </tr>
 <tr class="even">
 <td>4</td>
-<td>Both, without filter (current)</td>
+<td>Both, without filter</td>
 <td>as in step 2</td>
 <td>both</td>
 <td>no</td>
@@ -1251,15 +1290,30 @@ href="isolaser_gtex_comparison_reads10nc.html">GTEx</a>; <a
 href="isolaser_fdr_panel10nc.html">transcript-based FDR</a>, <a
 href="isolaser_gtex_comparison_panel10nc.html">GTEx</a></td>
 </tr>
+<tr class="odd">
+<td>5</td>
+<td>Both, without filter, at q &lt; 0.10 and |ΔPSI| ≥ 0.05
+(current)</td>
+<td>as in step 2</td>
+<td>both</td>
+<td>no</td>
+<td>No earlier hit is lost: read-based isoLASER reports 30 genes (22
+before), transcript-based 41 (29)</td>
+<td><a href="isolaser_fdr_reads10nc_q010.html">read-based FDR</a>, <a
+href="isolaser_gtex_comparison_reads10nc_q010.html">GTEx</a>; <a
+href="isolaser_fdr_panel10nc_q010.html">transcript-based FDR</a>, <a
+href="isolaser_gtex_comparison_panel10nc_q010.html">GTEx</a></td>
+</tr>
 </tbody>
 </table>
-<p><strong>Donors used</strong>: which donors count for an association
-at a SNP. <strong>Inclusion labels</strong>: how a read is called as
-including or excluding the tested exonic part. Transcript-based labels
-come from the transcript isoLASER assigned the read to, isoLASER’s
-default; read-based labels come from the read’s own alignment, our
-modification. <strong>Clustering filter</strong>: variants with another
-candidate variant within 30 bp are left out.</p>
+<p>Steps 1–4 report BH q &lt; 0.05 and |ΔPSI| ≥ 0.10. <strong>Donors
+used</strong>: which donors count for an association at a SNP.
+<strong>Inclusion labels</strong>: how a read is called as including or
+excluding the tested exonic part. Transcript-based labels come from the
+transcript isoLASER assigned the read to, isoLASER’s default; read-based
+labels come from the read’s own alignment, our modification.
+<strong>Clustering filter</strong>: variants with another candidate
+variant within 30 bp are left out.</p>
 </div>
 <div id="background-and-checks" class="section level2">
 <h2>Background and checks</h2>

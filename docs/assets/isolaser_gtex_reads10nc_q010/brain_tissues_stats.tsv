@@ -1,0 +1,163 @@
+set	tissue	tp	n	genes	expected_sign	pearson_r	pearson_p	subset
+Paper's cutoff	Brain_Caudate_basal_ganglia	0hr	22	15	19	-0.61118379482138	0.00251202423189323	GTEx p < 1e-5
+Paper's cutoff	Brain_Caudate_basal_ganglia	1hr	38	22	32	-0.64267586901039	1.35778098449629e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Caudate_basal_ganglia	6hr	36	17	32	-0.522922067605474	0.00106740929812294	GTEx p < 1e-5
+Paper's cutoff	Brain_Caudate_basal_ganglia	0hr	155	106	99	-0.307712947071189	9.82310123365997e-05	all
+Paper's cutoff	Brain_Caudate_basal_ganglia	1hr	226	147	123	-0.285168924527632	1.33672553609919e-05	all
+Paper's cutoff	Brain_Caudate_basal_ganglia	6hr	232	149	136	-0.324231256029461	4.44300343734329e-07	all
+Paper's cutoff	Brain_Cerebellar_Hemisphere	0hr	21	16	19	-0.658740901895054	0.00116517844731689	GTEx p < 1e-5
+Paper's cutoff	Brain_Cerebellar_Hemisphere	1hr	32	22	28	-0.652479161715047	5.19002206142342e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Cerebellar_Hemisphere	6hr	34	19	32	-0.676278500920507	1.1325382236972e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Cerebellar_Hemisphere	0hr	161	110	103	-0.402462008581434	1.2071007019393e-07	all
+Paper's cutoff	Brain_Cerebellar_Hemisphere	1hr	235	157	139	-0.33872267640282	1.0205866460655e-07	all
+Paper's cutoff	Brain_Cerebellar_Hemisphere	6hr	261	173	152	-0.348341605331498	7.34905607588659e-09	all
+Paper's cutoff	Brain_Cerebellum	0hr	27	18	24	-0.61548383964126	0.000632725739540319	GTEx p < 1e-5
+Paper's cutoff	Brain_Cerebellum	1hr	42	26	33	-0.498434168642822	0.000781153390695178	GTEx p < 1e-5
+Paper's cutoff	Brain_Cerebellum	6hr	42	21	36	-0.485394223671492	0.00112084526600972	GTEx p < 1e-5
+Paper's cutoff	Brain_Cerebellum	0hr	155	106	88	-0.316824964535802	5.90740861633807e-05	all
+Paper's cutoff	Brain_Cerebellum	1hr	227	154	129	-0.302757459917979	3.3873566255599e-06	all
+Paper's cutoff	Brain_Cerebellum	6hr	256	169	158	-0.301633612540854	8.76421124743368e-07	all
+Paper's cutoff	Brain_Cortex	0hr	21	15	19	-0.737297142860537	0.000137060258995956	GTEx p < 1e-5
+Paper's cutoff	Brain_Cortex	1hr	39	22	33	-0.658291179958448	5.23958195184681e-06	GTEx p < 1e-5
+Paper's cutoff	Brain_Cortex	6hr	38	17	34	-0.568287267012806	0.000197672623692107	GTEx p < 1e-5
+Paper's cutoff	Brain_Cortex	0hr	156	105	97	-0.315560507246057	6.00364871275264e-05	all
+Paper's cutoff	Brain_Cortex	1hr	223	144	129	-0.311687081582769	2.06343468678935e-06	all
+Paper's cutoff	Brain_Cortex	6hr	236	146	141	-0.297253809781807	3.35594335763192e-06	all
+Paper's cutoff	Brain_Frontal_Cortex_BA9	0hr	20	14	17	-0.53480594470934	0.0151167766725665	GTEx p < 1e-5
+Paper's cutoff	Brain_Frontal_Cortex_BA9	1hr	36	20	29	-0.523494721849919	0.00105156807850872	GTEx p < 1e-5
+Paper's cutoff	Brain_Frontal_Cortex_BA9	6hr	32	14	30	-0.476768611958312	0.00580076523501676	GTEx p < 1e-5
+Paper's cutoff	Brain_Frontal_Cortex_BA9	0hr	151	103	95	-0.307527289360285	0.000122502280030702	all
+Paper's cutoff	Brain_Frontal_Cortex_BA9	1hr	225	145	127	-0.240098941057349	0.000278264541087868	all
+Paper's cutoff	Brain_Frontal_Cortex_BA9	6hr	237	149	143	-0.271161431167668	2.31659168925147e-05	all
+Paper's cutoff	Brain_Hippocampus	0hr	18	11	16	-0.611340551259169	0.00702481049816348	GTEx p < 1e-5
+Paper's cutoff	Brain_Hippocampus	1hr	29	16	24	-0.711898665666871	1.48611603393479e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Hippocampus	6hr	33	14	31	-0.6913663380411	8.38891109456092e-06	GTEx p < 1e-5
+Paper's cutoff	Brain_Hippocampus	0hr	158	108	87	-0.319356205884202	4.31382793286115e-05	all
+Paper's cutoff	Brain_Hippocampus	1hr	226	147	135	-0.331018896795976	3.52403559713117e-07	all
+Paper's cutoff	Brain_Hippocampus	6hr	241	146	146	-0.416025474484658	1.66727644415881e-11	all
+Paper's cutoff	Brain_Hypothalamus	0hr	20	14	18	-0.711398516094464	0.000436273944643853	GTEx p < 1e-5
+Paper's cutoff	Brain_Hypothalamus	1hr	33	19	28	-0.665148256758439	2.4113605026091e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Hypothalamus	6hr	31	14	29	-0.665384452482522	4.42175209706855e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Hypothalamus	0hr	159	110	94	-0.3651063189716	2.22448139191945e-06	all
+Paper's cutoff	Brain_Hypothalamus	1hr	224	148	129	-0.342076149744125	1.51823086337832e-07	all
+Paper's cutoff	Brain_Hypothalamus	6hr	239	154	147	-0.34015580405997	6.93759697725294e-08	all
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	0hr	29	19	27	-0.690933545237381	3.33467340738967e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	1hr	40	22	35	-0.633197496609216	1.16041408877351e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	6hr	42	19	38	-0.580551904973656	5.56721678673084e-05	GTEx p < 1e-5
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	0hr	160	108	93	-0.364734835438533	2.11845885461338e-06	all
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	1hr	227	149	134	-0.32488589018582	5.60679473498664e-07	all
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	6hr	236	149	151	-0.344613852541443	5.53229029130365e-08	all
+Paper's cutoff	Brain_Putamen_basal_ganglia	0hr	16	10	13	-0.464581053708835	0.0698287540663378	GTEx p < 1e-5
+Paper's cutoff	Brain_Putamen_basal_ganglia	1hr	33	19	27	-0.506071888514344	0.00265788570265167	GTEx p < 1e-5
+Paper's cutoff	Brain_Putamen_basal_ganglia	6hr	30	13	27	-0.543244968252956	0.00192051709831921	GTEx p < 1e-5
+Paper's cutoff	Brain_Putamen_basal_ganglia	0hr	151	103	87	-0.274095153514656	0.000660162523424653	all
+Paper's cutoff	Brain_Putamen_basal_ganglia	1hr	227	145	146	-0.279167567438267	1.97211354584358e-05	all
+Paper's cutoff	Brain_Putamen_basal_ganglia	6hr	228	144	143	-0.284709139747603	1.26493869013194e-05	all
+Before FDR	Brain_Caudate_basal_ganglia	0hr	4	3	4	-0.85593306839374	0.14406693160626	GTEx p < 1e-5
+Before FDR	Brain_Caudate_basal_ganglia	1hr	14	8	14	-0.911476439369728	5.72797025329963e-06	GTEx p < 1e-5
+Before FDR	Brain_Caudate_basal_ganglia	6hr	10	5	10	-0.882320489321278	0.000726264665275402	GTEx p < 1e-5
+Before FDR	Brain_Caudate_basal_ganglia	0hr	24	18	21	-0.486376838260084	0.0159537843436417	all
+Before FDR	Brain_Caudate_basal_ganglia	1hr	59	41	31	-0.344401942508744	0.00756135535836077	all
+Before FDR	Brain_Caudate_basal_ganglia	6hr	36	26	23	-0.321288427653267	0.0560428932386491	all
+Before FDR	Brain_Cerebellar_Hemisphere	0hr	7	5	7	-0.888899192664639	0.00743697443154355	GTEx p < 1e-5
+Before FDR	Brain_Cerebellar_Hemisphere	1hr	14	8	13	-0.492658342075303	0.0734875825412927	GTEx p < 1e-5
+Before FDR	Brain_Cerebellar_Hemisphere	6hr	13	6	13	-0.893960908804148	3.78090026344426e-05	GTEx p < 1e-5
+Before FDR	Brain_Cerebellar_Hemisphere	0hr	28	20	23	-0.44845725121417	0.016688045396237	all
+Before FDR	Brain_Cerebellar_Hemisphere	1hr	57	40	31	-0.216773741213433	0.105302956091775	all
+Before FDR	Brain_Cerebellar_Hemisphere	6hr	42	31	25	-0.317200979002718	0.0406724716260514	all
+Before FDR	Brain_Cerebellum	0hr	8	5	8	-0.813065435506402	0.0141268524774009	GTEx p < 1e-5
+Before FDR	Brain_Cerebellum	1hr	17	9	14	-0.445857137319617	0.0728509641388625	GTEx p < 1e-5
+Before FDR	Brain_Cerebellum	6hr	12	6	12	-0.743313769552817	0.00559558251711	GTEx p < 1e-5
+Before FDR	Brain_Cerebellum	0hr	26	18	20	-0.416115621522923	0.0344812942566783	all
+Before FDR	Brain_Cerebellum	1hr	57	40	35	-0.212283423928667	0.112892477968492	all
+Before FDR	Brain_Cerebellum	6hr	40	30	27	-0.321515358765266	0.0430701196269079	all
+Before FDR	Brain_Cortex	0hr	6	4	6	-0.923777145433391	0.00849346085821057	GTEx p < 1e-5
+Before FDR	Brain_Cortex	1hr	12	6	12	-0.868782656588917	0.000244784704044267	GTEx p < 1e-5
+Before FDR	Brain_Cortex	6hr	13	6	13	-0.878116563347947	7.88000847580354e-05	GTEx p < 1e-5
+Before FDR	Brain_Cortex	0hr	28	20	23	-0.453902500182315	0.0152586261139815	all
+Before FDR	Brain_Cortex	1hr	57	39	35	-0.37860864699511	0.0036835829785047	all
+Before FDR	Brain_Cortex	6hr	38	27	26	-0.366321592935717	0.023697715187169	all
+Before FDR	Brain_Frontal_Cortex_BA9	0hr	7	5	7	-0.891366545901625	0.0070405824678294	GTEx p < 1e-5
+Before FDR	Brain_Frontal_Cortex_BA9	1hr	13	7	12	-0.674194236713858	0.0114984274880901	GTEx p < 1e-5
+Before FDR	Brain_Frontal_Cortex_BA9	6hr	13	6	13	-0.897668178362777	3.13173117066474e-05	GTEx p < 1e-5
+Before FDR	Brain_Frontal_Cortex_BA9	0hr	27	19	18	-0.373038525990107	0.0553046718767658	all
+Before FDR	Brain_Frontal_Cortex_BA9	1hr	58	40	35	-0.320002247279167	0.014334087775178	all
+Before FDR	Brain_Frontal_Cortex_BA9	6hr	40	29	28	-0.372265439084336	0.0180068538866299	all
+Before FDR	Brain_Hippocampus	0hr	3	2	3	-0.999649484380772	0.016856270609985	GTEx p < 1e-5
+Before FDR	Brain_Hippocampus	1hr	11	6	10	-0.609729743423441	0.0464027773315	GTEx p < 1e-5
+Before FDR	Brain_Hippocampus	6hr	9	4	9	-0.931375978540238	0.000260535334629433	GTEx p < 1e-5
+Before FDR	Brain_Hippocampus	0hr	27	19	22	-0.462898389238991	0.0150399530800754	all
+Before FDR	Brain_Hippocampus	1hr	58	40	37	-0.311377993473571	0.0173483017565661	all
+Before FDR	Brain_Hippocampus	6hr	39	28	27	-0.428551159382925	0.00648993738121041	all
+Before FDR	Brain_Hypothalamus	0hr	4	2	4	0.766248806996759	0.233751193003241	GTEx p < 1e-5
+Before FDR	Brain_Hypothalamus	1hr	12	6	12	-0.925582674521264	1.58481864412923e-05	GTEx p < 1e-5
+Before FDR	Brain_Hypothalamus	6hr	10	4	10	-0.926540987738453	0.000116506758823316	GTEx p < 1e-5
+Before FDR	Brain_Hypothalamus	0hr	26	19	20	-0.519173945676145	0.00657072223969269	all
+Before FDR	Brain_Hypothalamus	1hr	59	41	31	-0.268528242338889	0.039743073212892	all
+Before FDR	Brain_Hypothalamus	6hr	38	28	29	-0.391851719688947	0.0149729556913093	all
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	0hr	8	5	8	-0.949091560633311	0.000317378908048833	GTEx p < 1e-5
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	1hr	13	7	13	-0.902689282168134	2.39842901392229e-05	GTEx p < 1e-5
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	6hr	12	6	12	-0.914304479348576	3.14760888905037e-05	GTEx p < 1e-5
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	0hr	28	20	20	-0.477673270856795	0.0101499631173732	all
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	1hr	60	42	31	-0.311914364480453	0.0152613283656308	all
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	6hr	39	28	29	-0.367371363609331	0.021408884573404	all
+Before FDR	Brain_Putamen_basal_ganglia	0hr	2	1	2			GTEx p < 1e-5
+Before FDR	Brain_Putamen_basal_ganglia	1hr	10	6	10	-0.835666209137655	0.00260356162857617	GTEx p < 1e-5
+Before FDR	Brain_Putamen_basal_ganglia	6hr	6	3	6	-0.960239715051643	0.00233989226397478	GTEx p < 1e-5
+Before FDR	Brain_Putamen_basal_ganglia	0hr	24	18	18	-0.567452117517842	0.00382798591160235	all
+Before FDR	Brain_Putamen_basal_ganglia	1hr	57	39	34	-0.378785058166546	0.00366639832625988	all
+Before FDR	Brain_Putamen_basal_ganglia	6hr	36	26	28	-0.419206669816228	0.0109306247504666	all
+After FDR	Brain_Caudate_basal_ganglia	0hr	2	2	2			GTEx p < 1e-5
+After FDR	Brain_Caudate_basal_ganglia	1hr	3	3	3	-0.84194507984989	0.362821235336747	GTEx p < 1e-5
+After FDR	Brain_Caudate_basal_ganglia	6hr	3	3	3	-0.945092071219405	0.21194352249687	GTEx p < 1e-5
+After FDR	Brain_Caudate_basal_ganglia	0hr	5	4	5	-0.571875165195155	0.313773334538147	all
+After FDR	Brain_Caudate_basal_ganglia	1hr	4	3	4	-0.858420133482255	0.141579866517745	all
+After FDR	Brain_Caudate_basal_ganglia	6hr	5	4	5	-0.941897532554803	0.0166649516448335	all
+After FDR	Brain_Cerebellar_Hemisphere	0hr	3	2	3	-0.965437510648809	0.167863583011661	GTEx p < 1e-5
+After FDR	Brain_Cerebellar_Hemisphere	1hr	4	3	4	-0.825217973063348	0.174782026936652	GTEx p < 1e-5
+After FDR	Brain_Cerebellar_Hemisphere	6hr	4	3	4	-0.853460416531149	0.146539583468852	GTEx p < 1e-5
+After FDR	Brain_Cerebellar_Hemisphere	0hr	5	4	5	-0.511340993463941	0.378544737383961	all
+After FDR	Brain_Cerebellar_Hemisphere	1hr	4	3	4	-0.825217973063348	0.174782026936652	all
+After FDR	Brain_Cerebellar_Hemisphere	6hr	5	4	4	-0.84279963341863	0.0730295977162207	all
+After FDR	Brain_Cerebellum	0hr	3	2	3	-0.966275588186062	0.165804173130925	GTEx p < 1e-5
+After FDR	Brain_Cerebellum	1hr	4	3	4	-0.834175132248616	0.165824867751384	GTEx p < 1e-5
+After FDR	Brain_Cerebellum	6hr	4	3	4	-0.843103826013549	0.156896173986451	GTEx p < 1e-5
+After FDR	Brain_Cerebellum	0hr	5	4	5	-0.473806753765394	0.420130782226641	all
+After FDR	Brain_Cerebellum	1hr	4	3	4	-0.834175132248616	0.165824867751384	all
+After FDR	Brain_Cerebellum	6hr	5	4	5	-0.834764862118067	0.0785994275280102	all
+After FDR	Brain_Cortex	0hr	3	2	3	-0.954248682269061	0.193315548464548	GTEx p < 1e-5
+After FDR	Brain_Cortex	1hr	4	3	4	-0.79708383513036	0.20291616486964	GTEx p < 1e-5
+After FDR	Brain_Cortex	6hr	4	3	4	-0.900773259894657	0.0992267401053426	GTEx p < 1e-5
+After FDR	Brain_Cortex	0hr	6	5	5	-0.386997282246794	0.448483767581327	all
+After FDR	Brain_Cortex	1hr	4	3	4	-0.79708383513036	0.20291616486964	all
+After FDR	Brain_Cortex	6hr	5	4	5	-0.902676476012191	0.0359101157550331	all
+After FDR	Brain_Frontal_Cortex_BA9	0hr	3	2	3	-0.962377593198795	0.175182007475631	GTEx p < 1e-5
+After FDR	Brain_Frontal_Cortex_BA9	1hr	4	3	4	-0.86599325471858	0.13400674528142	GTEx p < 1e-5
+After FDR	Brain_Frontal_Cortex_BA9	6hr	4	3	4	-0.9376663993959	0.0623336006041003	GTEx p < 1e-5
+After FDR	Brain_Frontal_Cortex_BA9	0hr	5	4	4	-0.48222379684423	0.410717612857056	all
+After FDR	Brain_Frontal_Cortex_BA9	1hr	4	3	4	-0.86599325471858	0.13400674528142	all
+After FDR	Brain_Frontal_Cortex_BA9	6hr	5	4	5	-0.937087576430325	0.0187627768162102	all
+After FDR	Brain_Hippocampus	0hr	0	0	0			GTEx p < 1e-5
+After FDR	Brain_Hippocampus	1hr	1	1	1			GTEx p < 1e-5
+After FDR	Brain_Hippocampus	6hr	1	1	1			GTEx p < 1e-5
+After FDR	Brain_Hippocampus	0hr	5	4	3	-0.42311750429257	0.477806677345108	all
+After FDR	Brain_Hippocampus	1hr	4	3	4	-0.858361856194093	0.141638143805907	all
+After FDR	Brain_Hippocampus	6hr	5	4	5	-0.963413334072564	0.00835449594354093	all
+After FDR	Brain_Hypothalamus	0hr	2	1	2			GTEx p < 1e-5
+After FDR	Brain_Hypothalamus	1hr	3	2	3	-0.988010072049124	0.0986820799040248	GTEx p < 1e-5
+After FDR	Brain_Hypothalamus	6hr	3	2	3	-0.986094446576942	0.10629034248818	GTEx p < 1e-5
+After FDR	Brain_Hypothalamus	0hr	6	5	6	-0.476159729258506	0.339739798555584	all
+After FDR	Brain_Hypothalamus	1hr	4	3	4	-0.930819053907299	0.0691809460927009	all
+After FDR	Brain_Hypothalamus	6hr	5	4	5	-0.974048681519012	0.00499890829792755	all
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	0hr	3	2	3	-0.96952092457996	0.157581527412233	GTEx p < 1e-5
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	1hr	4	3	4	-0.830222152445436	0.169777847554564	GTEx p < 1e-5
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	6hr	4	3	4	-0.933666768388702	0.0663332316112979	GTEx p < 1e-5
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	0hr	5	4	4	-0.46676784110318	0.428040036055741	all
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	1hr	4	3	4	-0.830222152445436	0.169777847554564	all
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	6hr	5	4	5	-0.934307780107717	0.020011442452526	all
+After FDR	Brain_Putamen_basal_ganglia	0hr	2	1	2			GTEx p < 1e-5
+After FDR	Brain_Putamen_basal_ganglia	1hr	3	2	3	-0.982270998667006	0.120055203117923	GTEx p < 1e-5
+After FDR	Brain_Putamen_basal_ganglia	6hr	3	2	3	-0.980485760272563	0.125973652914416	GTEx p < 1e-5
+After FDR	Brain_Putamen_basal_ganglia	0hr	5	4	5	-0.420707810393246	0.48058834366147	all
+After FDR	Brain_Putamen_basal_ganglia	1hr	4	3	4	-0.933374447662603	0.0666255523373968	all
+After FDR	Brain_Putamen_basal_ganglia	6hr	5	4	5	-0.968249517783515	0.00675896375593999	all

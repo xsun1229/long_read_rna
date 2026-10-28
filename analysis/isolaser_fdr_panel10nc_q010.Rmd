@@ -1,0 +1,178 @@
+---
+title: "Transcript-based isoLASER: genome-wide FDR (q < 0.10)"
+author: "XSun"
+date: "2026-10-28"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+# R code here is ASCII only (HTML entities for special characters), so the page renders the same in any locale
+A <- "docs/assets/fdr_panel10nc_q010"
+ov <- fread(file.path(A, "fdr_overview.tsv")); rounds <- fread(file.path(A, "adaptive_rounds.tsv"))
+g <- fread(file.path(A, "significant_genes.tsv")); cons <- fread(file.path(A, "consistency.tsv")); fu <- fread(file.path(A, "follow_up.tsv"))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+pct <- function(x) sprintf("%.0f%%", 100 * x)
+counts <- function(a, b) sprintf("%s (%s)", fmt(a), fmt(b))
+any_tp <- ov[tp == "any timepoint"]
+effect_reads <- function(d, t) fifelse(is.na(d[[paste0("dpsi_", t)]]), "no score",
+  sprintf("%+.0f (%s)", 100 * d[[paste0("dpsi_", t)]], fmt(d[[paste0("het_cov_", t)]])))
+best_q <- function(d) signif(pmin(d$q_bh_0hr, d$q_bh_1hr, d$q_bh_6hr, na.rm=TRUE), 2)
+pattern_labels <- c("all three timepoints"="Reported at 3 timepoints", "two timepoints"="Reported at 2 timepoints",
+                    "shared, below threshold elsewhere"="One timepoint; nominal support elsewhere",
+                    "candidate timepoint-specific"="One timepoint; no nominal support elsewhere",
+                    "not testable elsewhere"="One timepoint; no usable score elsewhere")
+g[, display_pattern := unname(pattern_labels[pattern])]
+blank <- function(x) fifelse(is.na(x) | !nzchar(as.character(x)), "", as.character(x))
+annot <- function(d) d[, .(`Neuronal GO term`=blank(neuronal_go),
+  `Developmental disorder or autism`=fifelse(nzchar(blank(sfari)) & nzchar(blank(ddg2p)), paste0(blank(sfari), "; ", blank(ddg2p)), paste0(blank(sfari), blank(ddg2p))),
+  `Expression after stimulation`=blank(expression_response), `Splicing after stimulation`=fifelse(stim_splicing %in% TRUE, "yes", ""))]
+interactive_table <- function(d) DT::datatable(as.data.frame(d), rownames=FALSE, filter="top", extensions="Buttons",
+  options=list(pageLength=10, lengthMenu=c(10, 25, 50), scrollX=TRUE, order=list(), dom="Blfrtip", buttons=c("copy", "csv")),
+  caption="Search or filter genes, sort columns, and export the filtered table as CSV.")
+new_genes <- g[previous == FALSE, gene]
+fug <- merge(fu, g, by=c("gene", "sig_tps", "previous"))
+relevance <- function(d) { r <- character(nrow(d))
+  for (i in seq_len(nrow(d))) { x <- c(if (nzchar(blank(d$neuronal_go[i]))) paste0(d$neuronal_go[i], " (GO)"), blank(d$sfari[i]), blank(d$ddg2p[i]),
+    if (nzchar(blank(d$expression_response[i]))) paste("expression:", d$expression_response[i]), if (d$stim_splicing[i] %in% TRUE) "splicing after stimulation")
+    r[i] <- paste(x[nzchar(x)], collapse="; ") }; r }
+fig_genes <- sort(fu[has_figures == TRUE, gene])
+# which change brings a new gene in (10.page_tables_q010.R, new_because)
+why_lab <- c(q="lower q", dpsi="lower &#124;&Delta;PSI&#124;", both="both", either="either")
+why_long <- c(q="the lower q cutoff alone", dpsi="the lower &#124;&Delta;PSI&#124; cutoff alone", both="both changes together", either="either change alone")
+nw <- g[previous == FALSE, .(genes=paste(sort(gene), collapse=", ")), by=new_because][match(names(why_long), new_because)][!is.na(new_because)]
+new_text <- paste(sprintf("%s (%s)", why_long[nw$new_because], nw$genes), collapse="; ")
+```
+
+This page reports **transcript-based isoLASER** without the clustering filter at the
+cutoffs chosen on 2026-10-28: **BH q < 0.10** and **\|ΔPSI\| ≥ 0.05**, with
+isoLASER's `cis` label. The [earlier page](isolaser_fdr_panel10nc.html) used q < 0.05
+and \|ΔPSI\| ≥ 0.10. Everything else is unchanged and described there: the run,
+the donors and family rules, the permutation test and BH within each timepoint.
+The q-values themselves are the same. BH was computed over the full family of
+tested associations in each timepoint, before the `cis` / ΔPSI screen, so the new
+cutoffs only report more of them. The FDR target is now 10% within each
+timepoint's full family. The effect-filtered subset and the union across
+timepoints have no separate guarantee.
+
+**Main result:** `r fmt(any_tp$reported_associations)` associations in
+**`r fmt(any_tp$reported_genes)` genes** pass, against
+`r fmt(any_tp$previous_associations)` in `r fmt(any_tp$previous_genes)` genes at
+the earlier cutoffs. None are lost. The `r length(new_genes)` new genes enter through
+`r new_text`.
+
+# Genome-wide results
+
+```{r overview}
+knitr::kable(ov[, .(Timepoint=tp, `Tested associations`=fmt(tested),
+  `Paper's cutoff`=counts(paper_associations, paper_genes),
+  `Screen (&#124;&Delta;PSI&#124; &ge; 0.05)`=counts(screen_associations, screen_genes),
+  `Reported: screen + q < 0.10`=counts(reported_associations, reported_genes),
+  `Earlier cutoffs (q < 0.05, &#124;&Delta;PSI&#124; &ge; 0.10)`=counts(previous_associations, previous_genes))], align="lrrrrr", escape=FALSE)
+```
+
+Cells other than **Tested associations** show **associations (genes)**.
+
+- **Paper's cutoff:** isoLASER's own `cis` call with no other filter, as in the
+  isoLASER paper.
+- **Screen** (our definition), before FDR control: isoLASER's `cis` rule on the
+  panel-heterozygous donors, plus \|ΔPSI\| ≥ 0.05.
+- **Reported:** the screen plus q < 0.10.
+- **Earlier cutoffs:** what the earlier page reported.
+
+**Any timepoint** counts each gene or association once across timepoints.
+
+# How the test works
+
+The test is the one described on the [original page](isolaser_fdr.html#how-the-test-works),
+with this run's donor and family rules ([earlier page](isolaser_fdr_panel10nc.html)).
+
+```{r rounds}
+knitr::kable(rounds[, .(Timepoint=tp, `Stopped at 1,000`=fmt(stopped_1e3),
+  `Stopped at 10,000`=fmt(stopped_1e4), `Stopped at 100,000`=fmt(stopped_1e5),
+  `Reached 1,000,000`=fmt(reached_1e6))], align="lrrrr")
+```
+
+**Stopped** means at least 20 hits at that checkpoint, or no observed score
+(p = 1).
+
+![](assets/fdr_panel10nc_q010/qq.png)
+
+Real data only; there are no calibration runs for this run.
+
+# Genes to follow up
+
+We apply the same two conditions as the earlier page (our definitions):
+
+1. **Reported only after stimulation:** at 1 or 6 hours, not at 0 hours.
+2. **Neuron- or stimulation-related:** a neuronal GO term, a disorder in SFARI
+   or DDG2P, or a change in expression or splicing after stimulation in our data.
+
+`r nrow(fu)` genes meet both, `r sum(!fu$previous)` of them new at these cutoffs.
+
+```{r follow}
+knitr::kable(fug[order(!has_figures, gene), .(Gene=gene, `Reported at`=sig_tps,
+  `0 hr`=effect_reads(.SD, "0hr"), `1 hr`=effect_reads(.SD, "1hr"), `6 hr`=effect_reads(.SD, "6hr"),
+  `Best q`=best_q(.SD), `New at these cutoffs`=fifelse(previous, "", unname(why_lab[new_because])), Relevance=relevance(.SD),
+  Figures=fifelse(has_figures, "below", ""))], align="llrrrrlll", escape=FALSE)
+```
+
+**0 / 1 / 6 hr**: allelic effect in percentage points, alternative minus
+reference inclusion, with pooled informative coverage in brackets, for the gene's
+representative association. **Best q**: its lowest timepoint-specific q-value. **New at these cutoffs**: for
+genes not reported at the earlier cutoffs, which change brings them in.
+**Figures**: the genes with figures from the earlier page, shown below. The
+descriptions of these genes are on the [earlier page](isolaser_fdr_panel10nc.html#genes-to-follow-up).
+The other genes have no figures yet.
+
+```{r fig_blocks, results="asis"}
+for (gn in fig_genes) {
+  cat("## ", gn, "\n\n", sep="")
+  cat("**Permutation test**\n\n![](assets/fdr_panel10nc_q010/", gn, "_null.png)\n\n", sep="")
+  cat("**Read alignments** ([PDF](assets/fdr_panel10nc_q010/", gn, "_sashimi.pdf))\n\n![](assets/fdr_panel10nc_q010/", gn, "_sashimi.png)\n\n", sep="")
+  iso <- sort(list.files(A, pattern=paste0("^isoforms_", gn, "_[0-9]+hr[.]png$")))
+  if (length(iso)) { cat("**Isoforms and haplotypes**\n\n", sep="")
+    for (f in iso) cat("![](assets/fdr_panel10nc_q010/", f, ")\n\n", sep="") }
+}
+```
+
+# All reported genes
+
+Here, **reported** means q < 0.10, `cis` and \|ΔPSI\| ≥ 0.05.
+
+```{r patterns}
+pat <- g[, .N, by=pattern][match(names(pattern_labels), pattern)][!is.na(pattern)]
+knitr::kable(pat[, .(Pattern=unname(pattern_labels[pattern]), Genes=N)], align="lr")
+```
+
+For genes reported at one timepoint, the last three categories describe the
+representative association at the other timepoints: nominal p < 0.05 there,
+p ≥ 0.05 where scored, or no usable score. They are not tests of an allele × time
+interaction. Among comparisons of reported associations with another timepoint,
+`r pct(cons$nominal_p_lt_0.05)` had nominal p < 0.05 there and
+`r pct(cons$same_sign)` had the same effect direction.
+
+## Full interactive gene table
+
+All **`r nrow(g)` reported genes**. The variant, part, timepoint effects, best q
+and donor count refer to the representative association, the one with the lowest
+q. **Reported at** describes the gene across all its associations. **At earlier
+cutoffs** marks genes also reported at q < 0.05 and \|ΔPSI\| ≥ 0.10.
+
+```{r all}
+interactive_table(cbind(g[, .(Gene=gene, Pattern=display_pattern, `Reported at`=sig_tps,
+  `0 hr`=effect_reads(g, "0hr"), `1 hr`=effect_reads(g, "1hr"), `6 hr`=effect_reads(g, "6hr"),
+  `Best q`=best_q(g), `Het donors`=max_het, `At earlier cutoffs`=fifelse(previous, "yes", "no"))], annot(g),
+  g[, .(Variant=variant_qual, `Exonic part`=exonic_part)]))
+```
+
+**Data:** `11.fdr_results/10.page_tables_q010.R` writes this page's tables to
+`docs/assets/fdr_panel10nc_q010/`, from `10.isolaser_permutation/out/adaptive_panel10nc/results/`.
+The QQ plot, the adaptive rounds, the paper's-cutoff counts and the figures are
+copied unchanged from the earlier page, because they don't depend on the cutoffs.

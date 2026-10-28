@@ -1,0 +1,109 @@
+set	tissue	scope	pairs	consistent	consistent_pct	binom_p_two_sided	binom_p_one_sided
+Paper's cutoff	Brain_Caudate_basal_ganglia	0hr	46	24	52	0.882995912122399	0.4414979560612
+Paper's cutoff	Brain_Caudate_basal_ganglia	1hr	73	42	58	0.241644723140753	0.120822361570376
+Paper's cutoff	Brain_Caudate_basal_ganglia	6hr	72	43	60	0.124918200368641	0.0624591001843203
+Paper's cutoff	Brain_Caudate_basal_ganglia	All timepoints, each pair once	137	79	58	0.0871332264753472	0.0435666132376736
+Paper's cutoff	Brain_Cerebellar_Hemisphere	0hr	47	26	55	0.560064629580213	0.280032314790107
+Paper's cutoff	Brain_Cerebellar_Hemisphere	1hr	88	52	59	0.109295429777315	0.0546477148886574
+Paper's cutoff	Brain_Cerebellar_Hemisphere	6hr	98	60	61	0.0333600288969419	0.016680014448471
+Paper's cutoff	Brain_Cerebellar_Hemisphere	All timepoints, each pair once	170	101	59	0.017168697345159	0.00858434867257948
+Paper's cutoff	Brain_Cerebellum	0hr	57	30	53	0.791366427779182	0.395683213889591
+Paper's cutoff	Brain_Cerebellum	1hr	83	48	58	0.187459867966193	0.0937299339830964
+Paper's cutoff	Brain_Cerebellum	6hr	90	49	54	0.460792472718972	0.230396236359486
+Paper's cutoff	Brain_Cerebellum	All timepoints, each pair once	167	94	56	0.121448021229599	0.0607240106147993
+Paper's cutoff	Brain_Cortex	0hr	41	27	66	0.0595838880180964	0.0297919440090482
+Paper's cutoff	Brain_Cortex	1hr	82	51	62	0.0352414401787476	0.0176207200893738
+Paper's cutoff	Brain_Cortex	6hr	83	52	63	0.0275341780122947	0.0137670890061473
+Paper's cutoff	Brain_Cortex	All timepoints, each pair once	151	90	60	0.022375141333216	0.011187570666608
+Paper's cutoff	Brain_Frontal_Cortex_BA9	0hr	36	21	58	0.405032246140763	0.202516123070382
+Paper's cutoff	Brain_Frontal_Cortex_BA9	1hr	81	44	54	0.505236440766936	0.252618220383468
+Paper's cutoff	Brain_Frontal_Cortex_BA9	6hr	69	43	62	0.0532893638165138	0.0266446819082569
+Paper's cutoff	Brain_Frontal_Cortex_BA9	All timepoints, each pair once	138	80	58	0.0734506042125266	0.0367253021062633
+Paper's cutoff	Brain_Hippocampus	0hr	36	17	47	0.86793940042844	0.691140341485152
+Paper's cutoff	Brain_Hippocampus	1hr	70	42	60	0.119609335629885	0.0598046678149427
+Paper's cutoff	Brain_Hippocampus	6hr	69	41	59	0.148032180692759	0.0740160903463795
+Paper's cutoff	Brain_Hippocampus	All timepoints, each pair once	128	74	58	0.092690030898378	0.046345015449189
+Paper's cutoff	Brain_Hypothalamus	0hr	44	22	50	1	0.559802089359663
+Paper's cutoff	Brain_Hypothalamus	1hr	72	42	58	0.1945051658674	0.0972525829336998
+Paper's cutoff	Brain_Hypothalamus	6hr	71	46	65	0.0169946525734364	0.00849732628671818
+Paper's cutoff	Brain_Hypothalamus	All timepoints, each pair once	124	73	59	0.0588758732807351	0.0294379366403676
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	0hr	48	24	50	1	0.557283251356743
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	1hr	69	40	58	0.228400225353298	0.114200112676649
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	6hr	69	42	61	0.0911864905670118	0.0455932452835059
+Paper's cutoff	Brain_Nucleus_accumbens_basal_ganglia	All timepoints, each pair once	132	72	55	0.338380238939824	0.169190119469912
+Paper's cutoff	Brain_Putamen_basal_ganglia	0hr	34	19	56	0.60759136127308	0.30379568063654
+Paper's cutoff	Brain_Putamen_basal_ganglia	1hr	68	42	62	0.0681186742841	0.03405933714205
+Paper's cutoff	Brain_Putamen_basal_ganglia	6hr	77	50	65	0.011672721024383	0.00583636051219152
+Paper's cutoff	Brain_Putamen_basal_ganglia	All timepoints, each pair once	135	79	59	0.057893891566778	0.028946945783389
+Before FDR	Brain_Caudate_basal_ganglia	0hr	10	5	50	1	0.623046875
+Before FDR	Brain_Caudate_basal_ganglia	1hr	30	16	53	0.855535551905632	0.427767775952816
+Before FDR	Brain_Caudate_basal_ganglia	6hr	25	10	40	0.42435622215271	0.885238528251648
+Before FDR	Brain_Caudate_basal_ganglia	All timepoints, each pair once	49	25	51	1	0.500000000000001
+Before FDR	Brain_Cerebellar_Hemisphere	0hr	14	8	57	0.79052734375	0.395263671875
+Before FDR	Brain_Cerebellar_Hemisphere	1hr	33	17	52	1	0.500000000000001
+Before FDR	Brain_Cerebellar_Hemisphere	6hr	25	12	48	1	0.654981017112732
+Before FDR	Brain_Cerebellar_Hemisphere	All timepoints, each pair once	51	27	53	0.779767930553075	0.389883965276538
+Before FDR	Brain_Cerebellum	0hr	13	7	54	1	0.5
+Before FDR	Brain_Cerebellum	1hr	34	17	50	1	0.567916879779659
+Before FDR	Brain_Cerebellum	6hr	21	11	52	1	0.5
+Before FDR	Brain_Cerebellum	All timepoints, each pair once	52	29	56	0.488455669379893	0.244227834689946
+Before FDR	Brain_Cortex	0hr	13	10	77	0.09228515625	0.046142578125
+Before FDR	Brain_Cortex	1hr	28	15	54	0.850554019212724	0.425277009606362
+Before FDR	Brain_Cortex	6hr	17	11	65	0.332305908203125	0.166152954101563
+Before FDR	Brain_Cortex	All timepoints, each pair once	46	26	57	0.461391182136767	0.230695591068384
+Before FDR	Brain_Frontal_Cortex_BA9	0hr	10	6	60	0.75390625	0.376953125
+Before FDR	Brain_Frontal_Cortex_BA9	1hr	36	16	44	0.617719317029696	0.797483876929619
+Before FDR	Brain_Frontal_Cortex_BA9	6hr	22	10	45	0.831811904907227	0.738266468048096
+Before FDR	Brain_Frontal_Cortex_BA9	All timepoints, each pair once	51	26	51	1	0.500000000000002
+Before FDR	Brain_Hippocampus	0hr	11	4	36	0.548828125	0.88671875
+Before FDR	Brain_Hippocampus	1hr	28	14	50	1	0.574722990393638
+Before FDR	Brain_Hippocampus	6hr	23	10	43	0.677639484405518	0.797563552856445
+Before FDR	Brain_Hippocampus	All timepoints, each pair once	45	22	49	1	0.617004087877602
+Before FDR	Brain_Hypothalamus	0hr	10	5	50	1	0.623046875
+Before FDR	Brain_Hypothalamus	1hr	29	13	45	0.711071103811264	0.77087084017694
+Before FDR	Brain_Hypothalamus	6hr	20	10	50	1	0.588098526000976
+Before FDR	Brain_Hypothalamus	All timepoints, each pair once	42	22	52	0.877614328752315	0.438807164376158
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	0hr	13	4	31	0.266845703125	0.953857421875
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	1hr	30	14	47	0.855535551905632	0.707667644135654
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	6hr	21	11	52	1	0.5
+Before FDR	Brain_Nucleus_accumbens_basal_ganglia	All timepoints, each pair once	47	23	49	1	0.614566502713486
+Before FDR	Brain_Putamen_basal_ganglia	0hr	3	3	100	0.25	0.125
+Before FDR	Brain_Putamen_basal_ganglia	1hr	26	15	58	0.557197093963624	0.278598546981812
+Before FDR	Brain_Putamen_basal_ganglia	6hr	23	12	52	1	0.5
+Before FDR	Brain_Putamen_basal_ganglia	All timepoints, each pair once	43	24	56	0.542384011856486	0.271192005928243
+After FDR	Brain_Caudate_basal_ganglia	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Caudate_basal_ganglia	1hr	7	3	43	1	0.7734375
+After FDR	Brain_Caudate_basal_ganglia	6hr	7	3	43	1	0.7734375
+After FDR	Brain_Caudate_basal_ganglia	All timepoints, each pair once	8	4	50	1	0.63671875
+After FDR	Brain_Cerebellar_Hemisphere	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Cerebellar_Hemisphere	1hr	12	6	50	1	0.61279296875
+After FDR	Brain_Cerebellar_Hemisphere	6hr	8	3	38	0.7265625	0.85546875
+After FDR	Brain_Cerebellar_Hemisphere	All timepoints, each pair once	13	7	54	1	0.5
+After FDR	Brain_Cerebellum	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Cerebellum	1hr	7	3	43	1	0.7734375
+After FDR	Brain_Cerebellum	6hr	7	3	43	1	0.7734375
+After FDR	Brain_Cerebellum	All timepoints, each pair once	8	4	50	1	0.63671875
+After FDR	Brain_Cortex	0hr	6	6	100	0.03125	0.015625
+After FDR	Brain_Cortex	1hr	5	5	100	0.0625	0.03125
+After FDR	Brain_Cortex	6hr	5	5	100	0.0625	0.03125
+After FDR	Brain_Cortex	All timepoints, each pair once	7	7	100	0.015625	0.0078125
+After FDR	Brain_Frontal_Cortex_BA9	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Frontal_Cortex_BA9	1hr	10	3	30	0.34375	0.9453125
+After FDR	Brain_Frontal_Cortex_BA9	6hr	8	3	38	0.7265625	0.85546875
+After FDR	Brain_Frontal_Cortex_BA9	All timepoints, each pair once	11	4	36	0.548828125	0.88671875
+After FDR	Brain_Hippocampus	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Hippocampus	1hr	10	4	40	0.75390625	0.828125
+After FDR	Brain_Hippocampus	6hr	8	3	38	0.7265625	0.85546875
+After FDR	Brain_Hippocampus	All timepoints, each pair once	11	5	45	1	0.7255859375
+After FDR	Brain_Hypothalamus	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Hypothalamus	1hr	9	3	33	0.5078125	0.91015625
+After FDR	Brain_Hypothalamus	6hr	8	3	38	0.7265625	0.85546875
+After FDR	Brain_Hypothalamus	All timepoints, each pair once	10	4	40	0.75390625	0.828125
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	0hr	4	3	75	0.625	0.3125
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	1hr	8	3	38	0.7265625	0.85546875
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	6hr	7	3	43	1	0.7734375
+After FDR	Brain_Nucleus_accumbens_basal_ganglia	All timepoints, each pair once	9	4	44	1	0.74609375
+After FDR	Brain_Putamen_basal_ganglia	0hr	3	3	100	0.25	0.125
+After FDR	Brain_Putamen_basal_ganglia	1hr	3	3	100	0.25	0.125
+After FDR	Brain_Putamen_basal_ganglia	6hr	3	3	100	0.25	0.125
+After FDR	Brain_Putamen_basal_ganglia	All timepoints, each pair once	4	4	100	0.125	0.0625

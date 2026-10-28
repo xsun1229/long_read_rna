@@ -206,51 +206,79 @@ with `AFTER_Q=0.10`: `55.gtex_brain_tissues.R summarize`, `58.gtex_pi1.R` and
 `57.gtex_gene_venn.R`. The paper's-cutoff set is the original run's (`out/adaptive/`), read
 without being changed.
 
-# Storey's &pi;<sub>1</sub>: how many of our findings GTEx also sees {.tabset}
+# Estimated non-null proportion among GTEx-matched associations (Storey's &pi;<sub>1</sub>) {.tabset}
 
 ```{r pi1_setup}
-pi <- fread(file.path(A, "pi1.tsv"))
+pi <- fread(file.path(A, "pi1.tsv")); am <- fread(file.path(A, "after_fdr_matches.tsv"))
 p2 <- function(x) fifelse(is.na(x), "NA", sprintf("%.2f", x))
+multi_pct <- sprintf("%.0f%%", 100 * pi[, sum(multi_junction) / sum(matched)])
+am_n <- unique(am[, .(tissue, matched_0hr, matched_1hr, matched_6hr)])
+am_range <- paste(range(unlist(am_n[, -1])), collapse="&ndash;")
+am_min <- min(unlist(am_n[, -1]))
+before_small <- pi[set == BEFORE & pi0_method == "lambda 0.5", .N]
 ```
 
-We take our associations in each set at each timepoint and look up each one in
-GTEx. From their GTEx p-values we estimate Storey's π<sub>1</sub>, the share of
-our associations that are real sQTLs in GTEx.
+For each association in the paper's-cutoff and before-FDR sets, we take the GTEx
+p-value of its event's skipping junction for our SNV, as in the scatter plots,
+and estimate Storey's π<sub>1</sub> from these p-values. This is exploratory.
 
-- **If none of our findings were real in GTEx**, their GTEx p-values would be
-  spread evenly between 0 and 1.
-- **If all were**, they would pile up near 0.
-
-The estimator measures the flat part, π<sub>0</sub>, from the larger p-values,
-and π<sub>1</sub> = 1 − π<sub>0</sub>; 1 − π<sub>1</sub> is the share without a
-detectable GTEx signal. We use `qvalue::pi0est` with its default smoother, or
-with λ = 0.5 when there are fewer than 30 p-values. Each timepoint is estimated
-separately.
-
-- **Same junction** (main): the GTEx p-value of the annotated event's skipping
-  junction for our SNV, as in the scatter plots. Each association has one
-  prespecified junction, so the p-value is uniform under the null.
-- **Any junction** (a lower bound): our SNV and gene at any junction, using the
-  smallest p corrected for the gene's k junctions, 1 − (1 − min p)<sup>k</sup>
-  (Šidák). This covers more associations, but a gene's junctions are correlated,
-  so this p-value is conservative and π<sub>1</sub> is underestimated.
-
-Read π<sub>1</sub> with three limits in mind:
-
-- **It is imprecise with few p-values.** That is the case for the after-FDR set
-  in particular.
-- **It covers only associations GTEx can test:** a minority, as shown under
-  [Results](#results).
-- **A missing GTEx signal is not necessarily a new finding.** It can also
-  reflect GTEx's power, adult tissue against our neurons, stimulation-specific
-  effects, or the different splicing measures.
+- **What it estimates:** GTEx p-values of associations with no effect in GTEx
+  are spread evenly between 0 and 1, and real effects tend to produce smaller
+  p-values when GTEx has sufficient power.
+  The estimator measures the flat part, π<sub>0</sub>, from the larger p-values.
+  π<sub>1</sub> = 1 − π<sub>0</sub> is the estimated proportion of non-null
+  associations among those GTEx tests. We use `qvalue::pi0est` with its default
+  smoother, or with λ = 0.5 when there are fewer than 30 p-values, for each
+  timepoint separately.
+- **One junction per association** (our rule): some events have several
+  skipping junctions that GTEx tests (`r multi_pct` of matched associations). We
+  then use the junction shared by the most annotated transcripts that skip the
+  part, and the shortest intron on ties. The choice does not look at GTEx
+  p-values, so under the null the p-value stays uniform.
+- **What it is not:**
+  - It is not the share of associations that are significant in GTEx.
+  - It does not check direction: a non-null GTEx effect can go either way.
+    Direction is checked under [Testing](#testing) and in the after-FDR tables
+    below.
+  - 1 − π<sub>1</sub> estimates the null proportion among matched GTEx tests.
+    Limited power can make weak non-null effects look null and underestimate
+    π<sub>1</sub>. Therefore, π<sub>1</sub> cannot distinguish false positives
+    in our study from context-specific effects or effects that GTEx has
+    insufficient power to detect.
+- **Limits:**
+  - Only associations GTEx tests enter, a minority (see [Results](#results)).
+  - The p-values are not independent. One gene can contribute several variants,
+    often in linkage disequilibrium; the same association recurs at several
+    timepoints; and the nine tissues come from overlapping GTEx donors. The
+    estimates are noisier than their number of p-values suggests, and the
+    tissues are not independent replications.
+  - With λ = 0.5, π<sub>1</sub> = max(0, 1 − #(p > 0.5) / (0.5 n)), so one
+    p-value moves it by 2/n. This applies to `r before_small` of the `r pi[set == BEFORE, .N]` before-FDR
+    estimates.
+- **After FDR:** only `r am_range` associations are matched per tissue and
+  timepoint, too few for a stable π<sub>1</sub>: one p-value crossing 0.5 moves
+  it by 2/n, `r sprintf("%.2f", 2 / am_min)` at n = `r am_min`. Each tab lists
+  them instead, with their GTEx p-value and direction. **Expected direction** means GTEx's beta has the
+  opposite sign to our ΔPSI at every timepoint where the association is
+  reported, as in the sign-consistency test.
 
 ```{r pi1_tabs, results="asis"}
 for (t in TISSUES) {
   cat("## ", tname(t), "\n\n", sep="")
   d <- pi[tissue == t][order(match(set, SET_ORDER), tp)]
-  cat(kt(d[, .(Set=set, Timepoint=tpl(tp), `Same junction: p-values`=matched, `Same junction: &pi;<sub>1</sub>`=p2(pi1_matched),
-               `Any junction: p-values`=tested, `Any junction: &pi;<sub>1</sub> (lower bound)`=p2(pi1_any))], align="llrrrr", escape=FALSE), "\n\n", sep="")
+  cat("**&pi;<sub>1</sub>: paper's cutoff and before FDR**\n\n", sep="")
+  cat(kt(d[, .(Set=set, Timepoint=tpl(tp), Associations=fmt(associations), `Matched in GTEx`=fmt(matched),
+               `GTEx p < 0.05`=sprintf("%.0f%%", 100 * frac_p05), `&pi;<sub>1</sub>`=p2(pi1),
+               Estimator=fifelse(pi0_method == "smoother", "smoother", "&lambda; = 0.5"))], align="llrrrrl", escape=FALSE), "\n\n", sep="")
+  a <- am[tissue == t][order(pval_nominal)]
+  cat("**After FDR: each matched association**\n\n", sep="")
+  if (!nrow(a)) { cat("None of the after-FDR associations are matched in this tissue.\n\n"); next }
+  cat(sprintf("Matched at 0, 1 and 6 hr: %d of %d, %d of %d and %d of %d associations. Of the %d distinct ones, %d have GTEx p < 0.05, %d of them in the expected direction.\n\n",
+              a$matched_0hr[1], a$assoc_0hr[1], a$matched_1hr[1], a$assoc_1hr[1], a$matched_6hr[1], a$assoc_6hr[1],
+              nrow(a), a[pval_nominal < 0.05, .N], a[pval_nominal < 0.05 & expected == "yes", .N]))
+  cat(kt(a[, .(Gene=gene, Variant=variant_qual, `Exonic part`=exonic_part, `Reported at`=gsub("hr", " hr", tps),
+               `&Delta;PSI`=dpsi, `GTEx p`=fp(pval_nominal), `GTEx beta`=sprintf("%+.2f", slope), `Expected direction`=expected)],
+         align="llllrrrl", escape=FALSE), "\n\n", sep="")
 }
 ```
 
@@ -258,13 +286,20 @@ for (t in TISSUES) {
 
 ```{r pi1_summary}
 rg <- function(x) { x <- x[!is.na(x)]; if (!length(x)) "NA" else if (min(x) == max(x)) sprintf("%.2f", min(x)) else sprintf("%.2f&ndash;%.2f", min(x), max(x)) }
-sm <- pi[, .(n=paste(range(matched), collapse="&ndash;"), pi1=rg(pi1_matched), pi1_any=rg(pi1_any)), by=.(set, tp)][order(match(set, SET_ORDER), tp)]
-knitr::kable(sm[, .(Set=set, Timepoint=tpl(tp), `Same junction: p-values`=n, `Same junction: &pi;<sub>1</sub>`=pi1,
-                    `Any junction: &pi;<sub>1</sub> (lower bound)`=pi1_any)], align="llrrr", escape=FALSE)
+sm <- pi[, .(n=paste(range(matched), collapse="&ndash;"), pi1=rg(pi1)), by=.(set, tp)][order(match(set, SET_ORDER), tp)]
+knitr::kable(sm[, .(Set=set, Timepoint=tpl(tp), `Matched in GTEx`=n, `&pi;<sub>1</sub>`=pi1)], align="llrr", escape=FALSE)
 ```
 
-The ranges are across the nine tissues. Download [all estimates](assets/isolaser_gtex_panel10nc_q010/pi1.tsv)
-(made by `58.gtex_pi1.R`).
+The ranges are across the nine tissues.
+
+```{r after_summary}
+sa <- am[, .(n=.N, p05=sum(pval_nominal < 0.05), exp=sum(pval_nominal < 0.05 & expected == "yes")), by=tissue][order(match(tissue, TISSUES))]
+knitr::kable(sa[, .(Tissue=tname(tissue), `Matched after-FDR associations`=n, `GTEx p < 0.05`=p05, `Of those, expected direction`=exp)], align="lrrr")
+```
+
+After FDR, each distinct association counts once per tissue, over all timepoints.
+Download [the estimates](assets/isolaser_gtex_panel10nc_q010/pi1.tsv) and [the after-FDR
+matches](assets/isolaser_gtex_panel10nc_q010/after_fdr_matches.tsv) (made by `58.gtex_pi1.R`).
 
 
 # Gene-level overlap with GTEx sGenes {.tabset}

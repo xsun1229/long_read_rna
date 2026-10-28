@@ -1,82 +1,55 @@
-tissue	rule	run	set	tp	snv_genes	tested	tested_share	pi1_any	pi0_method_any	frac_p05_any	matched	pi1_matched	pi0_method_matched
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	598	0.390849673202614	0.162394018864295	smoother	0.379598662207358	151	0.608250203158788	smoother
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	815	0.478567234292425	0	smoother	0.352147239263804	224	0.702889563180163	smoother
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	932	0.511245200219419	0.20782318527593	smoother	0.362660944206009	229	0.643651398775425	smoother
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	126	112	0.888888888888889	0.520737751831752	smoother	0.535714285714286	24	0.5	lambda 0.5
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	222	208	0.936936936936937	0.695891115525398	smoother	0.519230769230769	59	0.469995943720309	smoother
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	256	236	0.921875	0.234811711288666	smoother	0.457627118644068	35	0.371428571428571	lambda 0.5
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.692307692307692	lambda 0.5	0.692307692307692	5	0.6	lambda 0.5
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.764705882352941	lambda 0.5	0.823529411764706	4	1	lambda 0.5
-Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	0.777777777777778	lambda 0.5	0.722222222222222	5	0.6	lambda 0.5
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	589	0.384967320261438	0.497463667911991	smoother	0.449915110356537	156	0.584567345497529	smoother
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	807	0.473869641808573	0.308608054778714	smoother	0.408921933085502	233	0.292804749007173	smoother
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	927	0.508502468458585	0.351076269904223	smoother	0.391585760517799	258	0.277257573715282	smoother
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	0hr	126	111	0.880952380952381	0.819620984831897	smoother	0.585585585585586	26	0.384615384615385	lambda 0.5
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	1hr	222	205	0.923423423423423	0.656522393328077	smoother	0.565853658536585	57	0.160092922328854	smoother
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	6hr	256	233	0.91015625	0.223862609424852	smoother	0.502145922746781	41	0.51219512195122	lambda 0.5
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.846153846153846	lambda 0.5	0.769230769230769	5	1	lambda 0.5
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.882352941176471	lambda 0.5	0.823529411764706	4	1	lambda 0.5
-Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	After FDR	6hr	23	15	0.652173913043478	0.866666666666667	lambda 0.5	0.8	5	1	lambda 0.5
-Brain_Cerebellum	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	586	0.383006535947712	0.317111714541247	smoother	0.426621160409556	150	0.491890885663025	smoother
-Brain_Cerebellum	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	805	0.47269524368761	0.282337028411756	smoother	0.407453416149068	225	0.480002349974528	smoother
-Brain_Cerebellum	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	928	0.509051014810752	0.325764248090136	smoother	0.405172413793103	253	0.375146994408742	smoother
-Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	0hr	126	110	0.873015873015873	0.000408879872156209	smoother	0.563636363636364	24	0.416666666666667	lambda 0.5
-Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	1hr	222	205	0.923423423423423	0.490845931245106	smoother	0.580487804878049	57	0.649436410587089	smoother
-Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	6hr	256	231	0.90234375	0.362057942494863	smoother	0.497835497835498	39	0.219583382600478	smoother
-Brain_Cerebellum	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.846153846153846	lambda 0.5	0.692307692307692	5	0.6	lambda 0.5
-Brain_Cerebellum	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.882352941176471	lambda 0.5	0.882352941176471	4	1	lambda 0.5
-Brain_Cerebellum	reads10nc	Read-based isoLASER	After FDR	6hr	23	15	0.652173913043478	1	lambda 0.5	0.866666666666667	5	1	lambda 0.5
-Brain_Cortex	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	585	0.382352941176471	0.359803535652397	smoother	0.418803418803419	150	0.518175754752816	smoother
-Brain_Cortex	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	809	0.475044039929536	0.217986114730378	smoother	0.368355995055624	221	0.270760467428307	smoother
-Brain_Cortex	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	929	0.509599561162918	0.251355161985004	smoother	0.389666307857912	232	0.59957999587077	smoother
-Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	0hr	126	115	0.912698412698413	0.297036492410906	smoother	0.547826086956522	26	0.461538461538462	lambda 0.5
-Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	1hr	222	210	0.945945945945946	0.482363778458066	smoother	0.514285714285714	57	0	smoother
-Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	6hr	256	234	0.9140625	0.156014873385855	smoother	0.487179487179487	37	0.450402410839181	smoother
-Brain_Cortex	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.692307692307692	lambda 0.5	0.846153846153846	6	0.333333333333333	lambda 0.5
-Brain_Cortex	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.882352941176471	lambda 0.5	0.882352941176471	4	1	lambda 0.5
-Brain_Cortex	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	0.777777777777778	lambda 0.5	0.833333333333333	5	1	lambda 0.5
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	585	0.382352941176471	0.147055020462082	smoother	0.377777777777778	145	0.408503796987689	smoother
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	805	0.47269524368761	0.204195139120392	smoother	0.362732919254658	223	0.533782064803974	smoother
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	928	0.509051014810752	0.0585808848043229	smoother	0.351293103448276	233	0.40425186529682	smoother
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	0hr	126	116	0.920634920634921	0.50958485351995	smoother	0.508620689655172	25	0.28	lambda 0.5
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	1hr	222	207	0.932432432432432	0.416375745294425	smoother	0.51207729468599	58	0.478285543798682	smoother
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	6hr	256	232	0.90625	0.0894299699146726	smoother	0.452586206896552	39	0.367388863009591	smoother
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.692307692307692	lambda 0.5	0.769230769230769	5	0.6	lambda 0.5
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.764705882352941	lambda 0.5	0.882352941176471	4	1	lambda 0.5
-Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	0.888888888888889	lambda 0.5	0.833333333333333	5	1	lambda 0.5
-Brain_Hippocampus	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	590	0.38562091503268	0.130640368983862	smoother	0.31864406779661	152	0.652056649651702	smoother
-Brain_Hippocampus	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	812	0.476805637110981	0.0721191875304176	smoother	0.318965517241379	224	0.136877881306449	smoother
-Brain_Hippocampus	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	925	0.507405375754251	0	smoother	0.31027027027027	237	0.460128098022098	smoother
-Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	0hr	126	113	0.896825396825397	0.17588004306286	smoother	0.460176991150443	25	0.76	lambda 0.5
-Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	1hr	222	206	0.927927927927928	0.304400148302248	smoother	0.446601941747573	58	0.467560769680985	smoother
-Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	6hr	256	234	0.9140625	0.119009519055929	smoother	0.41025641025641	38	0.578947368421053	lambda 0.5
-Brain_Hippocampus	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.692307692307692	lambda 0.5	0.538461538461538	5	1	lambda 0.5
-Brain_Hippocampus	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.764705882352941	lambda 0.5	0.588235294117647	4	1	lambda 0.5
-Brain_Hippocampus	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	0.666666666666667	lambda 0.5	0.666666666666667	5	1	lambda 0.5
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	598	0.390849673202614	0.176769233283284	smoother	0.354515050167224	155	0.623549535014432	smoother
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	811	0.476218438050499	0.054948632576761	smoother	0.350184956843403	222	0.506201521810809	smoother
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	941	0.516182117388919	0.000994703162141453	smoother	0.334750265674814	236	0.625028540274617	smoother
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	0hr	126	115	0.912698412698413	0.43705869109836	smoother	0.521739130434783	26	0.384615384615385	lambda 0.5
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	1hr	222	206	0.927927927927928	0.468277615735415	smoother	0.475728155339806	59	0.53726376513057	smoother
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	6hr	256	235	0.91796875	0.463849901307318	smoother	0.438297872340426	37	0.513513513513513	lambda 0.5
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.846153846153846	lambda 0.5	0.692307692307692	6	0.333333333333333	lambda 0.5
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.882352941176471	lambda 0.5	0.823529411764706	4	1	lambda 0.5
-Brain_Hypothalamus	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	1	lambda 0.5	0.833333333333333	5	1	lambda 0.5
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	591	0.386274509803922	0.0233498915034491	smoother	0.379018612521151	154	0.378151451773713	smoother
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	810	0.475631238990018	0.0235171748462647	smoother	0.339506172839506	225	0.728948874499571	smoother
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	928	0.509051014810752	0	smoother	0.359913793103448	232	0.449524809974591	smoother
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	126	114	0.904761904761905	0.725417559096076	smoother	0.482456140350877	26	0.461538461538462	lambda 0.5
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	222	208	0.936936936936937	0.480501324351726	smoother	0.514423076923077	60	0.7	lambda 0.5
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	256	233	0.91015625	0.0857447716034799	smoother	0.44206008583691	38	0.631578947368421	lambda 0.5
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.692307692307692	lambda 0.5	0.769230769230769	5	0.2	lambda 0.5
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.882352941176471	lambda 0.5	0.941176470588235	4	1	lambda 0.5
-Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	1	lambda 0.5	0.888888888888889	5	1	lambda 0.5
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	1530	589	0.384967320261438	0.197963730339283	smoother	0.31748726655348	147	0.235668385755731	smoother
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	1703	803	0.471520845566647	0.224625337977218	smoother	0.325031133250311	223	0.212575835255812	smoother
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	1823	912	0.500274273176084	0.211246604236554	smoother	0.315789473684211	225	0.347308957050527	smoother
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	126	111	0.880952380952381	0.581105524495215	smoother	0.468468468468469	24	0.416666666666667	lambda 0.5
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	222	205	0.923423423423423	0.472401793848929	smoother	0.482926829268293	57	0.473684210526316	lambda 0.5
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	256	229	0.89453125	0.240688470139452	smoother	0.397379912663755	35	0.593712393136997	smoother
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	0hr	14	13	0.928571428571429	0.692307692307692	lambda 0.5	0.615384615384615	5	0.6	lambda 0.5
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	1hr	18	17	0.944444444444444	0.882352941176471	lambda 0.5	0.823529411764706	4	1	lambda 0.5
-Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	After FDR	6hr	23	18	0.782608695652174	0.888888888888889	lambda 0.5	0.722222222222222	5	0.6	lambda 0.5
+tissue	rule	run	set	tp	associations	matched	matched_share	multi_junction	frac_p05	pi1	pi0_method
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	151	0.0245368865778356	3	0.377483443708609	0.606817222450854	smoother
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	224	0.0385940730530669	2	0.325892857142857	0.702889563180163	smoother
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	229	0.0366869593079141	3	0.336244541484716	0.643651398775425	smoother
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	194	24	0.123711340206186	0	0.458333333333333	0.5	lambda 0.5
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	359	59	0.164345403899721	0	0.389830508474576	0.469995943720309	smoother
+Brain_Caudate_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	403	35	0.086848635235732	1	0.4	0.314285714285714	lambda 0.5
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	156	0.0253493662658434	5	0.33974358974359	0.584567345497529	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	233	0.040144727773949	2	0.304721030042918	0.293654220743149	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	258	0.0413329061198334	3	0.313953488372093	0.277257573715282	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	2	0.5	0.384615384615385	lambda 0.5
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.368421052631579	0.160092922328854	smoother
+Brain_Cerebellar_Hemisphere	reads10nc	Read-based isoLASER	Before FDR	6hr	403	41	0.101736972704715	1	0.463414634146342	0.51219512195122	lambda 0.5
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	150	0.024374390640234	5	0.4	0.491890885663025	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	225	0.0387663680220538	2	0.4	0.480101198938511	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	253	0.0405318808074335	3	0.320158102766798	0.375146994408742	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	0hr	194	24	0.123711340206186	2	0.541666666666667	0.416666666666667	lambda 0.5
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.473684210526316	0.649436410587089	smoother
+Brain_Cerebellum	reads10nc	Read-based isoLASER	Before FDR	6hr	403	39	0.0967741935483871	1	0.41025641025641	0.224831441316547	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	150	0.024374390640234	6	0.386666666666667	0.519655549585028	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	221	0.0380771881461061	2	0.298642533936652	0.214927547799519	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	232	0.0371675744953541	4	0.344827586206897	0.576966195294374	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	2	0.576923076923077	0.461538461538462	lambda 0.5
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.421052631578947	0	smoother
+Brain_Cortex	reads10nc	Read-based isoLASER	Before FDR	6hr	403	37	0.0918114143920596	1	0.45945945945946	0.450402410839181	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	145	0.0235619109522262	6	0.358620689655172	0.409002812566062	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	223	0.0384217780840799	2	0.331838565022422	0.477994205011634	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	233	0.037327779557834	4	0.291845493562232	0.40425186529682	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	0hr	194	25	0.128865979381443	2	0.44	0.28	lambda 0.5
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	1hr	359	58	0.161559888579387	0	0.413793103448276	0.478285543798682	smoother
+Brain_Frontal_Cortex_BA9	reads10nc	Read-based isoLASER	Before FDR	6hr	403	39	0.0967741935483871	1	0.435897435897436	0.367388863009591	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	152	0.0246993825154371	5	0.296052631578947	0.627177725095847	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	224	0.0385940730530669	2	0.299107142857143	0.136877881306449	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	237	0.0379685998077539	4	0.29957805907173	0.437791542764869	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	0hr	194	25	0.128865979381443	2	0.48	0.76	lambda 0.5
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	1hr	359	58	0.161559888579387	0	0.396551724137931	0.467560769680985	smoother
+Brain_Hippocampus	reads10nc	Read-based isoLASER	Before FDR	6hr	403	38	0.0942928039702233	1	0.473684210526316	0.578947368421053	lambda 0.5
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	155	0.0251868703282418	3	0.316129032258065	0.623981661548954	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	222	0.038249483115093	2	0.301801801801802	0.506880888172596	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	236	0.037808394745274	3	0.330508474576271	0.620215702569097	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	0	0.461538461538462	0.384615384615385	lambda 0.5
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	1hr	359	59	0.164345403899721	0	0.372881355932203	0.53726376513057	smoother
+Brain_Hypothalamus	reads10nc	Read-based isoLASER	Before FDR	6hr	403	37	0.0918114143920596	1	0.378378378378378	0.513513513513514	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	154	0.0250243743906402	5	0.363636363636364	0.378151451773713	smoother
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	225	0.0387663680220538	2	0.284444444444444	0.729116273122275	smoother
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	232	0.0371675744953541	4	0.344827586206897	0.449524809974591	smoother
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	194	26	0.134020618556701	2	0.423076923076923	0.461538461538462	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	359	60	0.167130919220056	0	0.333333333333333	0.7	lambda 0.5
+Brain_Nucleus_accumbens_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	403	38	0.0942928039702233	1	0.552631578947369	0.631578947368421	lambda 0.5
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	0hr	6154	147	0.0238869028274293	3	0.244897959183673	0.236106252283619	smoother
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	1hr	5804	223	0.0384217780840799	4	0.31390134529148	0.21259927232533	smoother
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Paper's cutoff	6hr	6242	225	0.0360461390579942	3	0.28	0.348358177303528	smoother
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	0hr	194	24	0.123711340206186	0	0.375	0.416666666666667	lambda 0.5
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	1hr	359	57	0.158774373259053	0	0.43859649122807	0.473684210526316	lambda 0.5
+Brain_Putamen_basal_ganglia	reads10nc	Read-based isoLASER	Before FDR	6hr	403	35	0.086848635235732	1	0.4	0.593712393136997	smoother

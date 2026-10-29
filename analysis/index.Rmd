@@ -61,6 +61,9 @@ at BH q < 0.10 and |ΔPSI| ≥ 0.05.
 * [Hits in the GWAS Catalog](isolaser_gwas_catalog_q010.html) — which reported
   variants are known GWAS signals for neuropsychiatric, brain or behaviour
   traits (LY6H, GNL3, HNRNPK, FLOT1)
+* [cTWAS with the schizophrenia GWAS](isolaser_ctwas_scz.html) — enrichment of our
+  splicing QTLs, share of heritability and gene-level PIPs (LY6H, MYT1L, HSPA9,
+  SF3B1)
 
 **For comparison: transcript-based isoLASER** (isoLASER's own labels), without the
 clustering filter, at the same cutoffs: [genome-wide FDR](isolaser_fdr_panel10nc_q010_hetcis.html) and

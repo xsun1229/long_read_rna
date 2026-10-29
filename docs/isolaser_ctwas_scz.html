@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-10-29" />
+
+<title>cTWAS with isoLASER splicing QTLs: schizophrenia</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">cTWAS with isoLASER splicing QTLs:
+schizophrenia</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-10-29</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-29
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreebff77fad5be92a1b289f6211715c76e7c15e9d1etargetblankbff77faa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/bff77fad5be92a1b289f6211715c76e7c15e9d1e" target="_blank">bff77fa</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreebff77fad5be92a1b289f6211715c76e7c15e9d1etargetblankbff77faa"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/bff77fad5be92a1b289f6211715c76e7c15e9d1e" target="_blank">bff77fa</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_ctwas_scz.Rmd
+    Untracked:  analysis/isolaser_gtex_comparison_reads10nc_q010_hetcis.knit.md
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>We ran cTWAS on the schizophrenia (SCZ) GWAS with our isoLASER
+associations as splicing QTLs. cTWAS asks two things: whether the
+splicing QTLs explain more GWAS heritability than SNPs in general
+(<strong>enrichment</strong>), and which genes’ splicing is likely
+causal (<strong>PIP</strong>, the posterior inclusion probability). We
+ran it for each timepoint separately, and with all timepoints
+pooled.</p>
+<p><strong>Short answer.</strong></p>
+<ul>
+<li><strong>Enrichment:</strong> the splicing QTLs are enriched in every
+run. The <code>log_enrichment</code> for separate timepoints is 4.2–5.5
+read-based and 3.3–5.3 transcript-based; pooled, it is 4.74 and
+3.99.</li>
+<li><strong>prop_heritability</strong> of the splicing group: small,
+0.0029–0.0177, because even the largest run has only 1,386 traits
+against millions of SNPs.</li>
+<li><strong>Genes:</strong> 11 genes reach a gene-level
+<code>combined_pip</code> of 0.8 in at least one run: ACTB, CNPPD1,
+GOPC, HSPA9, LY6H, MYT1L, NDRG4, NLRP1, NRP1, PIGF, SF3B1. LY6H, our
+GWAS Catalog highlight for smoking, reaches 0.8 at every read-based
+timepoint.</li>
+<li><strong>Pooling</strong> gives 819 read-based and 1,386
+transcript-based traits, and 5 and 3 genes at <code>combined_pip</code>
+0.8. Genes not at 0.8 in any single-timepoint run: read-based none;
+transcript-based none.
+<!-- - **Caveat:** some top genes rest on parts with no allelic effect (permutation -->
+<!--   p near 1), see [Caveats](#caveats). --></li>
+</ul>
+<div id="how-the-runs-were-set-up" class="section level1">
+<h1>How the runs were set up</h1>
+<ul>
+<li><strong>GWAS:</strong> PGC schizophrenia, <code>ieu-b-5102</code> (N
+= 127,906), z-scores harmonized to the UK Biobank (UKB) LD reference,
+from the earlier multigroup cTWAS project.</li>
+<li><strong>Molecular traits</strong> (our definition): one trait per
+tested exonic part. A part is included when one of its associations has
+isoLASER’s <code>cis</code> label, computed from the panel-heterozygous
+donors only, with no ΔPSI or FDR cutoff. This is the first set of the <a
+href="isolaser_gtex_comparison_reads10nc_q010_hetcis.html">GTEx
+comparison</a>.</li>
+<li><strong>QTL and weight:</strong> each trait has one SNP, the part’s
+<code>cis</code> variant with the smallest permutation p (ties: largest
+|ΔPSI|), among single-base variants in the UKB reference that are not
+strand-ambiguous. The weight is ΔPSI (ALT minus REF inclusion) with ALT
+as the effect allele. With one SNP per trait, only the weight’s sign
+matters.</li>
+<li><strong>Mapping table:</strong> each trait (exonic part) maps to the
+gene the part belongs to. It is written with the weights and used for
+gene-level PIPs.</li>
+<li><strong>Two kinds of runs</strong>, each with a single splicing
+group: one run per timepoint, and one run per version with all
+timepoints pooled (how the weights were pooled is described <a
+href="#all-timepoints-pooled">there</a>).</li>
+<li><strong>Settings:</strong> UKB b38 LD, no thinning, one prior
+variance shared by all groups (<code>shared_all</code>), up to 5 signals
+per region (L = 5), at least 100 traits per group. Regions are
+fine-mapped when their non-SNP PIP is at least 0.5.</li>
+<li><strong>Not done yet:</strong> merging regions and checking LD
+mismatch.</li>
+</ul>
+<div id="what-the-tables-and-figures-show" class="section level2">
+<h2>What the tables and figures show</h2>
+<p><strong>Parameters</strong>, the output of
+<code>summarize_param()</code>:</p>
+<ul>
+<li><strong>group_size:</strong> splicing traits that reach cTWAS after
+matching to the GWAS and the LD reference.</li>
+<li><strong>group_prior:</strong> the estimated prior probability that a
+trait (splicing) or a variant (SNP) is causal.</li>
+<li><strong>group_prior_var:</strong> the prior variance of a causal
+effect, shared by both groups (<code>shared_all</code>).</li>
+<li><strong>log_enrichment:</strong> the log of the splicing prior over
+the SNP prior, with its standard error; <strong>enrichment_pval</strong>
+is its p-value.</li>
+<li><strong>group_pve:</strong> the proportion of SCZ variance explained
+by the group: group_size × group_prior × group_prior_var / GWAS N.
+<strong>total_pve</strong> sums the splicing and SNP groups.</li>
+<li><strong>prop_heritability:</strong> a group’s group_pve over
+total_pve, the slices of the pie charts.</li>
+</ul>
+<p><strong>Convergence</strong>, from
+<code>make_convergence_plots()</code>: the estimates at each iteration
+of the parameter estimation. Proportion causal (π) is
+<code>group_prior</code>, effect size (σ<sup>2</sup>) is
+<code>group_prior_var</code>, enrichment (π<sub>G</sub>/π<sub>S</sub>,
+not on the log scale), and PVE. Flat lines at the end mean the estimates
+have settled.</p>
+<p><strong>Gene-level PIPs:</strong> <code>combined_pip</code> combines
+a gene’s exonic parts with <code>combine_gene_pips()</code>
+(<code>method = "combine_cs"</code>, <code>filter_cs = FALSE</code>: all
+parts, whether or not they are in a credible set). It sums the parts’
+<code>susie_pip</code> within each credible set and combines credible
+sets as 1 − ∏(1 − sum). Parts that share a top SNP are identical
+predictors and split their PIP, so a gene’s <code>combined_pip</code>
+can be high when none of its parts is. The gene tables list genes with
+<code>combined_pip</code> of at least 0.5:</p>
+<ul>
+<li><strong>Parts:</strong> the gene’s parts in fine-mapped
+regions.</li>
+<li><strong>Top part:</strong> the part with the largest
+<code>susie_pip</code>, its <code>susie_pip</code>, and its z-score
+(z).</li>
+<li><strong>QTL:</strong> the top part’s SNP. <strong>ΔPSI</strong> and
+<strong>permutation p</strong> are its isoLASER association, from our
+permutation test. In pooled runs, <strong>QTL from</strong> gives the
+timepoint the QTL was taken from.</li>
+</ul>
+</div>
+</div>
+<div id="each-timepoint-separately" class="section level1">
+<h1>Each timepoint separately</h1>
+<div id="parameters" class="section level2">
+<h2>Parameters</h2>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="4%" />
+<col width="5%" />
+<col width="10%" />
+<col width="8%" />
+<col width="7%" />
+<col width="16%" />
+<col width="7%" />
+<col width="9%" />
+<col width="4%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Run</th>
+<th align="left">Timepoint</th>
+<th align="right">group_size</th>
+<th align="right">group_prior (splicing)</th>
+<th align="right">group_prior (SNP)</th>
+<th align="right">group_prior_var</th>
+<th align="right">log_enrichment (log_enrichment_se)</th>
+<th align="right">enrichment_pval</th>
+<th align="right">group_pve (splicing)</th>
+<th align="right">total_pve</th>
+<th align="right">prop_heritability (splicing)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Read-based isoLASER</td>
+<td align="left">0 hr</td>
+<td align="right">197</td>
+<td align="right">0.0260</td>
+<td align="right">0.00017</td>
+<td align="right">16.6</td>
+<td align="right">5.04 (0.44)</td>
+<td align="right">3.7e-10</td>
+<td align="right">0.0007</td>
+<td align="right">0.131</td>
+<td align="right">0.0051</td>
+</tr>
+<tr class="even">
+<td align="left">Read-based isoLASER</td>
+<td align="left">1 hr</td>
+<td align="right">365</td>
+<td align="right">0.0146</td>
+<td align="right">0.00021</td>
+<td align="right">21.6</td>
+<td align="right">4.23 (0.43)</td>
+<td align="right">2.3e-08</td>
+<td align="right">0.0009</td>
+<td align="right">0.214</td>
+<td align="right">0.0042</td>
+</tr>
+<tr class="odd">
+<td align="left">Read-based isoLASER</td>
+<td align="left">6 hr</td>
+<td align="right">419</td>
+<td align="right">0.0482</td>
+<td align="right">0.00019</td>
+<td align="right">19.5</td>
+<td align="right">5.54 (0.22)</td>
+<td align="right">7.3e-41</td>
+<td align="right">0.0031</td>
+<td align="right">0.174</td>
+<td align="right">0.0177</td>
+</tr>
+<tr class="even">
+<td align="left">Transcript-based isoLASER</td>
+<td align="left">0 hr</td>
+<td align="right">383</td>
+<td align="right">0.0291</td>
+<td align="right">0.00015</td>
+<td align="right">15.2</td>
+<td align="right">5.26 (0.30)</td>
+<td align="right">7.7e-22</td>
+<td align="right">0.0013</td>
+<td align="right">0.108</td>
+<td align="right">0.0122</td>
+</tr>
+<tr class="odd">
+<td align="left">Transcript-based isoLASER</td>
+<td align="left">1 hr</td>
+<td align="right">676</td>
+<td align="right">0.0132</td>
+<td align="right">0.00019</td>
+<td align="right">20.3</td>
+<td align="right">4.25 (0.33)</td>
+<td align="right">2.5e-14</td>
+<td align="right">0.0014</td>
+<td align="right">0.179</td>
+<td align="right">0.0079</td>
+</tr>
+<tr class="even">
+<td align="left">Transcript-based isoLASER</td>
+<td align="left">6 hr</td>
+<td align="right">673</td>
+<td align="right">0.0053</td>
+<td align="right">0.00020</td>
+<td align="right">19.8</td>
+<td align="right">3.25 (0.53)</td>
+<td align="right">1.4e-05</td>
+<td align="right">0.0006</td>
+<td align="right">0.188</td>
+<td align="right">0.0029</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="prop_heritability" class="section level2 tabset">
+<h2 class="tabset">prop_heritability</h2>
+<div id="read-based" class="section level3">
+<h3>Read-based</h3>
+<p><img src="assets/ctwas_scz/piechart_cis_reads10nc.png" /></p>
+<p><a href="assets/ctwas_scz/piechart_cis_reads10nc.pdf">Open as
+PDF</a></p>
+</div>
+<div id="transcript-based" class="section level3">
+<h3>Transcript-based</h3>
+<p><img src="assets/ctwas_scz/piechart_cis_panel10nc.png" /></p>
+<p><a href="assets/ctwas_scz/piechart_cis_panel10nc.pdf">Open as
+PDF</a></p>
+</div>
+</div>
+<div id="convergence" class="section level2 tabset">
+<h2 class="tabset">Convergence</h2>
+<p>All 6 runs converged, in 8–13 iterations (of at most 50).</p>
+<div id="read-based-0-hr" class="section level3">
+<h3>Read-based, 0 hr</h3>
+<p><img src="assets/ctwas_scz/convergence_cis_reads10nc_0hr.png" /></p>
+<p><a href="assets/ctwas_scz/convergence_cis_reads10nc_0hr.pdf">Open as
+PDF</a></p>
+</div>
+<div id="read-based-1-hr" class="section level3">
+<h3>Read-based, 1 hr</h3>
+<p><img src="assets/ctwas_scz/convergence_cis_reads10nc_1hr.png" /></p>
+<p><a href="assets/ctwas_scz/convergence_cis_reads10nc_1hr.pdf">Open as
+PDF</a></p>
+</div>
+<div id="read-based-6-hr" class="section level3">
+<h3>Read-based, 6 hr</h3>
+<p><img src="assets/ctwas_scz/convergence_cis_reads10nc_6hr.png" /></p>
+<p><a href="assets/ctwas_scz/convergence_cis_reads10nc_6hr.pdf">Open as
+PDF</a></p>
+</div>
+<div id="transcript-based-0-hr" class="section level3">
+<h3>Transcript-based, 0 hr</h3>
+<p><img src="assets/ctwas_scz/convergence_cis_panel10nc_0hr.png" /></p>
+<p><a href="assets/ctwas_scz/convergence_cis_panel10nc_0hr.pdf">Open as
+PDF</a></p>
+</div>
+<div id="transcript-based-1-hr" class="section level3">
+<h3>Transcript-based, 1 hr</h3>
+<p><img src="assets/ctwas_scz/convergence_cis_panel10nc_1hr.png" /></p>
+<p><a href="assets/ctwas_scz/convergence_cis_panel10nc_1hr.pdf">Open as
+PDF</a></p>
+</div>
+<div id="transcript-based-6-hr" class="section level3">
+<h3>Transcript-based, 6 hr</h3>
+<p><img src="assets/ctwas_scz/convergence_cis_panel10nc_6hr.png" /></p>
+<p><a href="assets/ctwas_scz/convergence_cis_panel10nc_6hr.pdf">Open as
+PDF</a></p>
+</div>
+</div>
+<div id="gene-level-pips" class="section level2">
+<h2>Gene-level PIPs</h2>
+<div id="genes-with-combined_pip-of-at-least-0.8-in-any-timepoint"
+class="section level3">
+<h3>Genes with combined_pip of at least 0.8 in any timepoint</h3>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">Read-based, 0 hr</th>
+<th align="right">Read-based, 1 hr</th>
+<th align="right">Read-based, 6 hr</th>
+<th align="right">Transcript-based, 0 hr</th>
+<th align="right">Transcript-based, 1 hr</th>
+<th align="right">Transcript-based, 6 hr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="right">0.97</td>
+<td align="right">0.93</td>
+<td align="right">0.98</td>
+<td align="right">–</td>
+<td align="right">0.91</td>
+<td align="right">0.79</td>
+</tr>
+<tr class="even">
+<td align="left">NDRG4</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.98</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="right">–</td>
+<td align="right">0.95</td>
+<td align="right">–</td>
+<td align="right">0.97</td>
+<td align="right">0.85</td>
+<td align="right">0.68</td>
+</tr>
+<tr class="even">
+<td align="left">SF3B1</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">0.92</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.96</td>
+<td align="right">0.94</td>
+<td align="right">0.86</td>
+<td align="right">0.90</td>
+</tr>
+<tr class="even">
+<td align="left">NRP1</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.96</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="odd">
+<td align="left">NLRP1</td>
+<td align="right">–</td>
+<td align="right">0.55</td>
+<td align="right">0.31</td>
+<td align="right">0.93</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="even">
+<td align="left">CNPPD1</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.85</td>
+<td align="right">0.90</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="odd">
+<td align="left">PIGF</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.84</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="even">
+<td align="left">GOPC</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.82</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="odd">
+<td align="left">ACTB</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.66</td>
+<td align="right">0.81</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+</tbody>
+</table>
+<p>Each cell is the gene’s <code>combined_pip</code> in that run. “–”
+means the gene was not in a fine-mapped region in that run.</p>
+</div>
+<div id="by-run-and-timepoint" class="section level3 tabset">
+<h3 class="tabset">By run and timepoint</h3>
+<div id="read-based-0-hr-1" class="section level4">
+<h4>Read-based, 0 hr</h4>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="4%" />
+<col width="23%" />
+<col width="17%" />
+<col width="4%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="left">0.97</td>
+<td align="right">2</td>
+<td align="left">chr8:143160267-143160309:-</td>
+<td align="left">0.49</td>
+<td align="left">-4.9</td>
+<td align="left">rs7007949</td>
+<td align="left">+0.052</td>
+<td align="left">0.0021</td>
+</tr>
+<tr class="even">
+<td align="left">SF3B1</td>
+<td align="left">0.97</td>
+<td align="right">5</td>
+<td align="left">chr2:197418795-197418895:-</td>
+<td align="left">0.21</td>
+<td align="left">7.3</td>
+<td align="left">rs788023</td>
+<td align="left">-0.084</td>
+<td align="left">0.013</td>
+</tr>
+<tr class="odd">
+<td align="left">MRPL43</td>
+<td align="left">0.58</td>
+<td align="right">1</td>
+<td align="left">chr10:100987089-100987196:-</td>
+<td align="left">0.58</td>
+<td align="left">-3.7</td>
+<td align="left">rs7184</td>
+<td align="left">-0.250</td>
+<td align="left">0.026</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="read-based-1-hr-1" class="section level4">
+<h4>Read-based, 1 hr</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="5%" />
+<col width="22%" />
+<col width="17%" />
+<col width="4%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="left">0.95</td>
+<td align="right">3</td>
+<td align="left">chr5:138556773-138556810:-</td>
+<td align="left">0.32</td>
+<td align="left">6.2</td>
+<td align="left">rs10117</td>
+<td align="left">-0.020</td>
+<td align="left">0.018</td>
+</tr>
+<tr class="even">
+<td align="left">LY6H</td>
+<td align="left">0.93</td>
+<td align="right">2</td>
+<td align="left">chr8:143158922-143159581:-</td>
+<td align="left">0.47</td>
+<td align="left">4.9</td>
+<td align="left">rs7007949</td>
+<td align="left">-0.003</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">TMX2</td>
+<td align="left">0.65</td>
+<td align="right">1</td>
+<td align="left">chr11:57738663-57738770:+</td>
+<td align="left">0.65</td>
+<td align="left">-5.7</td>
+<td align="left">rs4827</td>
+<td align="left">-0.073</td>
+<td align="left">0.045</td>
+</tr>
+<tr class="even">
+<td align="left">NLRP1</td>
+<td align="left">0.55</td>
+<td align="right">2</td>
+<td align="left">chr17:5500030-5500112:-</td>
+<td align="left">0.28</td>
+<td align="left">-4.5</td>
+<td align="left">rs5862</td>
+<td align="left">+0.090</td>
+<td align="left">0.026</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="read-based-6-hr-1" class="section level4">
+<h4>Read-based, 6 hr</h4>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="4%" />
+<col width="23%" />
+<col width="17%" />
+<col width="4%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="left">0.98</td>
+<td align="right">3</td>
+<td align="left">chr8:143158922-143159581:-</td>
+<td align="left">0.34</td>
+<td align="left">4.9</td>
+<td align="left">rs10109061</td>
+<td align="left">-0.006</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">NDRG4</td>
+<td align="left">0.98</td>
+<td align="right">8</td>
+<td align="left">chr16:58504385-58504397:+</td>
+<td align="left">0.18</td>
+<td align="left">5.3</td>
+<td align="left">rs42945</td>
+<td align="left">+0.222</td>
+<td align="left">0.019</td>
+</tr>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="left">0.96</td>
+<td align="right">2</td>
+<td align="left">chr2:2281930-2284093:-</td>
+<td align="left">0.96</td>
+<td align="left">-5.5</td>
+<td align="left">rs3749051</td>
+<td align="left">-0.059</td>
+<td align="left">0.04</td>
+</tr>
+<tr class="even">
+<td align="left">SF3B1</td>
+<td align="left">0.92</td>
+<td align="right">1</td>
+<td align="left">chr2:197393188-197393351:-</td>
+<td align="left">0.92</td>
+<td align="left">-7.3</td>
+<td align="left">rs4685</td>
+<td align="left">+0.037</td>
+<td align="left">0.24</td>
+</tr>
+<tr class="odd">
+<td align="left">CNPPD1</td>
+<td align="left">0.85</td>
+<td align="right">1</td>
+<td align="left">chr2:219172417-219172654:-</td>
+<td align="left">0.85</td>
+<td align="left">-3.9</td>
+<td align="left">rs1127102</td>
+<td align="left">+0.411</td>
+<td align="left">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">PIGF</td>
+<td align="left">0.84</td>
+<td align="right">1</td>
+<td align="left">chr2:46588074-46588179:-</td>
+<td align="left">0.84</td>
+<td align="left">3.6</td>
+<td align="left">rs1824050</td>
+<td align="left">-0.188</td>
+<td align="left">0.028</td>
+</tr>
+<tr class="odd">
+<td align="left">GOPC</td>
+<td align="left">0.82</td>
+<td align="right">1</td>
+<td align="left">chr6:117577447-117577471:-</td>
+<td align="left">0.82</td>
+<td align="left">4.3</td>
+<td align="left">rs3752848</td>
+<td align="left">-0.104</td>
+<td align="left">0.011</td>
+</tr>
+<tr class="even">
+<td align="left">YWHAE</td>
+<td align="left">0.77</td>
+<td align="right">3</td>
+<td align="left">chr17:1354210-1354347:-</td>
+<td align="left">0.75</td>
+<td align="left">4.0</td>
+<td align="left">rs9393</td>
+<td align="left">-0.061</td>
+<td align="left">0.043</td>
+</tr>
+<tr class="odd">
+<td align="left">RPL13</td>
+<td align="left">0.76</td>
+<td align="right">17</td>
+<td align="left">chr16:89560839-89560903:+</td>
+<td align="left">0.07</td>
+<td align="left">3.9</td>
+<td align="left">rs2280370</td>
+<td align="left">+0.015</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">COPA</td>
+<td align="left">0.73</td>
+<td align="right">2</td>
+<td align="left">chr1:160332557-160333461:-</td>
+<td align="left">0.38</td>
+<td align="left">-3.7</td>
+<td align="left">rs1802778</td>
+<td align="left">+0.103</td>
+<td align="left">0.035</td>
+</tr>
+<tr class="odd">
+<td align="left">MRPL43</td>
+<td align="left">0.72</td>
+<td align="right">1</td>
+<td align="left">chr10:100986686-100986748:-</td>
+<td align="left">0.72</td>
+<td align="left">3.7</td>
+<td align="left">rs7184</td>
+<td align="left">+0.125</td>
+<td align="left">0.043</td>
+</tr>
+<tr class="even">
+<td align="left">GGNBP2</td>
+<td align="left">0.68</td>
+<td align="right">1</td>
+<td align="left">chr17:36545817-36547747:+</td>
+<td align="left">0.68</td>
+<td align="left">-3.9</td>
+<td align="left">rs3736167</td>
+<td align="left">-0.124</td>
+<td align="left">0.058</td>
+</tr>
+<tr class="odd">
+<td align="left">ACTB</td>
+<td align="left">0.66</td>
+<td align="right">8</td>
+<td align="left">chr7:5527611-5527687:-</td>
+<td align="left">0.12</td>
+<td align="left">2.9</td>
+<td align="left">rs7612</td>
+<td align="left">+0.003</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">CLIP1</td>
+<td align="left">0.64</td>
+<td align="right">1</td>
+<td align="left">chr12:122347374-122347479:-</td>
+<td align="left">0.64</td>
+<td align="left">-4.2</td>
+<td align="left">rs1803290</td>
+<td align="left">+0.450</td>
+<td align="left">0.051</td>
+</tr>
+<tr class="odd">
+<td align="left">DNAJB9</td>
+<td align="left">0.63</td>
+<td align="right">1</td>
+<td align="left">chr7:108574135-108574402:+</td>
+<td align="left">0.63</td>
+<td align="left">-3.9</td>
+<td align="left">rs3763457</td>
+<td align="left">+0.109</td>
+<td align="left">0.028</td>
+</tr>
+<tr class="even">
+<td align="left">RABEP1</td>
+<td align="left">0.57</td>
+<td align="right">1</td>
+<td align="left">chr17:5336487-5336689:+</td>
+<td align="left">0.57</td>
+<td align="left">4.6</td>
+<td align="left">rs11538946</td>
+<td align="left">-0.202</td>
+<td align="left">0.0064</td>
+</tr>
+<tr class="odd">
+<td align="left">PPP1CB</td>
+<td align="left">0.52</td>
+<td align="right">1</td>
+<td align="left">chr2:28781842-28781978:+</td>
+<td align="left">0.52</td>
+<td align="left">-3.4</td>
+<td align="left">rs1128416</td>
+<td align="left">-0.222</td>
+<td align="left">0.0039</td>
+</tr>
+<tr class="even">
+<td align="left">COX6C</td>
+<td align="left">0.51</td>
+<td align="right">4</td>
+<td align="left">chr8:99887060-99887489:-</td>
+<td align="left">0.15</td>
+<td align="left">-2.7</td>
+<td align="left">rs1130474</td>
+<td align="left">+0.003</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="transcript-based-0-hr-1" class="section level4">
+<h4>Transcript-based, 0 hr</h4>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="5%" />
+<col width="22%" />
+<col width="17%" />
+<col width="3%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="left">0.97</td>
+<td align="right">2</td>
+<td align="left">chr5:138574126-138574169:-</td>
+<td align="left">0.49</td>
+<td align="left">6.2</td>
+<td align="left">rs10117</td>
+<td align="left">-0.084</td>
+<td align="left">0.022</td>
+</tr>
+<tr class="even">
+<td align="left">NRP1</td>
+<td align="left">0.96</td>
+<td align="right">2</td>
+<td align="left">chr10:33202890-33202911:-</td>
+<td align="left">0.49</td>
+<td align="left">4.4</td>
+<td align="left">rs35320960</td>
+<td align="left">-0.049</td>
+<td align="left">0.022</td>
+</tr>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="left">0.94</td>
+<td align="right">1</td>
+<td align="left">chr2:2002372-2002515:-</td>
+<td align="left">0.94</td>
+<td align="left">5.5</td>
+<td align="left">rs3749051</td>
+<td align="left">+0.080</td>
+<td align="left">0.025</td>
+</tr>
+<tr class="even">
+<td align="left">NLRP1</td>
+<td align="left">0.93</td>
+<td align="right">6</td>
+<td align="left">chr17:5500112-5500466:-</td>
+<td align="left">0.17</td>
+<td align="left">4.5</td>
+<td align="left">rs5862</td>
+<td align="left">-0.333</td>
+<td align="left">0.0035</td>
+</tr>
+<tr class="odd">
+<td align="left">CNPPD1</td>
+<td align="left">0.90</td>
+<td align="right">2</td>
+<td align="left">chr2:219171975-219172173:-</td>
+<td align="left">0.46</td>
+<td align="left">3.9</td>
+<td align="left">rs1043160</td>
+<td align="left">-0.333</td>
+<td align="left">0.013</td>
+</tr>
+<tr class="even">
+<td align="left">ACTB</td>
+<td align="left">0.81</td>
+<td align="right">26</td>
+<td align="left">chr7:5527783-5527797:-</td>
+<td align="left">0.05</td>
+<td align="left">2.9</td>
+<td align="left">rs7612</td>
+<td align="left">+0.001</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">NCL</td>
+<td align="left">0.77</td>
+<td align="right">2</td>
+<td align="left">chr2:231457642-231457800:-</td>
+<td align="left">0.40</td>
+<td align="left">3.6</td>
+<td align="left">rs1131171</td>
+<td align="left">+0.056</td>
+<td align="left">0.049</td>
+</tr>
+<tr class="even">
+<td align="left">PSMA4</td>
+<td align="left">0.59</td>
+<td align="right">12</td>
+<td align="left">chr15:78540539-78540734:+</td>
+<td align="left">0.06</td>
+<td align="left">7.2</td>
+<td align="left">rs3813570</td>
+<td align="left">-0.177</td>
+<td align="left">0.0062</td>
+</tr>
+<tr class="odd">
+<td align="left">COX6C</td>
+<td align="left">0.51</td>
+<td align="right">6</td>
+<td align="left">chr8:99877864-99878139:-</td>
+<td align="left">0.11</td>
+<td align="left">2.7</td>
+<td align="left">rs1130474</td>
+<td align="left">-0.026</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">AKAP1</td>
+<td align="left">0.51</td>
+<td align="right">6</td>
+<td align="left">chr17:57096577-57096590:+</td>
+<td align="left">0.10</td>
+<td align="left">2.9</td>
+<td align="left">rs4583</td>
+<td align="left">+0.412</td>
+<td align="left">0.0079</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="transcript-based-1-hr-1" class="section level4">
+<h4>Transcript-based, 1 hr</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="5%" />
+<col width="22%" />
+<col width="17%" />
+<col width="4%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="left">0.91</td>
+<td align="right">2</td>
+<td align="left">chr8:143158922-143159581:-</td>
+<td align="left">0.46</td>
+<td align="left">-4.9</td>
+<td align="left">rs10109061</td>
+<td align="left">+0.020</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">MYT1L</td>
+<td align="left">0.86</td>
+<td align="right">1</td>
+<td align="left">chr2:1997113-1997190:-</td>
+<td align="left">0.86</td>
+<td align="left">5.5</td>
+<td align="left">rs3749051</td>
+<td align="left">+0.076</td>
+<td align="left">2.3e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="left">0.85</td>
+<td align="right">1</td>
+<td align="left">chr5:138567648-138567722:-</td>
+<td align="left">0.85</td>
+<td align="left">6.2</td>
+<td align="left">rs10117</td>
+<td align="left">-0.060</td>
+<td align="left">0.042</td>
+</tr>
+<tr class="even">
+<td align="left">GLG1</td>
+<td align="left">0.77</td>
+<td align="right">8</td>
+<td align="left">chr16:74480274-74480394:-</td>
+<td align="left">0.10</td>
+<td align="left">3.7</td>
+<td align="left">rs4887772</td>
+<td align="left">+0.095</td>
+<td align="left">0.0018</td>
+</tr>
+<tr class="odd">
+<td align="left">NCL</td>
+<td align="left">0.66</td>
+<td align="right">3</td>
+<td align="left">chr2:231455457-231455539:-</td>
+<td align="left">0.23</td>
+<td align="left">-3.6</td>
+<td align="left">rs1131171</td>
+<td align="left">-0.060</td>
+<td align="left">0.021</td>
+</tr>
+<tr class="even">
+<td align="left">PKIB</td>
+<td align="left">0.62</td>
+<td align="right">4</td>
+<td align="left">chr6:122701061-122701081:+</td>
+<td align="left">0.16</td>
+<td align="left">-3.6</td>
+<td align="left">rs1132643</td>
+<td align="left">+0.486</td>
+<td align="left">0.0022</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="transcript-based-6-hr-1" class="section level4">
+<h4>Transcript-based, 6 hr</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="5%" />
+<col width="22%" />
+<col width="17%" />
+<col width="4%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="left">0.90</td>
+<td align="right">7</td>
+<td align="left">chr2:2324768-2324781:-</td>
+<td align="left">0.23</td>
+<td align="left">-5.5</td>
+<td align="left">rs3749051</td>
+<td align="left">-0.047</td>
+<td align="left">0.011</td>
+</tr>
+<tr class="even">
+<td align="left">LY6H</td>
+<td align="left">0.79</td>
+<td align="right">2</td>
+<td align="left">chr8:143158922-143159581:-</td>
+<td align="left">0.40</td>
+<td align="left">-4.9</td>
+<td align="left">rs10109061</td>
+<td align="left">+0.023</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="left">0.68</td>
+<td align="right">1</td>
+<td align="left">chr5:138559863-138560091:-</td>
+<td align="left">0.68</td>
+<td align="left">-6.2</td>
+<td align="left">rs10117</td>
+<td align="left">+0.034</td>
+<td align="left">0.043</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="all-timepoints-pooled" class="section level1">
+<h1>All timepoints pooled</h1>
+<p><strong>How the weights were pooled</strong> (our definition): one
+run per version, with the traits of all three timepoints in one weight
+file. Each exonic part enters once, with the QTL of the timepoint where
+its association has the smallest permutation p (ties: largest |ΔPSI|,
+then the earlier timepoint). Keeping a part once per timepoint would
+give identical predictors, which split their PIP.</p>
+<div id="parameters-1" class="section level2">
+<h2>Parameters</h2>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="4%" />
+<col width="4%" />
+<col width="10%" />
+<col width="8%" />
+<col width="7%" />
+<col width="15%" />
+<col width="7%" />
+<col width="9%" />
+<col width="4%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Run</th>
+<th align="left">Timepoint</th>
+<th align="right">group_size</th>
+<th align="right">group_prior (splicing)</th>
+<th align="right">group_prior (SNP)</th>
+<th align="right">group_prior_var</th>
+<th align="right">log_enrichment (log_enrichment_se)</th>
+<th align="right">enrichment_pval</th>
+<th align="right">group_pve (splicing)</th>
+<th align="right">total_pve</th>
+<th align="right">prop_heritability (splicing)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Read-based isoLASER, pooled</td>
+<td align="left">pooled</td>
+<td align="right">819</td>
+<td align="right">0.0223</td>
+<td align="right">0.00020</td>
+<td align="right">19.6</td>
+<td align="right">4.74 (0.23)</td>
+<td align="right">8.8e-31</td>
+<td align="right">0.0028</td>
+<td align="right">0.180</td>
+<td align="right">0.0155</td>
+</tr>
+<tr class="even">
+<td align="left">Transcript-based isoLASER, pooled</td>
+<td align="left">pooled</td>
+<td align="right">1,386</td>
+<td align="right">0.0101</td>
+<td align="right">0.00019</td>
+<td align="right">18.9</td>
+<td align="right">3.99 (0.27)</td>
+<td align="right">6.7e-20</td>
+<td align="right">0.0021</td>
+<td align="right">0.166</td>
+<td align="right">0.0125</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="prop_heritability-1" class="section level2 tabset">
+<h2 class="tabset">prop_heritability</h2>
+<div id="read-based-pooled" class="section level3">
+<h3>Read-based, pooled</h3>
+<p><img src="assets/ctwas_scz/piechart_cis_reads10nc_pooled.png" /></p>
+<p><a href="assets/ctwas_scz/piechart_cis_reads10nc_pooled.pdf">Open as
+PDF</a></p>
+</div>
+<div id="transcript-based-pooled" class="section level3">
+<h3>Transcript-based, pooled</h3>
+<p><img src="assets/ctwas_scz/piechart_cis_panel10nc_pooled.png" /></p>
+<p><a href="assets/ctwas_scz/piechart_cis_panel10nc_pooled.pdf">Open as
+PDF</a></p>
+</div>
+</div>
+<div id="convergence-1" class="section level2 tabset">
+<h2 class="tabset">Convergence</h2>
+<p>All 2 runs converged, in 11–12 iterations (of at most 50).</p>
+<div id="read-based-pooled-1" class="section level3">
+<h3>Read-based, pooled</h3>
+<p><img
+src="assets/ctwas_scz/convergence_cis_reads10nc_pooled_pooled.png" /></p>
+<p><a
+href="assets/ctwas_scz/convergence_cis_reads10nc_pooled_pooled.pdf">Open
+as PDF</a></p>
+</div>
+<div id="transcript-based-pooled-1" class="section level3">
+<h3>Transcript-based, pooled</h3>
+<p><img
+src="assets/ctwas_scz/convergence_cis_panel10nc_pooled_pooled.png" /></p>
+<p><a
+href="assets/ctwas_scz/convergence_cis_panel10nc_pooled_pooled.pdf">Open
+as PDF</a></p>
+</div>
+</div>
+<div id="gene-level-pips-1" class="section level2">
+<h2>Gene-level PIPs</h2>
+<div id="genes-with-combined_pip-of-at-least-0.8-when-pooled"
+class="section level3">
+<h3>Genes with combined_pip of at least 0.8 when pooled</h3>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="14%" />
+<col width="26%" />
+<col width="19%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">Read-based, pooled</th>
+<th align="right">Read-based, best single timepoint</th>
+<th align="right">Transcript-based, pooled</th>
+<th align="right">Transcript-based, best single timepoint</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="right">0.97</td>
+<td align="right">0.95</td>
+<td align="right">0.95</td>
+<td align="right">0.97</td>
+</tr>
+<tr class="even">
+<td align="left">MYT1L</td>
+<td align="right">0.91</td>
+<td align="right">0.96</td>
+<td align="right">0.97</td>
+<td align="right">0.94</td>
+</tr>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="right">0.96</td>
+<td align="right">0.98</td>
+<td align="right">0.89</td>
+<td align="right">0.91</td>
+</tr>
+<tr class="even">
+<td align="left">NDRG4</td>
+<td align="right">0.93</td>
+<td align="right">0.98</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="odd">
+<td align="left">SF3B1</td>
+<td align="right">0.93</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+</tbody>
+</table>
+<p>Each cell is the gene’s <code>combined_pip</code>. <strong>Best
+single timepoint</strong> is its largest <code>combined_pip</code> over
+the three separate runs; “–” means it was not in a fine-mapped region
+there.</p>
+</div>
+<div id="by-run" class="section level3 tabset">
+<h3 class="tabset">By run</h3>
+<div id="read-based-pooled-2" class="section level4">
+<h4>Read-based, pooled</h4>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="10%" />
+<col width="4%" />
+<col width="21%" />
+<col width="16%" />
+<col width="3%" />
+<col width="10%" />
+<col width="8%" />
+<col width="10%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+<th align="left">QTL from</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HSPA9</td>
+<td align="left">0.97</td>
+<td align="right">3</td>
+<td align="left">chr5:138556773-138556810:-</td>
+<td align="left">0.33</td>
+<td align="left">6.2</td>
+<td align="left">rs10117</td>
+<td align="left">-0.020</td>
+<td align="left">0.018</td>
+<td align="left">1 hr</td>
+</tr>
+<tr class="even">
+<td align="left">LY6H</td>
+<td align="left">0.96</td>
+<td align="right">3</td>
+<td align="left">chr8:143160267-143160309:-</td>
+<td align="left">0.33</td>
+<td align="left">-4.9</td>
+<td align="left">rs10109061</td>
+<td align="left">+0.080</td>
+<td align="left">1e-06</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">NDRG4</td>
+<td align="left">0.93</td>
+<td align="right">8</td>
+<td align="left">chr16:58504385-58504397:+</td>
+<td align="left">0.16</td>
+<td align="left">5.3</td>
+<td align="left">rs42945</td>
+<td align="left">+0.222</td>
+<td align="left">0.019</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="even">
+<td align="left">SF3B1</td>
+<td align="left">0.93</td>
+<td align="right">6</td>
+<td align="left">chr2:197393188-197393351:-</td>
+<td align="left">0.21</td>
+<td align="left">-7.3</td>
+<td align="left">rs4685</td>
+<td align="left">+0.037</td>
+<td align="left">0.24</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="left">0.91</td>
+<td align="right">2</td>
+<td align="left">chr2:2281930-2284093:-</td>
+<td align="left">0.91</td>
+<td align="left">-5.5</td>
+<td align="left">rs3749051</td>
+<td align="left">-0.059</td>
+<td align="left">0.04</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="even">
+<td align="left">TMX2</td>
+<td align="left">0.75</td>
+<td align="right">1</td>
+<td align="left">chr11:57738663-57738770:+</td>
+<td align="left">0.75</td>
+<td align="left">-5.7</td>
+<td align="left">rs4827</td>
+<td align="left">-0.073</td>
+<td align="left">0.045</td>
+<td align="left">1 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">CNPPD1</td>
+<td align="left">0.71</td>
+<td align="right">1</td>
+<td align="left">chr2:219172417-219172654:-</td>
+<td align="left">0.71</td>
+<td align="left">-3.9</td>
+<td align="left">rs1127102</td>
+<td align="left">+0.411</td>
+<td align="left">0.12</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="even">
+<td align="left">MRPL43</td>
+<td align="left">0.70</td>
+<td align="right">2</td>
+<td align="left">chr10:100986686-100986748:-</td>
+<td align="left">0.35</td>
+<td align="left">3.7</td>
+<td align="left">rs7184</td>
+<td align="left">+0.125</td>
+<td align="left">0.043</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">PIGF</td>
+<td align="left">0.66</td>
+<td align="right">1</td>
+<td align="left">chr2:46588074-46588179:-</td>
+<td align="left">0.66</td>
+<td align="left">3.6</td>
+<td align="left">rs1824050</td>
+<td align="left">-0.188</td>
+<td align="left">0.028</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="even">
+<td align="left">GOPC</td>
+<td align="left">0.66</td>
+<td align="right">1</td>
+<td align="left">chr6:117577447-117577471:-</td>
+<td align="left">0.66</td>
+<td align="left">4.3</td>
+<td align="left">rs3752848</td>
+<td align="left">-0.104</td>
+<td align="left">0.011</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">RPL13</td>
+<td align="left">0.57</td>
+<td align="right">17</td>
+<td align="left">chr16:89560712-89560839:+</td>
+<td align="left">0.05</td>
+<td align="left">3.9</td>
+<td align="left">rs2280370</td>
+<td align="left">+0.017</td>
+<td align="left">0.1</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="even">
+<td align="left">COPA</td>
+<td align="left">0.53</td>
+<td align="right">2</td>
+<td align="left">chr1:160332557-160333461:-</td>
+<td align="left">0.27</td>
+<td align="left">-3.7</td>
+<td align="left">rs1802778</td>
+<td align="left">+0.103</td>
+<td align="left">0.035</td>
+<td align="left">6 hr</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="transcript-based-pooled-2" class="section level4">
+<h4>Transcript-based, pooled</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="7%" />
+<col width="10%" />
+<col width="4%" />
+<col width="20%" />
+<col width="16%" />
+<col width="3%" />
+<col width="10%" />
+<col width="8%" />
+<col width="10%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="left">combined_pip</th>
+<th align="right">Parts</th>
+<th align="left">Top part</th>
+<th align="left">susie_pip (top part)</th>
+<th align="left">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="left">ΔPSI</th>
+<th align="left">Permutation p</th>
+<th align="left">QTL from</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="left">0.97</td>
+<td align="right">9</td>
+<td align="left">chr2:1997113-1997190:-</td>
+<td align="left">0.16</td>
+<td align="left">5.5</td>
+<td align="left">rs3749051</td>
+<td align="left">+0.076</td>
+<td align="left">2.3e-05</td>
+<td align="left">1 hr</td>
+</tr>
+<tr class="even">
+<td align="left">HSPA9</td>
+<td align="left">0.95</td>
+<td align="right">4</td>
+<td align="left">chr5:138559863-138560091:-</td>
+<td align="left">0.24</td>
+<td align="left">-6.2</td>
+<td align="left">rs10117</td>
+<td align="left">+0.034</td>
+<td align="left">0.043</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="left">0.89</td>
+<td align="right">2</td>
+<td align="left">chr8:143158922-143159581:-</td>
+<td align="left">0.45</td>
+<td align="left">-4.9</td>
+<td align="left">rs10109061</td>
+<td align="left">+0.023</td>
+<td align="left">1</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="even">
+<td align="left">NCL</td>
+<td align="left">0.76</td>
+<td align="right">6</td>
+<td align="left">chr2:231463585-231463693:-</td>
+<td align="left">0.13</td>
+<td align="left">-3.6</td>
+<td align="left">rs1131171</td>
+<td align="left">-0.018</td>
+<td align="left">0.0091</td>
+<td align="left">6 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">NLRP1</td>
+<td align="left">0.73</td>
+<td align="right">6</td>
+<td align="left">chr17:5500834-5501025:-</td>
+<td align="left">0.13</td>
+<td align="left">4.5</td>
+<td align="left">rs5862</td>
+<td align="left">-0.327</td>
+<td align="left">0.0023</td>
+<td align="left">0 hr</td>
+</tr>
+<tr class="even">
+<td align="left">CNPPD1</td>
+<td align="left">0.72</td>
+<td align="right">2</td>
+<td align="left">chr2:219171975-219172173:-</td>
+<td align="left">0.36</td>
+<td align="left">3.9</td>
+<td align="left">rs1043160</td>
+<td align="left">-0.333</td>
+<td align="left">0.013</td>
+<td align="left">0 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">GLG1</td>
+<td align="left">0.71</td>
+<td align="right">8</td>
+<td align="left">chr16:74480274-74480394:-</td>
+<td align="left">0.09</td>
+<td align="left">3.7</td>
+<td align="left">rs4887772</td>
+<td align="left">+0.095</td>
+<td align="left">0.0018</td>
+<td align="left">1 hr</td>
+</tr>
+<tr class="even">
+<td align="left">PKIB</td>
+<td align="left">0.55</td>
+<td align="right">4</td>
+<td align="left">chr6:122701061-122701081:+</td>
+<td align="left">0.14</td>
+<td align="left">-3.6</td>
+<td align="left">rs1132643</td>
+<td align="left">+0.486</td>
+<td align="left">0.0022</td>
+<td align="left">1 hr</td>
+</tr>
+<tr class="odd">
+<td align="left">HSPD1</td>
+<td align="left">0.52</td>
+<td align="right">7</td>
+<td align="left">chr2:197499470-197499543:-</td>
+<td align="left">0.33</td>
+<td align="left">7.1</td>
+<td align="left">rs8539</td>
+<td align="left">-0.011</td>
+<td align="left">0.04</td>
+<td align="left">1 hr</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="all-genes" class="section level1">
+<h1>All genes</h1>
+<div id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.984\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"26\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.958\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-10.72\" data-max=\"10.63\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-0.538\" data-max=\"0.717\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1e-06\" data-max=\"1\" data-scale=\"6\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Every gene in a fine-mapped region, in every run.<\/caption>","data":[["Read-based","Read-based","Transcript-based","Read-based","Read-based, pooled","Read-based","Transcript-based, pooled","Read-based, pooled","Read-based","Transcript-based","Transcript-based, pooled","Read-based","Transcript-based","Read-based, pooled","Read-based","Transcript-based","Read-based, pooled","Read-based","Transcript-based","Read-based, pooled","Transcript-based","Transcript-based","Transcript-based, pooled","Transcript-based","Transcript-based","Read-based","Read-based","Read-based","Transcript-based","Transcript-based","Read-based","Transcript-based","Transcript-based","Read-based","Transcript-based, pooled","Read-based, pooled","Transcript-based, pooled","Read-based","Read-based","Transcript-based, pooled","Transcript-based, pooled","Read-based, pooled","Read-based, pooled","Read-based","Transcript-based","Read-based, pooled","Read-based","Read-based, pooled","Transcript-based","Read-based","Read-based","Read-based","Transcript-based","Transcript-based","Read-based","Read-based","Read-based, pooled","Transcript-based, pooled","Read-based","Read-based, pooled","Read-based","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Read-based","Transcript-based","Read-based","Read-based, pooled","Transcript-based","Read-based, pooled","Read-based, pooled","Transcript-based","Transcript-based","Read-based","Read-based","Transcript-based, pooled","Read-based, pooled","Transcript-based, pooled","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Read-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based, pooled","Read-based","Transcript-based","Read-based","Transcript-based, pooled","Transcript-based","Transcript-based","Read-based","Read-based","Transcript-based","Read-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Read-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based, pooled","Read-based","Read-based","Transcript-based","Read-based, pooled","Read-based","Transcript-based","Read-based","Transcript-based, pooled","Read-based, pooled","Read-based","Read-based, pooled","Read-based, pooled","Transcript-based, pooled","Read-based, pooled","Read-based, pooled","Read-based","Transcript-based","Read-based, pooled","Read-based, pooled","Read-based, pooled","Transcript-based","Read-based, pooled","Transcript-based","Read-based","Read-based, pooled","Read-based","Transcript-based","Transcript-based, pooled","Read-based, pooled","Transcript-based, pooled","Read-based","Read-based","Read-based, pooled","Transcript-based","Read-based","Read-based","Read-based","Read-based","Read-based","Read-based","Read-based, pooled","Read-based, pooled","Read-based, pooled","Read-based","Read-based","Transcript-based","Transcript-based","Read-based, pooled","Read-based","Read-based","Read-based","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Read-based","Transcript-based","Read-based, pooled","Read-based, pooled","Read-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based","Transcript-based","Transcript-based, pooled","Read-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based, pooled","Transcript-based","Read-based","Transcript-based, pooled","Transcript-based","Transcript-based","Read-based, pooled","Read-based","Read-based","Read-based, pooled","Read-based, pooled","Read-based, pooled","Transcript-based","Transcript-based","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Read-based, pooled","Transcript-based, pooled","Read-based","Read-based","Transcript-based","Read-based, pooled","Read-based, pooled","Read-based, pooled","Read-based","Transcript-based","Read-based, pooled","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based","Transcript-based","Transcript-based","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Read-based","Read-based, pooled","Read-based, pooled","Transcript-based","Read-based, pooled","Transcript-based, pooled","Read-based","Read-based","Transcript-based","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based, pooled","Read-based","Read-based","Read-based","Transcript-based","Read-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Read-based, pooled","Read-based, pooled","Read-based","Read-based","Transcript-based","Transcript-based","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Read-based, pooled","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Transcript-based","Read-based","Transcript-based","Transcript-based","Read-based, pooled","Read-based","Read-based, pooled","Read-based, pooled","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Transcript-based","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based, pooled","Transcript-based, pooled","Read-based","Read-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based, pooled","Transcript-based, pooled","Read-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Read-based","Read-based","Read-based","Read-based","Read-based","Read-based","Read-based","Read-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Transcript-based","Read-based, pooled","Read-based, pooled","Read-based, pooled","Read-based, pooled","Read-based, pooled","Read-based, pooled","Read-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled","Transcript-based, pooled"],["6 hr","6 hr","0 hr","0 hr","pooled","0 hr","pooled","pooled","6 hr","0 hr","pooled","1 hr","0 hr","pooled","1 hr","0 hr","pooled","6 hr","1 hr","pooled","6 hr","0 hr","pooled","1 hr","1 hr","6 hr","6 hr","6 hr","0 hr","6 hr","6 hr","0 hr","1 hr","6 hr","pooled","pooled","pooled","6 hr","6 hr","pooled","pooled","pooled","pooled","6 hr","6 hr","pooled","6 hr","pooled","1 hr","1 hr","6 hr","6 hr","1 hr","0 hr","0 hr","6 hr","pooled","pooled","1 hr","pooled","6 hr","pooled","6 hr","0 hr","0 hr","6 hr","1 hr","1 hr","pooled","1 hr","pooled","pooled","1 hr","0 hr","6 hr","1 hr","pooled","pooled","pooled","1 hr","6 hr","1 hr","1 hr","6 hr","pooled","pooled","pooled","pooled","6 hr","pooled","1 hr","6 hr","6 hr","pooled","1 hr","0 hr","6 hr","6 hr","6 hr","pooled","pooled","6 hr","1 hr","0 hr","0 hr","0 hr","0 hr","pooled","6 hr","6 hr","0 hr","pooled","0 hr","0 hr","6 hr","pooled","pooled","6 hr","pooled","pooled","pooled","pooled","pooled","1 hr","1 hr","pooled","pooled","pooled","0 hr","pooled","6 hr","6 hr","pooled","6 hr","0 hr","pooled","pooled","pooled","6 hr","6 hr","pooled","1 hr","0 hr","1 hr","0 hr","6 hr","6 hr","6 hr","pooled","pooled","pooled","6 hr","6 hr","0 hr","1 hr","pooled","6 hr","1 hr","6 hr","pooled","pooled","1 hr","0 hr","1 hr","1 hr","pooled","pooled","6 hr","pooled","pooled","pooled","1 hr","6 hr","pooled","0 hr","pooled","pooled","pooled","pooled","1 hr","6 hr","pooled","1 hr","6 hr","pooled","0 hr","6 hr","pooled","pooled","pooled","1 hr","1 hr","pooled","0 hr","1 hr","pooled","pooled","pooled","1 hr","pooled","pooled","pooled","1 hr","1 hr","pooled","pooled","1 hr","6 hr","1 hr","pooled","pooled","pooled","0 hr","1 hr","pooled","pooled","pooled","pooled","0 hr","1 hr","6 hr","pooled","pooled","pooled","0 hr","6 hr","pooled","pooled","0 hr","pooled","pooled","1 hr","1 hr","6 hr","pooled","1 hr","0 hr","1 hr","6 hr","pooled","0 hr","0 hr","1 hr","1 hr","pooled","pooled","1 hr","0 hr","0 hr","1 hr","6 hr","6 hr","pooled","pooled","1 hr","1 hr","6 hr","6 hr","pooled","pooled","6 hr","6 hr","6 hr","pooled","pooled","pooled","pooled","1 hr","1 hr","1 hr","1 hr","0 hr","1 hr","6 hr","pooled","1 hr","pooled","pooled","pooled","pooled","pooled","1 hr","1 hr","1 hr","1 hr","pooled","pooled","pooled","pooled","0 hr","1 hr","6 hr","pooled","pooled","pooled","pooled","1 hr","pooled","pooled","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","pooled","pooled","pooled","pooled","pooled","1 hr","6 hr","6 hr","6 hr","pooled","pooled","1 hr","6 hr","6 hr","6 hr","6 hr","pooled","pooled","pooled","pooled","pooled","pooled","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","pooled","pooled","pooled","pooled","pooled","pooled","pooled","pooled","pooled","pooled","pooled","pooled"],["LY6H","NDRG4","HSPA9","LY6H","HSPA9","SF3B1","MYT1L","LY6H","MYT1L","NRP1","HSPA9","HSPA9","MYT1L","NDRG4","LY6H","NLRP1","SF3B1","SF3B1","LY6H","MYT1L","MYT1L","CNPPD1","LY6H","MYT1L","HSPA9","CNPPD1","PIGF","GOPC","ACTB","LY6H","YWHAE","NCL","GLG1","RPL13","NCL","TMX2","NLRP1","COPA","MRPL43","CNPPD1","GLG1","CNPPD1","MRPL43","GGNBP2","HSPA9","PIGF","ACTB","GOPC","NCL","TMX2","CLIP1","DNAJB9","PKIB","PSMA4","MRPL43","RABEP1","RPL13","PKIB","NLRP1","COPA","PPP1CB","HSPD1","COX6C","COX6C","AKAP1","IFT57","HSPD1","RPL13","IFT57","RPL13","CLIP1","NLRP1","CISD2","NDUFS7","ACAT2","HSPD1","RPL13","RABEP1","CISD2","IFT57","HSPD1","ELAC2","CLIP1","NLRP1","ELAC2","IFT57","MAEA","CLIP1","MAPT","PSMA4","IFT57","RPL13","SNHG21","MAPT","MAPT","CCT7","PSMC6","NUP88","MAEA","MAPT","SPCS1","DPCD","SPCS1","RPL13","SPCS1","LMBRD1","RPL8","SCFD1","FAAP20","DZIP3","HSP90B1","PLK2","DDX49","THRAP3","PSMA4","NUP88","SNHG21","MORF4L1","PSMC6","DDX49","CCT7","NUP88","FAAP20","PLK2","PLK2","CTNND1","DPCD","NFKBIL1","MAPT","B4GALNT1","SCFD1","ZFAS1","CCDC25","ATP5IF1","POLR2E","GIGYF2","PIH1D1","PLK2","ERP29","ATP5MJ","DZIP3","TMEM218","RPL8","CTNND1","TMEM9","EEF1A2","POLE4","CKB","PSMA4","HSPD1","ATP5MJ","NOP10","DUSP11","HSPA8","CUTA","MORF4L1","NSUN6","NFKBIL1","ENSG00000289047","LMBRD1","TMEM218","B4GALNT1","NDFIP2","CCDC25","LMBRD1","RPL8","TMEM9","PIH1D1","THRAP3","HSP90B1","RPL8","ATP5MJ","MAPT","MORF4L1","HSPA8","CUTA","PAM","ATP5MJ","UQCC6","FAAP20","UQCC6","RPL3","COPE","GIGYF2","SPECC1","POLE4","HSP90B1","ATP5IF1","ZFAS1","HSPA8","PAM","ADAM22","CACNB2","CBY1","B4GALNT1","SNHG21","ZFAS1","RNF167","PIH1D1","B2M","IFRD1","FAAP20","MAPT","EIF3L","ERP29","COPE","ATP5MJ","GNL3","NKAIN4","EEF1A2","POLE4","CKB","PSMC6","ERP29","NOP10","CBY1","ADAM22","HSPA8","EPHX1","DPCD","LMBRD1","DUSP11","B4GALNT1","VCP","HSP90B1","DDX39B","HSP90B1","NSUN6","ATP5MJ","ENSG00000289047","EIF3L","SPECC1","ATP5IF1","PAM","NKAIN4","UQCC6","MORF4L1","ZFAS1","CCT7","ERP29","COPE","ATP5MJ","FAAP20","SBF1","CBR4","DPCD","NUP88","GNL3","TKT","IFRD1","MORF4L1","RPL3","CCT7","OBSL1","POLE4","NOP10","CACNB2","SNHG21","PBRM1","UQCC6","TXNRD1","B2M","FAAP20","COPE","ZSCAN16-AS1","SBF1","NDFIP2","ENSG00000289047","PBRM1","RUVBL2","ENSG00000289047","UQCC6","TPRKB","B4GALNT1","TXNRD1","CBR4","CLU","TKT","GNL3","POLE4","CCDC107","CCT7","UQCC6","CCT7","VCP","DDX39B","NSUN6","RUVBL2","ENSG00000289047","TXNRD1","CALR","IFRD1","CACNB2","HPF1","SLC45A1","TPRKB","ZSCAN16-AS1","HSF2","GAD1","CLU","TKT","STRN3","LEPROT","VCP","ZFAS1","USP22","OBSL1","EPHX1","CALR","LRRFIP2","GLT8D1","ATP5MJ","POLE4","NOP10","CKB","LEPROT","CACNB2","CCDC107","NSUN6","ENSG00000289047","HPF1","STRN3","TRAPPC12","GLT8D1","TKT","GNL3","RPL10A","SLC45A1","GAD1","HSP90B1","USP22","HSPA8","LRRFIP2","UQCC6","CKB","LEPROT","PBRM1","GLT8D1","TRAPPC12","RPL10A","CLIC1","FLOT1","RPP21","TXNL1","FLOT1","AGPAT1","ATP5MK","RNF5","GSTO1","NDUFA2","PRRC2A","ABHD16A","CSNK2B","NDUFA2","CLIC1","TXNL1","FLOT1","AGPAT1","ATP5MK","RNF5","RPP21","ABHD16A","CSNK2B","GSTO1","NDUFA2","PRRC2A"],[0.984,0.978,0.97,0.968,0.967,0.966,0.966,0.964,0.959,0.957,0.947,0.945,0.944,0.934,0.931,0.931,0.93,0.924,0.913,0.909,0.899,0.896,0.89,0.856,0.852,0.85,0.837,0.822,0.805,0.793,0.769,0.768,0.768,0.761,0.76,0.745,0.734,0.727,0.724,0.719,0.714,0.709,0.697,0.681,0.678,0.663,0.661,0.661,0.655,0.648,0.64,0.629,0.622,0.594,0.58,0.573,0.57,0.552,0.548,0.53,0.524,0.516,0.508,0.508,0.506,0.484,0.48,0.467,0.45,0.436,0.435,0.43,0.409,0.406,0.386,0.379,0.376,0.363,0.347,0.327,0.319,0.316,0.315,0.305,0.282,0.272,0.262,0.261,0.252,0.245,0.193,0.189,0.187,0.184,0.181,0.177,0.168,0.168,0.167,0.162,0.148,0.143,0.143,0.142,0.131,0.127,0.125,0.122,0.115,0.115,0.115,0.115,0.114,0.113,0.111,0.105,0.103,0.102,0.099,0.094,0.092,0.083,0.081,0.077,0.076,0.076,0.072,0.072,0.071,0.071,0.069,0.068,0.068,0.066,0.065,0.065,0.063,0.063,0.06,0.059,0.059,0.057,0.056,0.056,0.055,0.055,0.054,0.054,0.054,0.054,0.053,0.052,0.051,0.051,0.049,0.049,0.047,0.046,0.046,0.046,0.046,0.045,0.045,0.044,0.044,0.044,0.043,0.042,0.042,0.041,0.041,0.04,0.04,0.04,0.039,0.039,0.039,0.038,0.037,0.035,0.034,0.034,0.033,0.033,0.033,0.032,0.032,0.031,0.031,0.031,0.03,0.03,0.03,0.029,0.029,0.029,0.029,0.029,0.028,0.028,0.028,0.028,0.027,0.027,0.027,0.026,0.025,0.025,0.025,0.025,0.025,0.025,0.024,0.024,0.024,0.024,0.024,0.024,0.023,0.023,0.023,0.023,0.023,0.023,0.022,0.022,0.022,0.022,0.021,0.021,0.021,0.02,0.02,0.02,0.02,0.019,0.019,0.019,0.019,0.019,0.018,0.018,0.018,0.018,0.018,0.018,0.017,0.017,0.017,0.017,0.017,0.017,0.016,0.016,0.015,0.015,0.015,0.015,0.015,0.015,0.014,0.014,0.014,0.014,0.014,0.014,0.014,0.013,0.013,0.013,0.013,0.012,0.012,0.012,0.012,0.011,0.011,0.011,0.011,0.011,0.011,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.008,0.008,0.008,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.006,0.006,0.006,0.006,0.006,0.006,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.004,0.004,0.004,0.004,0.004,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.002,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[3,8,2,2,3,5,9,3,2,2,4,3,1,8,2,6,6,1,2,2,7,2,2,1,1,1,1,1,26,2,3,2,8,17,6,1,6,2,1,2,8,1,2,1,1,1,8,1,3,1,1,1,4,12,1,1,17,4,2,2,1,7,4,6,6,1,3,17,2,17,1,2,3,2,1,1,15,1,3,2,6,2,1,1,2,2,3,1,3,12,1,14,2,9,6,8,5,2,3,4,4,2,3,1,1,7,4,3,2,1,12,1,1,1,3,7,2,4,6,1,13,2,3,1,1,1,2,2,1,3,3,2,1,1,2,8,7,1,2,2,1,6,2,1,3,1,2,2,3,1,4,1,1,1,6,4,1,2,1,8,6,3,2,1,6,2,3,2,1,14,4,5,4,7,2,6,4,6,5,2,2,4,4,8,1,2,2,1,2,2,3,1,6,1,2,1,4,3,5,3,6,2,1,3,2,4,3,1,2,1,2,2,1,3,1,1,1,2,1,1,8,1,2,3,2,1,3,1,1,1,3,1,1,4,2,4,1,2,5,3,1,1,1,2,1,1,1,1,1,3,6,4,1,1,2,1,6,1,3,4,1,3,2,1,1,2,2,1,2,1,1,1,1,2,2,1,1,1,1,2,1,1,2,1,1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,2,3,2,1,3,2,1,1,1,1,1,2,1,1,2,1,6,2,1,1,2,2,1,1,1,1],["chr8:143158922-143159581:-","chr16:58504385-58504397:+","chr5:138574126-138574169:-","chr8:143160267-143160309:-","chr5:138556773-138556810:-","chr2:197418795-197418895:-","chr2:1997113-1997190:-","chr8:143160267-143160309:-","chr2:2281930-2284093:-","chr10:33202890-33202911:-","chr5:138559863-138560091:-","chr5:138556773-138556810:-","chr2:2002372-2002515:-","chr16:58504385-58504397:+","chr8:143158922-143159581:-","chr17:5500112-5500466:-","chr2:197393188-197393351:-","chr2:197393188-197393351:-","chr8:143158922-143159581:-","chr2:2281930-2284093:-","chr2:2324768-2324781:-","chr2:219171975-219172173:-","chr8:143158922-143159581:-","chr2:1997113-1997190:-","chr5:138567648-138567722:-","chr2:219172417-219172654:-","chr2:46588074-46588179:-","chr6:117577447-117577471:-","chr7:5527783-5527797:-","chr8:143158922-143159581:-","chr17:1354210-1354347:-","chr2:231457642-231457800:-","chr16:74480274-74480394:-","chr16:89560839-89560903:+","chr2:231463585-231463693:-","chr11:57738663-57738770:+","chr17:5500834-5501025:-","chr1:160332557-160333461:-","chr10:100986686-100986748:-","chr2:219171975-219172173:-","chr16:74480274-74480394:-","chr2:219172417-219172654:-","chr10:100986686-100986748:-","chr17:36545817-36547747:+","chr5:138559863-138560091:-","chr2:46588074-46588179:-","chr7:5527611-5527687:-","chr6:117577447-117577471:-","chr2:231455457-231455539:-","chr11:57738663-57738770:+","chr12:122347374-122347479:-","chr7:108574135-108574402:+","chr6:122701061-122701081:+","chr15:78540539-78540734:+","chr10:100987089-100987196:-","chr17:5336487-5336689:+","chr16:89560712-89560839:+","chr6:122701061-122701081:+","chr17:5500030-5500112:-","chr1:160332557-160333461:-","chr2:28781842-28781978:+","chr2:197499470-197499543:-","chr8:99887060-99887489:-","chr8:99877864-99878139:-","chr17:57096577-57096590:+","chr3:108219409-108219544:-","chr2:197499470-197499543:-","chr16:89560712-89560839:+","chr3:108218392-108218534:-","chr16:89560712-89560839:+","chr12:122347374-122347479:-","chr17:5500030-5500112:-","chr4:102869321-102869335:+","chr19:1386627-1386639:+","chr6:159762494-159762777:+","chr2:197497392-197497507:-","chr16:89560712-89560839:+","chr17:5336487-5336689:+","chr4:102869321-102869335:+","chr3:108219409-108219544:-","chr2:197494250-197494656:-","chr17:13003574-13003786:-","chr12:122351110-122351143:-","chr17:5500030-5500112:-","chr17:13003574-13003786:-","chr3:108219409-108219544:-","chr4:1309442-1309466:+","chr12:122351110-122351143:-","chr17:45978374-45978425:+","chr15:78540539-78540734:+","chr3:108218392-108218534:-","chr16:89560712-89560839:+","chr15:82754784-82754937:+","chr17:45978440-45979019:+","chr17:45978440-45979019:+","chr2:73243003-73243045:+","chr14:52708482-52708522:+","chr17:5386103-5386135:-","chr4:1309442-1309466:+","chr17:45978440-45979019:+","chr3:52704954-52705158:+","chr10:101608866-101608902:+","chr3:52704954-52705158:+","chr16:89561751-89561849:+","chr3:52706282-52706643:+","chr6:69780897-69780926:-","chr8:144792143-144792153:-","chr14:30676783-30676855:+","chr1:2194027-2194108:-","chr3:108648112-108648917:+","chr12:103930683-103930800:+","chr5:58459139-58459505:-","chr19:18921662-18921746:+","chr1:36225411-36225463:+","chr15:78540466-78540477:+","chr17:5391560-5391658:-","chr15:82754784-82754937:+","chr15:78873004-78873024:+","chr14:52708482-52708522:+","chr19:18921662-18921746:+","chr2:73234235-73234268:+","chr17:5386103-5386135:-","chr1:2192844-2192975:-","chr5:58459139-58459505:-","chr5:58458171-58458296:-","chr11:57791493-57791673:+","chr10:101608866-101608902:+","chr6:31557849-31557959:+","chr17:45974384-45974471:+","chr12:57632540-57632581:-","chr14:30676783-30676855:+","chr20:49280964-49281181:+","chr8:27764437-27764533:-","chr1:28237760-28237836:+","chr19:1088681-1088713:-","chr2:232735762-232735961:+","chr19:49446694-49446741:-","chr5:58458171-58458296:-","chr12:112019755-112019836:+","chr14:103914142-103914478:-","chr3:108648112-108648917:+","chr11:125101303-125101443:-","chr8:144791310-144791370:-","chr11:57791493-57791673:+","chr1:201135508-201135598:-","chr20:63490478-63490735:-","chr2:74958727-74958791:+","chr14:103520501-103520592:-","chr15:78540477-78540539:+","chr2:197497392-197497507:-","chr14:103913256-103913957:-","chr15:34341920-34342003:-","chr2:73778078-73778290:-","chr11:123060028-123060115:-","chr6:33417958-33417983:-","chr15:78873004-78873024:+","chr10:18648047-18648489:-","chr6:31557849-31557959:+","chr6:32894927-32895026:+","chr6:69780897-69780926:-","chr11:125101303-125101443:-","chr12:57632540-57632581:-","chr13:79553183-79553195:+","chr8:27764437-27764533:-","chr6:69790472-69792144:-","chr8:144791310-144791370:-","chr1:201135508-201135598:-","chr19:49446694-49446741:-","chr1:36225411-36225463:+","chr12:103947927-103948015:+","chr8:144792143-144792153:-","chr14:103913984-103914142:-","chr17:45971858-45971945:+","chr15:78872894-78872953:+","chr11:123059964-123059981:-","chr6:33417958-33417983:-","chr5:103028184-103028238:+","chr14:103913984-103914142:-","chr12:103956630-103956738:-","chr1:2194027-2194108:-","chr12:103957068-103957134:-","chr22:39317050-39317068:-","chr19:18905629-18905866:-","chr2:232735762-232735961:+","chr17:20204738-20204957:+","chr2:74958727-74958791:+","chr12:103947912-103947922:+","chr1:28237760-28237836:+","chr20:49280964-49281181:+","chr11:123059964-123059981:-","chr5:102808062-102808098:+","chr7:88131435-88132804:+","chr10:18400529-18400574:+","chr22:38670766-38670883:+","chr12:57632668-57632679:-","chr15:82754784-82754937:+","chr20:49278397-49278639:+","chr17:4940486-4940642:+","chr19:49448010-49448041:-","chr15:44715422-44715433:+","chr7:112452057-112452511:+","chr1:2194027-2194108:-","chr17:45978440-45979019:+","chr22:37862968-37863033:+","chr12:112019755-112019836:+","chr19:18905629-18905866:-","chr14:103913256-103913957:-","chr3:52688192-52688206:+","chr20:63254396-63254463:-","chr20:63490478-63490735:-","chr2:74958727-74958791:+","chr14:103520501-103520592:-","chr14:52723874-52723964:+","chr12:112018803-112019343:+","chr15:34341920-34342003:-","chr22:38670766-38670883:+","chr7:88131435-88132804:+","chr11:123060028-123060115:-","chr1:225810411-225810615:+","chr10:101605139-101605212:+","chr6:69780897-69780926:-","chr2:73778078-73778290:-","chr12:57632668-57632679:-","chr9:35057222-35057375:-","chr12:103947858-103947912:+","chr6:31538855-31538881:-","chr12:103947858-103947912:+","chr10:18648047-18648489:-","chr14:103914478-103914633:-","chr6:32894927-32895026:+","chr22:37862968-37863033:+","chr17:20204738-20204957:+","chr1:28237760-28237836:+","chr5:103028184-103028238:+","chr20:63254396-63254463:-","chr12:103956630-103956738:-","chr15:78873118-78873218:+","chr20:49278397-49278639:+","chr2:73234235-73234268:+","chr12:112018803-112019343:+","chr19:18905575-18905629:-","chr14:103914478-103914633:-","chr1:2192844-2192975:-","chr22:50454725-50454742:-","chr4:169005884-169005914:-","chr10:101605139-101605212:+","chr17:5387778-5387904:-","chr3:52688192-52688206:+","chr3:53231550-53232299:-","chr7:112470898-112471033:+","chr15:78872894-78872953:+","chr22:39317050-39317068:-","chr2:73239796-73240147:+","chr2:219556453-219556577:-","chr2:74958727-74958791:+","chr15:34341920-34342003:-","chr10:18400529-18400574:+","chr15:82754784-82754937:+","chr3:52563282-52563363:-","chr12:103956630-103956738:-","chr12:104288894-104288930:+","chr15:44715422-44715433:+","chr1:2194027-2194108:-","chr19:18905575-18905629:-","chr6:28125622-28125819:-","chr22:50454725-50454742:-","chr13:79553183-79553195:+","chr6:32894927-32895026:+","chr3:52563282-52563363:-","chr19:49004206-49004276:+","chr6:32894927-32895026:+","chr12:103957068-103957134:-","chr2:73730736-73731149:-","chr12:57632668-57632679:-","chr12:104288894-104288930:+","chr4:169005884-169005914:-","chr8:27605140-27605171:-","chr3:53225701-53225750:-","chr3:52688192-52688206:+","chr2:74958791-74958892:+","chr9:35660647-35660745:+","chr2:73239796-73240147:+","chr12:103956630-103956738:-","chr2:73239796-73240147:+","chr9:35061179-35061576:-","chr6:31538855-31538881:-","chr10:18648047-18648489:-","chr19:49004206-49004276:+","chr6:32894927-32895026:+","chr12:104290992-104291104:+","chr19:12940887-12940975:+","chr7:112452057-112452511:+","chr10:18400706-18401100:+","chr4:169750471-169750535:-","chr1:8330137-8330208:+","chr2:73730736-73731149:-","chr6:28125622-28125819:-","chr6:122412764-122412947:+","chr2:170836883-170837716:+","chr8:27605140-27605171:-","chr3:53225701-53225750:-","chr14:30913523-30913657:-","chr1:65421327-65421459:+","chr9:35057222-35057375:-","chr20:49280570-49280902:+","chr17:21011309-21011614:-","chr2:219558183-219558459:-","chr1:225810411-225810615:+","chr19:12940887-12940975:+","chr3:37174118-37174538:-","chr3:52703503-52703619:-","chr14:103914478-103914633:-","chr2:74958791-74958892:+","chr15:34341920-34342003:-","chr14:103522302-103522437:-","chr1:65421327-65421459:+","chr10:18400706-18401100:+","chr9:35660647-35660745:+","chr10:18648047-18648489:-","chr6:32894927-32895026:+","chr4:169750471-169750535:-","chr14:30913523-30913657:-","chr2:3449317-3449477:+","chr3:52703503-52703619:-","chr3:53231550-53232299:-","chr3:52688192-52688206:+","chr6:35469285-35469380:+","chr1:8330137-8330208:+","chr2:170836883-170837716:+","chr12:103947927-103948015:+","chr17:21011309-21011614:-","chr11:123057538-123057689:-","chr3:37174118-37174538:-","chr12:103957068-103957134:-","chr14:103522302-103522437:-","chr1:65421327-65421459:+","chr3:52643247-52643343:-","chr3:52703503-52703619:-","chr2:3449317-3449477:+","chr6:35469285-35469380:+","chr6:31736350-31736412:-","chr6:30742383-30742466:-","chr6:30345466-30345490:+","chr18:56626161-56626266:-","chr6:30741661-30741704:-","chr6:32169965-32169988:-","chr10:103394198-103394394:-","chr6:32179763-32179773:+","chr10:104262978-104263077:+","chr5:140645678-140645725:-","chr6:31622689-31622726:+","chr6:31702611-31702984:-","chr6:31666396-31666487:+","chr5:140645678-140645725:-","chr6:31736350-31736412:-","chr18:56626161-56626266:-","chr6:30742383-30742466:-","chr6:32169965-32169988:-","chr10:103394198-103394394:-","chr6:32179763-32179773:+","chr6:30345466-30345490:+","chr6:31702611-31702984:-","chr6:31666396-31666487:+","chr10:104262978-104263077:+","chr5:140645678-140645725:-","chr6:31622689-31622726:+"],[0.344,0.184,0.491,0.491,0.327,0.21,0.165,0.328,0.958,0.486,0.239,0.318,0.944,0.163,0.469,0.173,0.21,0.924,0.46,0.908,0.226,0.459,0.447,0.856,0.852,0.85,0.837,0.822,0.052,0.398,0.752,0.398,0.101,0.074,0.134,0.745,0.127,0.376,0.724,0.363,0.093,0.709,0.355,0.681,0.678,0.663,0.116,0.661,0.227,0.648,0.64,0.629,0.161,0.064,0.58,0.573,0.047,0.143,0.278,0.27,0.524,0.326,0.155,0.108,0.105,0.484,0.384,0.036,0.227,0.039,0.435,0.221,0.138,0.224,0.386,0.379,0.034,0.363,0.117,0.165,0.186,0.17,0.315,0.305,0.15,0.137,0.094,0.261,0.09,0.024,0.193,0.025,0.097,0.03,0.039,0.024,0.036,0.087,0.058,0.042,0.038,0.073,0.049,0.142,0.131,0.019,0.032,0.042,0.059,0.115,0.01,0.115,0.114,0.113,0.038,0.051,0.053,0.026,0.017,0.094,0.007,0.051,0.028,0.077,0.076,0.076,0.037,0.037,0.071,0.024,0.023,0.034,0.068,0.066,0.033,0.008,0.009,0.063,0.03,0.03,0.059,0.01,0.028,0.056,0.019,0.055,0.027,0.027,0.018,0.054,0.014,0.052,0.051,0.051,0.008,0.012,0.047,0.023,0.046,0.006,0.008,0.015,0.023,0.044,0.007,0.022,0.015,0.021,0.042,0.004,0.01,0.008,0.01,0.006,0.02,0.007,0.015,0.006,0.008,0.017,0.018,0.008,0.008,0.004,0.033,0.016,0.018,0.031,0.016,0.015,0.01,0.03,0.005,0.029,0.015,0.029,0.007,0.01,0.006,0.009,0.005,0.014,0.027,0.009,0.014,0.007,0.009,0.025,0.013,0.025,0.012,0.012,0.024,0.008,0.024,0.024,0.024,0.017,0.023,0.023,0.003,0.023,0.012,0.008,0.011,0.022,0.008,0.022,0.021,0.021,0.007,0.02,0.02,0.008,0.01,0.005,0.019,0.009,0.004,0.006,0.018,0.018,0.018,0.009,0.018,0.018,0.017,0.017,0.017,0.006,0.003,0.004,0.016,0.016,0.008,0.015,0.002,0.015,0.005,0.004,0.014,0.005,0.007,0.014,0.014,0.007,0.007,0.013,0.007,0.013,0.013,0.012,0.012,0.006,0.006,0.011,0.011,0.011,0.011,0.006,0.011,0.01,0.005,0.01,0.01,0.01,0.01,0.01,0.01,0.009,0.009,0.002,0.009,0.009,0.009,0.009,0.008,0.008,0.008,0.007,0.007,0.007,0.007,0.004,0.004,0.007,0.007,0.007,0.007,0.007,0.006,0.003,0.003,0.006,0.006,0.006,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.004,0.004,0.002,0.004,0.004,0.003,0.002,0.003,0.003,0.003,0.003,0.003,0.002,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[4.91,5.28,6.25,-4.94,6.25,7.26,5.53,-4.91,-5.53,4.4,-6.25,6.25,5.53,5.28,4.94,4.54,-7.3,-7.3,-4.91,-5.53,-5.53,3.91,-4.91,5.53,6.25,-3.88,3.61,4.3,2.86,-4.91,4.01,3.57,3.65,3.88,-3.57,-5.74,4.54,-3.73,3.68,3.91,3.65,-3.88,3.68,-3.92,-6.25,3.61,2.86,4.3,-3.57,-5.74,-4.19,-3.91,-3.62,7.18,-3.68,4.58,3.88,-3.62,-4.54,-3.73,-3.4,7.07,-2.72,2.72,2.91,-4.08,7.07,3.88,-4.08,3.88,-4.19,4.54,-4.19,-3.4,3.37,7.07,3.88,4.58,-4.19,-4.08,-7.07,-4.91,4.19,4.54,-4.91,-4.08,-3.64,4.19,-5.61,7.18,-4.08,3.88,1.41,-5.69,-5.69,-1.62,-1.05,3.91,-3.64,-5.61,-3.49,-1.84,-3.49,3.88,3.49,0.94,-1.18,-2.77,-1.47,1.62,1.73,3.83,2.07,-1.75,1.54,-4.16,1.41,-1.01,-1.05,2.07,-1.62,3.91,-1.47,3.83,3.83,-5.14,-1.84,2.92,-5.59,-1.28,-2.77,-1.5,-2.52,1.82,1.19,3.02,0.87,3.83,0.68,0.15,1.62,-0.96,1.18,-5.14,-0.94,0.87,0.37,3,1.54,7.07,-0.15,-1.53,1.71,-1.33,-0.43,-1.01,3.54,2.92,2.15,0.94,-0.96,-1.28,1.19,-2.52,0.94,1.18,-0.94,0.87,-1.75,1.35,-1.18,0.15,5.61,1.01,0.25,-0.43,-1.15,0.15,1.33,-1.47,1.33,-1.28,-0.59,3.02,-2.94,0.37,1.35,1.82,-1.5,0.25,-0.43,-2.58,-2.79,0.48,-1.28,1.41,-1.5,-1.21,0.89,1.15,0.83,-1.47,-5.61,-0.69,0.68,-0.59,-0.15,6.85,-1.26,0.87,0.37,3,-1.05,0.68,-1.53,0.48,-2.58,-1.33,0.59,1.84,0.94,1.71,1.28,1.98,1.35,1.55,1.35,3.54,0.15,2.15,-0.69,-2.94,1.82,-1.15,-1.26,1.33,-1.01,-1.5,-1.62,0.68,0.45,0.15,-1.47,0.63,-0.52,1.84,-1.27,-6.85,2.27,0.84,1.01,-1.28,1.62,-0.6,0.37,-1.53,-2.79,1.41,-7.13,2.7,-0.93,1.15,-1.47,0.45,-8.21,0.63,1.19,2.15,-7.13,-1.22,2.15,2.7,1.92,1.28,-0.93,-0.52,2.18,-2.27,6.85,0.37,1.51,1.62,2.7,1.62,1.98,1.55,3.54,-1.22,2.15,-0.93,-1.36,0.83,1.47,-0.56,-3.77,1.92,-8.21,1.02,0.82,2.18,-2.27,-0.49,-0.36,1.98,-1.5,-0.94,-0.6,0.59,-1.36,-2.3,-6.9,0.15,0.37,1.53,-2.9,-0.36,1.47,1.51,3.54,2.15,-0.56,-0.49,-0.42,-6.9,2.27,-6.85,0.81,-3.77,0.82,1.35,-0.94,0.25,-2.3,2.3,-2.9,-0.36,-7.13,-6.9,-0.42,0.81,-10.72,10.63,3.65,-0.36,-10.56,-0.22,-3.43,-9.67,4.19,-4.76,-9.57,-1.13,-0.41,-4.76,-10.72,-0.36,10.63,-0.22,-3.43,-9.67,3.65,-1.13,-0.41,4.19,-4.76,-9.57],["rs10109061","rs42945","rs10117","rs7007949","rs10117","rs788023","rs3749051","rs10109061","rs3749051","rs35320960","rs10117","rs10117","rs3749051","rs42945","rs7007949","rs5862","rs4685","rs4685","rs10109061","rs3749051","rs3749051","rs1043160","rs10109061","rs3749051","rs10117","rs1127102","rs1824050","rs3752848","rs7612","rs10109061","rs9393","rs1131171","rs4887772","rs2280370","rs1131171","rs4827","rs5862","rs1802778","rs7184","rs1043160","rs4887772","rs1127102","rs7184","rs3736167","rs10117","rs1824050","rs7612","rs3752848","rs1131171","rs4827","rs1803290","rs3763457","rs1132643","rs3813570","rs7184","rs11538946","rs2280370","rs1132643","rs5862","rs1802778","rs1128416","rs8539","rs1130474","rs1130474","rs4583","rs1135897","rs8539","rs2280370","rs1135897","rs2280370","rs1803290","rs5862","rs7254","rs1142530","rs25683","rs8539","rs2280370","rs11538946","rs7254","rs1135897","rs8539","rs1044569","rs1803290","rs5862","rs1044569","rs1135897","rs1128427","rs1803290","rs17650901","rs3813570","rs1135897","rs2280370","rs3803383","rs62056779","rs62056779","rs1053329","rs6696","rs11209","rs1128427","rs17650901","rs150901717","rs7874","rs150901717","rs2280370","rs150901717","rs9185","rs2954658","rs229150","rs2503701","rs2969901","rs6615","rs15915","rs7497","rs2242428","rs8053","rs1071705","rs3803383","rs1435163","rs6696","rs7497","rs1053329","rs11209","rs2503701","rs15915","rs15915","rs11570176","rs7874","rs2230365","rs9468","rs715930","rs229150","rs6648","rs7842666","rs12154","rs6844","rs11555646","rs13394","rs15915","rs7114","rs1053419","rs2969901","rs7030","rs2954658","rs11570176","rs8158","rs310617","rs7881","rs1136165","rs8053","rs8539","rs1053419","rs3063","rs2272051","rs1136141","rs151115589","rs1435163","rs3740102","rs2230365","rs3749981","rs9185","rs7030","rs715930","rs11549502","rs7842666","rs9185","rs2954658","rs8158","rs13394","rs2242428","rs7645","rs2954658","rs1053419","rs17650901","rs1435163","rs4802","rs151115589","rs2230457","rs1053419","rs15805","rs2503701","rs15805","rs6509","rs1127821","rs11555646","rs2703805","rs7881","rs7645","rs12154","rs6648","rs4802","rs5855","rs17255978","rs3750592","rs3747174","rs715930","rs3803383","rs6648","rs6559","rs2293011","rs4780","rs7467","rs2503701","rs17650901","rs9466","rs7114","rs1127821","rs1053419","rs11177","rs2236194","rs310617","rs7881","rs1136165","rs6696","rs7114","rs3063","rs3747174","rs17255978","rs1136141","rs2234922","rs7874","rs9185","rs2272051","rs715930","rs1053318","rs7645","rs1129640","rs7645","rs3740102","rs1053419","rs3749981","rs9466","rs2703805","rs12154","rs2230457","rs2236194","rs15805","rs1435163","rs6648","rs1053329","rs7114","rs3177137","rs1053419","rs2503701","rs1053744","rs2279038","rs7874","rs61753104","rs11177","rs1131728","rs2253962","rs1435163","rs6509","rs1053329","rs1056908","rs7881","rs3063","rs3750592","rs3803383","rs3755806","rs11111854","rs4964287","rs4780","rs2503701","rs3177137","rs6934769","rs1053744","rs11549502","rs3749981","rs3755806","rs11558800","rs3749981","rs11111854","rs7210","rs715930","rs4964287","rs2279038","rs7982","rs1131728","rs11177","rs7881","rs2275420","rs1053329","rs11111854","rs1053329","rs1053318","rs1129640","rs3740102","rs11558800","rs3749981","rs4964287","rs1049481","rs7467","rs3750591","rs11540095","rs1055236","rs7210","rs6934769","rs6926219","rs769404","rs7982","rs1131728","rs12886419","rs3790435","rs1053318","rs6648","rs11541311","rs1056908","rs2234922","rs1049481","rs9829683","rs6976","rs1053419","rs7881","rs3063","rs1803283","rs3790435","rs3750591","rs2275420","rs3740102","rs3749981","rs11540095","rs12886419","rs6767","rs6976","rs1131728","rs11177","rs2076172","rs1055236","rs769404","rs7645","rs11541311","rs4802","rs9829683","rs1047490","rs1803283","rs3790435","rs3755806","rs6976","rs6767","rs2076172","rs3131383","rs1059612","rs974962","rs14387","rs3094125","rs1269839","rs2292807","rs1062070","rs4925","rs778593","rs11229","rs1475865","rs14365","rs778593","rs3131383","rs14387","rs1059612","rs1269839","rs2292807","rs1062070","rs974962","rs1475865","rs14365","rs4925","rs778593","rs11229"],[-0.006,0.222,-0.084,0.052,-0.02,-0.084,0.076,0.08,-0.059,-0.049,0.034,-0.02,0.08,0.222,-0.003,-0.333,0.037,0.037,0.02,-0.059,-0.047,-0.333,0.023,0.076,-0.06,0.411,-0.188,-0.104,0.001,0.023,-0.061,0.056,0.095,0.015,-0.018,-0.073,-0.327,0.103,0.125,-0.333,0.095,0.411,0.125,-0.124,0.034,-0.188,0.003,-0.104,-0.06,-0.073,0.45,0.109,0.486,-0.177,-0.25,-0.202,0.017,0.486,0.09,0.103,-0.222,-0.011,0.003,-0.026,0.412,0.06,-0.011,0.012,0.07,0.025,0.45,-0.099,-0.29,0.055,0.104,-0.019,0.025,-0.202,-0.29,0.102,0.068,-0.188,-0.305,-0.099,-0.188,0.102,0.121,-0.305,0.049,-0.177,0.07,0.014,0.238,0.06,0.06,-0.033,0.071,-0.098,0.121,0.037,-0.409,0.068,-0.409,0.006,0.028,-0.261,0.411,0.154,0.091,-0.138,-0.114,0.011,-0.207,-0.215,-0.07,0.105,0.238,-0.03,0.071,-0.207,-0.028,-0.098,0.048,0.011,0.013,0.5,0.068,0.286,0.283,-0.538,0.154,-0.028,-0.267,-0.041,-0.109,-0.259,-0.054,0.013,0.104,0.006,-0.138,-0.5,-0.118,0.5,0.189,-0.146,0.115,0.034,-0.064,-0.019,-0.008,0.03,-0.105,-0.026,0.263,-0.03,0.312,0.286,0.717,-0.261,-0.5,-0.538,0.333,-0.267,-0.45,-0.118,0.189,-0.054,-0.215,-0.036,0.411,0.005,-0.186,0.12,0.062,0.263,-0.082,0.005,-0.021,0.104,-0.169,0.008,-0.014,-0.259,0.077,0.069,-0.014,-0.04,-0.028,0.062,0.066,-0.188,-0.049,-0.312,-0.312,0.238,-0.122,-0.137,-0.087,-0.019,-0.163,0.094,0.037,0.023,0.104,-0.014,-0.008,-0.13,0.169,-0.146,0.115,0.034,0.057,0.073,0.03,-0.312,-0.188,-0.026,-0.417,-0.199,-0.136,-0.105,0.35,-0.017,-0.014,-0.08,-0.014,0.312,0.083,0.717,0.023,0.077,-0.04,-0.082,0.169,-0.021,-0.112,-0.122,-0.028,0.073,0.03,0.09,0.048,0.354,-0.276,-0.199,-0.364,0.18,0.087,-0.444,0.12,0.008,0.029,-0.304,0.098,0.032,-0.049,0.238,0.1,-0.028,0.017,-0.019,0.094,0.03,0.016,0.354,0.333,0.64,0.1,0.656,0.56,-0.181,-0.02,0.35,0.017,-0.276,-0.053,-0.058,-0.13,0.044,-0.159,0.029,-0.028,0.027,-0.047,-0.08,0.318,0.656,0.677,0.051,0.03,-0.163,0.025,0.057,-0.055,-0.02,0.016,-0.153,-0.137,-0.053,-0.058,0.42,0.366,-0.017,-0.028,0.229,-0.259,-0.417,0.03,-0.089,0.099,0.051,0.044,-0.042,-0.029,0.366,0.025,-0.159,0.318,0.677,0.057,0.42,-0.251,0.099,0.087,0.18,0.077,-0.055,-0.137,-0.036,0.229,0.014,-0.089,-0.051,-0.029,0.377,0.076,0.125,-0.251,0.077,0.14,-0.083,0.063,0.088,0.075,-0.364,0.018,0.021,-0.054,-0.24,0.667,0.158,-0.071,-0.308,0.14,0.088,-0.083,-0.364,0.018,0.021,0.063,0.158,-0.071,-0.054,-0.24,0.667],[1,0.019,0.022,0.0021,0.018,0.013,2.3e-05,1e-06,0.04,0.022,0.043,0.018,0.025,0.019,1,0.0035,0.24,0.24,1,0.04,0.011,0.013,1,2.3e-05,0.042,0.12,0.028,0.011,1,1,0.043,0.049,0.0018,1,0.0091,0.045,0.0023,0.035,0.043,0.013,0.0018,0.12,0.043,0.058,0.043,0.028,1,0.011,0.021,0.045,0.051,0.028,0.0022,0.0062,0.026,0.0064,0.1,0.0022,0.026,0.035,0.0039,0.04,1,1,0.0079,0.02,0.04,1,0.0024,0.099,0.051,0.021,0.0057,0.038,0.005,0.011,0.099,0.0064,0.0057,0.037,0.0087,0.0046,0.00071,0.021,0.0046,0.037,0.01,0.00071,0.0094,0.0062,0.0024,1,0.034,0.028,0.028,0.025,0.015,0.13,0.01,0.084,0.0044,0.029,0.0044,0.013,0.043,0.0053,0.34,0.027,0.0094,0.038,1e-06,0.035,0.043,0.022,0.031,0.058,0.034,0.067,0.015,0.043,0.071,0.13,0.47,0.035,0.051,0.0082,0.029,0.024,0.0025,0.3,0.027,0.035,0.11,5.7e-05,0.014,0.011,0.042,0.051,0.018,0.17,0.038,0.81,0.26,0.0082,7.3e-05,0.039,4e-06,0.043,0.037,0.011,0.0082,0.023,0.024,0.13,0.0036,0.067,0.002,0.024,1e-06,0.0053,0.81,0.3,0.1,0.11,4.5e-05,0.26,7.3e-05,0.042,0.022,0.031,0.34,0.06,0.0025,0.014,0.073,0.0036,0.0056,0.06,0.06,0.042,0.00024,0.0069,0.00042,0.011,0.12,0.029,0.0034,1e-06,0.035,0.073,0.049,0.021,0.041,0.021,0.055,0.044,0.00021,0.012,0.049,0.0021,0.016,0.0073,0.084,0.19,0.018,0.00042,0.0082,0.02,0.0012,0.039,4e-06,0.043,0.2,0.037,0.023,0.021,0.021,0.13,0.67,0.0098,0.014,0.024,0.0025,0.028,0.0027,0.037,0.0027,0.002,5.3e-05,1e-06,0.19,0.12,1e-06,0.0056,0.0012,0.06,0.027,0.00021,0.071,0.037,0.013,1e-06,0.47,0.035,0.0035,0.0098,0.42,0.00087,0.018,0.23,0.014,0.0069,0.052,0.013,1.3e-05,0.067,0.041,0.044,0.027,0.024,0.25,0.0021,0.0073,0.013,0.048,0.035,0.1,1e-06,0.027,0.15,1e-06,0.016,0.28,0.0025,0.25,0.0035,0.005,0.0071,0.02,0.059,0.017,0.052,0.024,0.047,0.0061,0.037,0.00026,0.15,1e-06,0.003,0.0046,0.016,0.22,0.044,0.056,0.28,0.048,0.015,0.025,0.005,0.0071,0.0024,5e-06,0.028,0.03,0.011,0.043,0.67,0.0046,0.028,0.023,0.0015,0.059,0.013,0.044,5e-06,0.22,0.017,0.00026,1e-06,0.044,0.0024,0.023,0.023,0.018,0.00087,0.031,0.056,0.025,0.031,0.011,0.0045,0.028,0.063,0.044,0.00017,0.049,0.033,0.023,0.031,0.014,0.034,0.026,0.0062,0.0051,0.078,0.032,0.11,0.029,8e-05,0.69,0.018,0.12,0.00032,0.014,0.0062,0.034,0.078,0.032,0.11,0.026,0.018,0.12,0.029,8e-05,0.69],["6 hr","6 hr","0 hr","0 hr","1 hr","0 hr","1 hr","6 hr","6 hr","0 hr","6 hr","1 hr","0 hr","6 hr","1 hr","0 hr","6 hr","6 hr","1 hr","6 hr","6 hr","0 hr","6 hr","1 hr","1 hr","6 hr","6 hr","6 hr","0 hr","6 hr","6 hr","0 hr","1 hr","6 hr","6 hr","1 hr","0 hr","6 hr","6 hr","0 hr","1 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","6 hr","6 hr","1 hr","0 hr","0 hr","6 hr","6 hr","1 hr","1 hr","6 hr","6 hr","1 hr","6 hr","0 hr","0 hr","6 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","1 hr","0 hr","6 hr","1 hr","1 hr","6 hr","1 hr","1 hr","6 hr","1 hr","1 hr","6 hr","1 hr","1 hr","6 hr","1 hr","6 hr","0 hr","1 hr","6 hr","6 hr","1 hr","1 hr","0 hr","6 hr","6 hr","6 hr","1 hr","1 hr","6 hr","1 hr","0 hr","0 hr","0 hr","0 hr","6 hr","6 hr","6 hr","0 hr","1 hr","0 hr","0 hr","6 hr","6 hr","6 hr","6 hr","6 hr","0 hr","6 hr","6 hr","1 hr","1 hr","1 hr","1 hr","6 hr","1 hr","0 hr","1 hr","6 hr","6 hr","1 hr","6 hr","0 hr","6 hr","6 hr","1 hr","6 hr","6 hr","6 hr","1 hr","0 hr","1 hr","0 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","6 hr","6 hr","0 hr","1 hr","6 hr","6 hr","1 hr","6 hr","0 hr","1 hr","1 hr","0 hr","1 hr","1 hr","0 hr","0 hr","6 hr","0 hr","6 hr","0 hr","1 hr","6 hr","6 hr","0 hr","1 hr","6 hr","1 hr","1 hr","1 hr","6 hr","6 hr","1 hr","6 hr","1 hr","0 hr","6 hr","1 hr","6 hr","0 hr","1 hr","1 hr","6 hr","0 hr","1 hr","6 hr","1 hr","6 hr","1 hr","6 hr","6 hr","6 hr","1 hr","1 hr","6 hr","1 hr","1 hr","6 hr","1 hr","6 hr","6 hr","6 hr","0 hr","1 hr","6 hr","0 hr","1 hr","0 hr","0 hr","1 hr","6 hr","6 hr","6 hr","6 hr","0 hr","6 hr","0 hr","6 hr","0 hr","6 hr","1 hr","1 hr","1 hr","6 hr","1 hr","1 hr","0 hr","1 hr","6 hr","1 hr","0 hr","0 hr","1 hr","1 hr","1 hr","1 hr","1 hr","0 hr","0 hr","1 hr","6 hr","6 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","1 hr","1 hr","6 hr","6 hr","6 hr","0 hr","1 hr","1 hr","0 hr","1 hr","1 hr","1 hr","1 hr","0 hr","1 hr","6 hr","6 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","1 hr","6 hr","0 hr","1 hr","6 hr","1 hr","6 hr","6 hr","1 hr","1 hr","6 hr","6 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","1 hr","0 hr","1 hr","6 hr","1 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","6 hr","6 hr","6 hr","6 hr","1 hr","6 hr","1 hr","0 hr","0 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","6 hr","6 hr","1 hr","1 hr","1 hr","6 hr","6 hr","6 hr","1 hr","6 hr","1 hr","6 hr","6 hr","6 hr","1 hr","6 hr","6 hr","1 hr","1 hr","1 hr"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Run<\/th>\n      <th>Timepoint<\/th>\n      <th>gene_name<\/th>\n      <th>combined_pip<\/th>\n      <th>Parts<\/th>\n      <th>Top part<\/th>\n      <th>susie_pip (top part)<\/th>\n      <th>z<\/th>\n      <th>QTL<\/th>\n      <th>dPSI<\/th>\n      <th>Permutation p<\/th>\n      <th>QTL from<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"Bfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[3,4,6,7,9,10]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<!-- # Caveats -->
+<!-- - **Some top genes have no allelic effect.** `cis` is isoLASER's cutoff, and above -->
+<!--   about 2,370 pooled reads its threshold falls below zero, so nearly every -->
+<!--   association there is labelled `cis`. That's 15&ndash;18% of the traits per -->
+<!--   timepoint here. They have ΔPSI near 0 and permutation p near 1. -->
+<!--   - ACTB, COX6C and RPL13 rest on such parts. -->
+<!--   - So does LY6H at 1 and 6 hours, where its PIP is shared with other parts on the -->
+<!--     same SNP. At 0 hours its top part has a real association. -->
+<!-- - **One SNP per trait:** a trait and its SNP are the same predictor, so cTWAS -->
+<!--   separates them only through the estimated priors. A high PIP means the group's -->
+<!--   enrichment favours the trait over the SNP, not that this exon's splicing -->
+<!--   explains the GWAS signal better than other genes' at the locus. -->
+<!-- - **The enrichment may not be specific to splicing.** These SNPs are exonic -->
+<!--   variants in neuron-expressed genes, where SCZ heritability is known to -->
+<!--   concentrate. A control run on tested associations that are not `cis` would -->
+<!--   separate the two. -->
+<!-- - **The separate timepoints are not independent:** many parts and SNPs recur at -->
+<!--   0, 1 and 6 hours. -->
+<!-- **Code:** `long_read_RNA/12.ctwas/`: -->
+<!-- - `1.build_weights.R`: the weights and the mapping table, sets `cis_reads10nc`, `cis_panel10nc` and their `_pooled` versions. -->
+<!-- - `2.run_ctwas.R` and `4.submit_scz.sh`: the runs. -->
+<!-- - `5.summarize_runs.R`: this page's tables, pie charts and convergence plots. -->
+<!-- **Downloads:** [parameters](assets/ctwas_scz/params.tsv), [gene PIPs](assets/ctwas_scz/gene_pips.tsv), -->
+<!-- [convergence](assets/ctwas_scz/convergence.tsv) and [all fine-mapped traits](assets/ctwas_scz/traits.tsv). -->
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DT_0.22           data.table_1.14.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12       pillar_1.9.0      compiler_4.2.0    bslib_0.3.1      
+ [5] later_1.3.0       jquerylib_0.1.4   git2r_0.30.1      highr_0.9        
+ [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
+[13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3  
+[17] rlang_1.1.2       cli_3.6.1         rstudioapi_0.13   crosstalk_1.2.0  
+[21] yaml_2.3.5        xfun_0.41         fastmap_1.1.0     stringr_1.5.1    
+[25] knitr_1.39        fs_1.5.2          vctrs_0.6.5       sass_0.4.1       
+[29] htmlwidgets_1.5.4 rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
+[33] fansi_1.0.3       rmarkdown_2.25    magrittr_2.0.3    promises_1.2.0.1 
+[37] htmltools_0.5.2   httpuv_1.6.5      utf8_1.2.2        stringi_1.7.6    </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

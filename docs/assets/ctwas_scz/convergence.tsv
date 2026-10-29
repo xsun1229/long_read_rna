@@ -1,0 +1,9 @@
+set	run	tp	iterations	converged
+cis_reads10nc	Read-based isoLASER	0hr	12	TRUE
+cis_reads10nc	Read-based isoLASER	1hr	11	TRUE
+cis_reads10nc	Read-based isoLASER	6hr	11	TRUE
+cis_panel10nc	Transcript-based isoLASER	0hr	8	TRUE
+cis_panel10nc	Transcript-based isoLASER	1hr	13	TRUE
+cis_panel10nc	Transcript-based isoLASER	6hr	12	TRUE
+cis_reads10nc_pooled	Read-based isoLASER, pooled	pooled	11	TRUE
+cis_panel10nc_pooled	Transcript-based isoLASER, pooled	pooled	12	TRUE

@@ -1,0 +1,291 @@
+---
+title: "cTWAS with isoLASER splicing QTLs: schizophrenia"
+author: "XSun"
+date: "2026-10-29"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+# R code here is ASCII only (HTML entities for special characters), so the page renders the same in any locale
+A <- "docs/assets/ctwas_scz"
+pa <- fread(file.path(A, "params.tsv")); g <- fread(file.path(A, "gene_pips.tsv")); cv <- fread(file.path(A, "convergence.tsv"))
+RUNS <- c(cis_reads10nc="Read-based isoLASER", cis_panel10nc="Transcript-based isoLASER",
+          cis_reads10nc_pooled="Read-based isoLASER, pooled", cis_panel10nc_pooled="Transcript-based isoLASER, pooled")
+SEP <- c("cis_reads10nc", "cis_panel10nc"); POOL <- c("cis_reads10nc_pooled", "cis_panel10nc_pooled")
+TPS <- c("0hr", "1hr", "6hr")
+tps_of <- function(s) if (s %in% POOL) "pooled" else TPS
+combos_of <- function(sets) rbindlist(lapply(sets, function(s) data.table(set=s, tp=tps_of(s))))
+tpl <- function(x) fifelse(x == "pooled", "pooled", sub("hr", " hr", x))
+short <- function(s) sub(" isoLASER", "", RUNS[s])
+lab <- function(s, t) fifelse(t == "pooled", short(s), paste0(short(s), ", ", tpl(t)))
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+fp <- function(x) vapply(x, function(z) if (is.na(z)) "NA" else format(signif(z, 2)), "")
+rng <- function(x, d=1) if (min(x) == max(x)) sprintf(paste0("%.", d, "f"), min(x)) else sprintf(paste0("%.", d, "f&ndash;%.", d, "f"), min(x), max(x))
+cell <- function(x) fifelse(is.na(x), "&ndash;", sprintf("%.2f", x))
+sp <- pa[group == "splicing"]; sn <- pa[group == "SNP"]
+g8_any <- sort(unique(g[gene_pip >= 0.8, gene_name]))
+n8 <- function(s) g[set == s & gene_pip >= 0.8, .N]
+new8 <- function(base) sort(setdiff(g[set == paste0(base, "_pooled") & gene_pip >= 0.8, gene_name], g[set == base & gene_pip >= 0.8, gene_name]))
+pr <- sp[set == "cis_reads10nc_pooled"]; pt <- sp[set == "cis_panel10nc_pooled"]
+
+# the same tables and figures for both kinds of runs
+params_table <- function(sets) {
+  w <- merge(sp[set %in% sets], sn[, .(set, tp, snp_prior=prior)], by=c("set", "tp"))[order(match(set, sets), match(tp, c(TPS, "pooled")))]
+  knitr::kable(w[, .(Run=RUNS[set], Timepoint=tpl(tp), group_size=fmt(group_size),
+    `group_prior (splicing)`=sprintf("%.4f", prior), `group_prior (SNP)`=sprintf("%.5f", snp_prior),
+    group_prior_var=sprintf("%.1f", prior_var), `log_enrichment (log_enrichment_se)`=sprintf("%.2f (%.2f)", log_enrichment, log_enrichment_se),
+    enrichment_pval=fp(enrichment_pval), `group_pve (splicing)`=sprintf("%.4f", pve),
+    total_pve=sprintf("%.3f", total_pve), `prop_heritability (splicing)`=sprintf("%.4f", prop_heritability))], align="llrrrrrrrrr")
+}
+pie_tabs <- function(sets, h) for (s in sets) {
+  cat(h, " ", short(s), "\n\n", sep="")
+  cat("![](assets/ctwas_scz/piechart_", s, ".png)\n\n[Open as PDF](assets/ctwas_scz/piechart_", s, ".pdf)\n\n", sep="")
+}
+conv_tabs <- function(cmb, h) for (i in seq_len(nrow(cmb))) { s <- cmb$set[i]; t <- cmb$tp[i]
+  cat(h, " ", lab(s, t), "\n\n", sep="")
+  cat("![](assets/ctwas_scz/convergence_", s, "_", t, ".png)\n\n[Open as PDF](assets/ctwas_scz/convergence_", s, "_", t, ".pdf)\n\n", sep="")
+}
+conv_line <- function(sets) { d <- cv[set %in% sets]
+  sprintf("%s, in %s iterations (of at most 50).", if (all(d$converged)) sprintf("All %d runs converged", nrow(d)) else sprintf("%d of %d runs converged", sum(d$converged), nrow(d)), rng(d$iterations, 0)) }
+gene_table <- function(d) {
+  d <- d[order(-gene_pip)]
+  x <- d[, .(gene_name, combined_pip=sprintf("%.2f", gene_pip), Parts=n_parts,
+             `Top part`=top_part, `susie_pip (top part)`=sprintf("%.2f", top_part_pip), z=sprintf("%.1f", z), `QTL (UKB ID)`=ukb_id,
+             `&Delta;PSI`=sprintf("%+.3f", dpsi), `Permutation p`=fp(qtl_p))]
+  if (all(d$tp == "pooled")) x[, `QTL from` := tpl(d$tp_source)]
+  paste(knitr::kable(x, escape=FALSE), collapse="\n")
+}
+gene_tabs <- function(cmb, h) for (i in seq_len(nrow(cmb))) { s <- cmb$set[i]; t <- cmb$tp[i]
+  cat(h, " ", lab(s, t), "\n\n", sep="")
+  d <- g[set == s & tp == t & gene_pip >= 0.5]
+  if (!nrow(d)) cat("No gene reaches 0.5.\n\n") else cat(gene_table(d), "\n\n", sep="")
+}
+```
+
+We ran cTWAS on the schizophrenia (SCZ) GWAS with our isoLASER associations as
+splicing QTLs. cTWAS asks two things: whether the splicing QTLs explain more
+GWAS heritability than SNPs in general (**enrichment**), and which genes'
+splicing is likely causal (**PIP**, the posterior inclusion probability). We ran
+it for each timepoint separately, and with all timepoints pooled.
+
+**Short answer.**
+
+- **Enrichment:** the splicing QTLs are enriched in every run. The
+  `log_enrichment` for separate timepoints is `r rng(sp[set == "cis_reads10nc", log_enrichment])`
+  read-based and `r rng(sp[set == "cis_panel10nc", log_enrichment])`
+  transcript-based; pooled, it is `r sprintf("%.2f", pr$log_enrichment)` and
+  `r sprintf("%.2f", pt$log_enrichment)`.
+- **prop_heritability** of the splicing group: small, `r rng(sp$prop_heritability, 4)`,
+  because even the largest run has only `r fmt(max(sp$group_size))` traits against millions of SNPs.
+- **Genes:** `r length(g8_any)` genes reach a gene-level `combined_pip` of 0.8 in
+  at least one run: `r paste(g8_any, collapse=", ")`. LY6H, our GWAS Catalog
+  highlight for smoking, reaches 0.8 at every read-based timepoint.
+- **Pooling** gives `r fmt(pr$group_size)` read-based and `r fmt(pt$group_size)`
+  transcript-based traits, and `r n8("cis_reads10nc_pooled")` and
+  `r n8("cis_panel10nc_pooled")` genes at `combined_pip` 0.8. Genes not at 0.8 in
+  any single-timepoint run: read-based
+  `r if (length(new8("cis_reads10nc"))) paste(new8("cis_reads10nc"), collapse=", ") else "none"`;
+  transcript-based `r if (length(new8("cis_panel10nc"))) paste(new8("cis_panel10nc"), collapse=", ") else "none"`.
+<!-- - **Caveat:** some top genes rest on parts with no allelic effect (permutation -->
+<!--   p near 1), see [Caveats](#caveats). -->
+
+# How the runs were set up
+
+- **GWAS:** PGC schizophrenia, `ieu-b-5102` (N = 127,906), z-scores harmonized to
+  the UK Biobank (UKB) LD reference, from the earlier multigroup cTWAS project.
+- **Molecular traits** (our definition): one trait per tested exonic part. A part
+  is included when one of its associations has isoLASER's `cis` label, computed
+  from the panel-heterozygous donors only, with no ΔPSI or FDR cutoff. This is
+  the first set of the [GTEx comparison](isolaser_gtex_comparison_reads10nc_q010_hetcis.html).
+- **QTL and weight:** each trait has one SNP, the part's `cis` variant with the
+  smallest permutation p (ties: largest \|ΔPSI\|), among single-base variants in
+  the UKB reference that are not strand-ambiguous. The weight is ΔPSI (ALT minus
+  REF inclusion) with ALT as the effect allele. With one SNP per trait, only the
+  weight's sign matters.
+- **Mapping table:** each trait (exonic part) maps to the gene the part belongs
+  to. It is written with the weights and used for gene-level PIPs.
+- **Two kinds of runs**, each with a single splicing group: one run per
+  timepoint, and one run per version with all timepoints pooled (how the weights
+  were pooled is described [there](#all-timepoints-pooled)).
+- **Settings:** UKB b38 LD, no thinning, one prior variance shared by all groups
+  (`shared_all`), up to 5 signals per region (L = 5), at least 100 traits per
+  group. Regions are fine-mapped when their non-SNP PIP is at least 0.5.
+- **Not done yet:** merging regions and checking LD mismatch.
+
+## What the tables and figures show
+
+**Parameters**, the output of `summarize_param()`:
+
+- **group_size:** splicing traits that reach cTWAS after matching to the GWAS and the LD reference.
+- **group_prior:** the estimated prior probability that a trait (splicing) or a
+  variant (SNP) is causal.
+- **group_prior_var:** the prior variance of a causal effect, shared by both groups (`shared_all`).
+- **log_enrichment:** the log of the splicing prior over the SNP prior, with its
+  standard error; **enrichment_pval** is its p-value.
+- **group_pve:** the proportion of SCZ variance explained by the group:
+  group_size &times; group_prior &times; group_prior_var / GWAS N. **total_pve**
+  sums the splicing and SNP groups.
+- **prop_heritability:** a group's group_pve over total_pve, the slices of the
+  pie charts.
+
+**Convergence**, from `make_convergence_plots()`: the estimates at each iteration
+of the parameter estimation. Proportion causal (&pi;) is `group_prior`, effect
+size (&sigma;<sup>2</sup>) is `group_prior_var`, enrichment
+(&pi;<sub>G</sub>/&pi;<sub>S</sub>, not on the log scale), and PVE. Flat lines
+at the end mean the estimates have settled.
+
+**Gene-level PIPs:** `combined_pip` combines a gene's exonic parts with
+`combine_gene_pips()` (`method = "combine_cs"`, `filter_cs = FALSE`: all parts,
+whether or not they are in a credible set). It sums the parts' `susie_pip`
+within each credible set and combines credible sets as
+1 &minus; &prod;(1 &minus; sum). Parts that share a top SNP are identical
+predictors and split their PIP, so a gene's `combined_pip` can be high when none
+of its parts is. The gene tables list genes with `combined_pip` of at least 0.5:
+
+- **Parts:** the gene's parts in fine-mapped regions.
+- **Top part:** the part with the largest `susie_pip`, its `susie_pip`, and its z-score (z).
+- **QTL:** the top part's SNP. **ΔPSI** and **permutation p** are its isoLASER
+  association, from our permutation test. In pooled runs, **QTL from** gives the
+  timepoint the QTL was taken from.
+
+# Each timepoint separately
+
+## Parameters
+
+```{r sep_params}
+params_table(SEP)
+```
+
+## prop_heritability {.tabset}
+
+```{r sep_pies, results="asis"}
+pie_tabs(SEP, "###")
+```
+
+## Convergence {.tabset}
+
+`r conv_line(SEP)`
+
+```{r sep_conv, results="asis"}
+conv_tabs(combos_of(SEP), "###")
+```
+
+## Gene-level PIPs
+
+### Genes with combined_pip of at least 0.8 in any timepoint
+
+```{r sep_overview}
+cmb <- combos_of(SEP); keys <- cmb[, paste(set, tp, sep="_")]
+o <- dcast(g[set %in% SEP & gene_name %in% g[set %in% SEP & gene_pip >= 0.8, gene_name]], gene_name ~ set + tp, value.var="gene_pip")
+for (k in setdiff(keys, names(o))) o[, (k) := NA_real_]
+o <- o[order(-do.call(pmax, c(lapply(keys, function(k) o[[k]]), na.rm=TRUE)))]
+out <- data.table(gene_name=o$gene_name); for (i in seq_along(keys)) out[, (lab(cmb$set[i], cmb$tp[i])) := cell(o[[keys[i]]])]
+knitr::kable(out, escape=FALSE, align=c("l", rep("r", length(keys))))
+```
+
+Each cell is the gene's `combined_pip` in that run. "&ndash;" means the gene was
+not in a fine-mapped region in that run.
+
+### By run and timepoint {.tabset}
+
+```{r sep_genes, results="asis"}
+gene_tabs(combos_of(SEP), "####")
+```
+
+# All timepoints pooled
+
+**How the weights were pooled** (our definition): one run per version, with the
+traits of all three timepoints in one weight file. Each exonic part enters once,
+with the QTL of the timepoint where its association has the smallest permutation
+p (ties: largest \|ΔPSI\|, then the earlier timepoint). Keeping a part once per
+timepoint would give identical predictors, which split their PIP.
+
+## Parameters
+
+```{r pool_params}
+params_table(POOL)
+```
+
+## prop_heritability {.tabset}
+
+```{r pool_pies, results="asis"}
+pie_tabs(POOL, "###")
+```
+
+## Convergence {.tabset}
+
+`r conv_line(POOL)`
+
+```{r pool_conv, results="asis"}
+conv_tabs(combos_of(POOL), "###")
+```
+
+## Gene-level PIPs
+
+### Genes with combined_pip of at least 0.8 when pooled
+
+```{r pool_overview}
+best <- function(base, gn) vapply(gn, function(x) { v <- g[set == base & gene_name == x, gene_pip]; if (length(v)) max(v) else NA_real_ }, 0)
+pool_g <- function(s, gn) vapply(gn, function(x) { v <- g[set == s & gene_name == x, gene_pip]; if (length(v)) v[1] else NA_real_ }, 0)
+gn <- sort(unique(g[set %in% POOL & gene_pip >= 0.8, gene_name]))
+out <- data.table(gene_name=gn, a=pool_g("cis_reads10nc_pooled", gn), b=best("cis_reads10nc", gn), c=pool_g("cis_panel10nc_pooled", gn), d=best("cis_panel10nc", gn))
+out <- out[order(-pmax(a, c, na.rm=TRUE))]
+knitr::kable(out[, .(gene_name, `Read-based, pooled`=cell(a), `Read-based, best single timepoint`=cell(b),
+                     `Transcript-based, pooled`=cell(c), `Transcript-based, best single timepoint`=cell(d))], escape=FALSE, align="lrrrr")
+```
+
+Each cell is the gene's `combined_pip`. **Best single timepoint** is its largest
+`combined_pip` over the three separate runs; "&ndash;" means it was not in a
+fine-mapped region there.
+
+### By run {.tabset}
+
+```{r pool_genes, results="asis"}
+gene_tabs(combos_of(POOL), "####")
+```
+
+# All genes
+
+```{r all_genes}
+DT::datatable(as.data.frame(g[, .(Run=short(set), Timepoint=tpl(tp), gene_name, combined_pip=round(gene_pip, 3),
+  Parts=n_parts, `Top part`=top_part, `susie_pip (top part)`=round(top_part_pip, 3), z=round(z, 2),
+  QTL=ukb_id, dPSI=round(dpsi, 3), `Permutation p`=signif(qtl_p, 2), `QTL from`=tpl(tp_source))][order(-combined_pip)]), rownames=FALSE, filter="top",
+  extensions="Buttons", options=list(pageLength=10, scrollX=TRUE, dom="Bfrtip", buttons=c("copy", "csv")),
+  caption="Every gene in a fine-mapped region, in every run.")
+```
+
+<!-- # Caveats -->
+
+<!-- - **Some top genes have no allelic effect.** `cis` is isoLASER's cutoff, and above -->
+<!--   about 2,370 pooled reads its threshold falls below zero, so nearly every -->
+<!--   association there is labelled `cis`. That's 15&ndash;18% of the traits per -->
+<!--   timepoint here. They have ΔPSI near 0 and permutation p near 1. -->
+<!--   - ACTB, COX6C and RPL13 rest on such parts. -->
+<!--   - So does LY6H at 1 and 6 hours, where its PIP is shared with other parts on the -->
+<!--     same SNP. At 0 hours its top part has a real association. -->
+<!-- - **One SNP per trait:** a trait and its SNP are the same predictor, so cTWAS -->
+<!--   separates them only through the estimated priors. A high PIP means the group's -->
+<!--   enrichment favours the trait over the SNP, not that this exon's splicing -->
+<!--   explains the GWAS signal better than other genes' at the locus. -->
+<!-- - **The enrichment may not be specific to splicing.** These SNPs are exonic -->
+<!--   variants in neuron-expressed genes, where SCZ heritability is known to -->
+<!--   concentrate. A control run on tested associations that are not `cis` would -->
+<!--   separate the two. -->
+<!-- - **The separate timepoints are not independent:** many parts and SNPs recur at -->
+<!--   0, 1 and 6 hours. -->
+
+<!-- **Code:** `long_read_RNA/12.ctwas/`: -->
+
+<!-- - `1.build_weights.R`: the weights and the mapping table, sets `cis_reads10nc`, `cis_panel10nc` and their `_pooled` versions. -->
+<!-- - `2.run_ctwas.R` and `4.submit_scz.sh`: the runs. -->
+<!-- - `5.summarize_runs.R`: this page's tables, pie charts and convergence plots. -->
+
+<!-- **Downloads:** [parameters](assets/ctwas_scz/params.tsv), [gene PIPs](assets/ctwas_scz/gene_pips.tsv), -->
+<!-- [convergence](assets/ctwas_scz/convergence.tsv) and [all fine-mapped traits](assets/ctwas_scz/traits.tsv). -->

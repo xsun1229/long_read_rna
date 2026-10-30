@@ -1,0 +1,8 @@
+step	qtls	isoforms	genes
+independent cis-QTLs (Pantry)	6755	6067	4998
+one row per isoform x variant	6749	6067	4998
+single-base SNV	6207	5639	4703
+autosomes	6207	5639	4703
+variant in the UKB b38 reference	5374	4993	4278
+not strand-ambiguous	4600	4296	3751
+top QTL per isoform	4296	4296	3751

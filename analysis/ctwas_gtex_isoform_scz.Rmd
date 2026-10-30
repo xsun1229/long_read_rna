@@ -1,0 +1,194 @@
+---
+title: "cTWAS with GTEx eQTLs, sQTLs and isoform-ratio QTLs: schizophrenia, Brain Cerebellum"
+author: "XSun"
+date: "2026-10-30"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+# R code here is ASCII only (HTML entities for special characters), so the page renders the same in any locale
+A <- "docs/assets/ctwas_gtex_SCZ_Brain_Cerebellum"
+tq <- fread(file.path(A, "tissue_qtls.tsv")); st <- fread(file.path(A, "isoform_steps.tsv"))
+pa <- fread(file.path(A, "params.tsv")); g <- fread(file.path(A, "gene_pips.tsv")); cv <- fread(file.path(A, "convergence.tsv"))
+RUNS <- c(es="eQTL + sQTL", esi="eQTL + sQTL + isoform ratio")
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+fp <- function(x) vapply(x, function(z) if (is.na(z)) "NA" else format(signif(z, 2)), "")
+cell <- function(x) fifelse(is.na(x), "&ndash;", sprintf("%.2f", x))
+iso <- pa[run == "esi" & type == "isoQTL"]
+cb <- tq[tissue == "Brain_Cerebellum"]
+g8 <- function(r) g[run == r & combined_pip >= 0.8, gene_name]
+gene_table <- function(d) paste(knitr::kable(d[order(-combined_pip), .(gene_name, combined_pip=sprintf("%.2f", combined_pip), eQTL_pip=cell(eQTL_pip),
+  sQTL_pip=cell(sQTL_pip), isoQTL_pip=cell(isoQTL_pip), Traits=n_traits, `Top trait`=top_trait, `Top trait type`=top_type,
+  `susie_pip (top trait)`=sprintf("%.2f", top_trait_pip), z=sprintf("%.1f", z))], escape=FALSE, align="lrrrrrllrr"), collapse="\n")
+```
+
+# How we selected the tissue
+
+We chose the brain tissue with the most isoform-ratio QTLs, since SCZ is a brain
+trait. The counts are Pantry's conditionally independent cis-QTLs per GTEx v8
+tissue (`gtex.separate_kdp.qtls.tsv.gz`, downloaded 2026-10-29).
+
+```{r tissues}
+d <- tq[brain == TRUE | rank <= 3][order(rank)]
+knitr::kable(d[, .(Rank=rank, Tissue=gsub("_", " ", tissue), `Pantry code`=code, `Isoform-ratio QTLs`=fmt(isoform_qtls),
+  Isoforms=fmt(isoforms), Genes=fmt(isoform_genes), eQTLs=fmt(eqtls), `Splicing QTLs`=fmt(sqtls))], align="rllrrrrr")
+```
+
+- **Rank:** among all `r nrow(tq)` tissues, by the number of isoform-ratio QTLs. The
+  table shows the top three tissues overall and every brain tissue.
+- **Isoform-ratio QTLs:** independent cis-QTLs; **Isoforms** and **Genes** are the
+  isoforms and genes they belong to. **eQTLs** and **Splicing QTLs** are Pantry's
+  expression and intron-excision QTLs in the same tissue, for comparison.
+
+Brain Cerebellum has the most among brain tissues: `r fmt(cb$isoform_qtls)`
+isoform-ratio QTLs in `r fmt(cb$isoforms)` isoforms of `r fmt(cb$isoform_genes)` genes.
+Testis has the most overall. Pantry codes the two cerebellum tissues BRNCHA and
+BRNCHB. Its covariate files have 209 samples for BRNCHA and 175 for BRNCHB, the
+GTEx v8 sample sizes of Brain Cerebellum and Cerebellar Hemisphere, so BRNCHA is
+Brain Cerebellum.
+
+# How the runs were set up
+
+- **GWAS:** PGC schizophrenia, `ieu-b-5102` (N = 127,906), z-scores harmonized to
+  the UK Biobank (UKB) LD reference, as for the M-cTWAS paper.
+- **eQTL and sQTL weights:** the paper's GTEx v8 PredictDB expression and splicing
+  models for Brain Cerebellum.
+- **Isoform-ratio weights** (our definition): one trait per isoform, from Pantry's
+  independent cis-QTLs in Brain Cerebellum. They come from the genes significant
+  in Pantry's permutation test, q < 0.05.
+  - Each isoform's QTL is its strongest independent variant (smallest nominal p)
+    among single-base variants in the UKB reference that are not
+    strand-ambiguous.
+  - The weight is that variant's effect on the isoform ratio (tensorQTL's
+    slope); with one SNP per trait, only its sign matters.
+  - Genes come from Pantry's own annotation. We used top QTLs, not Munro's
+    prediction models.
+- **Settings, as the paper's runs:** each QTL type is its own group, with protein-coding genes only and LD
+  from the UKB reference. eQTL and sQTL weights are scaled (`scale_predictdb_weights`), the
+  isoform weights are not (one SNP per trait). No thinning, one prior variance shared
+  by all groups (`shared_all`), up to 5 signals per region (L = 5).
+- **Not done yet:** merging regions and checking LD mismatch.
+
+```{r steps}
+knitr::kable(st[, .(Step=step, QTLs=fmt(qtls), Isoforms=fmt(isoforms), Genes=fmt(genes))], align="lrrr")
+```
+
+The isoform-ratio weights at each step. The last row is the weights. cTWAS then
+keeps the isoforms of protein-coding genes whose QTL is in the GWAS:
+`r fmt(iso$group_size)` traits.
+
+## What the tables and figures show
+
+**Parameters**, the output of `summarize_param()`:
+
+- **group_size:** molecular traits that reach cTWAS after matching to the GWAS and the LD reference.
+- **group_prior:** the estimated prior probability that a trait (or a SNP) is causal.
+- **group_prior_var:** the prior variance of a causal effect, shared by all groups (`shared_all`).
+- **log_enrichment:** the log of a group's prior over the SNP prior, with its
+  standard error; **enrichment_pval** is its p-value.
+- **group_pve:** the proportion of SCZ variance explained by the group;
+  **total_pve** sums all groups and SNPs.
+- **prop_heritability:** a group's `group_pve` over `total_pve`, the slices of the
+  pie charts.
+
+**Convergence**, from `make_convergence_plots()`: the estimates at each iteration
+of the parameter estimation (proportion causal &pi; is `group_prior`, effect size
+&sigma;<sup>2</sup> is `group_prior_var`, enrichment is
+&pi;<sub>G</sub>/&pi;<sub>S</sub>, and PVE).
+
+**Gene-level PIPs:** `combined_pip` combines all of a gene's molecular traits and
+QTL types with `combine_gene_pips()` (`by = "type"`, `method = "combine_cs"`,
+`filter_cs = FALSE`). **eQTL_pip**, **sQTL_pip** and **isoQTL_pip** are the gene's
+PIP from each QTL type; "&ndash;" means the gene has no trait of that type in a
+fine-mapped region. The mapping table assigns each trait to its gene: the paper's
+PredictDB mapping for eQTL genes and sQTL introns, and Pantry's annotation for
+isoforms.
+
+# Results
+
+## Parameters
+
+```{r params}
+w <- merge(pa[type != "SNP"], pa[type == "SNP", .(run, snp_prior=group_prior)], by="run")[order(match(run, names(RUNS)), match(type, c("eQTL", "sQTL", "isoQTL")))]
+knitr::kable(w[, .(Run=RUNS[run], group, group_size=fmt(group_size), group_prior=sprintf("%.5f", group_prior), `group_prior (SNP)`=sprintf("%.5f", snp_prior),
+  group_prior_var=sprintf("%.1f", group_prior_var), `log_enrichment (log_enrichment_se)`=sprintf("%.2f (%.2f)", log_enrichment, log_enrichment_se),
+  enrichment_pval=fp(enrichment_pval), group_pve=sprintf("%.4f", group_pve), total_pve=sprintf("%.3f", total_pve),
+  prop_heritability=sprintf("%.5f", prop_heritability))], align="llrrrrrrrrr")
+```
+
+## prop_heritability {.tabset}
+
+```{r pies, results="asis"}
+for (r in names(RUNS)) {
+  cat("### ", RUNS[[r]], "\n\n", sep="")
+  cat("![](assets/ctwas_gtex_SCZ_Brain_Cerebellum/piechart_", r, ".png)\n\n[Open as PDF](assets/ctwas_gtex_SCZ_Brain_Cerebellum/piechart_", r, ".pdf)\n\n", sep="")
+}
+```
+
+## Convergence {.tabset}
+
+`r sprintf("%s converged in %d iterations. %s stopped at %d iterations without converging: the isoQTL prior was still decreasing towards zero while the eQTL, sQTL and SNP estimates had settled, so its estimate is an upper bound.", RUNS[["es"]], cv[run == "es", iterations], RUNS[["esi"]], cv[run == "esi", iterations])`
+Both runs fine-mapped `r fmt(cv[run == "es", regions])` regions.
+
+```{r conv, results="asis"}
+for (r in names(RUNS)) {
+  cat("### ", RUNS[[r]], "\n\n", sep="")
+  cat("![](assets/ctwas_gtex_SCZ_Brain_Cerebellum/convergence_", r, ".png)\n\n[Open as PDF](assets/ctwas_gtex_SCZ_Brain_Cerebellum/convergence_", r, ".pdf)\n\n", sep="")
+}
+```
+
+## Gene-level PIPs
+
+### Genes with combined_pip of at least 0.8 in either run
+
+```{r overview}
+gn <- sort(unique(g[combined_pip >= 0.8, gene_name]))
+pick <- function(r, col) vapply(gn, function(x) { v <- g[run == r & gene_name == x][[col]]; if (length(v)) v[1] else NA_real_ }, 0)
+o <- data.table(gene_name=gn, a=pick("es", "combined_pip"), b=pick("esi", "combined_pip"), e=pick("esi", "eQTL_pip"), s=pick("esi", "sQTL_pip"), i=pick("esi", "isoQTL_pip"))[order(-b)]
+knitr::kable(o[, .(gene_name, `combined_pip (eQTL + sQTL)`=cell(a), `combined_pip (+ isoform ratio)`=cell(b),
+  `eQTL_pip (+ isoform ratio)`=cell(e), `sQTL_pip (+ isoform ratio)`=cell(s), `isoQTL_pip (+ isoform ratio)`=cell(i))], escape=FALSE, align="lrrrrr")
+```
+
+The last three columns split the second run's `combined_pip` by QTL type.
+
+### By run {.tabset}
+
+Genes with `combined_pip` of at least 0.5.
+
+```{r gene_tabs, results="asis"}
+for (r in names(RUNS)) {
+  cat("#### ", RUNS[[r]], "\n\n", sep="")
+  cat(gene_table(g[run == r & combined_pip >= 0.5]), "\n\n", sep="")
+}
+```
+
+- **Traits:** the gene's molecular traits in fine-mapped regions, over all QTL types.
+- **Top trait:** the trait with the largest `susie_pip`: its ID (an eQTL gene, an
+  sQTL intron or an isoform), type, `susie_pip` and z-score (z).
+
+## All genes
+
+```{r all_genes}
+DT::datatable(as.data.frame(g[, .(Run=RUNS[run], gene_name, combined_pip=round(combined_pip, 3), eQTL_pip=round(eQTL_pip, 3), sQTL_pip=round(sQTL_pip, 3),
+  isoQTL_pip=round(isoQTL_pip, 3), Traits=n_traits, `Top trait`=top_trait, `Top trait type`=top_type, `susie_pip (top trait)`=round(top_trait_pip, 3),
+  z=round(z, 2))][order(-combined_pip)]), rownames=FALSE, filter="top", extensions="Buttons",
+  options=list(pageLength=10, scrollX=TRUE, dom="Bfrtip", buttons=c("copy", "csv")), caption="Every gene in a fine-mapped region, in both runs.")
+```
+
+**Code:** `long_read_RNA/15.ctwas_gtex_isoform/`:
+
+- `0.build_isoform_topqtl.R`: the isoform-ratio top-QTL weights and their mapping table.
+- `1.run_ctwas.R` and `.sbatch`: the two runs (QTL types `es` and `esi`).
+- `2.summarize.R`: this page's tables and figures.
+
+**Downloads:** [tissue counts](assets/ctwas_gtex_SCZ_Brain_Cerebellum/tissue_qtls.tsv),
+[parameters](assets/ctwas_gtex_SCZ_Brain_Cerebellum/params.tsv),
+[gene PIPs](assets/ctwas_gtex_SCZ_Brain_Cerebellum/gene_pips.tsv) and
+[convergence](assets/ctwas_gtex_SCZ_Brain_Cerebellum/convergence.tsv).

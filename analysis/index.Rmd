@@ -110,3 +110,10 @@ within 30 bp are left out.
 * [Evidence of technical artifacts in isoLASER variant calls](isolaser_variant_artifacts.html) —
   support from our panel, sequence-context and read-pattern checks, and the
   reanalysis that led to step 2
+
+# cTWAS with GTEx molecular QTLs
+
+* [eQTLs, sQTLs and isoform-ratio QTLs, schizophrenia](ctwas_gtex_isoform_scz.html) —
+  whether isoform-ratio QTLs from Munro et al. add to the M-cTWAS paper's eQTL and
+  sQTL groups, in Brain Cerebellum (chosen as the brain tissue with the most
+  isoform-ratio QTLs)

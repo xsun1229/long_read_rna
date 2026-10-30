@@ -34,6 +34,10 @@ g8_any <- sort(unique(g[gene_pip >= 0.8, gene_name]))
 n8 <- function(s) g[set == s & gene_pip >= 0.8, .N]
 new8 <- function(base) sort(setdiff(g[set == paste0(base, "_pooled") & gene_pip >= 0.8, gene_name], g[set == base & gene_pip >= 0.8, gene_name]))
 pr <- sp[set == "cis_reads10nc_pooled"]; pt <- sp[set == "cis_panel10nc_pooled"]
+# joint run: read-based, the three timepoints as separate groups in one run
+jp <- fread(file.path(A, "joint_params.tsv")); jg <- fread(file.path(A, "joint_gene_pips.tsv")); jc <- fread(file.path(A, "joint_convergence.tsv"))
+j8 <- jg[gene_pip >= 0.8, gene_name]
+sep8 <- g[set == "cis_reads10nc" & gene_pip >= 0.8, unique(gene_name)]
 
 # the same tables and figures for both kinds of runs
 params_table <- function(sets) {
@@ -93,6 +97,11 @@ it for each timepoint separately, and with all timepoints pooled.
   any single-timepoint run: read-based
   `r if (length(new8("cis_reads10nc"))) paste(new8("cis_reads10nc"), collapse=", ") else "none"`;
   transcript-based `r if (length(new8("cis_panel10nc"))) paste(new8("cis_panel10nc"), collapse=", ") else "none"`.
+- **Joint run** (read-based, the three timepoints as separate groups in one run):
+  one `combined_pip` per gene over all its parts and timepoints. `r length(j8)` genes
+  reach 0.8 (`r paste(j8, collapse=", ")`) and `r jg[gene_pip >= 0.5, .N]` reach 0.5.
+  The separate read-based runs had `r length(sep8)` genes at 0.8 between them; the
+  joint run adds `r if (length(setdiff(j8, sep8))) paste(setdiff(j8, sep8), collapse=", ") else "none"`.
 <!-- - **Caveat:** some top genes rest on parts with no allelic effect (permutation -->
 <!--   p near 1), see [Caveats](#caveats). -->
 
@@ -111,9 +120,10 @@ it for each timepoint separately, and with all timepoints pooled.
   weight's sign matters.
 - **Mapping table:** each trait (exonic part) maps to the gene the part belongs
   to. It is written with the weights and used for gene-level PIPs.
-- **Two kinds of runs**, each with a single splicing group: one run per
-  timepoint, and one run per version with all timepoints pooled (how the weights
-  were pooled is described [there](#all-timepoints-pooled)).
+- **Three kinds of runs:** one run per timepoint; one run per version with all
+  timepoints pooled into a single group ([how](#all-timepoints-pooled)); and one
+  read-based run with the three timepoints as separate groups
+  ([how](#all-timepoints-jointly)).
 - **Settings:** UKB b38 LD, no thinning, one prior variance shared by all groups
   (`shared_all`), up to 5 signals per region (L = 5), at least 100 traits per
   group. Regions are fine-mapped when their non-SNP PIP is at least 0.5.
@@ -251,6 +261,64 @@ fine-mapped region there.
 gene_tabs(combos_of(POOL), "####")
 ```
 
+# All timepoints jointly
+
+**How the joint run works** (Xin's suggestion; read-based only): one run with the
+three timepoints as separate groups, `0hr|splicing`, `1hr|splicing` and
+`6hr|splicing`, each with that timepoint's weights (the traits of the separate
+runs) and its own `group_prior`; `group_prior_var` is shared. A part tested at
+several timepoints enters once per timepoint. Copies with the same QTL are
+identical predictors and split their PIP, but they fall in the same credible set,
+so a gene's `combined_pip` (all its parts and timepoints, `combine_gene_pips()`
+with `by = "type"`) adds them back.
+
+## Parameters
+
+```{r joint_params}
+w <- jp[group != "SNP"][, snp_prior := jp[group == "SNP", prior]]
+knitr::kable(w[, .(group, group_size=fmt(group_size), `group_prior (splicing)`=sprintf("%.4f", prior), `group_prior (SNP)`=sprintf("%.5f", snp_prior),
+  group_prior_var=sprintf("%.1f", prior_var), `log_enrichment (log_enrichment_se)`=sprintf("%.2f (%.2f)", log_enrichment, log_enrichment_se),
+  enrichment_pval=fp(enrichment_pval), group_pve=sprintf("%.4f", pve), total_pve=sprintf("%.3f", total_pve),
+  prop_heritability=sprintf("%.4f", prop_heritability))], align="lrrrrrrrrr")
+```
+
+## prop_heritability
+
+![](assets/ctwas_scz/piechart_joint.png)
+
+[Open as PDF](assets/ctwas_scz/piechart_joint.pdf)
+
+## Convergence
+
+`r sprintf("%s in %d iterations (of at most 50).", if (jc$converged) "Converged" else "Did not converge", jc$iterations)`
+
+![](assets/ctwas_scz/convergence_joint.png)
+
+[Open as PDF](assets/ctwas_scz/convergence_joint.pdf)
+
+## Gene-level PIPs
+
+Genes with `combined_pip` of at least 0.5.
+
+```{r joint_genes}
+best_sep <- function(gn) vapply(gn, function(x) { v <- g[set == "cis_reads10nc" & gene_name == x, gene_pip]; if (length(v)) max(v) else NA_real_ }, 0)
+d <- jg[gene_pip >= 0.5][order(-gene_pip)]
+knitr::kable(d[, .(gene_name, combined_pip=sprintf("%.2f", gene_pip), `0hr_pip`=cell(pip_0hr), `1hr_pip`=cell(pip_1hr), `6hr_pip`=cell(pip_6hr),
+  `Best separate run`=cell(best_sep(gene_name)), Traits=n_traits, `Top part`=top_part, Timepoint=tpl(top_tp),
+  `susie_pip (top part)`=sprintf("%.2f", top_part_pip), z=sprintf("%.1f", z), `QTL (UKB ID)`=ukb_id, `&Delta;PSI`=sprintf("%+.3f", dpsi),
+  `Permutation p`=fp(qtl_p))], escape=FALSE, align="lrrrrrrlllrlrr")
+```
+
+- **combined_pip:** over all of the gene's parts and timepoints (`by = "type"`).
+- **0hr_pip, 1hr_pip, 6hr_pip:** `combine_gene_pips()` with `by = "context"`, the
+  gene's PIP from that timepoint's traits only; "&ndash;" means none of its traits
+  at that timepoint is in a fine-mapped region.
+- **Best separate run:** the gene's largest `combined_pip` in the three
+  single-timepoint runs.
+- **Traits:** the gene's part &times; timepoint traits in fine-mapped regions.
+- **Top part, Timepoint, susie_pip (top part), z, QTL, ΔPSI, permutation p:** the
+  trait with the largest `susie_pip`, as in the other tables.
+
 # All genes
 
 ```{r all_genes}
@@ -284,8 +352,8 @@ DT::datatable(as.data.frame(g[, .(Run=short(set), Timepoint=tpl(tp), gene_name, 
 <!-- **Code:** `long_read_RNA/12.ctwas/`: -->
 
 <!-- - `1.build_weights.R`: the weights and the mapping table, sets `cis_reads10nc`, `cis_panel10nc` and their `_pooled` versions. -->
-<!-- - `2.run_ctwas.R` and `4.submit_scz.sh`: the runs. -->
-<!-- - `5.summarize_runs.R`: this page's tables, pie charts and convergence plots. -->
+<!-- - `2.run_ctwas.R` and `4.submit_scz.sh`: the runs (the joint run: `4.submit_scz.sh cis_reads10nc 0hr,1hr,6hr`). -->
+<!-- - `5.summarize_runs.R`: this page's tables, pie charts and convergence plots, including the joint run. -->
 
 <!-- **Downloads:** [parameters](assets/ctwas_scz/params.tsv), [gene PIPs](assets/ctwas_scz/gene_pips.tsv), -->
 <!-- [convergence](assets/ctwas_scz/convergence.tsv) and [all fine-mapped traits](assets/ctwas_scz/traits.tsv). -->

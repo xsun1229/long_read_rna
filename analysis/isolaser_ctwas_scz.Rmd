@@ -390,36 +390,35 @@ cat(knitr::kable(pt, format="html", escape=FALSE, row.names=FALSE), sep="\n")
 cat('\n</div>\n')
 ```
 
-### How the PIPs are combined
+<!-- ### How the PIPs are combined -->
 
-All timepoint PIPs in this table come from **the same joint fit**, not from the
-separate single-timepoint analyses. A part at two timepoints is two predictors.
-For each SuSiE component (identified by region and component), the probabilities
-`alpha` are summed across a gene's parts at the selected timepoint. The component
-sums are then combined:
+<!-- All timepoint PIPs in this table come from **the same joint fit**, not from the -->
+<!-- separate single-timepoint analyses. A part at two timepoints is two predictors. -->
+<!-- For each SuSiE component (identified by region and component), the probabilities -->
+<!-- `alpha` are summed across a gene's parts at the selected timepoint. The component -->
+<!-- sums are then combined: -->
 
-\[
-A_{g,t,k}=\sum_{j\,\in\,\text{parts of gene }g\text{ at time }t}\alpha_{k,j},
-\qquad
-\mathrm{PIP}_{g,t}=1-\prod_k(1-A_{g,t,k}).
-\]
+<!-- \[ -->
+<!-- A_{g,t,k}=\sum_{j\,\in\,\text{parts of gene }g\text{ at time }t}\alpha_{k,j}, -->
+<!-- \qquad -->
+<!-- \mathrm{PIP}_{g,t}=1-\prod_k(1-A_{g,t,k}). -->
+<!-- \] -->
 
-The overall PIP uses all the gene's parts at all three timepoints:
+<!-- The overall PIP uses all the gene's parts at all three timepoints: -->
 
-\[
-\mathrm{PIP}_{g,\mathrm{all}}=1-\prod_k\left(1-\sum_t A_{g,t,k}\right).
-\]
+<!-- \[ -->
+<!-- \mathrm{PIP}_{g,\mathrm{all}}=1-\prod_k\left(1-\sum_t A_{g,t,k}\right). -->
+<!-- \] -->
 
-For **LY6H**, combining its 2, 2 and 3 predictors at 0, 1 and 6 hr gives
-PIPs of `r sprintf("%.3f", jg[gene_name == "LY6H", pip_0hr])`,
-`r sprintf("%.3f", jg[gene_name == "LY6H", pip_1hr])` and
-`r sprintf("%.3f", jg[gene_name == "LY6H", pip_6hr])`, respectively.
-Combining all seven predictors at the component level gives
-**`r sprintf("%.3f", jg[gene_name == "LY6H", gene_pip])`**.
-Do not add the three PIPs or combine them as independent probabilities.
-A higher PIP at 6 hr does not itself test whether stimulation changes the effect.
+<!-- For **LY6H**, combining its 2, 2 and 3 predictors at 0, 1 and 6 hr gives -->
+<!-- PIPs of `r sprintf("%.3f", jg[gene_name == "LY6H", pip_0hr])`, -->
+<!-- `r sprintf("%.3f", jg[gene_name == "LY6H", pip_1hr])` and -->
+<!-- `r sprintf("%.3f", jg[gene_name == "LY6H", pip_6hr])`, respectively. -->
+<!-- Combining all seven predictors at the component level gives -->
+<!-- **`r sprintf("%.3f", jg[gene_name == "LY6H", gene_pip])`**. -->
+<!-- Do not add the three PIPs or combine them as independent probabilities. -->
+<!-- A higher PIP at 6 hr does not itself test whether stimulation changes the effect. -->
 
-### Reading the evidence table
 
 - **PIP and part counts:** include all fine-mapped predictors for the gene.
   A dash means no fine-mapped predictor at that timepoint. The calculation uses
@@ -452,60 +451,60 @@ A higher PIP at 6 hr does not itself test whether stimulation changes the effect
   one-SNP predictors, separation from the SNP depends strongly on the model's
   priors. The high 6 hr enrichment can favor predictors even at suggestive loci.
 
-### References
+<!-- ### References -->
 
-- Collado-Torres L, et al. (2019). Regional Heterogeneity in Gene Expression,
-  Regulation, and Coherence in the Frontal Cortex and Hippocampus across
-  Development and Schizophrenia. *Neuron*. PMID
-  [31174959](https://pubmed.ncbi.nlm.nih.gov/31174959/);
-  [paper](https://doi.org/10.1016/j.neuron.2019.05.013).
-- Deans PJM, et al. (2026). Functional implications of polygenic risk for
-  schizophrenia in human neurons. *Nature Communications*. PMID
-  [41519853](https://pubmed.ncbi.nlm.nih.gov/41519853/);
-  [paper](https://doi.org/10.1038/s41467-025-67959-z).
-- Mall M, et al. (2017). Myt1l safeguards neuronal identity by actively repressing
-  many non-neuronal fates. *Nature*. PMID
-  [28379941](https://pubmed.ncbi.nlm.nih.gov/28379941/);
-  [paper](https://doi.org/10.1038/nature21722).
+<!-- - Collado-Torres L, et al. (2019). Regional Heterogeneity in Gene Expression, -->
+<!--   Regulation, and Coherence in the Frontal Cortex and Hippocampus across -->
+<!--   Development and Schizophrenia. *Neuron*. PMID -->
+<!--   [31174959](https://pubmed.ncbi.nlm.nih.gov/31174959/); -->
+<!--   [paper](https://doi.org/10.1016/j.neuron.2019.05.013). -->
+<!-- - Deans PJM, et al. (2026). Functional implications of polygenic risk for -->
+<!--   schizophrenia in human neurons. *Nature Communications*. PMID -->
+<!--   [41519853](https://pubmed.ncbi.nlm.nih.gov/41519853/); -->
+<!--   [paper](https://doi.org/10.1038/s41467-025-67959-z). -->
+<!-- - Mall M, et al. (2017). Myt1l safeguards neuronal identity by actively repressing -->
+<!--   many non-neuronal fates. *Nature*. PMID -->
+<!--   [28379941](https://pubmed.ncbi.nlm.nih.gov/28379941/); -->
+<!--   [paper](https://doi.org/10.1038/nature21722). -->
 
-- GTEx Consortium (2020). The GTEx Consortium atlas of genetic regulatory effects
-  across human tissues. *Science*. PMID
-  [32913098](https://pubmed.ncbi.nlm.nih.gov/32913098/);
-  [paper](https://doi.org/10.1126/science.aaz1776).
-- Mansfield P, et al. (2020). MYT1L: A systematic review of genetic variation
-  encompassing schizophrenia and autism. *Am J Med Genet B Neuropsychiatr Genet*.
-  PMID [32267091](https://pubmed.ncbi.nlm.nih.gov/32267091/);
-  [paper](https://doi.org/10.1002/ajmg.b.32781).
-- Moriwaki Y, et al. (2020). Endogenous neurotoxin-like protein Ly6H inhibits alpha7
-  nicotinic acetylcholine receptor currents at the plasma membrane. *Sci Rep*.
-  PMID [32686737](https://pubmed.ncbi.nlm.nih.gov/32686737/);
-  [paper](https://doi.org/10.1038/s41598-020-68947-7).
-- Pardi&ntilde;as AF, et al. (2018). Common schizophrenia alleles are enriched in
-  mutation-intolerant genes and in regions under strong background selection.
-  *Nat Genet*. PMID [29483656](https://pubmed.ncbi.nlm.nih.gov/29483656/);
-  [paper](https://doi.org/10.1038/s41588-018-0059-2).
-- Puddifoot CA, et al. (2015). Ly6h regulates trafficking of alpha7 nicotinic
-  acetylcholine receptors and nicotine-induced potentiation of glutamatergic
-  signaling. *J Neurosci*. PMID
-  [25716842](https://pubmed.ncbi.nlm.nih.gov/25716842/);
-  [paper](https://doi.org/10.1523/JNEUROSCI.3630-14.2015).
-- Salian S, et al. (2021). PIGF deficiency causes a phenotype overlapping with DOORS
-  syndrome. *Hum Genet*. PMID [33386993](https://pubmed.ncbi.nlm.nih.gov/33386993/);
-  [paper](https://doi.org/10.1007/s00439-020-02251-2).
-- Trubetskoy V, et al. (2022). Mapping genomic loci implicates genes and synaptic
-  biology in schizophrenia. *Nature*. PMID
-  [35396580](https://pubmed.ncbi.nlm.nih.gov/35396580/);
-  [paper](https://doi.org/10.1038/s41586-022-04434-5).
-- Wu Y, et al. (2020). Multi-trait analysis for genome-wide association study of five
-  psychiatric disorders. *Transl Psychiatry*. PMID
-  [32606422](https://pubmed.ncbi.nlm.nih.gov/32606422/);
-  [paper](https://doi.org/10.1038/s41398-020-00902-6).
-- Yamamoto H, et al. (2011). NDRG4 protein-deficient mice exhibit spatial learning
-  deficits and vulnerabilities to cerebral ischemia. *J Biol Chem*. PMID
-  [21636852](https://pubmed.ncbi.nlm.nih.gov/21636852/);
-  [paper](https://doi.org/10.1074/jbc.M111.256446).
+<!-- - GTEx Consortium (2020). The GTEx Consortium atlas of genetic regulatory effects -->
+<!--   across human tissues. *Science*. PMID -->
+<!--   [32913098](https://pubmed.ncbi.nlm.nih.gov/32913098/); -->
+<!--   [paper](https://doi.org/10.1126/science.aaz1776). -->
+<!-- - Mansfield P, et al. (2020). MYT1L: A systematic review of genetic variation -->
+<!--   encompassing schizophrenia and autism. *Am J Med Genet B Neuropsychiatr Genet*. -->
+<!--   PMID [32267091](https://pubmed.ncbi.nlm.nih.gov/32267091/); -->
+<!--   [paper](https://doi.org/10.1002/ajmg.b.32781). -->
+<!-- - Moriwaki Y, et al. (2020). Endogenous neurotoxin-like protein Ly6H inhibits alpha7 -->
+<!--   nicotinic acetylcholine receptor currents at the plasma membrane. *Sci Rep*. -->
+<!--   PMID [32686737](https://pubmed.ncbi.nlm.nih.gov/32686737/); -->
+<!--   [paper](https://doi.org/10.1038/s41598-020-68947-7). -->
+<!-- - Pardi&ntilde;as AF, et al. (2018). Common schizophrenia alleles are enriched in -->
+<!--   mutation-intolerant genes and in regions under strong background selection. -->
+<!--   *Nat Genet*. PMID [29483656](https://pubmed.ncbi.nlm.nih.gov/29483656/); -->
+<!--   [paper](https://doi.org/10.1038/s41588-018-0059-2). -->
+<!-- - Puddifoot CA, et al. (2015). Ly6h regulates trafficking of alpha7 nicotinic -->
+<!--   acetylcholine receptors and nicotine-induced potentiation of glutamatergic -->
+<!--   signaling. *J Neurosci*. PMID -->
+<!--   [25716842](https://pubmed.ncbi.nlm.nih.gov/25716842/); -->
+<!--   [paper](https://doi.org/10.1523/JNEUROSCI.3630-14.2015). -->
+<!-- - Salian S, et al. (2021). PIGF deficiency causes a phenotype overlapping with DOORS -->
+<!--   syndrome. *Hum Genet*. PMID [33386993](https://pubmed.ncbi.nlm.nih.gov/33386993/); -->
+<!--   [paper](https://doi.org/10.1007/s00439-020-02251-2). -->
+<!-- - Trubetskoy V, et al. (2022). Mapping genomic loci implicates genes and synaptic -->
+<!--   biology in schizophrenia. *Nature*. PMID -->
+<!--   [35396580](https://pubmed.ncbi.nlm.nih.gov/35396580/); -->
+<!--   [paper](https://doi.org/10.1038/s41586-022-04434-5). -->
+<!-- - Wu Y, et al. (2020). Multi-trait analysis for genome-wide association study of five -->
+<!--   psychiatric disorders. *Transl Psychiatry*. PMID -->
+<!--   [32606422](https://pubmed.ncbi.nlm.nih.gov/32606422/); -->
+<!--   [paper](https://doi.org/10.1038/s41398-020-00902-6). -->
+<!-- - Yamamoto H, et al. (2011). NDRG4 protein-deficient mice exhibit spatial learning -->
+<!--   deficits and vulnerabilities to cerebral ischemia. *J Biol Chem*. PMID -->
+<!--   [21636852](https://pubmed.ncbi.nlm.nih.gov/21636852/); -->
+<!--   [paper](https://doi.org/10.1074/jbc.M111.256446). -->
 
-References in the evidence table link to both PubMed and the paper.
+<!-- References in the evidence table link to both PubMed and the paper. -->
 
 # All genes
 

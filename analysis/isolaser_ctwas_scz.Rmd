@@ -319,6 +319,183 @@ knitr::kable(d[, .(gene_name, combined_pip=sprintf("%.2f", gene_pip), `0hr_pip`=
 - **Top part, Timepoint, susie_pip (top part), z, QTL, ΔPSI, permutation p:** the
   trait with the largest `susie_pip`, as in the other tables.
 
+## Plausibility of the genes at combined_pip 0.8
+
+**NDRG4, MYT1L and LY6H are the strongest candidates for follow-up.** NDRG4
+combines neuronal biology, SCZ genetics and GTEx sQTL support; MYT1L has strong
+neuronal and SCZ evidence but a modest splicing effect; LY6H has a direct synaptic
+mechanism and strong splicing evidence. SF3B1 has strong SCZ support, although
+its 6 hr splicing evidence is weak. HSPA9, CNPPD1 and PIGF need more cautious
+interpretation. Biological plausibility of a gene and support for its particular
+splicing association are assessed separately below.
+
+```{r joint_plausibility, results='asis'}
+ev <- fread(file.path(A, "joint_gene_evidence.tsv"), na.strings=c("", "NA"))
+jtr <- fread(file.path(A, "joint_traits.tsv"))
+verdict <- c(NDRG4="Strong candidate; sizable effects, but low read counts",
+  MYT1L="Strong neuronal and SCZ support; modest splicing effect",
+  SF3B1="Strong SCZ support; weaker event-level evidence at 6 hr",
+  HSPA9="Strong locus; small splicing effect and unresolved causal gene",
+  LY6H="Strong mechanistic candidate and splicing evidence; suggestive GWAS signal",
+  CNPPD1="Exploratory; low coverage and weak permutation evidence",
+  PIGF="Neurodevelopmental relevance; limited SCZ-specific support")
+stopifnot(setequal(unique(ev$gene_name), j8), setequal(names(verdict), j8))
+ref <- function(author, pmid, doi) sprintf('%s (<a href="https://pubmed.ncbi.nlm.nih.gov/%s/">PMID %s</a>; <a href="https://doi.org/%s">paper</a>)', author, pmid, pmid, doi)
+support <- c(
+  NDRG4=paste0("rs42945 is a published SCZ association: ", ref("Pardi&ntilde;as 2018", "29483656", "10.1038/s41588-018-0059-2"), ". Ndrg4-deficient mice have reduced cortical BDNF and impaired spatial learning: ", ref("Yamamoto 2011", "21636852", "10.1074/jbc.M111.256446"), "."),
+  MYT1L=paste0("Maintains neuronal identity: ", ref("Mall 2017", "28379941", "10.1038/nature21722"), ". Prioritized by PGC3 SCZ fine-mapping: ", ref("Trubetskoy 2022", "35396580", "10.1038/s41586-022-04434-5"), "."),
+  SF3B1=paste0("Core spliceosome component. Independent SCZ regulatory evidence and inclusion in a human-neuron perturbation study: ", ref("Deans et al. 2026", "41519853", "10.1038/s41467-025-67959-z"), "."),
+  HSPA9=paste0("Mitochondrial chaperone. A PGC3 association lies about 9 kb away at the ETF1-HSPA9 locus: ", ref("Trubetskoy 2022", "35396580", "10.1038/s41586-022-04434-5"), ". This supports the locus, but does not resolve the causal gene."),
+  LY6H=paste0("Regulates alpha7 nicotinic receptor trafficking and nicotine-induced potentiation of glutamatergic signaling: ", ref("Puddifoot 2015", "25716842", "10.1523/JNEUROSCI.3630-14.2015"), ". No genome-wide significant SNP within 250 kb in this GWAS; this does not establish novelty."),
+  CNPPD1=paste0("Limited neuronal functional evidence. The catalog association 7 kb away comes from a multi-trait psychiatric analysis, not independent SCZ-only confirmation: ", ref("Wu 2020", "32606422", "10.1038/s41398-020-00902-6"), "."),
+  PIGF=paste0("GPI-anchor biosynthesis. Rare biallelic variants were reported in a syndrome with intellectual disability and seizures: ", ref("Salian 2021", "33386993", "10.1007/s00439-020-02251-2"), ". This is neurodevelopmental evidence, not common-variant SCZ replication."))
+br <- function(x) paste(x, collapse="<br>")
+numrange <- function(x, formatter) {
+  z <- formatter(range(x))
+  if (z[1] == z[2]) z[1] else paste(z, collapse=" to ")
+}
+pip_cell <- function(gn) {
+  row <- jg[gene_name == gn]
+  br(c(sprintf("<strong>Overall %.3f</strong>", row$gene_pip), vapply(TPS, function(t) {
+    n <- jtr[gene_name == gn & context == t, uniqueN(molecular_id)]
+    p <- row[[paste0("pip_", t)]]
+    if (is.na(p)) paste0(tpl(t), ": &ndash;") else sprintf("%s: %.3f (%d %s)", tpl(t), p, n, ifelse(n == 1, "part", "parts"))
+  }, "")))
+}
+effect_cell <- function(gn) {
+  z <- jtr[gene_name == gn & susie_pip >= 0.05 & het_cov < 2371]
+  z <- z[order(match(context, TPS))]
+  br(z[, .(text=sprintf("%s, %s: &Delta;PSI %s; p %s; %s reads", tpl(context[1]), ukb_id[1],
+    numrange(dpsi, function(x) sprintf("%+.3f", x)), numrange(qtl_p, fp), numrange(het_cov, fmt))),
+    by=.(context, ukb_id)]$text)
+}
+support_cell <- function(gn) {
+  e <- ev[gene_name == gn][1]
+  extra <- character()
+  if (e$gtex_sqtl_tissues > 0) extra <- c(extra, sprintf("The selected SNP is a GTEx sQTL for this gene in %d of 13 brain tissues (minimum p %s).", e$gtex_sqtl_tissues, fp(e$gtex_sqtl_min_p)))
+  if (gn %in% c("SF3B1", "HSPA9")) extra <- c(extra, sprintf("GTEx cerebellum eQTL + sQTL cTWAS gene PIP: %.2f.", e$gtex_ctwas_pip))
+  br(c(support[[gn]], extra))
+}
+ord <- c("NDRG4", "MYT1L", "SF3B1", "HSPA9", "LY6H", "CNPPD1", "PIGF")
+pt <- rbindlist(lapply(ord, function(gn) {
+  e <- ev[gene_name == gn][1]
+  data.table(Gene=gn, `Joint combined PIP: overall and by timepoint`=pip_cell(gn),
+    `Allelic splicing: signed effect, permutation p, reads`=effect_cell(gn),
+    `SCZ GWAS p at selected SNP`=paste0(e$qtl_snp, "<br>", fp(e$gwas_p)),
+    `Best GWAS p within 250 kb`=fp(e$nearby_min_p),
+    `Other evidence`=support_cell(gn), Plausibility=verdict[[gn]])
+}))
+cat('<div style="overflow-x:auto;">\n')
+cat(knitr::kable(pt, format="html", escape=FALSE, row.names=FALSE), sep="\n")
+cat('\n</div>\n')
+```
+
+### How the PIPs are combined
+
+All timepoint PIPs in this table come from **the same joint fit**, not from the
+separate single-timepoint analyses. A part at two timepoints is two predictors.
+For each SuSiE component (identified by region and component), the probabilities
+`alpha` are summed across a gene's parts at the selected timepoint. The component
+sums are then combined:
+
+\[
+A_{g,t,k}=\sum_{j\,\in\,\text{parts of gene }g\text{ at time }t}\alpha_{k,j},
+\qquad
+\mathrm{PIP}_{g,t}=1-\prod_k(1-A_{g,t,k}).
+\]
+
+The overall PIP uses all the gene's parts at all three timepoints:
+
+\[
+\mathrm{PIP}_{g,\mathrm{all}}=1-\prod_k\left(1-\sum_t A_{g,t,k}\right).
+\]
+
+For **LY6H**, combining its 2, 2 and 3 predictors at 0, 1 and 6 hr gives
+PIPs of `r sprintf("%.3f", jg[gene_name == "LY6H", pip_0hr])`,
+`r sprintf("%.3f", jg[gene_name == "LY6H", pip_1hr])` and
+`r sprintf("%.3f", jg[gene_name == "LY6H", pip_6hr])`, respectively.
+Combining all seven predictors at the component level gives
+**`r sprintf("%.3f", jg[gene_name == "LY6H", gene_pip])`**.
+Do not add the three PIPs or combine them as independent probabilities.
+A higher PIP at 6 hr does not itself test whether stimulation changes the effect.
+
+### Reading the evidence table
+
+- **PIP and part counts:** include all fine-mapped predictors for the gene.
+  A dash means no fine-mapped predictor at that timepoint. The calculation uses
+  `combine_gene_pips(method="combine_cs", filter_cs=FALSE)`, with `by="context"`
+  for each timepoint and `by="type"` for the overall splicing PIP.
+- **Splicing effects:** summarize parts with individual predictor PIP at least
+  0.05 and fewer than 2,371 informative reads, grouped by timepoint and QTL SNP.
+  This is a descriptive subset; **the gene PIPs are not recomputed after these
+  exclusions**. LY6H also has high-coverage, near-zero-effect predictors in its
+  overall PIP. Above this depth isoLASER's fitted `cis` cutoff can be negative.
+- **Delta PSI:** ALT inclusion minus REF inclusion; +0.250 means +25 percentage
+  points. **Permutation p** is unadjusted. **Reads** are pooled informative reads
+  from the heterozygous donors. Ranges summarize several parts, not confidence
+  intervals; low counts can produce uncertain effect estimates.
+- **Selected SNP:** the QTL of the retained part with the largest predictor PIP.
+  The GWAS columns refer to that SNP and its surrounding 250 kb on either side
+  in the SCZ GWAS used here (`ieu-b-5102`). Genome-wide significance is p < 5e-8.
+- **GTEx support:** a significant SNP-intron association for the same SNP and
+  gene in GTEx v8 brain tissues. It need not measure the same exonic part, so it
+  is **not automatically replication of the specific splicing event**. No match
+  in these significant-pair files does not establish absence of an effect.
+- **Interpretation:** high cTWAS PIP supports a predictor under the fitted model;
+  it does not prove that the particular splicing event mediates SCZ risk. With
+  one-SNP predictors, separation from the SNP depends strongly on the model's
+  priors. The high 6 hr enrichment can favor predictors even at suggestive loci.
+
+### References
+
+- Deans PJM, et al. (2026). Functional implications of polygenic risk for
+  schizophrenia in human neurons. *Nature Communications*. PMID
+  [41519853](https://pubmed.ncbi.nlm.nih.gov/41519853/);
+  [paper](https://doi.org/10.1038/s41467-025-67959-z).
+- Mall M, et al. (2017). Myt1l safeguards neuronal identity by actively repressing
+  many non-neuronal fates. *Nature*. PMID
+  [28379941](https://pubmed.ncbi.nlm.nih.gov/28379941/);
+  [paper](https://doi.org/10.1038/nature21722).
+
+- GTEx Consortium (2020). The GTEx Consortium atlas of genetic regulatory effects
+  across human tissues. *Science*. PMID
+  [32913098](https://pubmed.ncbi.nlm.nih.gov/32913098/);
+  [paper](https://doi.org/10.1126/science.aaz1776).
+- Mansfield P, et al. (2020). MYT1L: A systematic review of genetic variation
+  encompassing schizophrenia and autism. *Am J Med Genet B Neuropsychiatr Genet*.
+  PMID [32267091](https://pubmed.ncbi.nlm.nih.gov/32267091/);
+  [paper](https://doi.org/10.1002/ajmg.b.32781).
+- Moriwaki Y, et al. (2020). Endogenous neurotoxin-like protein Ly6H inhibits alpha7
+  nicotinic acetylcholine receptor currents at the plasma membrane. *Sci Rep*.
+  PMID [32686737](https://pubmed.ncbi.nlm.nih.gov/32686737/);
+  [paper](https://doi.org/10.1038/s41598-020-68947-7).
+- Pardi&ntilde;as AF, et al. (2018). Common schizophrenia alleles are enriched in
+  mutation-intolerant genes and in regions under strong background selection.
+  *Nat Genet*. PMID [29483656](https://pubmed.ncbi.nlm.nih.gov/29483656/);
+  [paper](https://doi.org/10.1038/s41588-018-0059-2).
+- Puddifoot CA, et al. (2015). Ly6h regulates trafficking of alpha7 nicotinic
+  acetylcholine receptors and nicotine-induced potentiation of glutamatergic
+  signaling. *J Neurosci*. PMID
+  [25716842](https://pubmed.ncbi.nlm.nih.gov/25716842/);
+  [paper](https://doi.org/10.1523/JNEUROSCI.3630-14.2015).
+- Salian S, et al. (2021). PIGF deficiency causes a phenotype overlapping with DOORS
+  syndrome. *Hum Genet*. PMID [33386993](https://pubmed.ncbi.nlm.nih.gov/33386993/);
+  [paper](https://doi.org/10.1007/s00439-020-02251-2).
+- Trubetskoy V, et al. (2022). Mapping genomic loci implicates genes and synaptic
+  biology in schizophrenia. *Nature*. PMID
+  [35396580](https://pubmed.ncbi.nlm.nih.gov/35396580/);
+  [paper](https://doi.org/10.1038/s41586-022-04434-5).
+- Wu Y, et al. (2020). Multi-trait analysis for genome-wide association study of five
+  psychiatric disorders. *Transl Psychiatry*. PMID
+  [32606422](https://pubmed.ncbi.nlm.nih.gov/32606422/);
+  [paper](https://doi.org/10.1038/s41398-020-00902-6).
+- Yamamoto H, et al. (2011). NDRG4 protein-deficient mice exhibit spatial learning
+  deficits and vulnerabilities to cerebral ischemia. *J Biol Chem*. PMID
+  [21636852](https://pubmed.ncbi.nlm.nih.gov/21636852/);
+  [paper](https://doi.org/10.1074/jbc.M111.256446).
+
+References in the evidence table link to both PubMed and the paper.
+
 # All genes
 
 ```{r all_genes}
@@ -354,6 +531,7 @@ DT::datatable(as.data.frame(g[, .(Run=short(set), Timepoint=tpl(tp), gene_name, 
 <!-- - `1.build_weights.R`: the weights and the mapping table, sets `cis_reads10nc`, `cis_panel10nc` and their `_pooled` versions. -->
 <!-- - `2.run_ctwas.R` and `4.submit_scz.sh`: the runs (the joint run: `4.submit_scz.sh cis_reads10nc 0hr,1hr,6hr`). -->
 <!-- - `5.summarize_runs.R`: this page's tables, pie charts and convergence plots, including the joint run. -->
+<!-- - `6.joint_gene_evidence.R`: the evidence columns of the plausibility table (joint run, combined_pip >= 0.8). -->
 
 <!-- **Downloads:** [parameters](assets/ctwas_scz/params.tsv), [gene PIPs](assets/ctwas_scz/gene_pips.tsv), -->
 <!-- [convergence](assets/ctwas_scz/convergence.tsv) and [all fine-mapped traits](assets/ctwas_scz/traits.tsv). -->

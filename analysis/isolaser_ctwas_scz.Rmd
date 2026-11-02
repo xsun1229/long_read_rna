@@ -342,10 +342,10 @@ verdict <- c(NDRG4="Strong candidate; sizable effects, but low read counts",
 stopifnot(setequal(unique(ev$gene_name), j8), setequal(names(verdict), j8))
 ref <- function(author, pmid, doi) sprintf('%s (<a href="https://pubmed.ncbi.nlm.nih.gov/%s/">PMID %s</a>; <a href="https://doi.org/%s">paper</a>)', author, pmid, pmid, doi)
 support <- c(
-  NDRG4=paste0("rs42945 is a published SCZ association: ", ref("Pardi&ntilde;as 2018", "29483656", "10.1038/s41588-018-0059-2"), ". Ndrg4-deficient mice have reduced cortical BDNF and impaired spatial learning: ", ref("Yamamoto 2011", "21636852", "10.1074/jbc.M111.256446"), "."),
+  NDRG4=paste0("GWAS Catalog links rs42945 to the SCZ association results of ", ref("Pardi&ntilde;as 2018", "29483656", "10.1038/s41588-018-0059-2"), "; the SNP and NDRG4 are not named in the main article. ", ref("Collado-Torres 2019", "31174959", "10.1016/j.neuron.2019.05.013"), " explicitly identifies rs42945 as a SCZ risk SNP and reports associations with NDRG4 RNA expression features in hippocampus (Supplementary Fig. S43A-B). This supports NDRG4 regulation, but does not establish replication of the same splicing event. Ndrg4-deficient mice have reduced cortical BDNF and impaired spatial learning: ", ref("Yamamoto 2011", "21636852", "10.1074/jbc.M111.256446"), "."),
   MYT1L=paste0("Maintains neuronal identity: ", ref("Mall 2017", "28379941", "10.1038/nature21722"), ". Prioritized by PGC3 SCZ fine-mapping: ", ref("Trubetskoy 2022", "35396580", "10.1038/s41586-022-04434-5"), "."),
   SF3B1=paste0("Core spliceosome component. Independent SCZ regulatory evidence and inclusion in a human-neuron perturbation study: ", ref("Deans et al. 2026", "41519853", "10.1038/s41467-025-67959-z"), "."),
-  HSPA9=paste0("Mitochondrial chaperone. A PGC3 association lies about 9 kb away at the ETF1-HSPA9 locus: ", ref("Trubetskoy 2022", "35396580", "10.1038/s41586-022-04434-5"), ". This supports the locus, but does not resolve the causal gene."),
+  HSPA9=paste0("Mitochondrial chaperone involved in protein import, folding and quality control (<a href='https://www.uniprot.org/uniprotkb/P38646/entry'>UniProt P38646</a>). The <a href='https://www.ebi.ac.uk/gwas/variants/rs187653'>GWAS Catalog record for rs187653</a> reports a SCZ association (p = 1e-11), mapped to ETF1-HSPA9, from ", ref("Trubetskoy 2022", "35396580", "10.1038/s41586-022-04434-5"), ". This is regional association evidence; it does not establish HSPA9 as the causal gene."),
   LY6H=paste0("Regulates alpha7 nicotinic receptor trafficking and nicotine-induced potentiation of glutamatergic signaling: ", ref("Puddifoot 2015", "25716842", "10.1523/JNEUROSCI.3630-14.2015"), ". No genome-wide significant SNP within 250 kb in this GWAS; this does not establish novelty."),
   CNPPD1=paste0("Limited neuronal functional evidence. The catalog association 7 kb away comes from a multi-trait psychiatric analysis, not independent SCZ-only confirmation: ", ref("Wu 2020", "32606422", "10.1038/s41398-020-00902-6"), "."),
   PIGF=paste0("GPI-anchor biosynthesis. Rare biallelic variants were reported in a syndrome with intellectual disability and seizures: ", ref("Salian 2021", "33386993", "10.1007/s00439-020-02251-2"), ". This is neurodevelopmental evidence, not common-variant SCZ replication."))
@@ -437,6 +437,12 @@ A higher PIP at 6 hr does not itself test whether stimulation changes the effect
 - **Selected SNP:** the QTL of the retained part with the largest predictor PIP.
   The GWAS columns refer to that SNP and its surrounding 250 kb on either side
   in the SCZ GWAS used here (`ieu-b-5102`). Genome-wide significance is p < 5e-8.
+- **HSPA9 regional association:** the catalog record places rs187653 at GRCh38
+  chr5:138,547,009. The tested QTL, rs10117, is at GRCh38 chr5:138,556,481
+  (1-based coordinates). Their separation is **9,472 bp**, measured SNP to SNP,
+  rather than from the HSPA9 gene boundary or transcription start site. The
+  ETF1-HSPA9 label is the catalog's mapped-gene annotation, not a PGC3
+  fine-mapping prioritization of HSPA9.
 - **GTEx support:** a significant SNP-intron association for the same SNP and
   gene in GTEx v8 brain tissues. It need not measure the same exonic part, so it
   is **not automatically replication of the specific splicing event**. No match
@@ -448,6 +454,11 @@ A higher PIP at 6 hr does not itself test whether stimulation changes the effect
 
 ### References
 
+- Collado-Torres L, et al. (2019). Regional Heterogeneity in Gene Expression,
+  Regulation, and Coherence in the Frontal Cortex and Hippocampus across
+  Development and Schizophrenia. *Neuron*. PMID
+  [31174959](https://pubmed.ncbi.nlm.nih.gov/31174959/);
+  [paper](https://doi.org/10.1016/j.neuron.2019.05.013).
 - Deans PJM, et al. (2026). Functional implications of polygenic risk for
   schizophrenia in human neurons. *Nature Communications*. PMID
   [41519853](https://pubmed.ncbi.nlm.nih.gov/41519853/);

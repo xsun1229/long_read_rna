@@ -1,3 +1,4 @@
 run	iterations	converged	regions
 es	17	TRUE	204
 esi	50	FALSE	204
+i	20	TRUE	123

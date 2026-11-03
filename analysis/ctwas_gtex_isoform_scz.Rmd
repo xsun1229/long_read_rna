@@ -117,43 +117,6 @@ isoforms.
 
 # Results
 
-## irQTLs alone
-
-```{r alone_setup}
-io <- pa[run == "i" & type == "irQTL"]; ij <- pa[run == "esi" & type == "irQTL"]
-pt <- function(x) x$group_pve / x$group_size
-ov <- fread(file.path(A, "isoform_overlap.tsv"))
-g5i <- g[run == "i" & combined_pip >= 0.5, gene_name]; g5es <- g[run == "es" & combined_pip >= 0.5, gene_name]
-new5 <- g[run == "i" & combined_pip >= 0.5 & !gene_name %in% g5es][order(-combined_pip), gene_name]
-```
-
-**Short answer:** on their own, the irQTLs are enriched for SCZ
-heritability, with `log_enrichment` `r sprintf("%.2f", io$log_enrichment)`
-(SE `r sprintf("%.2f", io$log_enrichment_se)`, `enrichment_pval` `r fp(io$enrichment_pval)`).
-Per trait they explain about as much as eQTLs. With eQTLs and sQTLs in the same
-run, their `group_prior` falls to `r sprintf("%.1e", ij$group_prior)` and
-`log_enrichment` to `r sprintf("%.2f", ij$log_enrichment)`. So the signal is real,
-but in this tissue it is largely the signal the eQTLs and sQTLs already carry:
-`r fmt(ov[gene_has_eqtl | gene_has_sqtl, .N])` of the `r fmt(nrow(ov))` isoform
-traits (`r sprintf("%.0f%%", 100 * ov[, mean(gene_has_eqtl | gene_has_sqtl)])`)
-are on genes that also have an eQTL or sQTL trait.
-
-```{r alone}
-w <- rbind(io, pa[run == "es" & type %in% c("eQTL", "sQTL")], ij)
-knitr::kable(w[, .(Run=RUNS[run], group, group_size=fmt(group_size), `log_enrichment (log_enrichment_se)`=sprintf("%.2f (%.2f)", log_enrichment, log_enrichment_se),
-  enrichment_pval=fp(enrichment_pval), group_pve=sprintf("%.4f", group_pve), `group_pve per trait`=sprintf("%.1e", pt(.SD)))], align="llrrrrr")
-```
-
-- **group_pve per trait** (ours): `group_pve` / `group_size`, so groups of
-  different sizes can be compared.
-- **Overlap** (ours): an isoform trait's gene, by Ensembl ID, also has an eQTL or
-  sQTL trait in the eQTL + sQTL + irQTL run. sQTL introns are assigned to
-  genes by the paper's PredictDB mapping.
-- **Genes:** alone, the irQTLs give `r g[run == "i" & combined_pip >= 0.8, .N]`
-  gene at `combined_pip` 0.8 (`r paste(g[run == "i" & combined_pip >= 0.8, gene_name], collapse=", ")`)
-  and `r length(g5i)` at 0.5. Of these, `r if (length(new5)) paste(new5, collapse=", ") else "none"`
-  are below 0.5, or not fine-mapped, in the eQTL + sQTL run.
-
 ## Parameters
 
 ```{r params}

@@ -1,0 +1,4 @@
+measure	isoforms	q25	median	q75
+model SNPs (non-zero weight)	76307	16	471	861
+usable SNPs	76307	16	445	842
+top_share	76307	0.00761293169640975	0.0771855137138684	0.261463952183836

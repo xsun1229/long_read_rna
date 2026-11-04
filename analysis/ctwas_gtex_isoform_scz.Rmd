@@ -1,5 +1,5 @@
 ---
-title: "cTWAS with GTEx eQTLs, sQTLs and isoform-ratio QTLs (irQTLs): schizophrenia, Brain Cerebellum"
+title: "cTWAS with GTEx eQTLs, sQTLs, isoform-ratio QTLs (irQTLs) and isoform-expression QTLs (isoQTLs): schizophrenia, Brain Cerebellum"
 author: "XSun"
 date: "2026-10-30"
 output:
@@ -15,18 +15,25 @@ library(data.table)
 library(DT)
 # R code here is ASCII only (HTML entities for special characters), so the page renders the same in any locale
 A <- "docs/assets/ctwas_gtex_SCZ_Brain_Cerebellum"
-tq <- fread(file.path(A, "tissue_qtls.tsv")); st <- fread(file.path(A, "isoform_steps.tsv"))
+tq <- fread(file.path(A, "tissue_qtls.tsv")); st <- fread(file.path(A, "isoform_steps.tsv")); it <- fread(file.path(A, "isoqtl_steps.tsv"))
+dc <- fread(file.path(A, "isoqtl_copies.tsv"))
 pa <- fread(file.path(A, "params.tsv")); g <- fread(file.path(A, "gene_pips.tsv")); cv <- fread(file.path(A, "convergence.tsv"))
-RUNS <- c(es="eQTL + sQTL", esi="eQTL + sQTL + irQTL", i="irQTL only")
+RUNS <- c(es="eQTL + sQTL", esi="eQTL + sQTL + irQTL", i="irQTL only", est="eQTL + sQTL + isoQTL", t="isoQTL only")
+TYPES <- list(es=c("eQTL", "sQTL"), esi=c("eQTL", "sQTL", "irQTL"), i="irQTL", est=c("eQTL", "sQTL", "isoQTL"), t="isoQTL")
 fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
 fp <- function(x) vapply(x, function(z) if (is.na(z)) "NA" else format(signif(z, 2)), "")
 cell <- function(x) fifelse(is.na(x), "&ndash;", sprintf("%.2f", x))
-iso <- pa[run == "esi" & type == "irQTL"]
+iso <- pa[run == "esi" & type == "irQTL"]; isq <- pa[run == "t" & type == "isoQTL"]
 cb <- tq[tissue == "Brain_Cerebellum"]
 g8 <- function(r) g[run == r & combined_pip >= 0.8, gene_name]
-gene_table <- function(d) paste(knitr::kable(d[order(-combined_pip), .(gene_name, combined_pip=sprintf("%.2f", combined_pip), eQTL_pip=cell(eQTL_pip),
-  sQTL_pip=cell(sQTL_pip), irQTL_pip=cell(irQTL_pip), Traits=n_traits, `Top trait`=top_trait, `Top trait type`=top_type,
-  `susie_pip (top trait)`=sprintf("%.2f", top_trait_pip), z=sprintf("%.1f", z))], escape=FALSE, align="lrrrrrllrr"), collapse="\n")
+# one run's genes: a PIP column per QTL type only when the run has more than one type; isoQTL runs add the duplicate count
+gene_table <- function(r, d) {
+  d <- d[order(-combined_pip)]; x <- d[, .(gene_name, combined_pip=sprintf("%.2f", combined_pip))]
+  if (length(TYPES[[r]]) > 1) for (k in TYPES[[r]]) x[[paste0(k, "_pip")]] <- cell(d[[paste0(k, "_pip")]])
+  x <- cbind(x, d[, .(Traits=n_traits, `Top trait`=top_trait, `Top trait type`=top_type, `susie_pip (top trait)`=sprintf("%.2f", top_trait_pip), z=sprintf("%.1f", z))])
+  if ("isoQTL" %in% TYPES[[r]]) x[, `isoQTL copies` := fifelse(is.na(d$top_isoqtl_copies), "&ndash;", as.character(d$top_isoqtl_copies))]
+  paste(knitr::kable(x, escape=FALSE, align=ifelse(names(x) %in% c("gene_name", "Top trait", "Top trait type"), "l", "r")), collapse="\n")
+}
 ```
 
 # How we selected the tissue
@@ -71,14 +78,31 @@ Brain Cerebellum.
     slope); with one SNP per trait, only its sign matters.
   - Genes come from Pantry's own annotation. We used top QTLs, not Munro's
     prediction models.
+- **isoQTL weights** (added 2026-11-04; models from the paper, the top SNP is ours):
+  one trait per isoform, from the isoTWAS prediction models of
+  [Bhattacharya et al. 2023](https://doi.org/10.1038/s41588-023-01560-2) for GTEx v8
+  Brain Cerebellum ([Zenodo 8047940](https://zenodo.org/records/8047940)).
+  - The paper's trait is one isoform's expression (Salmon, GENCODE v38), predicted
+    from SNPs within 1 Mb by multivariate models fitted over all of the gene's
+    isoforms. Only isoforms with cross-validated R<sup>2</sup> &ge; 0.01 are released.
+  - The models are dense (median 471 SNPs per isoform). We kept one SNP per
+    isoform: the SNP with the largest standardised weight (|weight| &times; genotype
+    SD from the UKB reference), among single-base SNPs in the UKB reference that
+    are not strand-ambiguous. This is the model's most influential SNP, not a QTL
+    lead variant (the released files have no QTL statistics). It carries a median
+    7.7% of its model's total standardised weight.
+  - Genes are named from the paper's PredictDB mapping (as for eQTLs), else from
+    Pantry's annotation.
 - **Settings, as the paper's runs:** each QTL type is its own group, with protein-coding genes only and LD
   from the UKB reference. eQTL and sQTL weights are scaled (`scale_predictdb_weights`), the
-  isoform weights are not (one SNP per trait). No thinning, one prior variance shared
+  isoform weights (irQTL and isoQTL) are not (one SNP per trait). No thinning, one prior variance shared
   by all groups (`shared_all`), up to 5 signals per region (L = 5).
-- **Three runs:** eQTL + sQTL (the paper's QTL types), eQTL + sQTL + irQTL,
-  and irQTL only (added 2026-11-03, to test whether the irQTLs
-  carry signal on their own). All use the same settings.
-- **Not done yet:** merging regions and checking LD mismatch.
+- **Five runs:** eQTL + sQTL (the paper's QTL types), eQTL + sQTL + irQTL,
+  irQTL only (added 2026-11-03, to test whether the irQTLs
+  carry signal on their own), and eQTL + sQTL + isoQTL and isoQTL only
+  (added 2026-11-04). All use the same settings.
+- **Not done yet:** merging regions, checking LD mismatch, and merging
+  [duplicate isoQTL traits](#duplicate-isoqtl-traits).
 
 ```{r steps}
 knitr::kable(st[, .(Step=step, QTLs=fmt(qtls), Isoforms=fmt(isoforms), Genes=fmt(genes))], align="lrrr")
@@ -87,6 +111,14 @@ knitr::kable(st[, .(Step=step, QTLs=fmt(qtls), Isoforms=fmt(isoforms), Genes=fmt
 The irQTL weights at each step. The last row is the weights. cTWAS then
 keeps the isoforms of protein-coding genes whose QTL is in the GWAS:
 `r fmt(iso$group_size)` traits.
+
+```{r isoqtl_steps}
+knitr::kable(it[, .(Step=step, `Isoform-SNP pairs`=fmt(rows), Isoforms=fmt(isoforms), Genes=fmt(genes))], align="lrrr")
+```
+
+The isoQTL weights at each step; the first row counts every isoform-SNP pair in
+the released models. cTWAS keeps the protein-coding isoforms whose SNP is in the
+GWAS: `r fmt(isq$group_size)` traits.
 
 ## What the tables and figures show
 
@@ -109,23 +141,45 @@ of the parameter estimation (proportion causal &pi; is `group_prior`, effect siz
 
 **Gene-level PIPs:** `combined_pip` combines all of a gene's molecular traits and
 QTL types with `combine_gene_pips()` (`by = "type"`, `method = "combine_cs"`,
-`filter_cs = FALSE`). **eQTL_pip**, **sQTL_pip** and **irQTL_pip** are the gene's
+`filter_cs = FALSE`). **eQTL_pip**, **sQTL_pip**, **irQTL_pip** and **isoQTL_pip** are the gene's
 PIP from each QTL type; "&ndash;" means the gene has no trait of that type in a
 fine-mapped region. The mapping table assigns each trait to its gene: the paper's
-PredictDB mapping for eQTL genes and sQTL introns, and Pantry's annotation for
-isoforms.
+PredictDB mapping for eQTL genes and sQTL introns, Pantry's annotation for
+irQTL isoforms, and the PredictDB mapping (else Pantry's) for isoQTL isoforms.
 
 # Results
 
 ## Parameters
 
 ```{r params}
-w <- merge(pa[type != "SNP"], pa[type == "SNP", .(run, snp_prior=group_prior)], by="run")[order(match(run, names(RUNS)), match(type, c("eQTL", "sQTL", "irQTL")))]
+w <- merge(pa[type != "SNP"], pa[type == "SNP", .(run, snp_prior=group_prior)], by="run")[order(match(run, names(RUNS)), match(type, c("eQTL", "sQTL", "irQTL", "isoQTL")))]
 knitr::kable(w[, .(Run=RUNS[run], group, group_size=fmt(group_size), group_prior=sprintf("%.5f", group_prior), `group_prior (SNP)`=sprintf("%.5f", snp_prior),
   group_prior_var=sprintf("%.1f", group_prior_var), `log_enrichment (log_enrichment_se)`=sprintf("%.2f (%.2f)", log_enrichment, log_enrichment_se),
   enrichment_pval=fp(enrichment_pval), group_pve=sprintf("%.4f", group_pve), total_pve=sprintf("%.3f", total_pve),
   prop_heritability=sprintf("%.5f", prop_heritability))], align="llrrrrrrrrr")
 ```
+
+```{r isoqtl_note}
+ij <- pa[run == "est" & type == "isoQTL"]; e0 <- pa[run == "es" & type != "SNP"]; e1 <- pa[run == "est" & type != "SNP"]
+pt <- function(r, ty) pa[run == r & type == ty, group_pve / group_size]
+```
+
+**isoQTLs** (2026-11-04): unlike the irQTLs, the isoQTLs stay enriched when
+eQTLs and sQTLs are in the same run.
+
+- `log_enrichment` is `r sprintf("%.2f", isq$log_enrichment)` alone and
+  `r sprintf("%.2f", ij$log_enrichment)` with eQTLs and sQTLs (`enrichment_pval`
+  `r fp(ij$enrichment_pval)`); the irQTLs fall from
+  `r sprintf("%.2f", pa[run == "i" & type == "irQTL", log_enrichment])` alone to
+  `r sprintf("%.2f", iso$log_enrichment)`.
+- In the joint run the isoQTLs take `r sprintf("%.1f%%", 100 * ij$prop_heritability)`
+  of `total_pve`, and all molecular traits together
+  `r sprintf("%.1f%%", 100 * sum(e1$prop_heritability))`, against
+  `r sprintf("%.1f%%", 100 * sum(e0$prop_heritability))` with eQTLs and sQTLs only.
+- Per trait the isoQTL signal is small: `group_pve` / `group_size` (ours) is
+  `r sprintf("%.1e", pt("est", "isoQTL"))`, against `r sprintf("%.1e", pt("est", "eQTL"))`
+  for eQTLs in the same run. The share is large because the group is large
+  (`r fmt(isq$group_size)` traits).
 
 ## prop_heritability {.tabset}
 
@@ -139,7 +193,7 @@ for (r in names(RUNS)) {
 ## Convergence {.tabset}
 
 `r sprintf("%s converged in %d iterations. %s stopped at %d iterations without converging: the irQTL prior was still decreasing towards zero while the eQTL, sQTL and SNP estimates had settled, so its estimate is an upper bound.", RUNS[["es"]], cv[run == "es", iterations], RUNS[["esi"]], cv[run == "esi", iterations])`
-Both fine-mapped `r fmt(cv[run == "es", regions])` regions. `r sprintf("%s %s in %d iterations and fine-mapped %s regions.", RUNS[["i"]], if (cv[run == "i", converged]) "converged" else "did not converge", cv[run == "i", iterations], fmt(cv[run == "i", regions]))`
+Both fine-mapped `r fmt(cv[run == "es", regions])` regions. `r paste(vapply(c("i", "est", "t"), function(r) sprintf("%s %s in %d iterations and fine-mapped %s regions.", RUNS[[r]], if (cv[run == r, converged]) "converged" else "did not converge", cv[run == r, iterations], fmt(cv[run == r, regions])), ""), collapse=" ")`
 
 ```{r conv, results="asis"}
 for (r in names(RUNS)) {
@@ -155,16 +209,52 @@ for (r in names(RUNS)) {
 ```{r overview}
 gn <- sort(unique(g[combined_pip >= 0.8, gene_name]))
 pick <- function(r, col) vapply(gn, function(x) { v <- g[run == r & gene_name == x][[col]]; if (length(v)) v[1] else NA_real_ }, 0)
-o <- data.table(gene_name=gn, a=pick("es", "combined_pip"), b=pick("esi", "combined_pip"), e=pick("esi", "eQTL_pip"), s=pick("esi", "sQTL_pip"), i=pick("esi", "irQTL_pip"),
-                c=pick("i", "combined_pip"))[order(-b)]
-knitr::kable(o[, .(gene_name, `combined_pip (eQTL + sQTL)`=cell(a), `combined_pip (+ irQTL)`=cell(b),
-  `eQTL_pip (+ irQTL)`=cell(e), `sQTL_pip (+ irQTL)`=cell(s), `irQTL_pip (+ irQTL)`=cell(i),
-  `combined_pip (irQTL only)`=cell(c))], escape=FALSE, align="lrrrrrr")
+o <- data.table(gene_name=gn, a=pick("es", "combined_pip"), b=pick("esi", "combined_pip"), c=pick("i", "combined_pip"), d=pick("est", "combined_pip"),
+                e=pick("est", "eQTL_pip"), s=pick("est", "sQTL_pip"), t=pick("est", "isoQTL_pip"), u=pick("t", "combined_pip"))[order(-d)]
+knitr::kable(o[, .(gene_name, `combined_pip (eQTL + sQTL)`=cell(a), `combined_pip (+ irQTL)`=cell(b), `combined_pip (irQTL only)`=cell(c),
+  `combined_pip (+ isoQTL)`=cell(d), `eQTL_pip (+ isoQTL)`=cell(e), `sQTL_pip (+ isoQTL)`=cell(s), `isoQTL_pip (+ isoQTL)`=cell(t),
+  `combined_pip (isoQTL only)`=cell(u))], escape=FALSE, align="lrrrrrrrr")
 ```
 
-Columns 4&ndash;6 split the second run's `combined_pip` by QTL type. The last
-column is the irQTL-only run; "&ndash;" means the gene was not in a
-fine-mapped region there.
+Columns 2&ndash;5 and 9 are `combined_pip` in each run; columns 6&ndash;8
+split the eQTL + sQTL + isoQTL run's `combined_pip` by QTL type. "&ndash;"
+means the gene was not in a fine-mapped region in that run, or has no trait of
+that type.
+
+### Duplicate isoQTL traits
+
+```{r dup_setup}
+dt <- dc[run == "t"]; d5 <- function(r) dc[run == r & copy_group == "5 or more copies"]
+pair <- g[run == "est" & gene_name %in% c("PPIL2", "TMEM25")][order(-combined_pip)]
+ar <- g[run == "est" & gene_name == "ARHGAP9"]
+```
+
+**Caveat (ours):** with one SNP per isoform, isoforms of the same gene often get
+the same top SNP. Their predicted expressions are then the same trait (up to
+sign), and cTWAS keeps them as separate traits. SuSiE splits a signal evenly over
+such copies and `combined_pip` adds them back, so a gene with many copies gets
+the prior of many traits.
+
+```{r dup}
+knitr::kable(dc[, .(Run=RUNS[run], `Copies per gene and SNP`=copy_group, `isoQTL traits`=fmt(traits), `Share of traits`=sprintf("%.0f%%", 100 * trait_share),
+  `susie_pip sum`=sprintf("%.1f", pip_sum), `Share of susie_pip`=sprintf("%.0f%%", 100 * pip_share))], align="llrrrr")
+```
+
+- **Copies per gene and SNP:** how many of the run's isoQTL traits have the same
+  gene and the same SNP (1 = no duplicate).
+- **susie_pip sum:** the isoQTL traits' `susie_pip`, summed over fine-mapped
+  regions; **Share of susie_pip** is its share of the run's isoQTL total.
+- **isoQTL copies** (gene tables below): the copies of the gene's isoQTL trait
+  with the largest `susie_pip`.
+
+The copy groups take about the same share of `susie_pip` as of traits, so the
+duplicates do not drive the group estimates above. They matter for single
+genes. In the eQTL + sQTL + isoQTL run,
+`r paste(sprintf("%s (combined_pip %.2f) rests on %d copies of its top trait, each with susie_pip %.2f", pair$gene_name, pair$combined_pip, pair$top_isoqtl_copies, pair$top_isoqtl_pip), collapse=", and ")`.
+Their SNPs have GWAS |z| `r paste(sprintf("%.2f", abs(pair$z)), collapse=" and ")`
+(p `r paste(fp(2 * pnorm(-abs(pair$z))), collapse=" and ")`), below genome-wide significance. ARHGAP9 rests on one isoform,
+`r sub(".*__", "", ar$top_trait)` (susie_pip `r sprintf("%.2f", ar$top_trait_pip)`,
+z = `r sprintf("%.1f", ar$z)`).
 
 ### By run {.tabset}
 
@@ -173,30 +263,37 @@ Genes with `combined_pip` of at least 0.5.
 ```{r gene_tabs, results="asis"}
 for (r in names(RUNS)) {
   cat("#### ", RUNS[[r]], "\n\n", sep="")
-  cat(gene_table(g[run == r & combined_pip >= 0.5]), "\n\n", sep="")
+  cat(gene_table(r, g[run == r & combined_pip >= 0.5]), "\n\n", sep="")
 }
 ```
 
+- **eQTL_pip** and the other PIP columns appear when a run has more than one QTL type.
 - **Traits:** the gene's molecular traits in fine-mapped regions, over all QTL types.
 - **Top trait:** the trait with the largest `susie_pip`: its ID (an eQTL gene, an
   sQTL intron or an isoform), type, `susie_pip` and z-score (z).
+- **isoQTL copies** (isoQTL runs only): see [Duplicate isoQTL traits](#duplicate-isoqtl-traits).
 
 ## All genes
 
 ```{r all_genes}
 DT::datatable(as.data.frame(g[, .(Run=RUNS[run], gene_name, combined_pip=round(combined_pip, 3), eQTL_pip=round(eQTL_pip, 3), sQTL_pip=round(sQTL_pip, 3),
-  irQTL_pip=round(irQTL_pip, 3), Traits=n_traits, `Top trait`=top_trait, `Top trait type`=top_type, `susie_pip (top trait)`=round(top_trait_pip, 3),
-  z=round(z, 2))][order(-combined_pip)]), rownames=FALSE, filter="top", extensions="Buttons",
+  irQTL_pip=round(irQTL_pip, 3), isoQTL_pip=round(isoQTL_pip, 3), Traits=n_traits, `Top trait`=top_trait, `Top trait type`=top_type, `susie_pip (top trait)`=round(top_trait_pip, 3),
+  z=round(z, 2), `isoQTL copies`=top_isoqtl_copies)][order(-combined_pip)]), rownames=FALSE, filter="top", extensions="Buttons",
   options=list(pageLength=10, scrollX=TRUE, dom="Bfrtip", buttons=c("copy", "csv")), caption="Every gene in a fine-mapped region, in every run.")
 ```
 
 **Code:** `long_read_RNA/15.ctwas_gtex_isoform/`:
 
 - `0.build_isoform_topqtl.R`: the irQTL top-QTL weights and their mapping table.
-- `1.run_ctwas.R` and `.sbatch`: the three runs (QTL types `es`, `esi` and `i`).
+- `3.fetch_isotwas_models.sh`: fetches the Brain Cerebellum isoTWAS models from
+  Zenodo (only the byte range that holds them, on the login node).
+- `4.build_isoqtl_isotwas.R`: the isoQTL top-SNP weights and their mapping table.
+- `1.run_ctwas.R` and `.sbatch`: the five runs (QTL types `es`, `esi`, `i`, `est` and `t`).
 - `2.summarize.R`: this page's tables and figures.
 
 **Downloads:** [tissue counts](assets/ctwas_gtex_SCZ_Brain_Cerebellum/tissue_qtls.tsv),
 [parameters](assets/ctwas_gtex_SCZ_Brain_Cerebellum/params.tsv),
-[gene PIPs](assets/ctwas_gtex_SCZ_Brain_Cerebellum/gene_pips.tsv) and
-[convergence](assets/ctwas_gtex_SCZ_Brain_Cerebellum/convergence.tsv).
+[gene PIPs](assets/ctwas_gtex_SCZ_Brain_Cerebellum/gene_pips.tsv),
+[convergence](assets/ctwas_gtex_SCZ_Brain_Cerebellum/convergence.tsv),
+[isoQTL steps](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_steps.tsv) and
+[isoQTL copies](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_copies.tsv).

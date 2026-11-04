@@ -113,7 +113,8 @@ within 30 bp are left out.
 
 # cTWAS with GTEx molecular QTLs
 
-* [eQTLs, sQTLs and irQTLs, schizophrenia](ctwas_gtex_isoform_scz.html) —
-  whether isoform-ratio QTLs (irQTLs) from Munro et al. add to the M-cTWAS paper's eQTL and
-  sQTL groups, and whether they carry signal on their own, in Brain Cerebellum
-  (chosen as the brain tissue with the most isoform-ratio QTLs)
+* [eQTLs, sQTLs, irQTLs and isoQTLs, schizophrenia](ctwas_gtex_isoform_scz.html) —
+  whether isoform-ratio QTLs (irQTLs) from Munro et al. and isoform-expression QTLs (isoQTLs)
+  from the isoTWAS models add to the M-cTWAS paper's eQTL and sQTL groups, and whether they
+  carry signal on their own, in Brain Cerebellum (chosen as the brain tissue with the most
+  isoform-ratio QTLs)

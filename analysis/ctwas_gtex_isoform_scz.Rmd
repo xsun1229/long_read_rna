@@ -19,9 +19,9 @@ tq <- fread(file.path(A, "tissue_qtls.tsv")); st <- fread(file.path(A, "isoform_
 dc <- fread(file.path(A, "isoqtl_copies.tsv"))
 pa <- fread(file.path(A, "params.tsv")); g <- fread(file.path(A, "gene_pips.tsv")); cv <- fread(file.path(A, "convergence.tsv"))
 RUNS <- c(es="eQTL + sQTL", esi="eQTL + sQTL + irQTL", i="irQTL only", est="eQTL + sQTL + isoQTL (top 1)", t="isoQTL only (top 1)",
-          esf="eQTL + sQTL + isoQTL (top 5)", f="isoQTL only (top 5)")
+          esh="eQTL + sQTL + isoQTL (top 3)", h="isoQTL only (top 3)", esf="eQTL + sQTL + isoQTL (top 5)", f="isoQTL only (top 5)")
 TYPES <- list(es=c("eQTL", "sQTL"), esi=c("eQTL", "sQTL", "irQTL"), i="irQTL", est=c("eQTL", "sQTL", "isoQTL"), t="isoQTL",
-              esf=c("eQTL", "sQTL", "isoQTL"), f="isoQTL")
+              esh=c("eQTL", "sQTL", "isoQTL"), h="isoQTL", esf=c("eQTL", "sQTL", "isoQTL"), f="isoQTL")
 # only the runs this page shows
 dc <- dc[run %in% names(RUNS)]; pa <- pa[run %in% names(RUNS)]; g <- g[run %in% names(RUNS)]; cv <- cv[run %in% names(RUNS)]
 TOP1 <- c("es", "esi", "i", "est", "t")
@@ -92,21 +92,22 @@ Brain Cerebellum.
     isoforms. Only isoforms with cross-validated R<sup>2</sup> &ge; 0.01 are released.
   - The models are dense (median 471 SNPs per isoform). We kept the SNP with
     the largest standardised weight per isoform (top 1), or the 5 SNPs with the
-    largest (top 5, added 2026-11-04 at Xin's suggestion): see
+    largest (top 5, added 2026-11-04 at Xin's suggestion), or the 3 largest (top 3,
+    added 2026-11-05): see
     [How the isoQTL SNP was chosen](#how-the-isoqtl-snp-was-chosen).
   - Genes are named from the paper's PredictDB mapping (as for eQTLs), else from
     Pantry's annotation.
 - **Settings, as the paper's runs:** each QTL type is its own group, with protein-coding genes only and LD
   from the UKB reference. eQTL and sQTL weights are scaled (`scale_predictdb_weights`), and
-  so are the top-5 isoQTL weights, whose SNPs' relative weights matter. The top-1 isoform
+  so are the top-3 and top-5 isoQTL weights, whose SNPs' relative weights matter. The top-1 isoform
   weights (irQTL and isoQTL) are not scaled: with one SNP per trait only the sign matters.
   No thinning, one prior variance shared by all groups (`shared_all`), up to 5 signals per
   region (L = 5).
-- **Seven runs:** eQTL + sQTL (the paper's QTL types), eQTL + sQTL + irQTL,
+- **Nine runs:** eQTL + sQTL (the paper's QTL types), eQTL + sQTL + irQTL,
   irQTL only (added 2026-11-03, to test whether the irQTLs
   carry signal on their own), and eQTL + sQTL + isoQTL and isoQTL only, each
-  with the top 1 and the top 5 SNPs per isoform (added 2026-11-04). All use the
-  same settings.
+  with the top 1, top 3 and top 5 SNPs per isoform (added 2026-11-04 and
+  2026-11-05). All use the same settings.
 - **Not done yet:** merging regions, checking LD mismatch, and merging
   [duplicate isoQTL traits](#duplicate-isoqtl-traits).
 
@@ -132,7 +133,8 @@ GWAS: `r fmt(isq$group_size)` traits. The top-5 weights pass the same steps and
 keep `r fmt(s5$rows)` isoform-SNP pairs for the same `r fmt(s5$isoforms)`
 protein-coding isoforms. cTWAS keeps `r fmt(isf$group_size)` of them: cTWAS drops a
 weight's SNPs that are not in the GWAS, and the trait survives while one of its 5
-SNPs remains.
+SNPs remains. The top-3 weights are built the same way; cTWAS keeps
+`r fmt(pa[run == "h" & type == "isoQTL", group_size])` of them.
 
 ## How the isoQTL SNP was chosen
 
@@ -274,12 +276,15 @@ eQTLs and sQTLs are in the same run.
   `r sprintf("%.1e", pt("est", "isoQTL"))`, against `r sprintf("%.1e", pt("est", "eQTL"))`
   for eQTLs in the same run. The share is large because the group is large
   (`r fmt(isq$group_size)` traits).
-- These are the top-1 runs. With the top 5 SNPs per isoform, the isoQTL
-  `log_enrichment` is `r sprintf("%.2f", pa[run == "f" & type == "isoQTL", log_enrichment])` alone
-  and `r sprintf("%.2f", pa[run == "esf" & type == "isoQTL", log_enrichment])` jointly, and the
-  isoQTLs take `r sprintf("%.1f%%", 100 * pa[run == "esf" & type == "isoQTL", prop_heritability])` of
+- These are the top-1 runs. With the top 3 / top 5 SNPs per isoform, the isoQTL
+  `log_enrichment` is `r sprintf("%.2f", pa[run == "h" & type == "isoQTL", log_enrichment])` /
+  `r sprintf("%.2f", pa[run == "f" & type == "isoQTL", log_enrichment])` alone and
+  `r sprintf("%.2f", pa[run == "esh" & type == "isoQTL", log_enrichment])` /
+  `r sprintf("%.2f", pa[run == "esf" & type == "isoQTL", log_enrichment])` jointly, and the
+  isoQTLs take `r sprintf("%.1f%%", 100 * pa[run == "esh" & type == "isoQTL", prop_heritability])` /
+  `r sprintf("%.1f%%", 100 * pa[run == "esf" & type == "isoQTL", prop_heritability])` of
   `total_pve` in the joint run. Much of this gain may be an artefact: see
-  [Top 5 SNPs per isoform: checks](#top-5-snps-per-isoform-checks).
+  [Top 3 and top 5 SNPs per isoform: checks](#top-3-and-top-5-snps-per-isoform-checks).
 
 ## prop_heritability {.tabset}
 
@@ -293,7 +298,7 @@ for (r in names(RUNS)) {
 ## Convergence {.tabset}
 
 `r sprintf("%s converged in %d iterations. %s stopped at %d iterations without converging: the irQTL prior was still decreasing towards zero while the eQTL, sQTL and SNP estimates had settled, so its estimate is an upper bound.", RUNS[["es"]], cv[run == "es", iterations], RUNS[["esi"]], cv[run == "esi", iterations])`
-Both fine-mapped `r fmt(cv[run == "es", regions])` regions. `r paste(vapply(c("i", "est", "t", "esf", "f"), function(r) sprintf("%s %s in %d iterations and fine-mapped %s regions.", RUNS[[r]], if (cv[run == r, converged]) "converged" else "did not converge", cv[run == r, iterations], fmt(cv[run == r, regions])), ""), collapse=" ")`
+Both fine-mapped `r fmt(cv[run == "es", regions])` regions. `r paste(vapply(c("i", "est", "t", "esh", "h", "esf", "f"), function(r) sprintf("%s %s in %d iterations and fine-mapped %s regions.", RUNS[[r]], if (cv[run == r, converged]) "converged" else "did not converge", cv[run == r, iterations], fmt(cv[run == r, regions])), ""), collapse=" ")`
 
 ```{r conv, results="asis"}
 for (r in names(RUNS)) {
@@ -311,19 +316,20 @@ gn <- sort(unique(g[run %in% TOP1 & combined_pip >= 0.8, gene_name]))
 pick <- function(r, col) vapply(gn, function(x) { v <- g[run == r & gene_name == x][[col]]; if (length(v)) v[1] else NA_real_ }, 0)
 o <- data.table(gene_name=gn, a=pick("es", "combined_pip"), b=pick("esi", "combined_pip"), c=pick("i", "combined_pip"), d=pick("est", "combined_pip"),
                 e=pick("est", "eQTL_pip"), s=pick("est", "sQTL_pip"), t=pick("est", "isoQTL_pip"), u=pick("t", "combined_pip"),
-                v=pick("esf", "combined_pip"), w=pick("f", "combined_pip"))[order(-d)]
+                v=pick("esf", "combined_pip"), w=pick("f", "combined_pip"), v3=pick("esh", "combined_pip"), w3=pick("h", "combined_pip"))[order(-d)]
 knitr::kable(o[, .(gene_name, `combined_pip (eQTL + sQTL)`=cell(a), `combined_pip (+ irQTL)`=cell(b), `combined_pip (irQTL only)`=cell(c),
   `combined_pip (+ isoQTL top 1)`=cell(d), `eQTL_pip (+ isoQTL top 1)`=cell(e), `sQTL_pip (+ isoQTL top 1)`=cell(s), `isoQTL_pip (+ isoQTL top 1)`=cell(t),
-  `combined_pip (isoQTL top 1 only)`=cell(u), `combined_pip (+ isoQTL top 5)`=cell(v), `combined_pip (isoQTL top 5 only)`=cell(w))],
-  escape=FALSE, align="lrrrrrrrrrr")
+  `combined_pip (isoQTL top 1 only)`=cell(u), `combined_pip (+ isoQTL top 3)`=cell(v3), `combined_pip (isoQTL top 3 only)`=cell(w3),
+  `combined_pip (+ isoQTL top 5)`=cell(v), `combined_pip (isoQTL top 5 only)`=cell(w))],
+  escape=FALSE, align="lrrrrrrrrrrrr")
 ```
 
-Columns 2&ndash;5 and 9&ndash;11 are `combined_pip` in each run; columns 6&ndash;8
+Columns 2&ndash;5 and 9&ndash;13 are `combined_pip` in each run; columns 6&ndash;8
 split the eQTL + sQTL + isoQTL (top 1) run's `combined_pip` by QTL type. "&ndash;"
 means the gene was not in a fine-mapped region in that run, or has no trait of
-that type. The table lists the genes of the top-1 runs. The top-5 runs have many
-more (`r length(g8("esf"))` in the joint run): see
-[Top 5 SNPs per isoform: checks](#top-5-snps-per-isoform-checks) and the run tabs below.
+that type. The table lists the genes of the top-1 runs. The top-3 and top-5 runs have
+many more (`r length(g8("esh"))` and `r length(g8("esf"))` in the joint runs): see
+[Top 3 and top 5 SNPs per isoform: checks](#top-3-and-top-5-snps-per-isoform-checks) and the run tabs below.
 
 ### Duplicate isoQTL traits
 
@@ -346,7 +352,7 @@ knitr::kable(dc[, .(Run=RUNS[run], `Copies per gene and SNPs`=copy_group, `isoQT
 
 - **Copies per gene and SNPs:** how many of the run's isoQTL traits have the same
   gene and the same SNP (top 1), or the same gene and SNPs with proportional
-  weights (top 5); 1 = no duplicate.
+  weights (top 3, top 5); 1 = no duplicate.
 - **susie_pip sum:** the isoQTL traits' `susie_pip`, summed over fine-mapped
   regions; **Share of susie_pip** is its share of the run's isoQTL total.
 - **isoQTL copies** (gene tables below): the copies of the gene's isoQTL trait
@@ -361,12 +367,13 @@ Their SNPs have GWAS |z| `r paste(sprintf("%.2f", abs(pair$z)), collapse=" and "
 `r sub(".*__", "", ar$top_trait)` (susie_pip `r sprintf("%.2f", ar$top_trait_pip)`,
 z = `r sprintf("%.1f", ar$z)`).
 
-With the top 5 SNPs duplicates are rarer:
+With the top 3 or top 5 SNPs duplicates are rarer:
+`r sprintf("%.0f%%", 100 * dc[run == "esh" & copy_group == "1 copy", trait_share])` and
 `r sprintf("%.0f%%", 100 * dc[run == "esf" & copy_group == "1 copy", trait_share])` of the isoQTL
 traits have no copy, against `r sprintf("%.0f%%", 100 * dc[run == "est" & copy_group == "1 copy", trait_share])`
 with the top SNP.
 
-### Top 5 SNPs per isoform: checks
+### Top 3 and top 5 SNPs per isoform: checks
 
 ```{r top5_setup}
 fl <- fread(file.path(A, "isoqtl_top5_flags.tsv")); rg <- fread(file.path(A, "isoqtl_top5_region.tsv"))
@@ -376,13 +383,30 @@ e2 <- ex5[order(-abs(weight))][1:2]; r12 <- ex5[snp == e2$snp[1]][[paste0("r_", 
 gcl <- function(k) ge[class == k]
 kn <- g[run == "esf" & gene_name %in% c("CACNA1C", "CACNA1D", "MAD1L1")][order(gene_name)]
 dr <- setdiff(g8("es"), g8("esf"))   # genes at >= 0.8 with eQTL + sQTL that fall below 0.8 with the top-5 isoQTLs
+dr3 <- setdiff(g8("es"), g8("esh")); f3 <- fl[run == "esh"]
+sh35 <- length(intersect(g8("esh"), g8("esf")))   # genes at 0.8 with both top 3 and top 5
+pip_of <- function(r, x) { v <- g[run == r & gene_name == x, combined_pip]; if (length(v)) v else NA_real_ }
 dr <- data.table(gene_name=dr, es=vapply(dr, function(x) g[run == "es" & gene_name == x, combined_pip], 0),
                  esf=vapply(dr, function(x) { v <- g[run == "esf" & gene_name == x, combined_pip]; if (length(v)) v else NA_real_ }, 0))
 ```
 
 **Short answer (ours):** with the top 5 SNPs per isoform the isoQTLs look much
-stronger, but several signs point to fine-mapping artefacts, not signal. We
-have not tested the cause. Until we have, the top-1 runs are the safer result.
+stronger, but several signs point to fine-mapping artefacts, not signal. The
+top 3 SNPs (added 2026-11-05) show the same signs, so the problem comes with any
+multi-SNP truncation of these models, not with 5 SNPs in particular. We have not
+tested the cause. Until we have, the top-1 runs are the safer result.
+
+- **Top 3:** in the joint run the isoQTLs take
+  `r sprintf("%.1f%%", 100 * pa[run == "esh" & type == "isoQTL", prop_heritability])` of `total_pve`, and
+  `r f3$genes_pip08` genes reach `combined_pip` &ge; 0.8, `r f3$genes_pip08_z_lt3` of them with |z| < 3.
+  `r length(dr3)` of the `r length(g8("es"))` genes of the eQTL + sQTL run fall below 0.8. The gene
+  list is not stable between top 3 and top 5: only `r sh35` of the `r length(g8("esh"))` genes at 0.8
+  with top 3 are at 0.8 with top 5 (CACNA1C: `r sprintf("%.2f", pip_of("esh", "CACNA1C"))` with top 3,
+  `r sprintf("%.2f", pip_of("esf", "CACNA1C"))` with top 5). AMT, the example below, has
+  `combined_pip` `r sprintf("%.2f", pip_of("esh", "AMT"))` with top 3: its two largest weights, the
+  opposite-sign pair, are also the top 2 of 3.
+
+**Top 5** (2026-11-04):
 
 - In the joint run the isoQTLs take
   `r sprintf("%.1f%%", 100 * pa[run == "esf" & type == "isoQTL", prop_heritability])` of `total_pve`
@@ -395,7 +419,7 @@ have not tested the cause. Until we have, the top-1 runs are the safer result.
   `r paste(sprintf("%s %.2f to %s", dr$gene_name, dr$es, cell(dr$esf)), collapse=", ")`.
 
 ```{r top5_flags}
-knitr::kable(fl[match(c("es", "est", "t", "esf", "f"), run), .(Run=RUNS[run], `Regions fine-mapped`=fmt(regions), `Genes, combined_pip >= 0.8`=genes_pip08,
+knitr::kable(fl[match(c("es", "est", "t", "esh", "h", "esf", "f"), run), .(Run=RUNS[run], `Regions fine-mapped`=fmt(regions), `Genes, combined_pip >= 0.8`=genes_pip08,
   `of which |z| < 3`=genes_pip08_z_lt3, `Regions, traits take > 3 effects`=regions_trait_pip_gt3, `of which no SNP p < 5e-8`=regions_trait_pip_gt3_no_gws_snp)],
   align="lrrrrr")
 ```
@@ -410,7 +434,7 @@ All columns are ours.
   without a genome-wide significant SNP (largest SNP |z| < 5.45).
 
 ```{r top5_pip_z_setup}
-pzt <- fread(file.path(A, "isoqtl_top5_pip_z.tsv")); z1 <- pzt[run == "est"]; z5 <- pzt[run == "esf"]
+pzt <- fread(file.path(A, "isoqtl_top5_pip_z.tsv")); z1 <- pzt[run == "est"]; z3 <- pzt[run == "esh"]; z5 <- pzt[run == "esf"]
 ```
 
 ![](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_pip_z.png)
@@ -419,12 +443,13 @@ pzt <- fread(file.path(A, "isoqtl_top5_pip_z.tsv")); z1 <- pzt[run == "est"]; z5
 
 Each point is one molecular trait (an eQTL gene, an sQTL intron or an isoform) in
 a fine-mapped region of the joint run (`r fmt(z1$traits)` traits with the top SNP,
-`r fmt(z5$traits)` with the top 5): its `susie_pip` against its own GWAS |z|. The
-dashed lines mark `susie_pip` 0.8 and |z| 3, and the shaded corner holds the
+`r fmt(z3$traits)` with the top 3, `r fmt(z5$traits)` with the top 5): its `susie_pip` against its own
+GWAS |z|. The dashed lines mark `susie_pip` 0.8 and |z| 3, and the shaded corner holds the
 suspect traits. With the top SNP, `r z1$traits_pip08_z_lt3` of the `r z1$traits_pip08`
-traits at `susie_pip` &ge; 0.8 have |z| < 3; with the top 5, `r z5$traits_pip08_z_lt3`
-of `r z5$traits_pip08` do, and `r z5$isoqtl_pip08_z_lt3` of those are isoQTL traits. With
-the top 5, many isoQTL traits also sit at `susie_pip` 1 with only moderate |z|.
+traits at `susie_pip` &ge; 0.8 have |z| < 3; with the top 3, `r z3$traits_pip08_z_lt3` of
+`r z3$traits_pip08` (`r z3$isoqtl_pip08_z_lt3` isoQTL traits); with the top 5, `r z5$traits_pip08_z_lt3`
+of `r z5$traits_pip08` (`r z5$isoqtl_pip08_z_lt3` isoQTL traits). With multiple SNPs, many isoQTL
+traits also sit at `susie_pip` 1 with only moderate |z|.
 
 **Example region** `r sn$region_id` in the eQTL + sQTL + isoQTL (top 5) run.
 SuSiE puts `r sprintf("%.2f", rg$region_trait_pip[1])` of its 5 effects on isoQTL
@@ -508,10 +533,10 @@ DT::datatable(as.data.frame(g[, .(Run=RUNS[run], gene_name, combined_pip=round(c
   Zenodo (only the byte range that holds them, on the login node).
 - `4.build_isoqtl_isotwas.R`: the isoQTL weights (top 1, or top K SNPs with a
   second argument) and their mapping table.
-- `1.run_ctwas.R` and `.sbatch`: the seven runs (QTL types `es`, `esi`, `i`, `est`,
-  `t`, `esf` and `f`; `f` is the top-5 isoQTL weights).
+- `1.run_ctwas.R` and `.sbatch`: the nine runs (QTL types `es`, `esi`, `i`, `est`,
+  `t`, `esh`, `h`, `esf` and `f`; `h` and `f` are the top-3 and top-5 isoQTL weights).
 - `2.summarize.R`: this page's tables and figures.
-- `5.top5_diagnostics.R`: the checks of the top-5 runs.
+- `5.top5_diagnostics.R`: the checks of the top-3 and top-5 runs.
 
 **Downloads:** [tissue counts](assets/ctwas_gtex_SCZ_Brain_Cerebellum/tissue_qtls.tsv),
 [parameters](assets/ctwas_gtex_SCZ_Brain_Cerebellum/params.tsv),

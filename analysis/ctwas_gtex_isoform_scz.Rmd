@@ -409,6 +409,23 @@ All columns are ours.
   molecular traits. **of which no SNP p < 5e-8:** of those regions, the ones
   without a genome-wide significant SNP (largest SNP |z| < 5.45).
 
+```{r top5_pip_z_setup}
+pzt <- fread(file.path(A, "isoqtl_top5_pip_z.tsv")); z1 <- pzt[run == "est"]; z5 <- pzt[run == "esf"]
+```
+
+![](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_pip_z.png)
+
+[Open as PDF](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_pip_z.pdf)
+
+Each point is one molecular trait (an eQTL gene, an sQTL intron or an isoform) in
+a fine-mapped region of the joint run (`r fmt(z1$traits)` traits with the top SNP,
+`r fmt(z5$traits)` with the top 5): its `susie_pip` against its own GWAS |z|. The
+dashed lines mark `susie_pip` 0.8 and |z| 3, and the shaded corner holds the
+suspect traits. With the top SNP, `r z1$traits_pip08_z_lt3` of the `r z1$traits_pip08`
+traits at `susie_pip` &ge; 0.8 have |z| < 3; with the top 5, `r z5$traits_pip08_z_lt3`
+of `r z5$traits_pip08` do, and `r z5$isoqtl_pip08_z_lt3` of those are isoQTL traits. With
+the top 5, many isoQTL traits also sit at `susie_pip` 1 with only moderate |z|.
+
 **Example region** `r sn$region_id` in the eQTL + sQTL + isoQTL (top 5) run.
 SuSiE puts `r sprintf("%.2f", rg$region_trait_pip[1])` of its 5 effects on isoQTL
 traits and `r sprintf("%.2f", rg$region_snp_pip[1])` on SNPs, although the strongest
@@ -505,4 +522,5 @@ DT::datatable(as.data.frame(g[, .(Run=RUNS[run], gene_name, combined_pip=round(c
 ([flags](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_flags.tsv),
 [example region](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_region.tsv),
 [example trait](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_example.tsv),
-[weight pairs](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_geometry.tsv)).
+[weight pairs](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_geometry.tsv),
+[PIP vs |z| counts](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_top5_pip_z.tsv)).

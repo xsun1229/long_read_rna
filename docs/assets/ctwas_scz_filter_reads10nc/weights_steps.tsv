@@ -1,0 +1,22 @@
+tp	step	associations	parts	variants	genes
+0hr	QTL set filter_reads10nc	194	167	126	106
+0hr	single-base SNV	194	167	126	106
+0hr	dPSI not 0	194	167	126	106
+0hr	p available	194	167	126	106
+0hr	variant in the UKB b38 reference	192	165	124	104
+0hr	not strand-ambiguous	175	153	112	96
+0hr	top QTL per part	153	153	99	96
+1hr	QTL set filter_reads10nc	359	293	222	176
+1hr	single-base SNV	359	293	222	176
+1hr	dPSI not 0	359	293	222	176
+1hr	p available	359	293	222	176
+1hr	variant in the UKB b38 reference	352	287	216	171
+1hr	not strand-ambiguous	290	242	181	147
+1hr	top QTL per part	242	242	157	147
+6hr	QTL set filter_reads10nc	403	343	256	204
+6hr	single-base SNV	403	343	256	204
+6hr	dPSI not 0	403	343	256	204
+6hr	p available	403	343	256	204
+6hr	variant in the UKB b38 reference	398	338	252	200
+6hr	not strand-ambiguous	351	302	219	175
+6hr	top QTL per part	302	302	187	175

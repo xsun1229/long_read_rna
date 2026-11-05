@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2026-11-05" />
+
+<title>cTWAS with isoLASER + filter splicing QTLs: schizophrenia</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.11.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.11.3/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.11.3/js/buttons.print.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">long_read_rna</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/long_read_rna">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">cTWAS with isoLASER + filter splicing QTLs:
+schizophrenia</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2026-11-05</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-11-05
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>long_read_rna/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260908code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260908)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260908code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260908)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree439368caa3c9ca2ace5a8801f363b666c97e4278targetblank439368ca">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/long_read_rna/tree/439368caa3c9ca2ace5a8801f363b666c97e4278" target="_blank">439368c</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree439368caa3c9ca2ace5a8801f363b666c97e4278targetblank439368ca"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/long_read_rna/tree/439368caa3c9ca2ace5a8801f363b666c97e4278" target="_blank">439368c</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  analysis/isolaser_ctwas_scz_filter.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>We ran cTWAS on the schizophrenia (SCZ) GWAS with our isoLASER
+associations as splicing QTLs, using <strong>isoLASER + filter</strong>:
+isoLASER’s <code>cis</code> label plus |ΔPSI| ≥ 0.05. This page repeats
+the joint run of the <a href="isolaser_ctwas_scz.html">earlier cTWAS
+page</a>, which used the <code>cis</code> label alone, with these
+weights. cTWAS asks whether the splicing QTLs explain more GWAS
+heritability than SNPs in general (<strong>enrichment</strong>), and
+which genes’ splicing is likely causal (<strong>PIP</strong>, the
+posterior inclusion probability).</p>
+<p><strong>Short answer.</strong></p>
+<ul>
+<li><strong>Enrichment:</strong> <code>log_enrichment</code> is 4.64 at
+0 hr and 5.81 at 6 hr. At 1 hr the prior goes to about 0: in the joint
+run the 1 hr traits explain nothing beyond the 0 and 6 hr traits (<a
+href="#parameters">why</a>).</li>
+<li><strong>prop_heritability</strong> of the splicing groups: 1.67%
+together, most of it at 6 hr.</li>
+<li><strong>Genes:</strong> 9 genes reach <code>combined_pip</code> 0.8:
+LY6H, NDRG4, MYT1L, SF3B1, CNPPD1, PIGF, GOPC, MRPL43, YWHAE. With the
+<code>cis</code> label alone there were 7. The filter removes HSPA9 and
+adds GOPC, MRPL43, YWHAE.</li>
+<li><strong>The filter removes the high-coverage <code>cis</code>
+calls:</strong> above about 2,370 reads isoLASER’s <code>cis</code>
+cutoff falls below 0, so nearly every association there is labelled
+<code>cis</code> with ΔPSI near 0. On the earlier page ACTB, COX6C and
+RPL13 rested on such parts; none of them is in a fine-mapped region
+now.</li>
+</ul>
+<div id="how-the-runs-were-set-up" class="section level1">
+<h1>How the runs were set up</h1>
+<ul>
+<li><strong>GWAS:</strong> PGC schizophrenia, <code>ieu-b-5102</code> (N
+= 127,906), z-scores harmonized to the UK Biobank (UKB) LD reference,
+from the earlier multigroup cTWAS project.</li>
+<li><strong>Molecular traits</strong> (our definition): one trait per
+tested exonic part. A part is included when one of its associations has
+isoLASER’s <code>cis</code> label, computed from the panel-heterozygous
+donors with at least 10 reads each, and |ΔPSI| ≥ 0.05 (isoLASER +
+filter; no FDR cutoff). That is 194 / 359 / 403 associations at 0 / 1 /
+6 hr.</li>
+<li><strong>QTL and weight:</strong> each trait has one SNP, the part’s
+variant with the smallest permutation p (ties: largest |ΔPSI|) among its
+associations that pass the filter, single-base variants in the UKB
+reference that are not strand-ambiguous. The weight is ΔPSI (ALT minus
+REF inclusion) with ALT as the effect allele. With one SNP per trait,
+only the weight’s sign matters. This gives 153 / 242 / 302 traits, of
+which cTWAS keeps those whose SNP is in the GWAS
+(<code>group_size</code> below).</li>
+<li><strong>Mapping table:</strong> each trait (exonic part) maps to the
+gene the part belongs to. It is written with the weights and used for
+gene-level PIPs.</li>
+<li><strong>One run:</strong> the three timepoints as separate groups in
+one run (<a href="#all-timepoints-jointly">how</a>), with the same
+settings as the earlier page.</li>
+<li><strong>Settings:</strong> UKB b38 LD, no thinning, one prior
+variance shared by all groups (<code>shared_all</code>), up to 5 signals
+per region (L = 5), at least 100 traits per group. Regions are
+fine-mapped when their non-SNP PIP is at least 0.5.</li>
+<li><strong>Not done yet:</strong> merging regions and checking LD
+mismatch.</li>
+</ul>
+<div id="what-the-tables-and-figures-show" class="section level2">
+<h2>What the tables and figures show</h2>
+<p><strong>Parameters</strong>, the output of
+<code>summarize_param()</code>:</p>
+<ul>
+<li><strong>group_size:</strong> splicing traits that reach cTWAS after
+matching to the GWAS and the LD reference.</li>
+<li><strong>group_prior:</strong> the estimated prior probability that a
+trait (splicing) or a variant (SNP) is causal.</li>
+<li><strong>group_prior_var:</strong> the prior variance of a causal
+effect, shared by all groups (<code>shared_all</code>).</li>
+<li><strong>log_enrichment:</strong> the log of a splicing group’s prior
+over the SNP prior, with its standard error;
+<strong>enrichment_pval</strong> is its p-value.</li>
+<li><strong>group_pve:</strong> the proportion of SCZ variance explained
+by the group: group_size × group_prior × group_prior_var / GWAS N.
+<strong>total_pve</strong> sums all groups.</li>
+<li><strong>prop_heritability:</strong> a group’s group_pve over
+total_pve, the slices of the pie chart.</li>
+</ul>
+<p><strong>Convergence</strong>, from
+<code>make_convergence_plots()</code>: the estimates at each iteration
+of the parameter estimation. Proportion causal (π) is
+<code>group_prior</code>, effect size (σ<sup>2</sup>) is
+<code>group_prior_var</code>, enrichment (π<sub>G</sub>/π<sub>S</sub>,
+not on the log scale), and PVE. Flat lines at the end mean the estimates
+have settled.</p>
+<p><strong>Gene-level PIPs:</strong> <code>combined_pip</code> combines
+a gene’s exonic parts with <code>combine_gene_pips()</code>
+(<code>method = "combine_cs"</code>, <code>filter_cs = FALSE</code>: all
+parts, whether or not they are in a credible set). It sums the parts’
+<code>susie_pip</code> within each credible set and combines credible
+sets as 1 − ∏(1 − sum). Parts that share a top SNP are identical
+predictors and split their PIP, so a gene’s <code>combined_pip</code>
+can be high when none of its parts is.</p>
+</div>
+</div>
+<div id="all-timepoints-jointly" class="section level1">
+<h1>All timepoints jointly</h1>
+<p><strong>How the joint run works</strong> (Xin’s suggestion;
+read-based only): one run with the three timepoints as separate groups,
+<code>0hr|splicing</code>, <code>1hr|splicing</code> and
+<code>6hr|splicing</code>, each with that timepoint’s weights and its
+own <code>group_prior</code>; <code>group_prior_var</code> is shared. A
+part tested at several timepoints enters once per timepoint. Copies with
+the same QTL are identical predictors and split their PIP, but they fall
+in the same credible set, so a gene’s <code>combined_pip</code> (all its
+parts and timepoints, <code>combine_gene_pips()</code> with
+<code>by = "type"</code>) adds them back.</p>
+<div id="parameters" class="section level2">
+<h2>Parameters</h2>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="13%" />
+<col width="10%" />
+<col width="9%" />
+<col width="20%" />
+<col width="9%" />
+<col width="5%" />
+<col width="5%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">group</th>
+<th align="right">group_size</th>
+<th align="right">group_prior (splicing)</th>
+<th align="right">group_prior (SNP)</th>
+<th align="right">group_prior_var</th>
+<th align="right">log_enrichment (log_enrichment_se)</th>
+<th align="right">enrichment_pval</th>
+<th align="right">group_pve</th>
+<th align="right">total_pve</th>
+<th align="right">prop_heritability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0hr|splicing</td>
+<td align="right">124</td>
+<td align="right">0.0198</td>
+<td align="right">0.00019</td>
+<td align="right">19.1</td>
+<td align="right">4.64 (0.63)</td>
+<td align="right">0.00028</td>
+<td align="right">0.0004</td>
+<td align="right">0.172</td>
+<td align="right">0.0021</td>
+</tr>
+<tr class="even">
+<td align="left">1hr|splicing</td>
+<td align="right">216</td>
+<td align="right">0.0000</td>
+<td align="right">0.00019</td>
+<td align="right">19.1</td>
+<td align="right">-8.13 (286.38)</td>
+<td align="right">1</td>
+<td align="right">0.0000</td>
+<td align="right">0.172</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">6hr|splicing</td>
+<td align="right">262</td>
+<td align="right">0.0639</td>
+<td align="right">0.00019</td>
+<td align="right">19.1</td>
+<td align="right">5.81 (0.24)</td>
+<td align="right">4.2e-37</td>
+<td align="right">0.0025</td>
+<td align="right">0.172</td>
+<td align="right">0.0146</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1 hr</strong> (ours): its <code>group_prior</code> is 6e-08,
+so its <code>log_enrichment</code> is very negative and its standard
+error meaningless. In a joint run the timepoints compete for the same
+GWAS signal, and the 1 hr traits explain nothing beyond the 0 and 6 hr
+traits. Identical traits alone don’t explain it: about 20% of 1 hr
+traits are copies of a 0 or 6 hr trait, as with the <code>cis</code>
+label alone, where 1 hr kept a <code>log_enrichment</code> of 3.53.</p>
+</div>
+<div id="prop_heritability" class="section level2">
+<h2>prop_heritability</h2>
+<p><img
+src="assets/ctwas_scz_filter_reads10nc/piechart_joint.png" /></p>
+<p><a href="assets/ctwas_scz_filter_reads10nc/piechart_joint.pdf">Open
+as PDF</a></p>
+</div>
+<div id="convergence" class="section level2">
+<h2>Convergence</h2>
+<p>Converged in 10 iterations (of at most 50).</p>
+<p><img
+src="assets/ctwas_scz_filter_reads10nc/convergence_joint.png" /></p>
+<p><a
+href="assets/ctwas_scz_filter_reads10nc/convergence_joint.pdf">Open as
+PDF</a></p>
+</div>
+<div id="gene-level-pips" class="section level2">
+<h2>Gene-level PIPs</h2>
+<p>Genes with <code>combined_pip</code> of at least 0.5.</p>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="7%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="15%" />
+<col width="3%" />
+<col width="15%" />
+<col width="5%" />
+<col width="11%" />
+<col width="2%" />
+<col width="7%" />
+<col width="5%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">combined_pip</th>
+<th align="right">0hr_pip</th>
+<th align="right">1hr_pip</th>
+<th align="right">6hr_pip</th>
+<th align="right">isoLASER only (earlier page)</th>
+<th align="right">Traits</th>
+<th align="left">Top part</th>
+<th align="left">Timepoint</th>
+<th align="left">susie_pip (top part)</th>
+<th align="right">z</th>
+<th align="left">QTL (UKB ID)</th>
+<th align="right">ΔPSI</th>
+<th align="right">Permutation p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LY6H</td>
+<td align="right">0.99</td>
+<td align="right">0.29</td>
+<td align="right">0.00</td>
+<td align="right">0.73</td>
+<td align="right">0.99</td>
+<td align="right">5</td>
+<td align="left">chr8:143160267-143160309:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.38</td>
+<td align="right">-4.9</td>
+<td align="left">rs10109061</td>
+<td align="right">+0.080</td>
+<td align="right">1e-06</td>
+</tr>
+<tr class="even">
+<td align="left">NDRG4</td>
+<td align="right">0.99</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.99</td>
+<td align="right">0.97</td>
+<td align="right">8</td>
+<td align="left">chr16:58504385-58504397:+</td>
+<td align="left">6 hr</td>
+<td align="left">0.19</td>
+<td align="right">5.3</td>
+<td align="left">rs42945</td>
+<td align="right">+0.222</td>
+<td align="right">0.019</td>
+</tr>
+<tr class="odd">
+<td align="left">MYT1L</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.97</td>
+<td align="right">0.95</td>
+<td align="right">2</td>
+<td align="left">chr2:2281930-2284093:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.97</td>
+<td align="right">-5.5</td>
+<td align="left">rs3749051</td>
+<td align="right">-0.059</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="even">
+<td align="left">SF3B1</td>
+<td align="right">0.95</td>
+<td align="right">0.95</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.93</td>
+<td align="right">5</td>
+<td align="left">chr2:197418795-197418895:-</td>
+<td align="left">0 hr</td>
+<td align="left">0.20</td>
+<td align="right">7.3</td>
+<td align="left">rs788023</td>
+<td align="right">-0.084</td>
+<td align="right">0.013</td>
+</tr>
+<tr class="odd">
+<td align="left">CNPPD1</td>
+<td align="right">0.88</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.88</td>
+<td align="right">0.82</td>
+<td align="right">1</td>
+<td align="left">chr2:219172417-219172654:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.88</td>
+<td align="right">-3.9</td>
+<td align="left">rs1127102</td>
+<td align="right">+0.411</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">PIGF</td>
+<td align="right">0.88</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.88</td>
+<td align="right">0.81</td>
+<td align="right">1</td>
+<td align="left">chr2:46588074-46588179:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.88</td>
+<td align="right">3.6</td>
+<td align="left">rs1824050</td>
+<td align="right">-0.188</td>
+<td align="right">0.028</td>
+</tr>
+<tr class="odd">
+<td align="left">GOPC</td>
+<td align="right">0.86</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.86</td>
+<td align="right">0.79</td>
+<td align="right">1</td>
+<td align="left">chr6:117577447-117577471:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.86</td>
+<td align="right">4.3</td>
+<td align="left">rs3752848</td>
+<td align="right">-0.104</td>
+<td align="right">0.011</td>
+</tr>
+<tr class="even">
+<td align="left">MRPL43</td>
+<td align="right">0.83</td>
+<td align="right">0.20</td>
+<td align="right">–</td>
+<td align="right">0.64</td>
+<td align="right">0.72</td>
+<td align="right">2</td>
+<td align="left">chr10:100986686-100986748:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.64</td>
+<td align="right">3.7</td>
+<td align="left">rs7184</td>
+<td align="right">+0.125</td>
+<td align="right">0.043</td>
+</tr>
+<tr class="odd">
+<td align="left">YWHAE</td>
+<td align="right">0.81</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.81</td>
+<td align="right">0.73</td>
+<td align="right">1</td>
+<td align="left">chr17:1354210-1354347:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.81</td>
+<td align="right">4.0</td>
+<td align="left">rs9393</td>
+<td align="right">-0.061</td>
+<td align="right">0.043</td>
+</tr>
+<tr class="even">
+<td align="left">COPA</td>
+<td align="right">0.78</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.78</td>
+<td align="right">0.69</td>
+<td align="right">2</td>
+<td align="left">chr1:160332557-160333461:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.41</td>
+<td align="right">-3.7</td>
+<td align="left">rs1802778</td>
+<td align="right">+0.103</td>
+<td align="right">0.035</td>
+</tr>
+<tr class="odd">
+<td align="left">GGNBP2</td>
+<td align="right">0.74</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.74</td>
+<td align="right">0.64</td>
+<td align="right">1</td>
+<td align="left">chr17:36545817-36547747:+</td>
+<td align="left">6 hr</td>
+<td align="left">0.74</td>
+<td align="right">-3.9</td>
+<td align="left">rs3736167</td>
+<td align="right">-0.124</td>
+<td align="right">0.058</td>
+</tr>
+<tr class="even">
+<td align="left">CLIP1</td>
+<td align="right">0.71</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.71</td>
+<td align="right">0.60</td>
+<td align="right">1</td>
+<td align="left">chr12:122347374-122347479:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.71</td>
+<td align="right">-4.2</td>
+<td align="left">rs1803290</td>
+<td align="right">+0.450</td>
+<td align="right">0.051</td>
+</tr>
+<tr class="odd">
+<td align="left">DNAJB9</td>
+<td align="right">0.70</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.70</td>
+<td align="right">0.58</td>
+<td align="right">1</td>
+<td align="left">chr7:108574135-108574402:+</td>
+<td align="left">6 hr</td>
+<td align="left">0.70</td>
+<td align="right">-3.9</td>
+<td align="left">rs3763457</td>
+<td align="right">+0.109</td>
+<td align="right">0.028</td>
+</tr>
+<tr class="even">
+<td align="left">PPP1CB</td>
+<td align="right">0.61</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.61</td>
+<td align="right">0.37</td>
+<td align="right">1</td>
+<td align="left">chr2:28781842-28781978:+</td>
+<td align="left">6 hr</td>
+<td align="left">0.61</td>
+<td align="right">-3.4</td>
+<td align="left">rs1128416</td>
+<td align="right">-0.222</td>
+<td align="right">0.0039</td>
+</tr>
+<tr class="odd">
+<td align="left">RABEP1</td>
+<td align="right">0.61</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.61</td>
+<td align="right">0.51</td>
+<td align="right">1</td>
+<td align="left">chr17:5336487-5336689:+</td>
+<td align="left">6 hr</td>
+<td align="left">0.61</td>
+<td align="right">4.6</td>
+<td align="left">rs11538946</td>
+<td align="right">-0.202</td>
+<td align="right">0.0064</td>
+</tr>
+<tr class="even">
+<td align="left">IFT57</td>
+<td align="right">0.56</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.56</td>
+<td align="right">0.47</td>
+<td align="right">2</td>
+<td align="left">chr3:108219409-108219544:-</td>
+<td align="left">6 hr</td>
+<td align="left">0.56</td>
+<td align="right">-4.1</td>
+<td align="left">rs1135897</td>
+<td align="right">+0.060</td>
+<td align="right">0.02</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>combined_pip:</strong> over all of the gene’s parts and
+timepoints (<code>by = "type"</code>).</li>
+<li><strong>0hr_pip, 1hr_pip, 6hr_pip:</strong>
+<code>combine_gene_pips()</code> with <code>by = "context"</code>, the
+gene’s PIP from that timepoint’s traits only; “–” means none of its
+traits at that timepoint is in a fine-mapped region.</li>
+<li><strong>isoLASER only (earlier page):</strong> the gene’s
+<code>combined_pip</code> in the joint run with the <code>cis</code>
+label alone; “–” means not in a fine-mapped region there.</li>
+<li><strong>Traits:</strong> the gene’s part × timepoint traits in
+fine-mapped regions.</li>
+<li><strong>Top part, Timepoint, susie_pip (top part), z, QTL, ΔPSI,
+permutation p:</strong> the trait with the largest
+<code>susie_pip</code>, its z-score and its isoLASER association.</li>
+</ul>
+</div>
+<div id="plausibility-of-the-genes-at-combined_pip-0.8"
+class="section level2">
+<h2>Plausibility of the genes at combined_pip 0.8</h2>
+<p><strong>NDRG4, SF3B1 and MYT1L sit at genome-wide significant SCZ
+loci, and LY6H has the strongest splicing effect.</strong> YWHAE has a
+sub-threshold signal here but a PGC3 SCZ association 3 kb from its SNP.
+GOPC, MRPL43, CNPPD1 and PIGF are at loci without a genome-wide
+significant SNP within 250 kb; their PIP rests on the high 6 hr
+enrichment. Biological plausibility of a gene and support for its
+particular splicing association are assessed separately below.</p>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Gene
+</th>
+<th style="text-align:left;">
+Joint combined PIP: overall and by timepoint
+</th>
+<th style="text-align:left;">
+Allelic splicing: signed effect, permutation p, reads
+</th>
+<th style="text-align:left;">
+SCZ GWAS p at selected SNP
+</th>
+<th style="text-align:left;">
+Best GWAS p within 250 kb
+</th>
+<th style="text-align:left;">
+Other evidence
+</th>
+<th style="text-align:left;">
+Plausibility
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NDRG4
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.986</strong><br>0 hr: –<br>1 hr: –<br>6 hr: 0.986 (8
+parts)
+</td>
+<td style="text-align:left;">
+6 hr, rs42945: ΔPSI +0.222 to +0.477; p 0.0067 to 0.019; 35 to 38
+reads<br>6 hr, rs17821543: ΔPSI -0.294; p 0.055; 32 reads
+</td>
+<td style="text-align:left;">
+rs42945<br>1.3e-07
+</td>
+<td style="text-align:left;">
+3e-08
+</td>
+<td style="text-align:left;">
+GWAS Catalog links rs42945 to the SCZ association results of Pardiñas
+2018 (<a href="https://pubmed.ncbi.nlm.nih.gov/29483656/">PMID
+29483656</a>;
+<a href="https://doi.org/10.1038/s41588-018-0059-2">paper</a>); the SNP
+and NDRG4 are not named in the main article. Collado-Torres 2019
+(<a href="https://pubmed.ncbi.nlm.nih.gov/31174959/">PMID 31174959</a>;
+<a href="https://doi.org/10.1016/j.neuron.2019.05.013">paper</a>)
+explicitly identifies rs42945 as a SCZ risk SNP and reports associations
+with NDRG4 RNA expression features in hippocampus (Supplementary Fig.
+S43A-B). This supports NDRG4 regulation, but does not establish
+replication of the same splicing event. Ndrg4-deficient mice have
+reduced cortical BDNF and impaired spatial learning: Yamamoto 2011
+(<a href="https://pubmed.ncbi.nlm.nih.gov/21636852/">PMID 21636852</a>;
+<a href="https://doi.org/10.1074/jbc.M111.256446">paper</a>).<br>The
+selected SNP is a GTEx sQTL for this gene in 6 of 13 brain tissues
+(minimum p 1.6e-20).
+</td>
+<td style="text-align:left;">
+Strong candidate; sizable effects, but low read counts
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SF3B1
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.949</strong><br>0 hr: 0.949 (5 parts)<br>1 hr: –<br>6
+hr: –
+</td>
+<td style="text-align:left;">
+0 hr, rs788023: ΔPSI -0.109 to -0.084; p 0.005 to 0.017; 181 to 190
+reads
+</td>
+<td style="text-align:left;">
+rs788023<br>3.9e-13
+</td>
+<td style="text-align:left;">
+2.8e-13
+</td>
+<td style="text-align:left;">
+Core spliceosome component. Independent SCZ regulatory evidence and
+inclusion in a human-neuron perturbation study: Deans et al. 2026
+(<a href="https://pubmed.ncbi.nlm.nih.gov/41519853/">PMID 41519853</a>;
+<a href="https://doi.org/10.1038/s41467-025-67959-z">paper</a>).<br>GTEx
+cerebellum eQTL + sQTL cTWAS gene PIP: 0.74.
+</td>
+<td style="text-align:left;">
+Strong SCZ locus and GTEx cTWAS support; moderate splicing effect at 0
+hr
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MYT1L
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.970</strong><br>0 hr: –<br>1 hr: –<br>6 hr: 0.970 (2
+parts)
+</td>
+<td style="text-align:left;">
+6 hr, rs3749051: ΔPSI -0.059; p 0.04; 276 reads
+</td>
+<td style="text-align:left;">
+rs3749051<br>3.3e-08
+</td>
+<td style="text-align:left;">
+2.4e-08
+</td>
+<td style="text-align:left;">
+Maintains neuronal identity: Mall 2017
+(<a href="https://pubmed.ncbi.nlm.nih.gov/28379941/">PMID 28379941</a>;
+<a href="https://doi.org/10.1038/nature21722">paper</a>). Prioritized by
+PGC3 SCZ fine-mapping: Trubetskoy 2022
+(<a href="https://pubmed.ncbi.nlm.nih.gov/35396580/">PMID 35396580</a>;
+<a href="https://doi.org/10.1038/s41586-022-04434-5">paper</a>).
+</td>
+<td style="text-align:left;">
+Strong neuronal and SCZ support; modest splicing effect
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LY6H
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.987</strong><br>0 hr: 0.289 (2 parts)<br>1 hr: 0.000
+(1 part)<br>6 hr: 0.730 (2 parts)
+</td>
+<td style="text-align:left;">
+0 hr, rs7007949: ΔPSI +0.052 to +0.177; p 0.0021 to 0.0042; 177 to 691
+reads<br>6 hr, rs10109061: ΔPSI +0.080 to +0.250; p 1e-06; 362 to 1,342
+reads
+</td>
+<td style="text-align:left;">
+rs10109061<br>9.2e-07
+</td>
+<td style="text-align:left;">
+5.4e-07
+</td>
+<td style="text-align:left;">
+Regulates alpha7 nicotinic receptor trafficking and nicotine-induced
+potentiation of glutamatergic signaling: Puddifoot 2015
+(<a href="https://pubmed.ncbi.nlm.nih.gov/25716842/">PMID 25716842</a>;
+<a href="https://doi.org/10.1523/JNEUROSCI.3630-14.2015">paper</a>). No
+genome-wide significant SNP within 250 kb in this GWAS; this does not
+establish novelty.
+</td>
+<td style="text-align:left;">
+Strong mechanistic candidate and splicing evidence; suggestive GWAS
+signal
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+YWHAE
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.811</strong><br>0 hr: –<br>1 hr: –<br>6 hr: 0.811 (1
+part)
+</td>
+<td style="text-align:left;">
+6 hr, rs9393: ΔPSI -0.061; p 0.043; 307 reads
+</td>
+<td style="text-align:left;">
+rs9393<br>6e-05
+</td>
+<td style="text-align:left;">
+5.6e-06
+</td>
+<td style="text-align:left;">
+Literature not reviewed (new here).<br>Nearest GWAS Catalog SCZ
+association (p ≤ 5e-8): rs75329315, Trubetskoy 2022 (PMID 35396580),
+mapped to TRARG1 - YWHAE, p 3e-10, 3 kb from the SNP.<br>The selected
+SNP is a GTEx sQTL for this gene in 1 of 13 brain tissues (minimum p
+2.2e-08).
+</td>
+<td style="text-align:left;">
+Sub-threshold here, but a PGC3 SCZ association 3 kb away; small splicing
+effect
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GOPC
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.863</strong><br>0 hr: –<br>1 hr: –<br>6 hr: 0.863 (1
+part)
+</td>
+<td style="text-align:left;">
+6 hr, rs3752848: ΔPSI -0.104; p 0.011; 103 reads
+</td>
+<td style="text-align:left;">
+rs3752848<br>1.7e-05
+</td>
+<td style="text-align:left;">
+8.9e-06
+</td>
+<td style="text-align:left;">
+Literature not reviewed (new here).<br>Nearest GWAS Catalog SCZ
+association (p ≤ 5e-8): rs80196932, Dang 2025 (PMID 39753749), mapped to
+NEPNP - NUS1, p 3e-08, 73 kb from the SNP.
+</td>
+<td style="text-align:left;">
+Exploratory; no genome-wide significant SNP within 250 kb
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MRPL43
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.825</strong><br>0 hr: 0.197 (1 part)<br>1 hr: –<br>6
+hr: 0.645 (1 part)
+</td>
+<td style="text-align:left;">
+0 hr, rs7184: ΔPSI -0.250; p 0.026; 40 reads<br>6 hr, rs7184: ΔPSI
++0.125; p 0.043; 75 reads
+</td>
+<td style="text-align:left;">
+rs7184<br>0.00024
+</td>
+<td style="text-align:left;">
+4.3e-05
+</td>
+<td style="text-align:left;">
+Literature not reviewed (new here).<br>The selected SNP is a GTEx sQTL
+for this gene in 7 of 13 brain tissues (minimum p 9.3e-12).
+</td>
+<td style="text-align:left;">
+Exploratory; sub-threshold locus, but the SNP is a GTEx brain sQTL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CNPPD1
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.884</strong><br>0 hr: –<br>1 hr: –<br>6 hr: 0.884 (1
+part)
+</td>
+<td style="text-align:left;">
+6 hr, rs1127102: ΔPSI +0.411; p 0.12; 33 reads
+</td>
+<td style="text-align:left;">
+rs1127102<br>0.00011
+</td>
+<td style="text-align:left;">
+3.8e-05
+</td>
+<td style="text-align:left;">
+Limited neuronal functional evidence. The catalog association 7 kb away
+comes from a multi-trait psychiatric analysis, not independent SCZ-only
+confirmation: Wu 2020
+(<a href="https://pubmed.ncbi.nlm.nih.gov/32606422/">PMID 32606422</a>;
+<a href="https://doi.org/10.1038/s41398-020-00902-6">paper</a>).<br>The
+selected SNP is a GTEx sQTL for this gene in 1 of 13 brain tissues
+(minimum p 6.4e-10).<br>GTEx cerebellum eQTL + sQTL cTWAS gene PIP:
+0.27.
+</td>
+<td style="text-align:left;">
+Exploratory; low coverage and weak permutation evidence
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PIGF
+</td>
+<td style="text-align:left;">
+<strong>Overall 0.878</strong><br>0 hr: –<br>1 hr: –<br>6 hr: 0.878 (1
+part)
+</td>
+<td style="text-align:left;">
+6 hr, rs1824050: ΔPSI -0.188; p 0.028; 55 reads
+</td>
+<td style="text-align:left;">
+rs1824050<br>3e-04
+</td>
+<td style="text-align:left;">
+0.00011
+</td>
+<td style="text-align:left;">
+GPI-anchor biosynthesis. Rare biallelic variants were reported in a
+syndrome with intellectual disability and seizures: Salian 2021
+(<a href="https://pubmed.ncbi.nlm.nih.gov/33386993/">PMID 33386993</a>;
+<a href="https://doi.org/10.1007/s00439-020-02251-2">paper</a>). This is
+neurodevelopmental evidence, not common-variant SCZ replication.
+</td>
+<td style="text-align:left;">
+Neurodevelopmental relevance; limited SCZ-specific support
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>PIP and part counts:</strong> include all fine-mapped
+predictors for the gene. A dash means no fine-mapped predictor at that
+timepoint. The calculation uses
+<code>combine_gene_pips(method="combine_cs", filter_cs=FALSE)</code>,
+with <code>by="context"</code> for each timepoint and
+<code>by="type"</code> for the overall splicing PIP.</li>
+<li><strong>Splicing effects:</strong> summarize parts with individual
+predictor PIP at least 0.05, grouped by timepoint and QTL SNP. With the
+filter, no part has 2,371 or more reads.</li>
+<li><strong>Delta PSI:</strong> ALT inclusion minus REF inclusion;
++0.250 means +25 percentage points. <strong>Permutation p</strong> is
+unadjusted. <strong>Reads</strong> are pooled informative reads from the
+heterozygous donors. Ranges summarize several parts, not confidence
+intervals; low counts can produce uncertain effect estimates.</li>
+<li><strong>Selected SNP:</strong> the QTL of the part with the largest
+predictor PIP. The GWAS columns refer to that SNP and its surrounding
+250 kb on either side in the SCZ GWAS used here
+(<code>ieu-b-5102</code>). Genome-wide significance is p &lt; 5e-8.</li>
+<li><strong>GWAS Catalog</strong> (new genes only): the nearest
+association whose mapped trait contains “schizophrenia” with p ≤ 5e-8,
+within 500 kb (GRCh38). It can come from a larger GWAS than the one used
+here.</li>
+<li><strong>GTEx support:</strong> a significant SNP-intron association
+for the same SNP and gene in GTEx v8 brain tissues. It need not measure
+the same exonic part, so it is <strong>not automatically replication of
+the specific splicing event</strong>. No match in these significant-pair
+files does not establish absence of an effect.</li>
+<li><strong>Interpretation:</strong> high cTWAS PIP supports a predictor
+under the fitted model; it does not prove that the particular splicing
+event mediates SCZ risk. With one-SNP predictors, separation from the
+SNP depends strongly on the model’s priors. The high 6 hr enrichment can
+favor predictors even at suggestive loci.</li>
+</ul>
+</div>
+</div>
+<div id="all-genes" class="section level1">
+<h1>All genes</h1>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b79198de2c3cef88097c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.987\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.006\" data-max=\"0.949\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.986\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"8\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.968\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-10.72\" data-max=\"7.26\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-0.538\" data-max=\"0.717\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1e-06\" data-max=\"0.3\" data-scale=\"6\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"caption":"<caption>Every gene in a fine-mapped region of the joint run.<\/caption>","data":[["LY6H","NDRG4","MYT1L","SF3B1","CNPPD1","PIGF","GOPC","MRPL43","YWHAE","COPA","GGNBP2","CLIP1","DNAJB9","PPP1CB","RABEP1","IFT57","ACAT2","NLRP1","MAPT","SNHG21","NUP88","DPCD","PSMC6","FAAP20","PSMA4","DZIP3","POLE4","DDX49","ERP29","EEF1A2","DUSP11","NSUN6","ENSG00000289047","PIH1D1","ATP5MJ","UQCC6","RPL8","TMEM9","GNL3","DDX39B","HSPA8","CBY1","TXNRD1","TMX2","TXNL1","CTNND1","NFKBIL1","SOD2","CCDC25","B4GALNT1","SPECC1","CBR4","OBSL1","CLU","TKT","CLIC1","FLOT1","AGPAT1","RPP21"],[0.987,0.986,0.97,0.949,0.884,0.878,0.863,0.825,0.8110000000000001,0.785,0.743,0.705,0.704,0.615,0.608,0.5600000000000001,0.44,0.322,0.296,0.228,0.206,0.18,0.153,0.148,0.146,0.144,0.092,0.08699999999999999,0.08,0.073,0.066,0.063,0.061,0.056,0.053,0.053,0.039,0.039,0.033,0.029,0.028,0.021,0.006,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0.289,null,null,0.949,null,null,null,0.197,null,null,null,null,null,null,null,null,0.026,null,null,null,null,null,0.015,null,null,null,0.022,0.08699999999999999,null,null,null,null,null,null,0.012,0.008,0.039,0.039,null,null,0.028,0.021,0.006,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,0,null,null,0,null,null,null,null,null,0,null,null,null,null,null,0,0,0,0,null,null,null,null,null,null,null,0,null,0,0,0,0,0,0,0,0,0,0,0,0,null,0],[0.73,0.986,0.97,null,0.884,0.878,0.863,0.645,0.8110000000000001,0.785,0.743,0.705,0.704,0.615,0.608,0.5600000000000001,0.424,0.322,0.296,0.228,0.206,0.18,0.14,0.148,0.146,0.144,0.07199999999999999,null,0.08,0.073,0.066,0.063,0.061,0.056,0.041,0.046,null,null,0.033,0.029,null,null,null,null,0,null,null,null,null,null,null,null,null,null,null,null,0,0,null],[5,8,2,5,1,1,1,2,1,2,1,1,1,1,1,2,2,3,2,2,3,2,4,2,3,1,6,1,2,1,1,1,2,7,3,4,2,3,1,1,2,1,1,1,1,1,2,4,1,3,1,1,1,1,1,2,6,2,2],["chr8:143160267-143160309:-","chr16:58504385-58504397:+","chr2:2281930-2284093:-","chr2:197418795-197418895:-","chr2:219172417-219172654:-","chr2:46588074-46588179:-","chr6:117577447-117577471:-","chr10:100986686-100986748:-","chr17:1354210-1354347:-","chr1:160332557-160333461:-","chr17:36545817-36547747:+","chr12:122347374-122347479:-","chr7:108574135-108574402:+","chr2:28781842-28781978:+","chr17:5336487-5336689:+","chr3:108219409-108219544:-","chr6:159762494-159762777:+","chr17:5500030-5500112:-","chr17:45978374-45978425:+","chr15:82754784-82754937:+","chr17:5387778-5387904:-","chr10:101608866-101608902:+","chr14:52708482-52708522:+","chr1:2194027-2194108:-","chr15:78540466-78540477:+","chr3:108648112-108648917:+","chr2:74958727-74958791:+","chr19:18921662-18921746:+","chr12:112019755-112019836:+","chr20:63490478-63490735:-","chr2:73778078-73778290:-","chr10:18648047-18648489:-","chr6:32894927-32895026:+","chr19:49446694-49446741:-","chr14:103914478-103914633:-","chr12:103957068-103957134:-","chr8:144791310-144791370:-","chr1:201135508-201135598:-","chr3:52688192-52688206:+","chr6:31538855-31538881:-","chr11:123059964-123059981:-","chr22:38670766-38670883:+","chr12:104290992-104291104:+","chr11:57738663-57738770:+","chr18:56626161-56626266:-","chr11:57791493-57791673:+","chr6:31557849-31557959:+","chr6:159684853-159684874:-","chr8:27764437-27764533:-","chr12:57632540-57632581:-","chr17:20204738-20204957:+","chr4:169005884-169005914:-","chr2:219556453-219556577:-","chr8:27605140-27605171:-","chr3:53225701-53225750:-","chr6:31736350-31736412:-","chr6:30741661-30741704:-","chr6:32169965-32169988:-","chr6:30345466-30345490:+"],["6 hr","6 hr","6 hr","0 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","0 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","6 hr","0 hr","0 hr","6 hr","6 hr","0 hr","0 hr","0 hr","1 hr","6 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","1 hr","6 hr","6 hr","1 hr"],[0.377,0.193,0.968,0.201,0.884,0.878,0.863,0.645,0.8110000000000001,0.409,0.743,0.705,0.704,0.615,0.608,0.5600000000000001,0.424,0.322,0.152,0.119,0.11,0.094,0.048,0.076,0.051,0.144,0.036,0.08699999999999999,0.041,0.073,0.066,0.063,0.061,0.028,0.041,0.024,0.02,0.013,0.033,0.029,0.014,0.021,0.006,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[-4.91,5.28,-5.53,7.26,-3.88,3.61,4.3,3.68,4.01,-3.73,-3.92,-4.19,-3.91,-3.4,4.58,-4.08,3.37,4.54,-5.67,1.41,-1.27,-1.84,-1.05,-1.47,1.54,1.62,0.37,2.07,0.68,0.87,1.71,3.54,2.15,0.87,0.15,1.33,1.18,-0.9399999999999999,6.85,1.55,0.25,0.48,-0.93,-5.74,-0.36,-5.14,2.92,1.77,-2.52,-1.28,-2.94,-0.52,-0.6,2.18,-2.27,-10.72,-10.56,-0.22,3.65],["rs10109061","rs42945","rs3749051","rs788023","rs1127102","rs1824050","rs3752848","rs7184","rs9393","rs1802778","rs3736167","rs1803290","rs3763457","rs1128416","rs11538946","rs1135897","rs25683","rs5862","rs17652121","rs3803383","rs61753104","rs7874","rs6696","rs2503701","rs8053","rs2969901","rs7881","rs7497","rs7114","rs310617","rs2272051","rs3740102","rs3749981","rs13394","rs1053419","rs15805","rs2954658","rs8158","rs11177","rs1129640","rs4802","rs3747174","rs4964287","rs4827","rs14387","rs11570176","rs2230365","rs4880","rs7842666","rs715930","rs2703805","rs2279038","rs1056908","rs7982","rs1131728","rs3131383","rs3094125","rs1269839","rs974962"],[0.08,0.222,-0.059,-0.08400000000000001,0.411,-0.188,-0.104,0.125,-0.061,0.103,-0.124,0.45,0.109,-0.222,-0.202,0.06,0.104,-0.099,0.06,0.238,-0.353,0.068,0.07099999999999999,0.091,-0.07000000000000001,-0.138,0.115,-0.207,0.104,-0.146,-0.105,0.312,0.717,-0.054,0.09,-0.169,-0.118,0.189,-0.13,-0.08,0.062,-0.312,0.051,-0.073,0.08799999999999999,0.5,0.286,0.308,-0.267,-0.538,0.077,-0.276,-0.304,-0.053,-0.058,0.14,0.075,-0.364,0.063],[1e-06,0.019,0.04,0.013,0.12,0.028,0.011,0.043,0.043,0.035,0.058,0.051,0.028,0.0039,0.0064,0.02,0.005,0.021,0.057,0.034,0.0061,0.029,0.015,0.0094,0.031,0.038,4e-06,0.043,0.018,0.039,0.024,0.002,1e-06,0.042,1e-06,0.00024,0.26,7.3e-05,0.02,0.037,0.073,0.021,0.003,0.045,0.0062,0.008200000000000001,0.024,0.021,0.11,0.3,0.12,0.0035,0.013,0.005,0.0071,0.014,0.0051,0.078,0.026]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>gene_name<\/th>\n      <th>combined_pip<\/th>\n      <th>0hr_pip<\/th>\n      <th>1hr_pip<\/th>\n      <th>6hr_pip<\/th>\n      <th>Traits<\/th>\n      <th>Top part<\/th>\n      <th>Timepoint<\/th>\n      <th>susie_pip (top part)<\/th>\n      <th>z<\/th>\n      <th>QTL<\/th>\n      <th>dPSI<\/th>\n      <th>Permutation p<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"Bfrtip","buttons":["copy","csv"],"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,8,9,11,12]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=C.UTF-8    LC_NUMERIC=C        LC_TIME=C          
+ [4] LC_COLLATE=C        LC_MONETARY=C       LC_MESSAGES=C      
+ [7] LC_PAPER=C          LC_NAME=C           LC_ADDRESS=C       
+[10] LC_TELEPHONE=C      LC_MEASUREMENT=C    LC_IDENTIFICATION=C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DT_0.22           data.table_1.14.4 workflowr_1.7.1  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.1.1-1.1    bslib_0.3.1       jquerylib_0.1.4   compiler_4.2.0   
+ [5] pillar_1.9.0      later_1.3.0       git2r_0.30.1      tools_4.2.0      
+ [9] getPass_0.2-2     digest_0.6.29     jsonlite_2.0.0    evaluate_0.15    
+[13] lifecycle_1.0.4   tibble_3.2.1      pkgconfig_2.0.3   rlang_1.1.2      
+[17] cli_3.6.2         rstudioapi_0.14   crosstalk_1.2.0   yaml_2.3.5       
+[21] xfun_0.59         fastmap_1.1.0     httr_1.4.8        stringr_1.5.0    
+[25] knitr_1.51        htmlwidgets_1.6.2 sass_0.4.1        fs_1.5.2         
+[29] vctrs_0.6.1       rprojroot_2.0.3   glue_1.6.2        R6_2.5.1         
+[33] processx_3.5.3    fansi_1.0.3       otel_0.2.0        rmarkdown_2.31   
+[37] callr_3.7.0       magrittr_2.0.3    whisker_0.4       ellipsis_0.3.2   
+[41] ps_1.7.0          promises_1.2.0.1  htmltools_0.5.7   httpuv_1.6.5     
+[45] utf8_1.2.2        stringi_1.7.6    </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

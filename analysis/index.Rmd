@@ -64,6 +64,10 @@ at BH q < 0.10 and |ΔPSI| ≥ 0.05.
 * [cTWAS with the schizophrenia GWAS](isolaser_ctwas_scz.html) — enrichment of our
   splicing QTLs, share of heritability and gene-level PIPs (LY6H, MYT1L, HSPA9,
   SF3B1)
+* [cTWAS with the schizophrenia GWAS, isoLASER + filter](isolaser_ctwas_scz_filter.html) —
+  the joint run (all timepoints as separate groups) with weights at isoLASER + filter
+  (|ΔPSI| ≥ 0.05): enrichment, share of heritability, gene-level PIPs and the
+  plausibility of the genes at 0.8
 
 **For comparison: transcript-based isoLASER** (isoLASER's own labels), without the
 clustering filter, at the same cutoffs: [genome-wide FDR](isolaser_fdr_panel10nc_q010_hetcis.html) and

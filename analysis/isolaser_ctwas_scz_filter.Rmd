@@ -1,0 +1,283 @@
+---
+title: "cTWAS with isoLASER + filter splicing QTLs: schizophrenia"
+author: "XSun"
+date: "2026-11-05"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+library(data.table)
+library(DT)
+# R code here is ASCII only (HTML entities for special characters), so the page renders the same in any locale
+A <- "docs/assets/ctwas_scz_filter_reads10nc"
+jp <- fread(file.path(A, "joint_params.tsv")); jg <- fread(file.path(A, "joint_gene_pips.tsv")); jc <- fread(file.path(A, "joint_convergence.tsv"))
+jtr <- fread(file.path(A, "joint_traits.tsv")); cmp <- fread(file.path(A, "compare_gene_pips.tsv")); ws <- fread(file.path(A, "weights_steps.tsv"))
+TPS <- c("0hr", "1hr", "6hr")
+tpl <- function(x) sub("hr", " hr", x)
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+fp <- function(x) vapply(x, function(z) if (is.na(z)) "NA" else format(signif(z, 2)), "")
+cell <- function(x) fifelse(is.na(x), "&ndash;", sprintf("%.2f", x))
+j8 <- jg[gene_pip >= 0.8, gene_name]
+old8 <- cmp[gene_pip_isolaser >= 0.8, gene_name]
+gp <- function(t) jp[group == paste0(t, "|splicing")]
+w0 <- ws[step == "QTL set filter_reads10nc"]; wt <- ws[step == "top QTL per part"]
+```
+
+We ran cTWAS on the schizophrenia (SCZ) GWAS with our isoLASER associations as
+splicing QTLs, using **isoLASER + filter**: isoLASER's `cis` label plus
+|ΔPSI| &ge; 0.05. This page repeats the joint run of the
+[earlier cTWAS page](isolaser_ctwas_scz.html), which used the `cis` label alone,
+with these weights. cTWAS asks whether the splicing QTLs explain more GWAS
+heritability than SNPs in general (**enrichment**), and which genes' splicing is
+likely causal (**PIP**, the posterior inclusion probability).
+
+**Short answer.**
+
+- **Enrichment:** `log_enrichment` is `r sprintf("%.2f", gp("0hr")$log_enrichment)` at 0 hr and
+  `r sprintf("%.2f", gp("6hr")$log_enrichment)` at 6 hr. At 1 hr the prior goes to about 0:
+  in the joint run the 1 hr traits explain nothing beyond the 0 and 6 hr traits
+  ([why](#parameters)).
+- **prop_heritability** of the splicing groups: `r sprintf("%.2f%%", 100 * sum(jp[group != "SNP", prop_heritability]))`
+  together, most of it at 6 hr.
+- **Genes:** `r length(j8)` genes reach `combined_pip` 0.8: `r paste(j8, collapse=", ")`.
+  With the `cis` label alone there were `r length(old8)`. The filter removes
+  `r paste(setdiff(old8, j8), collapse=", ")` and adds `r paste(setdiff(j8, old8), collapse=", ")`.
+- **The filter removes the high-coverage `cis` calls:** above about 2,370 reads isoLASER's
+  `cis` cutoff falls below 0, so nearly every association there is labelled `cis`
+  with ΔPSI near 0. On the earlier page ACTB, COX6C and RPL13 rested on such parts;
+  none of them is in a fine-mapped region now.
+
+# How the runs were set up
+
+- **GWAS:** PGC schizophrenia, `ieu-b-5102` (N = 127,906), z-scores harmonized to
+  the UK Biobank (UKB) LD reference, from the earlier multigroup cTWAS project.
+- **Molecular traits** (our definition): one trait per tested exonic part. A part
+  is included when one of its associations has isoLASER's `cis` label, computed
+  from the panel-heterozygous donors with at least 10 reads each, and
+  |ΔPSI| &ge; 0.05 (isoLASER + filter; no FDR cutoff). That is
+  `r paste(fmt(w0$associations), collapse=" / ")` associations at 0 / 1 / 6 hr.
+- **QTL and weight:** each trait has one SNP, the part's variant with the smallest
+  permutation p (ties: largest \|ΔPSI\|) among its associations that pass the
+  filter, single-base variants in the UKB reference that are not
+  strand-ambiguous. The weight is ΔPSI (ALT minus REF inclusion) with ALT as the
+  effect allele. With one SNP per trait, only the weight's sign matters. This
+  gives `r paste(fmt(wt$parts), collapse=" / ")` traits, of which cTWAS keeps those whose
+  SNP is in the GWAS (`group_size` below).
+- **Mapping table:** each trait (exonic part) maps to the gene the part belongs
+  to. It is written with the weights and used for gene-level PIPs.
+- **One run:** the three timepoints as separate groups in one run
+  ([how](#all-timepoints-jointly)), with the same settings as the earlier page.
+- **Settings:** UKB b38 LD, no thinning, one prior variance shared by all groups
+  (`shared_all`), up to 5 signals per region (L = 5), at least 100 traits per
+  group. Regions are fine-mapped when their non-SNP PIP is at least 0.5.
+- **Not done yet:** merging regions and checking LD mismatch.
+
+## What the tables and figures show
+
+**Parameters**, the output of `summarize_param()`:
+
+- **group_size:** splicing traits that reach cTWAS after matching to the GWAS and the LD reference.
+- **group_prior:** the estimated prior probability that a trait (splicing) or a
+  variant (SNP) is causal.
+- **group_prior_var:** the prior variance of a causal effect, shared by all groups (`shared_all`).
+- **log_enrichment:** the log of a splicing group's prior over the SNP prior, with
+  its standard error; **enrichment_pval** is its p-value.
+- **group_pve:** the proportion of SCZ variance explained by the group:
+  group_size &times; group_prior &times; group_prior_var / GWAS N. **total_pve**
+  sums all groups.
+- **prop_heritability:** a group's group_pve over total_pve, the slices of the
+  pie chart.
+
+**Convergence**, from `make_convergence_plots()`: the estimates at each iteration
+of the parameter estimation. Proportion causal (&pi;) is `group_prior`, effect
+size (&sigma;<sup>2</sup>) is `group_prior_var`, enrichment
+(&pi;<sub>G</sub>/&pi;<sub>S</sub>, not on the log scale), and PVE. Flat lines
+at the end mean the estimates have settled.
+
+**Gene-level PIPs:** `combined_pip` combines a gene's exonic parts with
+`combine_gene_pips()` (`method = "combine_cs"`, `filter_cs = FALSE`: all parts,
+whether or not they are in a credible set). It sums the parts' `susie_pip`
+within each credible set and combines credible sets as
+1 &minus; &prod;(1 &minus; sum). Parts that share a top SNP are identical
+predictors and split their PIP, so a gene's `combined_pip` can be high when none
+of its parts is.
+
+# All timepoints jointly
+
+**How the joint run works** (Xin's suggestion; read-based only): one run with the
+three timepoints as separate groups, `0hr|splicing`, `1hr|splicing` and
+`6hr|splicing`, each with that timepoint's weights and its own `group_prior`;
+`group_prior_var` is shared. A part tested at several timepoints enters once per
+timepoint. Copies with the same QTL are identical predictors and split their
+PIP, but they fall in the same credible set, so a gene's `combined_pip` (all its
+parts and timepoints, `combine_gene_pips()` with `by = "type"`) adds them back.
+
+## Parameters
+
+```{r joint_params}
+w <- jp[group != "SNP"][, snp_prior := jp[group == "SNP", prior]]
+knitr::kable(w[, .(group, group_size=fmt(group_size), `group_prior (splicing)`=sprintf("%.4f", prior), `group_prior (SNP)`=sprintf("%.5f", snp_prior),
+  group_prior_var=sprintf("%.1f", prior_var), `log_enrichment (log_enrichment_se)`=sprintf("%.2f (%.2f)", log_enrichment, log_enrichment_se),
+  enrichment_pval=fp(enrichment_pval), group_pve=sprintf("%.4f", pve), total_pve=sprintf("%.3f", total_pve),
+  prop_heritability=sprintf("%.4f", prop_heritability))], align="lrrrrrrrrr")
+```
+
+**1 hr** (ours): its `group_prior` is `r sprintf("%.0e", gp("1hr")$prior)`, so its
+`log_enrichment` is very negative and its standard error meaningless. In a joint
+run the timepoints compete for the same GWAS signal, and the 1 hr traits explain
+nothing beyond the 0 and 6 hr traits. Identical traits alone don't explain it:
+about 20% of 1 hr traits are copies of a 0 or 6 hr trait, as with the `cis`
+label alone, where 1 hr kept a `log_enrichment` of 3.53.
+
+## prop_heritability
+
+![](assets/ctwas_scz_filter_reads10nc/piechart_joint.png)
+
+[Open as PDF](assets/ctwas_scz_filter_reads10nc/piechart_joint.pdf)
+
+## Convergence
+
+`r sprintf("%s in %d iterations (of at most 50).", if (jc$converged) "Converged" else "Did not converge", jc$iterations)`
+
+![](assets/ctwas_scz_filter_reads10nc/convergence_joint.png)
+
+[Open as PDF](assets/ctwas_scz_filter_reads10nc/convergence_joint.pdf)
+
+## Gene-level PIPs
+
+Genes with `combined_pip` of at least 0.5.
+
+```{r joint_genes}
+old_pip <- function(gn) vapply(gn, function(x) { v <- cmp[gene_name == x, gene_pip_isolaser]; if (length(v)) v else NA_real_ }, 0)
+d <- jg[gene_pip >= 0.5][order(-gene_pip)]
+knitr::kable(d[, .(gene_name, combined_pip=sprintf("%.2f", gene_pip), `0hr_pip`=cell(pip_0hr), `1hr_pip`=cell(pip_1hr), `6hr_pip`=cell(pip_6hr),
+  `isoLASER only (earlier page)`=cell(old_pip(gene_name)), Traits=n_traits, `Top part`=top_part, Timepoint=tpl(top_tp),
+  `susie_pip (top part)`=sprintf("%.2f", top_part_pip), z=sprintf("%.1f", z), `QTL (UKB ID)`=ukb_id, `&Delta;PSI`=sprintf("%+.3f", dpsi),
+  `Permutation p`=fp(qtl_p))], escape=FALSE, align="lrrrrrrlllrlrr")
+```
+
+- **combined_pip:** over all of the gene's parts and timepoints (`by = "type"`).
+- **0hr_pip, 1hr_pip, 6hr_pip:** `combine_gene_pips()` with `by = "context"`, the
+  gene's PIP from that timepoint's traits only; "&ndash;" means none of its traits
+  at that timepoint is in a fine-mapped region.
+- **isoLASER only (earlier page):** the gene's `combined_pip` in the joint run with
+  the `cis` label alone; "&ndash;" means not in a fine-mapped region there.
+- **Traits:** the gene's part &times; timepoint traits in fine-mapped regions.
+- **Top part, Timepoint, susie_pip (top part), z, QTL, ΔPSI, permutation p:** the
+  trait with the largest `susie_pip`, its z-score and its isoLASER association.
+
+## Plausibility of the genes at combined_pip 0.8
+
+**NDRG4, SF3B1 and MYT1L sit at genome-wide significant SCZ loci, and LY6H has
+the strongest splicing effect.** YWHAE has a sub-threshold signal here but a PGC3
+SCZ association 3 kb from its SNP. GOPC, MRPL43, CNPPD1 and PIGF are at loci
+without a genome-wide significant SNP within 250 kb; their PIP rests on the high
+6 hr enrichment. Biological plausibility of a gene and support for its particular
+splicing association are assessed separately below.
+
+```{r joint_plausibility, results='asis'}
+ev <- fread(file.path(A, "joint_gene_evidence.tsv"), na.strings=c("", "NA"))
+verdict <- c(NDRG4="Strong candidate; sizable effects, but low read counts",
+  SF3B1="Strong SCZ locus and GTEx cTWAS support; moderate splicing effect at 0 hr",
+  MYT1L="Strong neuronal and SCZ support; modest splicing effect",
+  LY6H="Strong mechanistic candidate and splicing evidence; suggestive GWAS signal",
+  YWHAE="Sub-threshold here, but a PGC3 SCZ association 3 kb away; small splicing effect",
+  GOPC="Exploratory; no genome-wide significant SNP within 250 kb",
+  MRPL43="Exploratory; sub-threshold locus, but the SNP is a GTEx brain sQTL",
+  CNPPD1="Exploratory; low coverage and weak permutation evidence",
+  PIGF="Neurodevelopmental relevance; limited SCZ-specific support")
+stopifnot(setequal(unique(ev$gene_name), j8), setequal(names(verdict), j8))
+ref <- function(author, pmid, doi) sprintf('%s (<a href="https://pubmed.ncbi.nlm.nih.gov/%s/">PMID %s</a>; <a href="https://doi.org/%s">paper</a>)', author, pmid, pmid, doi)
+# literature notes as on the earlier page; YWHAE, GOPC and MRPL43 are new here and their literature was not reviewed
+support <- c(
+  NDRG4=paste0("GWAS Catalog links rs42945 to the SCZ association results of ", ref("Pardi&ntilde;as 2018", "29483656", "10.1038/s41588-018-0059-2"), "; the SNP and NDRG4 are not named in the main article. ", ref("Collado-Torres 2019", "31174959", "10.1016/j.neuron.2019.05.013"), " explicitly identifies rs42945 as a SCZ risk SNP and reports associations with NDRG4 RNA expression features in hippocampus (Supplementary Fig. S43A-B). This supports NDRG4 regulation, but does not establish replication of the same splicing event. Ndrg4-deficient mice have reduced cortical BDNF and impaired spatial learning: ", ref("Yamamoto 2011", "21636852", "10.1074/jbc.M111.256446"), "."),
+  MYT1L=paste0("Maintains neuronal identity: ", ref("Mall 2017", "28379941", "10.1038/nature21722"), ". Prioritized by PGC3 SCZ fine-mapping: ", ref("Trubetskoy 2022", "35396580", "10.1038/s41586-022-04434-5"), "."),
+  SF3B1=paste0("Core spliceosome component. Independent SCZ regulatory evidence and inclusion in a human-neuron perturbation study: ", ref("Deans et al. 2026", "41519853", "10.1038/s41467-025-67959-z"), "."),
+  LY6H=paste0("Regulates alpha7 nicotinic receptor trafficking and nicotine-induced potentiation of glutamatergic signaling: ", ref("Puddifoot 2015", "25716842", "10.1523/JNEUROSCI.3630-14.2015"), ". No genome-wide significant SNP within 250 kb in this GWAS; this does not establish novelty."),
+  CNPPD1=paste0("Limited neuronal functional evidence. The catalog association 7 kb away comes from a multi-trait psychiatric analysis, not independent SCZ-only confirmation: ", ref("Wu 2020", "32606422", "10.1038/s41398-020-00902-6"), "."),
+  PIGF=paste0("GPI-anchor biosynthesis. Rare biallelic variants were reported in a syndrome with intellectual disability and seizures: ", ref("Salian 2021", "33386993", "10.1007/s00439-020-02251-2"), ". This is neurodevelopmental evidence, not common-variant SCZ replication."),
+  YWHAE="Literature not reviewed (new here).", GOPC="Literature not reviewed (new here).", MRPL43="Literature not reviewed (new here).")
+br <- function(x) paste(x, collapse="<br>")
+numrange <- function(x, formatter) {
+  z <- formatter(range(x))
+  if (z[1] == z[2]) z[1] else paste(z, collapse=" to ")
+}
+pip_cell <- function(gn) {
+  row <- jg[gene_name == gn]
+  br(c(sprintf("<strong>Overall %.3f</strong>", row$gene_pip), vapply(TPS, function(t) {
+    n <- jtr[gene_name == gn & context == t, uniqueN(molecular_id)]
+    p <- row[[paste0("pip_", t)]]
+    if (is.na(p)) paste0(tpl(t), ": &ndash;") else sprintf("%s: %.3f (%d %s)", tpl(t), p, n, ifelse(n == 1, "part", "parts"))
+  }, "")))
+}
+effect_cell <- function(gn) {
+  z <- jtr[gene_name == gn & susie_pip >= 0.05]
+  z <- z[order(match(context, TPS))]
+  br(z[, .(text=sprintf("%s, %s: &Delta;PSI %s; p %s; %s reads", tpl(context[1]), ukb_id[1],
+    numrange(dpsi, function(x) sprintf("%+.3f", x)), numrange(qtl_p, fp), numrange(het_cov, fmt))),
+    by=.(context, ukb_id)]$text)
+}
+support_cell <- function(gn) {
+  e <- ev[gene_name == gn][1]
+  extra <- character()
+  if (gn %in% c("YWHAE", "GOPC", "MRPL43") && !is.na(e$catalog_nearest))
+    extra <- c(extra, sprintf("Nearest GWAS Catalog SCZ association (p &le; 5e-8): %s, %d kb from the SNP.", e$catalog_nearest, abs(e$catalog_nearest_kb)))
+  if (e$gtex_sqtl_tissues > 0) extra <- c(extra, sprintf("The selected SNP is a GTEx sQTL for this gene in %d of 13 brain tissues (minimum p %s).", e$gtex_sqtl_tissues, fp(e$gtex_sqtl_min_p)))
+  if (!is.na(e$gtex_ctwas_pip) && e$gtex_ctwas_pip >= 0.1) extra <- c(extra, sprintf("GTEx cerebellum eQTL + sQTL cTWAS gene PIP: %.2f.", e$gtex_ctwas_pip))
+  br(c(support[[gn]], extra))
+}
+ord <- c("NDRG4", "SF3B1", "MYT1L", "LY6H", "YWHAE", "GOPC", "MRPL43", "CNPPD1", "PIGF")
+stopifnot(setequal(ord, j8))
+pt <- rbindlist(lapply(ord, function(gn) {
+  e <- ev[gene_name == gn][1]
+  data.table(Gene=gn, `Joint combined PIP: overall and by timepoint`=pip_cell(gn),
+    `Allelic splicing: signed effect, permutation p, reads`=effect_cell(gn),
+    `SCZ GWAS p at selected SNP`=paste0(e$qtl_snp, "<br>", fp(e$gwas_p)),
+    `Best GWAS p within 250 kb`=fp(e$nearby_min_p),
+    `Other evidence`=support_cell(gn), Plausibility=verdict[[gn]])
+}))
+cat('<div style="overflow-x:auto;">\n')
+cat(knitr::kable(pt, format="html", escape=FALSE, row.names=FALSE), sep="\n")
+cat('\n</div>\n')
+```
+
+- **PIP and part counts:** include all fine-mapped predictors for the gene.
+  A dash means no fine-mapped predictor at that timepoint. The calculation uses
+  `combine_gene_pips(method="combine_cs", filter_cs=FALSE)`, with `by="context"`
+  for each timepoint and `by="type"` for the overall splicing PIP.
+- **Splicing effects:** summarize parts with individual predictor PIP at least
+  0.05, grouped by timepoint and QTL SNP. With the filter, no part has 2,371 or
+  more reads.
+- **Delta PSI:** ALT inclusion minus REF inclusion; +0.250 means +25 percentage
+  points. **Permutation p** is unadjusted. **Reads** are pooled informative reads
+  from the heterozygous donors. Ranges summarize several parts, not confidence
+  intervals; low counts can produce uncertain effect estimates.
+- **Selected SNP:** the QTL of the part with the largest predictor PIP. The GWAS
+  columns refer to that SNP and its surrounding 250 kb on either side in the SCZ
+  GWAS used here (`ieu-b-5102`). Genome-wide significance is p < 5e-8.
+- **GWAS Catalog** (new genes only): the nearest association whose mapped trait
+  contains "schizophrenia" with p &le; 5e-8, within 500 kb (GRCh38). It can come
+  from a larger GWAS than the one used here.
+- **GTEx support:** a significant SNP-intron association for the same SNP and
+  gene in GTEx v8 brain tissues. It need not measure the same exonic part, so it
+  is **not automatically replication of the specific splicing event**. No match
+  in these significant-pair files does not establish absence of an effect.
+- **Interpretation:** high cTWAS PIP supports a predictor under the fitted model;
+  it does not prove that the particular splicing event mediates SCZ risk. With
+  one-SNP predictors, separation from the SNP depends strongly on the model's
+  priors. The high 6 hr enrichment can favor predictors even at suggestive loci.
+
+# All genes
+
+```{r all_genes}
+DT::datatable(as.data.frame(jg[, .(gene_name, combined_pip=round(gene_pip, 3), `0hr_pip`=round(pip_0hr, 3), `1hr_pip`=round(pip_1hr, 3),
+  `6hr_pip`=round(pip_6hr, 3), Traits=n_traits, `Top part`=top_part, Timepoint=tpl(top_tp), `susie_pip (top part)`=round(top_part_pip, 3),
+  z=round(z, 2), QTL=ukb_id, dPSI=round(dpsi, 3), `Permutation p`=signif(qtl_p, 2))][order(-combined_pip)]), rownames=FALSE, filter="top",
+  extensions="Buttons", options=list(pageLength=10, scrollX=TRUE, dom="Bfrtip", buttons=c("copy", "csv")),
+  caption="Every gene in a fine-mapped region of the joint run.")
+```

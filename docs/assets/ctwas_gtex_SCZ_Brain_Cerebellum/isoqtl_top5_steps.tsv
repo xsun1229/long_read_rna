@@ -1,0 +1,8 @@
+step	rows	isoforms	genes
+isoTWAS models (13573 gene files)	35658014	76584	13573
+CV R2 >= 0.01, non-zero weight	35658014	76584	13573
+single-base SNVs on autosomes	35658014	76584	13573
+SNP in the UKB b38 reference	34755819	76307	13535
+not strand-ambiguous (usable)	34755819	76307	13535
+top 5 SNPs per isoform (traits)	353861	76307	13535
+of which protein-coding (cTWAS keeps these)	353412	76213	13496

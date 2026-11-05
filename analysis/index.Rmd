@@ -117,4 +117,5 @@ within 30 bp are left out.
   whether isoform-ratio QTLs (irQTLs) from Munro et al. and isoform-expression QTLs (isoQTLs)
   from the isoTWAS models add to the M-cTWAS paper's eQTL and sQTL groups, and whether they
   carry signal on their own, in Brain Cerebellum (chosen as the brain tissue with the most
-  isoform-ratio QTLs)
+  isoform-ratio QTLs); isoQTL weights with the top 1 or the top 5 SNPs per isoform, and checks
+  of the top-5 runs

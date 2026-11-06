@@ -1,0 +1,180 @@
+---
+title: "Grant figures: allele-specific splicing and brain molecular QTLs"
+author: "XSun"
+date: "2026-11-06"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+library(data.table)
+# R code here is ASCII only (HTML entities for special characters), so the page renders the same in any locale
+A <- "docs/assets/grant_figures"
+fmt <- function(n) format(n, big.mark=",", trim=TRUE, scientific=FALSE)
+fp <- function(x) format(signif(x, 2))
+cnt <- fread(file.path(A, "filter_counts.tsv"))[timepoint != "any timepoint"]
+fo <- fread(file.path(A, "fdr_overview.tsv"))[tp %in% c("0hr", "1hr", "6hr")]
+st <- fread(file.path(A, "gtex_brain_tissues_stats.tsv"))
+sc <- function(t) { d <- fread(file.path(A, sprintf("gtex_sqtl_scatter_filter_0hr_Brain_%s.tsv", t))); ct <- cor.test(d$dpsi, d$slope)
+  list(n=nrow(d), genes=uniqueN(d$gene), r=unname(ct$estimate), p=ct$p.value) }
+cx <- sc("Cortex"); cb <- sc("Cerebellum")
+en <- fread(file.path(A, "ctwas_enrichment_filter_reads10nc_stim_joint.tsv")); eu <- en[tp == "0hr"]; es <- en[tp == "stim"]
+ex <- fread(file.path(A, "examples.tsv")); ly <- ex[gene == "LY6H"]; my <- ex[gene == "MYT1L"]
+g8 <- fread(file.path(A, "stim_joint_genes_pip08.tsv"))
+pie <- fread(file.path(A, "ctwas_h2g_pie_est.tsv")); pc <- function(t) sprintf("%.1f%%", 100 * pie[type == t, prop_heritability])
+vn <- fread(file.path(A, "ctwas_gene_venn_e_est.tsv"))
+fig <- function(f) sprintf("![](assets/grant_figures/%s.png)\n\n[Open as PDF](assets/grant_figures/%s.pdf)\n", f, f)
+```
+
+The figures Xin asked for in the grant threads, in one place. Each panel says what
+it shows, which results it uses and where the details are. All allele-specific
+results are from **read-based isoLASER** (each read's own alignment decides
+whether it includes the tested exonic part) and use **isoLASER + filter**:
+isoLASER's `cis` label, recomputed on the panel-heterozygous donors with at least
+10 reads each, plus |&Delta;PSI| &ge; 0.05. No q-value cutoff.
+
+# Part 1: allele-specific splicing (isoLASER)
+
+## Allele-specific events per timepoint {.tabset}
+
+### Exonic parts and genes
+
+```{r bars_parts, results="asis"}
+cat(fig("allelic_effect_counts_filter_exonic_parts"))
+```
+
+### Isoforms and genes
+
+```{r bars_iso, results="asis"}
+cat(fig("allelic_effect_counts_filter_isoforms"))
+```
+
+## {.unlisted .unnumbered}
+
+- **Exonic part:** the unit isoLASER tests, a segment that is exonic in some of a
+  gene's transcripts and intronic in others:
+  `r paste(fmt(cnt$exonic_parts), collapse=" / ")` at 0 / 1 / 6 hr, in
+  `r paste(fmt(cnt$genes), collapse=" / ")` genes.
+- **Isoform** (our definition): an annotated transcript that contains an associated
+  exonic part (`r paste(fmt(cnt$isoforms), collapse=" / ")`). isoLASER tests parts,
+  not transcripts, so this counts isoforms whose usage the allele can shift, not
+  isoforms each tested on their own.
+- **More events at later timepoints** follow sequencing depth: the number of tested
+  associations rises from `r fmt(fo$tested[1])` to `r fmt(fo$tested[2])` and `r fmt(fo$tested[3])`.
+  These are discovery counts, not evidence of more allele-specific splicing after
+  stimulation.
+
+## Agreement with GTEx brain sQTLs (0 hr) {.tabset}
+
+### Cortex
+
+```{r scatter_cortex, results="asis"}
+cat(fig("gtex_sqtl_scatter_filter_0hr_Brain_Cortex"))
+```
+
+### Cerebellum
+
+```{r scatter_cerebellum, results="asis"}
+cat(fig("gtex_sqtl_scatter_filter_0hr_Brain_Cerebellum"))
+```
+
+## {.unlisted .unnumbered}
+
+- **Each point** is one pair: an allele-specific association (SNP &times; exonic part)
+  and the GTEx v8 sQTL effect of the same SNP on that event's skipping junction, in
+  the same gene. A skipping junction moves opposite to the part's inclusion, so
+  agreement is a **negative** correlation.
+- **Cortex:** R = `r sprintf("%.2f", cx$r)` (`r cx$n` pairs, `r cx$genes` genes). **Cerebellum:**
+  R = `r sprintf("%.2f", cb$r)` (`r cb$n` pairs, `r cb$genes` genes).
+- **Across all `r nrow(st)` combinations** (9 brain tissues with full GTEx results, 3
+  timepoints), R is negative in `r st[pearson_r < 0, .N]`, from `r sprintf("%.2f", max(st$pearson_r))`
+  to `r sprintf("%.2f", min(st$pearson_r))`. The p-values on the plots are nominal, and
+  pairs share genes and SNPs.
+- Only associations whose exonic part is in an annotated skipping or alternative
+  splice-site event, with that junction measured by GTEx, can be paired, so the
+  points are a subset of the bar plot's events.
+
+## cTWAS enrichment of allele-specific QTLs in SCZ
+
+```{r enrichment, results="asis"}
+cat(fig("ctwas_enrichment_filter_reads10nc_stim_joint"))
+```
+
+- **Enrichment:** log2 of the splicing-QTL prior over the SNP prior (cTWAS
+  `log_enrichment` / ln 2), &plusmn; 1 SE, in the PGC SCZ GWAS (`ieu-b-5102`).
+  Unstimulated `r sprintf("%.1f", eu$log2_enrichment)` &plusmn; `r sprintf("%.1f", eu$log2_se)`
+  (p = `r fp(eu$enrichment_pval)`); stimulated `r sprintf("%.1f", es$log2_enrichment)` &plusmn;
+  `r sprintf("%.1f", es$log2_se)` (p = `r fp(es$enrichment_pval)`).
+- **Design:** one joint cTWAS run with two groups. Unstimulated is 0 hr
+  (`r fmt(eu$group_size)` traits); stimulated pools 1 hr and 6 hr
+  (`r fmt(es$group_size)` traits, one per exonic part, its QTL from the timepoint with
+  the smaller permutation p). One trait per exonic part, with one SNP.
+- **Genes at combined_pip &ge; 0.8** in this run: `r paste(g8$gene_name, collapse=", ")`.
+
+## Example gene {.tabset}
+
+### LY6H (6 hr)
+
+```{r ex_ly6h, results="asis"}
+cat(fig("isoform_LY6H_6hr"))
+```
+
+### MYT1L (6 hr)
+
+```{r ex_myt1l, results="asis"}
+cat(fig("isoform_MYT1L_6hr"))
+```
+
+## {.unlisted .unnumbered}
+
+Only 6 hr is shown: it is the timepoint that gives both genes their cTWAS PIP.
+
+- **LY6H** (combined_pip `r sprintf("%.2f", ly$combined_pip)`): `r ly$snp` with &Delta;PSI
+  `r sprintf("%+.2f", ly$dpsi)`, permutation p &le; 1 &times; 10<sup>-6</sup> (the floor of
+  a million permutations), `r ly$n_het` heterozygous donors, `r fmt(ly$reads)` reads. The
+  effect has the same sign at 0 and 1 hr. Our suggested highlight.
+- **MYT1L** (combined_pip `r sprintf("%.2f", my$combined_pip)`): `r my$snp`, a genome-wide
+  significant SCZ SNP, but &Delta;PSI `r sprintf("%+.2f", my$dpsi)`, permutation p
+  `r fp(my$perm_p)`, from `r my$n_het` heterozygous donor.
+- **Reading the numbers:** beside each isoform, "n (k)" is n reads assigned to that
+  transcript and k of them that include the tested part by their own alignment. A
+  read can match a skipping isoform everywhere except at the part, so k can be above
+  0 there. The bottom row holds reads assigned to transcripts that do not reach the
+  part. PSI = the sum of k over the sum of n, which is what the test uses (before
+  isoLASER's per-donor depth rescaling).
+
+# Part 2: brain eQTL, sQTL and isoQTL (cTWAS)
+
+cTWAS for SCZ with GTEx v8 Brain Cerebellum QTLs: eQTLs and sQTLs (the M-cTWAS
+paper's PredictDB models) and isoQTLs (isoform-expression QTLs from the isoTWAS
+models of Bhattacharya et al. 2023; we kept the SNP with the largest standardised
+weight per isoform). Details: [cTWAS with GTEx molecular QTLs](ctwas_gtex_isoform_scz.html).
+
+## Share of SCZ heritability
+
+```{r pie, results="asis"}
+cat(fig("ctwas_h2g_pie_est"))
+```
+
+`prop_heritability` of the eQTL + sQTL + isoQTL run: eQTL `r pc("eQTL")`, sQTL
+`r pc("sQTL")`, isoQTL `r pc("isoQTL")`, and the rest (`r pc("SNP")`) from SNPs not
+mediated by these traits.
+
+## Genes found with eQTLs alone and with all three
+
+```{r venn, results="asis"}
+cat(fig("ctwas_gene_venn_e_est"))
+```
+
+Genes with `combined_pip` &ge; 0.8 in an eQTL-only run and in the eQTL + sQTL +
+isoQTL run (same settings). The joint run finds
+`r vn[region == "est only", .N]` genes the eQTL-only run misses
+(`r paste(vn[region == "est only", sprintf("%s via %s", gene_name, top_type_est)], collapse=", ")`)
+and misses `r vn[region == "e only", .N]` (`r paste(vn[region == "e only", gene_name], collapse=", ")`).
+
+**Note:** these two panels come from the cTWAS results before post-processing
+(region merging and the LD-mismatch check). Post-processing is running now; the
+panels will be updated if it changes them.

@@ -1,0 +1,3 @@
+set	design	tp	group	group_size	group_prior	log_enrichment	log_enrichment_se	log2_enrichment	log2_se	enrichment_pval	prop_heritability	converged	drawn
+filter_reads10nc_stim	joint	0hr	0hr|splicing	124	0.0230286248476747	4.77989974343462	0.585665670808329	6.89593765579955	0.844936958894085	2.38080383657548e-06	0.00245987955096696	TRUE	TRUE
+filter_reads10nc_stim	joint	stim	stim|splicing	445	0.0300921473443604	5.04742599488084	0.270745815169401	7.28189645206863	0.390603644886334	2.78890048912537e-24	0.0115355244173096	TRUE	TRUE

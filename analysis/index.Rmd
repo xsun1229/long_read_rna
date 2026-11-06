@@ -18,6 +18,12 @@ donors, at 0, 1 and 6 hours after stimulation. The project has two aims:
 The first two sections describe the data and what the reads contain; they apply
 to both aims.
 
+# Grant figures
+
+* [Grant figures](grant_figures.html) — the figures requested for the grant, in
+  two parts: allele-specific splicing (isoLASER) and cTWAS with brain eQTLs, sQTLs
+  and isoQTLs
+
 # Data
 
 * [Data summary](data_summary.html) —

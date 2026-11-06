@@ -429,10 +429,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeac22b939cf4c0ce34fdfdbd94d4abf26626cefc4targetblankac22b93a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreefe2d86712aa991f5ac772d34a75ec9bff3c46192targetblankfe2d867a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/ac22b939cf4c0ce34fdfdbd94d4abf26626cefc4" target="_blank">ac22b93</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/fe2d86712aa991f5ac772d34a75ec9bff3c46192" target="_blank">fe2d867</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeac22b939cf4c0ce34fdfdbd94d4abf26626cefc4targetblankac22b93a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreefe2d86712aa991f5ac772d34a75ec9bff3c46192targetblankfe2d867a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/ac22b939cf4c0ce34fdfdbd94d4abf26626cefc4" target="_blank">ac22b93</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/fe2d86712aa991f5ac772d34a75ec9bff3c46192" target="_blank">fe2d867</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -557,11 +557,8 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/grant_figures.Rmd
-
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/grant_figures.Rmd
 
 </code></pre>
 <p>
@@ -576,17 +573,80 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/grant_figures.Rmd</code>) and
+HTML (<code>docs/grant_figures.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/fe2d86712aa991f5ac772d34a75ec9bff3c46192/analysis/grant_figures.Rmd" target="_blank">fe2d867</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-06
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/fe2d86712aa991f5ac772d34a75ec9bff3c46192/docs/grant_figures.html" target="_blank">fe2d867</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-06
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
-<p>The figures Xin asked for in the grant threads, in one place. Each
-panel says what it shows, which results it uses and where the details
-are. All allele-specific results are from <strong>read-based
+<p>Each panel says what it shows, which results it uses and where the
+details are. All allele-specific results are from <strong>read-based
 isoLASER</strong> (each read’s own alignment decides whether it includes
 the tested exonic part) and use <strong>isoLASER + filter</strong>:
 isoLASER’s <code>cis</code> label, recomputed on the panel-heterozygous
@@ -786,16 +846,16 @@ other attached packages:
 [1] data.table_1.14.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.12      rstudioapi_0.13  knitr_1.39       magrittr_2.0.3  
- [5] workflowr_1.7.0  R6_2.5.1         rlang_1.1.2      fastmap_1.1.0   
- [9] fansi_1.0.3      stringr_1.5.1    tools_4.2.0      xfun_0.41       
-[13] utf8_1.2.2       cli_3.6.1        git2r_0.30.1     jquerylib_0.1.4 
-[17] htmltools_0.5.2  rprojroot_2.0.3  yaml_2.3.5       digest_0.6.29   
-[21] tibble_3.2.1     lifecycle_1.0.4  later_1.3.0      sass_0.4.1      
-[25] vctrs_0.6.5      promises_1.2.0.1 fs_1.5.2         glue_1.6.2      
-[29] evaluate_0.15    rmarkdown_2.25   stringi_1.7.6    bslib_0.3.1     
-[33] compiler_4.2.0   pillar_1.9.0     jsonlite_1.8.0   httpuv_1.6.5    
-[37] pkgconfig_2.0.3 </code></pre>
+ [1] Rcpp_1.0.12      rstudioapi_0.13  whisker_0.4      knitr_1.39      
+ [5] magrittr_2.0.3   workflowr_1.7.0  R6_2.5.1         rlang_1.1.2     
+ [9] fastmap_1.1.0    fansi_1.0.3      stringr_1.5.1    tools_4.2.0     
+[13] xfun_0.41        utf8_1.2.2       cli_3.6.1        git2r_0.30.1    
+[17] jquerylib_0.1.4  htmltools_0.5.2  rprojroot_2.0.3  yaml_2.3.5      
+[21] digest_0.6.29    tibble_3.2.1     lifecycle_1.0.4  later_1.3.0     
+[25] sass_0.4.1       vctrs_0.6.5      promises_1.2.0.1 fs_1.5.2        
+[29] glue_1.6.2       evaluate_0.15    rmarkdown_2.25   stringi_1.7.6   
+[33] bslib_0.3.1      compiler_4.2.0   pillar_1.9.0     jsonlite_1.8.0  
+[37] httpuv_1.6.5     pkgconfig_2.0.3 </code></pre>
 </div>
 </div>
 </div>

@@ -29,8 +29,7 @@ vn <- fread(file.path(A, "ctwas_gene_venn_e_est.tsv"))
 fig <- function(f) sprintf("![](assets/grant_figures/%s.png)\n\n[Open as PDF](assets/grant_figures/%s.pdf)\n", f, f)
 ```
 
-The figures Xin asked for in the grant threads, in one place. Each panel says what
-it shows, which results it uses and where the details are. All allele-specific
+Each panel says what it shows, which results it uses and where the details are. All allele-specific
 results are from **read-based isoLASER** (each read's own alignment decides
 whether it includes the tested exonic part) and use **isoLASER + filter**:
 isoLASER's `cis` label, recomputed on the panel-heterozygous donors with at least

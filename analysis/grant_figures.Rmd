@@ -23,7 +23,7 @@ sc <- function(t) { d <- fread(file.path(A, sprintf("gtex_sqtl_scatter_filter_0h
 cx <- sc("Cortex"); cb <- sc("Cerebellum")
 en <- fread(file.path(A, "ctwas_enrichment_filter_reads10nc_stim_joint.tsv")); eu <- en[tp == "0hr"]; es <- en[tp == "stim"]
 ex <- fread(file.path(A, "examples.tsv")); ly <- ex[gene == "LY6H"]; my <- ex[gene == "MYT1L"]
-g8 <- fread(file.path(A, "stim_joint_genes_pip08.tsv"))
+g8 <- fread(file.path(A, "genes_pip08.tsv")); j3 <- fread(file.path(A, "joint3_params.tsv"))   # 3-group joint run: genes
 pie <- fread(file.path(A, "ctwas_h2g_pie_est.tsv")); pc <- function(t) sprintf("%.1f%%", 100 * pie[type == t, prop_heritability])
 vn <- fread(file.path(A, "ctwas_gene_venn_e_est.tsv"))
 fig <- function(f) sprintf("![](assets/grant_figures/%s.png)\n\n[Open as PDF](assets/grant_figures/%s.pdf)\n", f, f)
@@ -111,7 +111,32 @@ cat(fig("ctwas_enrichment_filter_reads10nc_stim_joint"))
   (`r fmt(eu$group_size)` traits); stimulated pools 1 hr and 6 hr
   (`r fmt(es$group_size)` traits, one per exonic part, its QTL from the timepoint with
   the smaller permutation p). One trait per exonic part, with one SNP.
-- **Genes at combined_pip &ge; 0.8** in this run: `r paste(g8$gene_name, collapse=", ")`.
+
+## cTWAS genes (combined_pip &ge; 0.8)
+
+From the joint cTWAS run with **0, 1 and 6 hr as separate groups** (the same
+isoLASER + filter weights, `r fmt(sum(j3[group != "SNP", group_size]))` traits): `r nrow(g8)` genes reach
+`combined_pip` &ge; 0.8.
+
+```{r genes8}
+cell <- function(x) fifelse(is.na(x), "&ndash;", sprintf("%.2f", x))
+knitr::kable(g8[, .(gene_name, combined_pip=sprintf("%.2f", combined_pip), `0hr_pip`=cell(pip_0hr), `1hr_pip`=cell(pip_1hr), `6hr_pip`=cell(pip_6hr),
+  `QTL SNP`=ukb_id, `&Delta;PSI`=sprintf("%+.3f", dpsi), `Permutation p`=fp(qtl_p), `SCZ GWAS p (SNP)`=fp(gwas_p),
+  `Best GWAS p within 250 kb`=fp(nearby_min_p))], escape=FALSE, align="lrrrrlrrrr")
+```
+
+- **combined_pip:** over all of the gene's exonic parts and timepoints;
+  **0hr_pip, 1hr_pip, 6hr_pip:** from that timepoint's traits only
+  ("&ndash;": none in a fine-mapped region).
+- **QTL SNP, &Delta;PSI, permutation p:** the gene's trait with the largest PIP. LY6H's
+  two top parts tie (same SNP); the example figure below shows the one with the larger
+  effect (+0.25).
+  **SCZ GWAS p:** of that SNP; **best within 250 kb:** genome-wide significance is
+  p < 5e-8.
+- NDRG4, SF3B1 and MYT1L sit at genome-wide significant SCZ loci, and LY6H has
+  the strongest splicing effect. CNPPD1, PIGF, GOPC, MRPL43 and YWHAE have no
+  genome-wide significant SNP within 250 kb. Details: [cTWAS with isoLASER + filter
+  QTLs](isolaser_ctwas_scz_filter.html).
 
 ## Example gene {.tabset}
 

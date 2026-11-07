@@ -409,7 +409,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-11-05
+<strong>Last updated:</strong> 2026-11-07
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -543,15 +543,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree3d257ebb5dec84627077ed85dac589d72abe23a2targetblank3d257eba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreece874053757cb3694a24c20935c7dd676ae9e426targetblankce87405a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/3d257ebb5dec84627077ed85dac589d72abe23a2" target="_blank">3d257eb</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/ce874053757cb3694a24c20935c7dd676ae9e426" target="_blank">ce87405</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree3d257ebb5dec84627077ed85dac589d72abe23a2targetblank3d257eba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreece874053757cb3694a24c20935c7dd676ae9e426targetblankce87405a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -561,7 +561,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/3d257ebb5dec84627077ed85dac589d72abe23a2" target="_blank">3d257eb</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/ce874053757cb3694a24c20935c7dd676ae9e426" target="_blank">ce87405</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -577,7 +577,6 @@ were generated:
 <pre><code>
 Unstaged changes:
     Modified:   analysis/ctwas_gtex_isoform_scz.Rmd
-    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -624,6 +623,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/ac22b939cf4c0ce34fdfdbd94d4abf26626cefc4/analysis/ctwas_gtex_isoform_scz.Rmd" target="_blank">ac22b93</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-05
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/ac22b939cf4c0ce34fdfdbd94d4abf26626cefc4/docs/ctwas_gtex_isoform_scz.html" target="_blank">ac22b93</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-05
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1099,8 +1132,10 @@ eQTL + sQTL + irQTL, irQTL only (added 2026-11-03, to test whether the
 irQTLs carry signal on their own), and eQTL + sQTL + isoQTL and isoQTL
 only, each with the top 1, top 3 and top 5 SNPs per isoform (added
 2026-11-04 and 2026-11-05). All use the same settings.</li>
-<li><strong>Not done yet:</strong> merging regions, checking LD
-mismatch, and merging <a href="#duplicate-isoqtl-traits">duplicate
+<li><strong>Post-processing</strong> (region merging and the LD-mismatch
+check, added 2026-11-07) for the three eQTL + sQTL + isoQTL runs (top 1,
+3, 5): see <a href="#post-processing">Post-processing</a>. <strong>Not
+done yet:</strong> merging <a href="#duplicate-isoqtl-traits">duplicate
 isoQTL traits</a>.</li>
 </ul>
 <table>
@@ -2806,9 +2841,12 @@ and 20% for the other fine-mapped isoQTL traits.</p>
 model can keep such opposite-sign pairs. A trait like this can fit
 differences between the GWAS z-scores of SNPs in LD, for example where
 the UKB LD reference does not match the GWAS samples (LD mismatch). That
-would inflate both the isoQTL prior and the gene PIPs. <strong>Not
-done:</strong> cTWAS’s LD-mismatch check
-(<code>diagnose_LD_mismatch_susie</code>) in these regions.</p>
+would inflate both the isoQTL prior and the gene PIPs.
+<strong>Post-processing changes this picture</strong> (<a
+href="#post-processing">below</a>): after region merging almost none of
+these traits keeps its PIP, and the LD-mismatch check refits the traits
+of only 2 genes, so the main cause looks like region boundaries rather
+than LD mismatch.</p>
 </div>
 <div id="by-run" class="section level3 tabset">
 <h3 class="tabset">By run</h3>
@@ -11909,6 +11947,770 @@ href="#duplicate-isoqtl-traits">Duplicate isoQTL traits</a>.</li>
 </div>
 </div>
 </div>
+<div id="post-processing" class="section level2">
+<h2>Post-processing</h2>
+<p><strong>How it was done</strong> (ours, following the M-cTWAS paper’s
+pipeline and its settings; ctwas 0.6.1), for the three eQTL + sQTL +
+isoQTL runs:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Region merging</strong>
+(<code>postprocess_region_merging()</code>). cTWAS fine-maps each LD
+region on its own, with no LD between SNPs of different regions. A gene
+whose traits use SNPs in more than one region is split across them. For
+every such boundary gene with PIP ≥ 0.5 (<code>pip_thresh = 0.5</code>,
+<code>filter_cs = FALSE</code>), the regions are merged and fine-mapped
+again with their full LD, using the run’s <code>group_prior</code> and
+<code>group_prior_var</code>, L = 5 and up to 20,000 SNPs.</li>
+<li><strong>LD mismatch</strong>
+(<code>postprocess_LD_mismatch()</code>). In regions whose molecular
+traits’ credible-set PIPs sum to more than 0.2, each SNP’s z-score is
+compared with the value its neighbours predict under the UKB LD
+reference; SNPs that disagree (p &lt; 5e-6) are flagged. A trait with
+PIP ≥ 0.2 whose prediction model uses a flagged SNP is problematic, and
+its region is fine-mapped again without LD (identity correlation, L = 1,
+the same z-scores and priors). This is a robustness check, not a repair:
+losing PIP there does not by itself prove an artefact.</li>
+<li><strong>Gene PIPs</strong> recomputed as before
+(<code>combine_gene_pips()</code>, <code>by = "type"</code>,
+<code>method = "combine_cs"</code>,
+<code>filter_cs = FALSE</code>).</li>
+</ol>
+<p><strong>Not redone:</strong> the parameter estimation.
+<code>group_prior</code>, <code>log_enrichment</code> and
+<code>prop_heritability</code> in the tables above are from the original
+fits. Each run’s weights and GWAS z-scores were checked against its
+input record.</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="8%" />
+<col width="6%" />
+<col width="12%" />
+<col width="5%" />
+<col width="12%" />
+<col width="17%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Run</th>
+<th align="right">Boundary genes (rows)</th>
+<th align="right">Merged regions</th>
+<th align="right">Regions checked for LD mismatch</th>
+<th align="right">Flagged SNPs</th>
+<th align="right">Traits refit without LD (genes)</th>
+<th align="right">Genes, combined_pip &gt;= 0.8: before / after</th>
+<th align="right">Traits, susie_pip &gt;= 0.8 and |z| &lt; 3: before /
+after</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">eQTL + sQTL + isoQTL (top 1)</td>
+<td align="right">23 (23)</td>
+<td align="right">21</td>
+<td align="right">53</td>
+<td align="right">575</td>
+<td align="right">0 (0)</td>
+<td align="right">15 / 15</td>
+<td align="right">0 / 0</td>
+</tr>
+<tr class="even">
+<td align="left">eQTL + sQTL + isoQTL (top 3)</td>
+<td align="right">124 (602)</td>
+<td align="right">71</td>
+<td align="right">52</td>
+<td align="right">998</td>
+<td align="right">0 (0)</td>
+<td align="right">86 / 30</td>
+<td align="right">21 / 1</td>
+</tr>
+<tr class="odd">
+<td align="left">eQTL + sQTL + isoQTL (top 5)</td>
+<td align="right">157 (868)</td>
+<td align="right">84</td>
+<td align="right">53</td>
+<td align="right">1,046</td>
+<td align="right">4 (2)</td>
+<td align="right">105 / 24</td>
+<td align="right">33 / 0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Boundary genes (rows):</strong> distinct genes selected for
+merging; a gene can give several rows. <strong>Merged regions:</strong>
+the new regions after merging.</li>
+<li><strong>Flagged SNPs:</strong> SNPs whose z-score disagrees with the
+LD reference. <strong>Traits refit without LD:</strong> traits that use
+a flagged SNP and have PIP ≥ 0.2, with their genes in brackets (top 5:
+ARID4B, DPP4).</li>
+<li><strong>Traits with |z| &lt; 3:</strong> the suspect corner of the
+figure below.</li>
+</ul>
+<p><img
+src="assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_pp_pip_z.png" /></p>
+<p><a
+href="assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_pp_pip_z.pdf">Open
+as PDF</a></p>
+<p>The same figure as in <a
+href="#top-3-and-top-5-snps-per-isoform-checks">the checks</a>, after
+post-processing: each molecular trait’s <code>susie_pip</code> against
+its own GWAS |z|.</p>
+<p><strong>What changed:</strong></p>
+<ul>
+<li><strong>Top 1:</strong> nothing material. The same 15 genes are at
+<code>combined_pip</code> ≥ 0.8, and none moves by more than 0.02.</li>
+<li><strong>Top 3 and top 5:</strong> most of the excess genes go (86 to
+30 and 105 to 24), and so do nearly all the high-PIP traits with |z|
+&lt; 3. AMT’s isoform, the example above, goes from
+<code>susie_pip</code> 1.00 to 0.00 (top 3) and from 1.00 to 0.00 (top
+5).</li>
+<li><strong>Our reading:</strong> the excess came mainly from region
+boundaries, not LD mismatch. The LD-mismatch step refit the traits of
+only 2 genes. Many top-3 and top-5 isoQTL traits use SNPs in two
+neighbouring regions (one of AMT’s 5 SNPs is in the next region);
+fine-mapped region by region, with no LD between regions, such traits
+took PIP that they lose once the regions are merged.</li>
+<li><strong>Caveat:</strong> the parameters were not re-estimated, so
+the top-3 and top-5 enrichment and <code>prop_heritability</code> above
+still come from the original fits and are likely inflated.</li>
+</ul>
+<div id="genes-after-post-processing" class="section level3 tabset">
+<h3 class="tabset">Genes after post-processing</h3>
+<p>Genes with <code>combined_pip</code> ≥ 0.8 after post-processing.</p>
+<div id="eqtl-sqtl-isoqtl-top-1-3" class="section level4">
+<h4>eQTL + sQTL + isoQTL (top 1)</h4>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="20%" />
+<col width="19%" />
+<col width="15%" />
+<col width="15%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">combined_pip before</th>
+<th align="right">combined_pip after</th>
+<th align="right">eQTL_pip after</th>
+<th align="right">sQTL_pip after</th>
+<th align="right">isoQTL_pip after</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SOHLH1</td>
+<td align="right">0.98</td>
+<td align="right">0.98</td>
+<td align="right">0.98</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">ZNF823</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">MRPS33</td>
+<td align="right">0.96</td>
+<td align="right">0.96</td>
+<td align="right">–</td>
+<td align="right">0.96</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="even">
+<td align="left">R3HDM2</td>
+<td align="right">0.93</td>
+<td align="right">0.93</td>
+<td align="right">–</td>
+<td align="right">0.93</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">FEZF1</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="even">
+<td align="left">PPIL2</td>
+<td align="right">0.91</td>
+<td align="right">0.91</td>
+<td align="right">0.01</td>
+<td align="right">0.00</td>
+<td align="right">0.90</td>
+</tr>
+<tr class="odd">
+<td align="left">PTPA</td>
+<td align="right">0.90</td>
+<td align="right">0.90</td>
+<td align="right">0.88</td>
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">ACTR1B</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">0.17</td>
+<td align="right">0.72</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">TRPV4</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">GALNT2</td>
+<td align="right">0.84</td>
+<td align="right">0.86</td>
+<td align="right">0.86</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">TMEM25</td>
+<td align="right">0.86</td>
+<td align="right">0.85</td>
+<td align="right">0.00</td>
+<td align="right">0.01</td>
+<td align="right">0.85</td>
+</tr>
+<tr class="even">
+<td align="left">ACE</td>
+<td align="right">0.85</td>
+<td align="right">0.84</td>
+<td align="right">0.56</td>
+<td align="right">0.24</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">ANKRD63</td>
+<td align="right">0.81</td>
+<td align="right">0.81</td>
+<td align="right">0.81</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">HLA-DMA</td>
+<td align="right">0.81</td>
+<td align="right">0.81</td>
+<td align="right">0.78</td>
+<td align="right">0.02</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">ARHGAP9</td>
+<td align="right">0.81</td>
+<td align="right">0.81</td>
+<td align="right">–</td>
+<td align="right">0.01</td>
+<td align="right">0.80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="eqtl-sqtl-isoqtl-top-3-3" class="section level4">
+<h4>eQTL + sQTL + isoQTL (top 3)</h4>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="20%" />
+<col width="19%" />
+<col width="15%" />
+<col width="15%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">combined_pip before</th>
+<th align="right">combined_pip after</th>
+<th align="right">eQTL_pip after</th>
+<th align="right">sQTL_pip after</th>
+<th align="right">isoQTL_pip after</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">PPIP5K1</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+</tr>
+<tr class="even">
+<td align="left">ZKSCAN7</td>
+<td align="right">0.99</td>
+<td align="right">1.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+</tr>
+<tr class="odd">
+<td align="left">TRAIP</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">1.00</td>
+</tr>
+<tr class="even">
+<td align="left">HRCT1</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">1.00</td>
+</tr>
+<tr class="odd">
+<td align="left">BTN3A2</td>
+<td align="right">1.00</td>
+<td align="right">0.99</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="even">
+<td align="left">IP6K1</td>
+<td align="right">0.00</td>
+<td align="right">0.99</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="odd">
+<td align="left">SRSF2</td>
+<td align="right">1.00</td>
+<td align="right">0.99</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="even">
+<td align="left">AP3B2</td>
+<td align="right">0.98</td>
+<td align="right">0.98</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.98</td>
+</tr>
+<tr class="odd">
+<td align="left">EDARADD</td>
+<td align="right">0.99</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.97</td>
+</tr>
+<tr class="even">
+<td align="left">SOHLH1</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">ZNF823</td>
+<td align="right">0.96</td>
+<td align="right">0.96</td>
+<td align="right">0.96</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">ASCC2</td>
+<td align="right">0.99</td>
+<td align="right">0.96</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.96</td>
+</tr>
+<tr class="odd">
+<td align="left">RAB15</td>
+<td align="right">0.95</td>
+<td align="right">0.93</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.93</td>
+</tr>
+<tr class="even">
+<td align="left">CREB1</td>
+<td align="right">0.93</td>
+<td align="right">0.93</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.93</td>
+</tr>
+<tr class="odd">
+<td align="left">R3HDM2</td>
+<td align="right">0.93</td>
+<td align="right">0.93</td>
+<td align="right">–</td>
+<td align="right">0.92</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">MRPS33</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">–</td>
+<td align="right">0.92</td>
+<td align="right">0.08</td>
+</tr>
+<tr class="odd">
+<td align="left">ACTR1B</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">0.15</td>
+<td align="right">0.77</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">PROSER1</td>
+<td align="right">1.00</td>
+<td align="right">0.92</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.92</td>
+</tr>
+<tr class="odd">
+<td align="left">FEZF1</td>
+<td align="right">0.90</td>
+<td align="right">0.90</td>
+<td align="right">0.90</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="even">
+<td align="left">FAAP100</td>
+<td align="right">0.88</td>
+<td align="right">0.90</td>
+<td align="right">–</td>
+<td align="right">0.06</td>
+<td align="right">0.89</td>
+</tr>
+<tr class="odd">
+<td align="left">PPIL2</td>
+<td align="right">0.90</td>
+<td align="right">0.89</td>
+<td align="right">0.01</td>
+<td align="right">0.00</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="even">
+<td align="left">ACAN</td>
+<td align="right">0.00</td>
+<td align="right">0.88</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="odd">
+<td align="left">CARD16</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">0.00</td>
+<td align="right">0.01</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="even">
+<td align="left">CUX2</td>
+<td align="right">0.87</td>
+<td align="right">0.86</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="odd">
+<td align="left">PITPNC1</td>
+<td align="right">0.86</td>
+<td align="right">0.86</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="even">
+<td align="left">FOXM1</td>
+<td align="right">0.86</td>
+<td align="right">0.84</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">0.84</td>
+</tr>
+<tr class="odd">
+<td align="left">TRPV4</td>
+<td align="right">0.00</td>
+<td align="right">0.82</td>
+<td align="right">0.82</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">MTIF2</td>
+<td align="right">0.83</td>
+<td align="right">0.81</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.81</td>
+</tr>
+<tr class="odd">
+<td align="left">POLR3H</td>
+<td align="right">0.99</td>
+<td align="right">0.81</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.81</td>
+</tr>
+<tr class="even">
+<td align="left">ADSL</td>
+<td align="right">0.93</td>
+<td align="right">0.81</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.81</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="eqtl-sqtl-isoqtl-top-5-3" class="section level4">
+<h4>eQTL + sQTL + isoQTL (top 5)</h4>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="20%" />
+<col width="19%" />
+<col width="15%" />
+<col width="15%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">combined_pip before</th>
+<th align="right">combined_pip after</th>
+<th align="right">eQTL_pip after</th>
+<th align="right">sQTL_pip after</th>
+<th align="right">isoQTL_pip after</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">BTN2A2</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+</tr>
+<tr class="even">
+<td align="left">SRSF2</td>
+<td align="right">1.00</td>
+<td align="right">0.99</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="odd">
+<td align="left">DDX60</td>
+<td align="right">0.99</td>
+<td align="right">0.99</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="even">
+<td align="left">HRCT1</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">0.97</td>
+</tr>
+<tr class="odd">
+<td align="left">GRAP</td>
+<td align="right">0.96</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.97</td>
+</tr>
+<tr class="even">
+<td align="left">SOHLH1</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">ZNF823</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">–</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">POLR3H</td>
+<td align="right">0.00</td>
+<td align="right">0.96</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.96</td>
+</tr>
+<tr class="odd">
+<td align="left">PPIP5K1</td>
+<td align="right">1.00</td>
+<td align="right">0.96</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+<td align="right">0.96</td>
+</tr>
+<tr class="even">
+<td align="left">PPIL2</td>
+<td align="right">0.94</td>
+<td align="right">0.94</td>
+<td align="right">0.01</td>
+<td align="right">0.00</td>
+<td align="right">0.93</td>
+</tr>
+<tr class="odd">
+<td align="left">ZMYND10</td>
+<td align="right">0.00</td>
+<td align="right">0.94</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.94</td>
+</tr>
+<tr class="even">
+<td align="left">ASCC2</td>
+<td align="right">0.96</td>
+<td align="right">0.93</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.92</td>
+</tr>
+<tr class="odd">
+<td align="left">ACTR1B</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">0.16</td>
+<td align="right">0.76</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">R3HDM2</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">–</td>
+<td align="right">0.91</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="odd">
+<td align="left">FEZF1</td>
+<td align="right">0.90</td>
+<td align="right">0.90</td>
+<td align="right">0.90</td>
+<td align="right">–</td>
+<td align="right">–</td>
+</tr>
+<tr class="even">
+<td align="left">FOXM1</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">0.89</td>
+</tr>
+<tr class="odd">
+<td align="left">SLC26A11</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.89</td>
+</tr>
+<tr class="even">
+<td align="left">AP3B2</td>
+<td align="right">0.89</td>
+<td align="right">0.88</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="odd">
+<td align="left">MKRN1</td>
+<td align="right">0.13</td>
+<td align="right">0.88</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="even">
+<td align="left">PROSER1</td>
+<td align="right">1.00</td>
+<td align="right">0.88</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="odd">
+<td align="left">PITPNC1</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">0.00</td>
+<td align="right">–</td>
+<td align="right">0.88</td>
+</tr>
+<tr class="even">
+<td align="left">MTIF2</td>
+<td align="right">0.85</td>
+<td align="right">0.83</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.83</td>
+</tr>
+<tr class="odd">
+<td align="left">HNRNPA1</td>
+<td align="right">0.83</td>
+<td align="right">0.82</td>
+<td align="right">–</td>
+<td align="right">–</td>
+<td align="right">0.82</td>
+</tr>
+<tr class="even">
+<td align="left">ANKRD63</td>
+<td align="right">0.80</td>
+<td align="right">0.80</td>
+<td align="right">0.80</td>
+<td align="right">–</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<p>“–”: the gene has no trait of that type in a fine-mapped region. The
+before and after values for every gene and QTL type are in <a
+href="assets/ctwas_gtex_SCZ_Brain_Cerebellum/pp_gene_pips.tsv">pp_gene_pips.tsv</a>.</p>
+</div>
+</div>
+</div>
 <div id="all-genes" class="section level2">
 <h2>All genes</h2>
 <div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b79198de2c3cef88097c" style="width:100%;height:auto;"></div>
@@ -11931,6 +12733,11 @@ are the top-3 and top-5 isoQTL weights).</li>
 <li><code>2.summarize.R</code>: this page’s tables and figures.</li>
 <li><code>5.top5_diagnostics.R</code>: the checks of the top-3 and top-5
 runs.</li>
+<li><code>6.postprocess.R</code> and <code>.sbatch</code>:
+post-processing (region merging, LD mismatch, gene PIPs) of one
+run.</li>
+<li><code>7.pp_pip_z.R</code> and <code>8.pp_summarize.R</code>: this
+page’s post-processing figure and tables.</li>
 </ul>
 <p><strong>Downloads:</strong> <a
 href="assets/ctwas_gtex_SCZ_Brain_Cerebellum/tissue_qtls.tsv">tissue
@@ -11963,7 +12770,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so

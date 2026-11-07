@@ -108,7 +108,9 @@ Brain Cerebellum.
   carry signal on their own), and eQTL + sQTL + isoQTL and isoQTL only, each
   with the top 1, top 3 and top 5 SNPs per isoform (added 2026-11-04 and
   2026-11-05). All use the same settings.
-- **Not done yet:** merging regions, checking LD mismatch, and merging
+- **Post-processing** (region merging and the LD-mismatch check, added 2026-11-07)
+  for the three eQTL + sQTL + isoQTL runs (top 1, 3, 5): see
+  [Post-processing](#post-processing). **Not done yet:** merging
   [duplicate isoQTL traits](#duplicate-isoqtl-traits).
 
 ```{r steps}
@@ -497,8 +499,10 @@ the other fine-mapped isoQTL traits.
 opposite-sign pairs. A trait like this can fit differences between the GWAS
 z-scores of SNPs in LD, for example where the UKB LD reference does not match
 the GWAS samples (LD mismatch). That would inflate both the isoQTL prior and
-the gene PIPs. **Not done:** cTWAS's LD-mismatch check
-(`diagnose_LD_mismatch_susie`) in these regions.
+the gene PIPs. **Post-processing changes this picture** ([below](#post-processing)):
+after region merging almost none of these traits keeps its PIP, and the
+LD-mismatch check refits the traits of only 2 genes, so the main cause looks like
+region boundaries rather than LD mismatch.
 
 ### By run {.tabset}
 
@@ -516,6 +520,102 @@ for (r in names(RUNS)) {
 - **Top trait:** the trait with the largest `susie_pip`: its ID (an eQTL gene, an
   sQTL intron or an isoform), type, `susie_pip` and z-score (z).
 - **isoQTL copies** (isoQTL runs only): see [Duplicate isoQTL traits](#duplicate-isoqtl-traits).
+
+## Post-processing
+
+```{r pp_setup}
+pps <- fread(file.path(A, "pp_summary.tsv")); ppz <- fread(file.path(A, "isoqtl_pp_pip_z.tsv"))
+ppg <- fread(file.path(A, "pp_gene_pips.tsv")); ppx <- fread(file.path(A, "isoqtl_pp_example.tsv"))
+PPR <- c(est="eQTL + sQTL + isoQTL (top 1)", esh="eQTL + sQTL + isoQTL (top 3)", esf="eQTL + sQTL + isoQTL (top 5)")
+zc <- function(q, st, col) ppz[run == q & stage == st][[col]]
+e1 <- ppg[run == "est" & (combined_pip_before >= 0.8 | combined_pip_after >= 0.8)]
+amt <- function(q, st) sprintf("%.2f", ppx[run == q & stage == st, susie_pip])
+```
+
+**How it was done** (ours, following the M-cTWAS paper's pipeline and its settings;
+ctwas 0.6.1), for the three eQTL + sQTL + isoQTL runs:
+
+1. **Region merging** (`postprocess_region_merging()`). cTWAS fine-maps each LD
+   region on its own, with no LD between SNPs of different regions. A gene whose
+   traits use SNPs in more than one region is split across them. For every such
+   boundary gene with PIP &ge; 0.5 (`pip_thresh = 0.5`, `filter_cs = FALSE`), the
+   regions are merged and fine-mapped again with their full LD, using the run's
+   `group_prior` and `group_prior_var`, L = 5 and up to 20,000 SNPs.
+2. **LD mismatch** (`postprocess_LD_mismatch()`). In regions whose molecular traits'
+   credible-set PIPs sum to more than 0.2, each SNP's z-score is compared with the
+   value its neighbours predict under the UKB LD reference; SNPs that disagree
+   (p < 5e-6) are flagged. A trait with PIP &ge; 0.2 whose prediction model uses a
+   flagged SNP is problematic, and its region is fine-mapped again without LD
+   (identity correlation, L = 1, the same z-scores and priors). This is a
+   robustness check, not a repair: losing PIP there does not by itself prove an
+   artefact.
+3. **Gene PIPs** recomputed as before (`combine_gene_pips()`, `by = "type"`,
+   `method = "combine_cs"`, `filter_cs = FALSE`).
+
+**Not redone:** the parameter estimation. `group_prior`, `log_enrichment` and
+`prop_heritability` in the tables above are from the original fits. Each run's
+weights and GWAS z-scores were checked against its input record.
+
+```{r pp_table}
+knitr::kable(pps[match(names(PPR), run), .(Run=PPR[run], `Boundary genes (rows)`=sprintf("%d (%d)", boundary_genes, boundary_rows),
+  `Merged regions`=merged_regions, `Regions checked for LD mismatch`=ld_regions_checked, `Flagged SNPs`=fmt(problematic_snps),
+  `Traits refit without LD (genes)`=sprintf("%d (%d)", problematic_traits, problematic_trait_genes),
+  `Genes, combined_pip >= 0.8: before / after`=sprintf("%d / %d", genes_pip08_before, genes_pip08_after),
+  `Traits, susie_pip >= 0.8 and |z| < 3: before / after`=vapply(run, function(q) sprintf("%d / %d", zc(q, "before", "traits_pip08_z_lt3"), zc(q, "after", "traits_pip08_z_lt3")), ""))],
+  align="lrrrrrrr")
+```
+
+- **Boundary genes (rows):** distinct genes selected for merging; a gene can give
+  several rows. **Merged regions:** the new regions after merging.
+- **Flagged SNPs:** SNPs whose z-score disagrees with the LD reference. **Traits refit
+  without LD:** traits that use a flagged SNP and have PIP &ge; 0.2, with their genes
+  in brackets (top 5: `r pps[run == "esf", problematic_gene_names]`).
+- **Traits with |z| < 3:** the suspect corner of the figure below.
+
+![](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_pp_pip_z.png)
+
+[Open as PDF](assets/ctwas_gtex_SCZ_Brain_Cerebellum/isoqtl_pp_pip_z.pdf)
+
+The same figure as in [the checks](#top-3-and-top-5-snps-per-isoform-checks), after
+post-processing: each molecular trait's `susie_pip` against its own GWAS |z|.
+
+**What changed:**
+
+- **Top 1:** nothing material. The same `r pps[run == "est", genes_pip08_after]` genes are at
+  `combined_pip` &ge; 0.8, and none moves by more than
+  `r sprintf("%.2f", max(abs(e1$combined_pip_after - e1$combined_pip_before)))`.
+- **Top 3 and top 5:** most of the excess genes go (`r pps[run == "esh", genes_pip08_before]` to
+  `r pps[run == "esh", genes_pip08_after]` and `r pps[run == "esf", genes_pip08_before]` to
+  `r pps[run == "esf", genes_pip08_after]`), and so do nearly all the high-PIP traits
+  with |z| < 3. AMT's isoform, the example above, goes from `susie_pip`
+  `r amt("esh", "before")` to `r amt("esh", "after")` (top 3) and from `r amt("esf", "before")` to
+  `r amt("esf", "after")` (top 5).
+- **Our reading:** the excess came mainly from region boundaries, not LD mismatch.
+  The LD-mismatch step refit the traits of only 2 genes. Many top-3 and top-5
+  isoQTL traits use SNPs in two neighbouring regions (one of AMT's 5 SNPs is in
+  the next region); fine-mapped region by region, with no LD between regions, such
+  traits took PIP that they lose once the regions are merged.
+- **Caveat:** the parameters were not re-estimated, so the top-3 and top-5
+  enrichment and `prop_heritability` above still come from the original fits and
+  are likely inflated.
+
+### Genes after post-processing {.tabset}
+
+Genes with `combined_pip` &ge; 0.8 after post-processing.
+
+```{r pp_genes, results="asis"}
+for (q in names(PPR)) {
+  cat("#### ", PPR[[q]], "\n\n", sep="")
+  d <- ppg[run == q & combined_pip_after >= 0.8][order(-combined_pip_after)]
+  x <- d[, .(gene_name, `combined_pip before`=cell(combined_pip_before), `combined_pip after`=cell(combined_pip_after),
+             `eQTL_pip after`=cell(eQTL_pip_after), `sQTL_pip after`=cell(sQTL_pip_after), `isoQTL_pip after`=cell(isoQTL_pip_after))]
+  cat(paste(knitr::kable(x, escape=FALSE, align="lrrrrr"), collapse="\n"), "\n\n", sep="")
+}
+```
+
+"&ndash;": the gene has no trait of that type in a fine-mapped region. The before
+and after values for every gene and QTL type are in
+[pp_gene_pips.tsv](assets/ctwas_gtex_SCZ_Brain_Cerebellum/pp_gene_pips.tsv).
 
 ## All genes
 
@@ -537,6 +637,8 @@ DT::datatable(as.data.frame(g[, .(Run=RUNS[run], gene_name, combined_pip=round(c
   `t`, `esh`, `h`, `esf` and `f`; `h` and `f` are the top-3 and top-5 isoQTL weights).
 - `2.summarize.R`: this page's tables and figures.
 - `5.top5_diagnostics.R`: the checks of the top-3 and top-5 runs.
+- `6.postprocess.R` and `.sbatch`: post-processing (region merging, LD mismatch, gene PIPs) of one run.
+- `7.pp_pip_z.R` and `8.pp_summarize.R`: this page's post-processing figure and tables.
 
 **Downloads:** [tissue counts](assets/ctwas_gtex_SCZ_Brain_Cerebellum/tissue_qtls.tsv),
 [parameters](assets/ctwas_gtex_SCZ_Brain_Cerebellum/params.tsv),

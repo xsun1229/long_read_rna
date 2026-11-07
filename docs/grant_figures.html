@@ -391,7 +391,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-11-06
+<strong>Last updated:</strong> 2026-11-07
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree6edb87bbf7f7b162b5ee4a5a772694830ff77127targetblank6edb87ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree07e10148aaf6bfe7c0642fdaba45352403d74abctargetblank07e1014a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/6edb87bbf7f7b162b5ee4a5a772694830ff77127" target="_blank">6edb87b</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/07e10148aaf6bfe7c0642fdaba45352403d74abc" target="_blank">07e1014</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree6edb87bbf7f7b162b5ee4a5a772694830ff77127targetblank6edb87ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree07e10148aaf6bfe7c0642fdaba45352403d74abctargetblank07e1014a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/6edb87bbf7f7b162b5ee4a5a772694830ff77127" target="_blank">6edb87b</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/07e10148aaf6bfe7c0642fdaba45352403d74abc" target="_blank">07e1014</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -604,6 +604,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/ce874053757cb3694a24c20935c7dd676ae9e426/analysis/grant_figures.Rmd" target="_blank">ce87405</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-07
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/ce874053757cb3694a24c20935c7dd676ae9e426/docs/grant_figures.html" target="_blank">ce87405</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-07
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -984,34 +1018,44 @@ class="section level1">
 <h1>Part 2: brain eQTL, sQTL and isoQTL (cTWAS)</h1>
 <p>cTWAS for SCZ with GTEx v8 Brain Cerebellum QTLs: eQTLs and sQTLs
 (the M-cTWAS paper’s PredictDB models) and isoQTLs (isoform-expression
-QTLs from the isoTWAS models of Bhattacharya et al. 2023; we kept the
-SNP with the largest standardised weight per isoform). Details: <a
-href="ctwas_gtex_isoform_scz.html">cTWAS with GTEx molecular
-QTLs</a>.</p>
+QTLs from the isoTWAS models of Bhattacharya et al. 2023). For each
+isoform we kept the 3 SNPs with the largest standardised weights (the
+top-3 run). Details: <a href="ctwas_gtex_isoform_scz.html">cTWAS with
+GTEx molecular QTLs</a>, with the post-processing in <a
+href="ctwas_gtex_isoform_scz.html#post-processing">its own
+section</a>.</p>
 <div id="share-of-scz-heritability" class="section level2">
 <h2>Share of SCZ heritability</h2>
-<p><img src="assets/grant_figures/ctwas_h2g_pie_est.png" /></p>
-<p><a href="assets/grant_figures/ctwas_h2g_pie_est.pdf">Open as
+<p><img src="assets/grant_figures/ctwas_h2g_bars_esh.png" /></p>
+<p><a href="assets/grant_figures/ctwas_h2g_bars_esh.pdf">Open as
 PDF</a></p>
-<p><code>prop_heritability</code> of the eQTL + sQTL + isoQTL run: eQTL
-5.2%, sQTL 5.0%, isoQTL 4.5%, and the rest (85.3%) from SNPs not
-mediated by these traits.</p>
+<p>Each bar is a QTL type’s <code>prop_heritability</code> (its share of
+the SCZ SNP heritability, h<sup>2</sup><sub>g</sub>) in the eQTL + sQTL
++ isoQTL (top 3) run: eQTL 3.5%, sQTL 3.5%, isoQTL 15.7%, together
+22.7%. The rest is from SNPs not mediated by these traits. cTWAS gives
+no standard error for these shares.</p>
+<p><strong>Caveat:</strong> post-processing (next panel) does not
+re-estimate these shares, so they come from the fit before it. In that
+fit, many top-3 isoQTL traits took PIP at LD-region boundaries that they
+lose after region merging (86 genes at <code>combined_pip</code> ≥ 0.8
+before, 30 after). The isoQTL share is therefore probably inflated. With
+only the top SNP per isoform it is 4.5%.</p>
 </div>
 <div id="genes-found-with-eqtls-alone-and-with-all-three"
 class="section level2">
 <h2>Genes found with eQTLs alone and with all three</h2>
-<p><img src="assets/grant_figures/ctwas_gene_venn_e_est.png" /></p>
-<p><a href="assets/grant_figures/ctwas_gene_venn_e_est.pdf">Open as
+<p><img src="assets/grant_figures/ctwas_gene_venn_e_esh_pp.png" /></p>
+<p><a href="assets/grant_figures/ctwas_gene_venn_e_esh_pp.pdf">Open as
 PDF</a></p>
 <p>Genes with <code>combined_pip</code> ≥ 0.8 in an eQTL-only run and in
-the eQTL + sQTL + isoQTL run (same settings). The joint run finds 5
-genes the eQTL-only run misses (ARHGAP9 via isoQTL, MRPS33 via sQTL,
-PPIL2 via isoQTL, R3HDM2 via sQTL, TMEM25 via isoQTL) and misses 2
-(MAP3K11, SLC38A3).</p>
-<p><strong>Note:</strong> these two panels come from the cTWAS results
-before post-processing (region merging and the LD-mismatch check).
-Post-processing is running now; the panels will be updated if it changes
-them.</p>
+the eQTL + sQTL + isoQTL (top 3) run (same settings), both after
+post-processing (region merging and the LD-mismatch check, as in the
+M-cTWAS paper). The joint run finds 25 genes the eQTL-only run misses
+(23 via isoQTLs, 2 via sQTLs; listed in the figure, by
+<code>combined_pip</code>) and misses 7. “Via” is the QTL type with the
+largest PIP for that gene. Of the 7 missed, 3 are just below the cutoff
+in the joint run (ANKRD63 0.799, ACE 0.779, PTPA 0.727) and 4 drop
+further (MAP3K11 0.38, GALNT2 0.01, SLC38A3 0.00, HLA-DMA 0.00).</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

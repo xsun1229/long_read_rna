@@ -24,8 +24,10 @@ cx <- sc("Cortex"); cb <- sc("Cerebellum")
 en <- fread(file.path(A, "ctwas_enrichment_filter_reads10nc_stim_joint.tsv")); eu <- en[tp == "0hr"]; es <- en[tp == "stim"]
 ex <- fread(file.path(A, "examples.tsv")); ly <- ex[gene == "LY6H"]; my <- ex[gene == "MYT1L"]
 g8 <- fread(file.path(A, "genes_pip08.tsv")); j3 <- fread(file.path(A, "joint3_params.tsv"))   # 3-group joint run: genes
-pie <- fread(file.path(A, "ctwas_h2g_pie_est.tsv")); pc <- function(t) sprintf("%.1f%%", 100 * pie[type == t, prop_heritability])
-vn <- fread(file.path(A, "ctwas_gene_venn_e_est.tsv"))
+# cTWAS with GTEx QTLs: top-3 isoQTL run (esh; Xin, 2026-11-07), h2g bars from the original fit, Venn after post-processing
+pie <- fread(file.path(A, "ctwas_h2g_bars_esh.tsv")); pc <- function(t) sprintf("%.1f%%", 100 * pie[type == t, prop_heritability])
+p1 <- fread(file.path(A, "ctwas_h2g_pie_est.tsv"))   # top 1, for the caveat
+vn <- fread(file.path(A, "ctwas_gene_venn_e_esh_pp.tsv")); pps <- fread(file.path(A, "ctwas_pp_summary.tsv"))
 fig <- function(f) sprintf("![](assets/grant_figures/%s.png)\n\n[Open as PDF](assets/grant_figures/%s.pdf)\n", f, f)
 ```
 
@@ -174,31 +176,44 @@ Only 6 hr is shown: it is the timepoint that gives both genes their cTWAS PIP.
 
 cTWAS for SCZ with GTEx v8 Brain Cerebellum QTLs: eQTLs and sQTLs (the M-cTWAS
 paper's PredictDB models) and isoQTLs (isoform-expression QTLs from the isoTWAS
-models of Bhattacharya et al. 2023; we kept the SNP with the largest standardised
-weight per isoform). Details: [cTWAS with GTEx molecular QTLs](ctwas_gtex_isoform_scz.html).
+models of Bhattacharya et al. 2023). For each isoform we kept the 3 SNPs with the
+largest standardised weights (the top-3 run). Details: [cTWAS with GTEx molecular QTLs](ctwas_gtex_isoform_scz.html),
+with the post-processing in [its own section](ctwas_gtex_isoform_scz.html#post-processing).
 
 ## Share of SCZ heritability
 
 ```{r pie, results="asis"}
-cat(fig("ctwas_h2g_pie_est"))
+cat(fig("ctwas_h2g_bars_esh"))
 ```
 
-`prop_heritability` of the eQTL + sQTL + isoQTL run: eQTL `r pc("eQTL")`, sQTL
-`r pc("sQTL")`, isoQTL `r pc("isoQTL")`, and the rest (`r pc("SNP")`) from SNPs not
-mediated by these traits.
+Each bar is a QTL type's `prop_heritability` (its share of the SCZ SNP heritability,
+h<sup>2</sup><sub>g</sub>) in the eQTL + sQTL + isoQTL (top 3) run: eQTL `r pc("eQTL")`, sQTL
+`r pc("sQTL")`, isoQTL `r pc("isoQTL")`, together
+`r sprintf("%.1f%%", 100 * pie[type != "SNP", sum(prop_heritability)])`. The rest is from SNPs not
+mediated by these traits. cTWAS gives no standard error for these shares.
+
+**Caveat:** post-processing (next panel) does not re-estimate these shares, so
+they come from the fit before it. In that fit, many top-3 isoQTL traits took PIP
+at LD-region boundaries that they lose after region merging
+(`r pps[run == "esh", genes_pip08_before]` genes at `combined_pip` &ge; 0.8 before,
+`r pps[run == "esh", genes_pip08_after]` after). The isoQTL share is therefore
+probably inflated. With only the top SNP per isoform it is
+`r sprintf("%.1f%%", 100 * p1[type == "isoQTL", prop_heritability])`.
 
 ## Genes found with eQTLs alone and with all three
 
 ```{r venn, results="asis"}
-cat(fig("ctwas_gene_venn_e_est"))
+cat(fig("ctwas_gene_venn_e_esh_pp"))
 ```
 
 Genes with `combined_pip` &ge; 0.8 in an eQTL-only run and in the eQTL + sQTL +
-isoQTL run (same settings). The joint run finds
-`r vn[region == "est only", .N]` genes the eQTL-only run misses
-(`r paste(vn[region == "est only", sprintf("%s via %s", gene_name, top_type_est)], collapse=", ")`)
-and misses `r vn[region == "e only", .N]` (`r paste(vn[region == "e only", gene_name], collapse=", ")`).
-
-**Note:** these two panels come from the cTWAS results before post-processing
-(region merging and the LD-mismatch check). Post-processing is running now; the
-panels will be updated if it changes them.
+isoQTL (top 3) run (same settings), both after post-processing (region merging
+and the LD-mismatch check, as in the M-cTWAS paper). The joint run finds
+`r vn[region == "esh only", .N]` genes the eQTL-only run misses
+(`r vn[region == "esh only" & top_type_esh == "isoQTL", .N]` via isoQTLs,
+`r vn[region == "esh only" & top_type_esh == "sQTL", .N]` via sQTLs; listed in the figure, by `combined_pip`)
+and misses `r vn[region == "e only", .N]`. "Via" is the QTL type with the largest PIP for that gene.
+Of the `r vn[region == "e only", .N]` missed, `r vn[region == "e only" & combined_pip_esh >= 0.5, .N]` are just below the cutoff in the
+joint run (`r vn[region == "e only" & combined_pip_esh >= 0.5][order(-combined_pip_esh), paste(sprintf("%s %.3f", gene_name, combined_pip_esh), collapse=", ")]`)
+and `r vn[region == "e only" & combined_pip_esh < 0.5, .N]` drop further
+(`r vn[region == "e only" & combined_pip_esh < 0.5][order(-combined_pip_esh), paste(sprintf("%s %.2f", gene_name, combined_pip_esh), collapse=", ")]`).

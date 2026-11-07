@@ -1,0 +1,3 @@
+run	boundary_rows	boundary_genes	merged_regions	ld_regions_checked	problematic_snps	problematic_traits	problematic_trait_genes	problematic_gene_names	genes_pip08_before	genes_pip08_after	genes_pip08_both
+e	0	0	0	26	253	0	0	""	12	12	12
+esh	602	124	71	52	998	0	0	""	86	30	27

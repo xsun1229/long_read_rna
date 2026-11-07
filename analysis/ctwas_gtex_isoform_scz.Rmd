@@ -617,6 +617,66 @@ for (q in names(PPR)) {
 and after values for every gene and QTL type are in
 [pp_gene_pips.tsv](assets/ctwas_gtex_SCZ_Brain_Cerebellum/pp_gene_pips.tsv).
 
+### Top 1, top 3 and top 5 compared, after post-processing
+
+```{r pp_venn_setup}
+gcat <- fread(file.path(A, "pp_gene_categories.tsv"), na.strings=c("", "NA"))
+nc <- function(k) gcat[category == k, .N]; npr <- function(k) gcat[category == k & promising == TRUE, .N]
+cat_table <- function(k) {
+  d <- gcat[category == k & promising == TRUE]
+  d[, sl := fifelse(is.na(shared_locus), "", shared_locus)]   # empty: no other gene of the diagram at this locus
+  d <- d[order(-(!nzchar(sl) & !mhc), -region_max_snp_absz)]
+  note <- fifelse(d$mhc, "MHC", fifelse(nzchar(d$sl), paste("same locus as", d$sl), ""))
+  x <- d[, .(gene_name, `PIP top 1`=cell(pip_top1), `PIP top 3`=cell(pip_top3), `PIP top 5`=cell(pip_top5), Driver=driver,
+             `Trait z`=sprintf("%.1f", top_z), `Region |z|`=sprintf("%.1f", region_max_snp_absz),
+             `Catalog SCZ hits (best p)`=fifelse(catalog_n > 0, sprintf("%d (%s)", catalog_n, fp(catalog_best_p)), "0"), Note=note)]
+  paste(knitr::kable(x, escape=FALSE, align="lrrrlrrrl"), collapse="\n")
+}
+notp <- function(k) { x <- gcat[category == k & promising == FALSE, gene_name]; if (length(x)) paste(x, collapse=", ") else "none" }
+```
+
+![](assets/ctwas_gtex_SCZ_Brain_Cerebellum/pp_gene_venn.png)
+
+[Open as PDF](assets/ctwas_gtex_SCZ_Brain_Cerebellum/pp_gene_venn.pdf)
+
+Genes with `combined_pip` &ge; 0.8 after post-processing in the three runs. Circle
+areas are proportional to the number of genes (an `eulerr` fit; three circles
+cannot match every overlap exactly, so each region shows its true count).
+
+**Promising** (our rule, from our data only): the gene sits at a genome-wide
+significant locus, meaning the strongest SNP in its top trait's region has
+|z| > 5.45 (p < 5e-8) or the GWAS Catalog (2026-10-22) has a schizophrenia
+association with p &le; 5e-8 within 500 kb, **and** its own top trait has
+|z| &ge; 3. Genes in the MHC, or at a locus where another gene of the diagram is
+also found, are kept but noted. SCZ loci are dense, so the rule supports the locus
+more than the gene, and the literature has not been checked.
+
+```{r pp_venn_lists, results="asis"}
+heads <- c(`1. top 3 and top 5`="Found by both top 3 and top 5", `2. top 3 only`="Top 3 only", `3. top 5 only`="Top 5 only", `4. top 1 only`="Top 1 only")
+for (k in names(heads)) {
+  cat("#### ", heads[[k]], " (", npr(k), " of ", nc(k), " promising)\n\n", sep="")
+  cat(cat_table(k), "\n\nNot promising: ", notp(k), ".\n\n", sep="")
+}
+```
+
+- **PIP top 1 / 3 / 5:** `combined_pip` after post-processing in each run; "&ndash;": not in
+  a fine-mapped region of that run. **Driver:** the QTL type with the largest PIP.
+- **Trait z:** the GWAS z-score of the gene's top trait (largest `susie_pip`), in the
+  run where the gene's `combined_pip` is largest. **Region |z|:** the strongest SNP in
+  that trait's region after merging.
+- **Catalog SCZ hits:** GWAS Catalog associations with schizophrenia (p &le; 5e-8)
+  within 500 kb of the gene, and the best p.
+
+**Short reading (ours):** the most convincing new genes are those both multi-SNP
+runs agree on, at strong loci: FOXM1, POLR3H, AP3B2, PPIP5K1 and HRCT1; CUX2 is
+the strongest gene found by top 3 only. Genes found by only one of top 3 and top 5
+are less robust, since 3 rather than 5 SNPs per isoform should not change the
+causal gene; the MHC genes and the chr3p21 cluster switch between the runs. Most
+top-1-only genes stay just below 0.8 in the multi-SNP runs, where isoQTL traits
+compete for the same signal. The top-3 and top-5 priors were not re-estimated
+after merging, so their PIPs may still be a little optimistic. All genes:
+[pp_gene_categories.tsv](assets/ctwas_gtex_SCZ_Brain_Cerebellum/pp_gene_categories.tsv).
+
 ## All genes
 
 ```{r all_genes}
@@ -638,7 +698,7 @@ DT::datatable(as.data.frame(g[, .(Run=RUNS[run], gene_name, combined_pip=round(c
 - `2.summarize.R`: this page's tables and figures.
 - `5.top5_diagnostics.R`: the checks of the top-3 and top-5 runs.
 - `6.postprocess.R` and `.sbatch`: post-processing (region merging, LD mismatch, gene PIPs) of one run.
-- `7.pp_pip_z.R` and `8.pp_summarize.R`: this page's post-processing figure and tables.
+- `7.pp_pip_z.R`, `8.pp_summarize.R` and `9.pp_gene_venn.R`: this page's post-processing figures and tables.
 
 **Downloads:** [tissue counts](assets/ctwas_gtex_SCZ_Brain_Cerebellum/tissue_qtls.tsv),
 [parameters](assets/ctwas_gtex_SCZ_Brain_Cerebellum/params.tsv),

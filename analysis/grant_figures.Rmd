@@ -127,8 +127,8 @@ ex1 <- function(p) { m <- regmatches(p, regexec("^(chr[^:]+):([0-9]+)-([0-9]+):(
 tp_main <- names(which.max(table(g8$top_tp))); tp_other <- g8[top_tp != tp_main]
 tpl1 <- function(t) sub("hr$", " hr", t)
 tp_note <- paste0(tpl1(tp_main), if (nrow(tp_other)) paste0("; ", paste(sprintf("%s %s", tp_other$gene_name, tpl1(tp_other$top_tp)), collapse=", ")) else "")
-knitr::kable(g8[, .(Gene=gene_name, PIP=sprintf("%.2f", combined_pip), SNP=ukb_id, `&Delta;PSI`=sprintf("%+.2f", dpsi),
-  `Affected exon`=ex1(top_part))], escape=FALSE, align="lrlrl")
+knitr::kable(g8[, .(Gene=gene_name, PIP=sprintf("%.2f", combined_pip), SNP=ukb_id, `GWAS p`=fp(gwas_p), `&Delta;PSI`=sprintf("%+.2f", dpsi),
+  `Affected exon`=ex1(top_part))], escape=FALSE, align="lrlrrl")
 ```
 
 - **PIP:** cTWAS `combined_pip`, over all of the gene's exonic parts and timepoints.
@@ -137,6 +137,8 @@ knitr::kable(g8[, .(Gene=gene_name, PIP=sprintf("%.2f", combined_pip), SNP=ukb_i
   permutation p, then the largest |&Delta;PSI|, as in the example figures below (ties
   here: LY6H 2 parts, SF3B1 5, NDRG4 6).
   - **SNP:** the trait's QTL SNP.
+  - **GWAS p:** that SNP's p-value in the SCZ GWAS (PGC, ieu-b-5102), from the z-score
+    cTWAS used; genome-wide significance is p < 5e-8.
   - **&Delta;PSI:** isoLASER's allelic difference in the part's inclusion, at the trait's
     timepoint (`r tp_note`); positive = the ALT allele includes the part more.
   - **Affected exon:** the exonic part isoLASER tested (GRCh38, 1-based, strand in

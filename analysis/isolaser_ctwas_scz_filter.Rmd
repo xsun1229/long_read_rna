@@ -169,7 +169,9 @@ knitr::kable(d[, .(gene_name, combined_pip=sprintf("%.2f", gene_pip), `0hr_pip`=
   the `cis` label alone; "&ndash;" means not in a fine-mapped region there.
 - **Traits:** the gene's part &times; timepoint traits in fine-mapped regions.
 - **Top part, Timepoint, susie_pip (top part), z, QTL, ΔPSI, permutation p:** the
-  trait with the largest `susie_pip`, its z-score and its isoLASER association.
+  trait with the largest `susie_pip`, its z-score and its isoLASER association. Parts
+  whose weights use the same SNP tie on `susie_pip`; the tie goes to the smallest
+  permutation p, then the largest |ΔPSI| (since 2026-11-07, to match the grant figures).
 
 ## Plausibility of the genes at combined_pip 0.8
 

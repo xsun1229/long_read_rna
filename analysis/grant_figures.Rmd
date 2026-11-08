@@ -121,22 +121,31 @@ isoLASER + filter weights, `r fmt(sum(j3[group != "SNP", group_size]))` traits):
 `combined_pip` &ge; 0.8.
 
 ```{r genes8}
-cell <- function(x) fifelse(is.na(x), "&ndash;", sprintf("%.2f", x))
-knitr::kable(g8[, .(gene_name, combined_pip=sprintf("%.2f", combined_pip), `0hr_pip`=cell(pip_0hr), `1hr_pip`=cell(pip_1hr), `6hr_pip`=cell(pip_6hr),
-  `QTL SNP`=ukb_id, `&Delta;PSI`=sprintf("%+.3f", dpsi), `Permutation p`=fp(qtl_p), `SCZ GWAS p (SNP)`=fp(gwas_p),
-  `Best GWAS p within 250 kb`=fp(nearby_min_p))], escape=FALSE, align="lrrrrlrrrr")
+# Affected exon: the top trait's exonic part, isoLASER's 0-based half-open [start, end) shown 1-based inclusive, with strand
+ex1 <- function(p) { m <- regmatches(p, regexec("^(chr[^:]+):([0-9]+)-([0-9]+):([+-])$", p)); stopifnot(all(lengths(m) == 5))
+  vapply(m, function(z) sprintf("%s:%s-%s (%s)", z[2], fmt(as.numeric(z[3]) + 1), fmt(as.numeric(z[4])), z[5]), "") }
+tp_main <- names(which.max(table(g8$top_tp))); tp_other <- g8[top_tp != tp_main]
+tpl1 <- function(t) sub("hr$", " hr", t)
+tp_note <- paste0(tpl1(tp_main), if (nrow(tp_other)) paste0("; ", paste(sprintf("%s %s", tp_other$gene_name, tpl1(tp_other$top_tp)), collapse=", ")) else "")
+knitr::kable(g8[, .(Gene=gene_name, PIP=sprintf("%.2f", combined_pip), SNP=ukb_id, `&Delta;PSI`=sprintf("%+.2f", dpsi),
+  `Affected exon`=ex1(top_part))], escape=FALSE, align="lrlrl")
 ```
 
-- **combined_pip:** over all of the gene's exonic parts and timepoints;
-  **0hr_pip, 1hr_pip, 6hr_pip:** from that timepoint's traits only
-  ("&ndash;": none in a fine-mapped region).
-- **QTL SNP, &Delta;PSI, permutation p:** the gene's trait with the largest PIP. LY6H's
-  two top parts tie (same SNP); the example figure below shows the one with the larger
-  effect (+0.25).
-  **SCZ GWAS p:** of that SNP; **best within 250 kb:** genome-wide significance is
-  p < 5e-8.
+- **PIP:** cTWAS `combined_pip`, over all of the gene's exonic parts and timepoints.
+- **SNP, &Delta;PSI, Affected exon:** of the gene's trait with the largest PIP. Parts
+  whose weights use the same SNP get the same PIP; among such ties we take the smallest
+  permutation p, then the largest |&Delta;PSI|, as in the example figures below (ties
+  here: LY6H 2 parts, SF3B1 5, NDRG4 6).
+  - **SNP:** the trait's QTL SNP.
+  - **&Delta;PSI:** isoLASER's allelic difference in the part's inclusion, at the trait's
+    timepoint (`r tp_note`); positive = the ALT allele includes the part more.
+  - **Affected exon:** the exonic part isoLASER tested (GRCh38, 1-based, strand in
+    brackets). isoLASER cuts exons at every exon boundary of the gene's annotated
+    transcripts, so a part can be a piece of an exon (LY6H: 12 bp of a 124-bp exon).
+    MYT1L's part is exonic only in a retained-intron transcript (MYT1L-255); in the
+    coding transcripts it lies inside an intron.
 - NDRG4, SF3B1 and MYT1L sit at genome-wide significant SCZ loci, and LY6H has
-  the strongest splicing effect. CNPPD1, PIGF, GOPC, MRPL43 and YWHAE have no
+  the strongest splicing association (permutation p &le; 1e-6, the test's floor). CNPPD1, PIGF, GOPC, MRPL43 and YWHAE have no
   genome-wide significant SNP within 250 kb. Details: [cTWAS with isoLASER + filter
   QTLs](isolaser_ctwas_scz_filter.html).
 

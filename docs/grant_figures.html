@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree07e10148aaf6bfe7c0642fdaba45352403d74abctargetblank07e1014a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeadf77a54ecba646714040edadb29b2c3c5fda7c6targetblankadf77a5a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/long_read_rna/tree/07e10148aaf6bfe7c0642fdaba45352403d74abc" target="_blank">07e1014</a>
+<a href="https://github.com/xsun1229/long_read_rna/tree/adf77a54ecba646714040edadb29b2c3c5fda7c6" target="_blank">adf77a5</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatree07e10148aaf6bfe7c0642fdaba45352403d74abctargetblank07e1014a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229longreadrnatreeadf77a54ecba646714040edadb29b2c3c5fda7c6targetblankadf77a5a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/long_read_rna/tree/07e10148aaf6bfe7c0642fdaba45352403d74abc" target="_blank">07e1014</a>.
+<a href="https://github.com/xsun1229/long_read_rna/tree/adf77a54ecba646714040edadb29b2c3c5fda7c6" target="_blank">adf77a5</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -559,6 +559,7 @@ were generated:
 <pre><code>
 Unstaged changes:
     Modified:   analysis/grant_figures.Rmd
+    Modified:   analysis/isolaser_ctwas_scz_filter.Rmd
 
 </code></pre>
 <p>
@@ -604,6 +605,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/long_read_rna/blob/adf77a54ecba646714040edadb29b2c3c5fda7c6/analysis/grant_figures.Rmd" target="_blank">adf77a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-07
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/long_read_rna/adf77a54ecba646714040edadb29b2c3c5fda7c6/docs/grant_figures.html" target="_blank">adf77a5</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2026-11-07
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -824,154 +859,111 @@ groups</strong> (the same isoLASER + filter weights, 602 traits): 9
 genes reach <code>combined_pip</code> ≥ 0.8.</p>
 <table>
 <colgroup>
-<col width="7%" />
 <col width="10%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="8%" />
-<col width="8%" />
-<col width="11%" />
-<col width="13%" />
-<col width="20%" />
+<col width="7%" />
+<col width="16%" />
+<col width="16%" />
+<col width="50%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">gene_name</th>
-<th align="right">combined_pip</th>
-<th align="right">0hr_pip</th>
-<th align="right">1hr_pip</th>
-<th align="right">6hr_pip</th>
-<th align="left">QTL SNP</th>
+<th align="left">Gene</th>
+<th align="right">PIP</th>
+<th align="left">SNP</th>
 <th align="right">ΔPSI</th>
-<th align="right">Permutation p</th>
-<th align="right">SCZ GWAS p (SNP)</th>
-<th align="right">Best GWAS p within 250 kb</th>
+<th align="left">Affected exon</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">LY6H</td>
 <td align="right">0.99</td>
-<td align="right">0.29</td>
-<td align="right">0.00</td>
-<td align="right">0.73</td>
 <td align="left">rs10109061</td>
-<td align="right">+0.080</td>
-<td align="right">1.0e-06</td>
-<td align="right">9.2e-07</td>
-<td align="right">5.4e-07</td>
+<td align="right">+0.25</td>
+<td align="left">chr8:143,160,310-143,160,321 (-)</td>
 </tr>
 <tr class="even">
 <td align="left">NDRG4</td>
 <td align="right">0.99</td>
-<td align="right">–</td>
-<td align="right">–</td>
-<td align="right">0.99</td>
 <td align="left">rs42945</td>
-<td align="right">+0.222</td>
-<td align="right">1.9e-02</td>
-<td align="right">1.3e-07</td>
-<td align="right">3.0e-08</td>
+<td align="right">+0.25</td>
+<td align="left">chr16:58,504,619-58,504,629 (+)</td>
 </tr>
 <tr class="odd">
 <td align="left">MYT1L</td>
 <td align="right">0.97</td>
-<td align="right">–</td>
-<td align="right">–</td>
-<td align="right">0.97</td>
 <td align="left">rs3749051</td>
-<td align="right">-0.059</td>
-<td align="right">4.0e-02</td>
-<td align="right">3.3e-08</td>
-<td align="right">2.4e-08</td>
+<td align="right">-0.06</td>
+<td align="left">chr2:2,281,931-2,284,093 (-)</td>
 </tr>
 <tr class="even">
 <td align="left">SF3B1</td>
 <td align="right">0.95</td>
-<td align="right">0.95</td>
-<td align="right">–</td>
-<td align="right">–</td>
 <td align="left">rs788023</td>
-<td align="right">-0.084</td>
-<td align="right">1.3e-02</td>
-<td align="right">3.9e-13</td>
-<td align="right">2.8e-13</td>
+<td align="right">-0.11</td>
+<td align="left">chr2:197,418,896-197,418,951 (-)</td>
 </tr>
 <tr class="odd">
 <td align="left">CNPPD1</td>
 <td align="right">0.88</td>
-<td align="right">–</td>
-<td align="right">–</td>
-<td align="right">0.88</td>
 <td align="left">rs1127102</td>
-<td align="right">+0.411</td>
-<td align="right">1.2e-01</td>
-<td align="right">1.1e-04</td>
-<td align="right">3.8e-05</td>
+<td align="right">+0.41</td>
+<td align="left">chr2:219,172,418-219,172,654 (-)</td>
 </tr>
 <tr class="even">
 <td align="left">PIGF</td>
 <td align="right">0.88</td>
-<td align="right">–</td>
-<td align="right">–</td>
-<td align="right">0.88</td>
 <td align="left">rs1824050</td>
-<td align="right">-0.188</td>
-<td align="right">2.8e-02</td>
-<td align="right">3.0e-04</td>
-<td align="right">1.1e-04</td>
+<td align="right">-0.19</td>
+<td align="left">chr2:46,588,075-46,588,179 (-)</td>
 </tr>
 <tr class="odd">
 <td align="left">GOPC</td>
 <td align="right">0.86</td>
-<td align="right">–</td>
-<td align="right">–</td>
-<td align="right">0.86</td>
 <td align="left">rs3752848</td>
-<td align="right">-0.104</td>
-<td align="right">1.1e-02</td>
-<td align="right">1.7e-05</td>
-<td align="right">8.9e-06</td>
+<td align="right">-0.10</td>
+<td align="left">chr6:117,577,448-117,577,471 (-)</td>
 </tr>
 <tr class="even">
 <td align="left">MRPL43</td>
 <td align="right">0.83</td>
-<td align="right">0.20</td>
-<td align="right">–</td>
-<td align="right">0.64</td>
 <td align="left">rs7184</td>
-<td align="right">+0.125</td>
-<td align="right">4.3e-02</td>
-<td align="right">2.4e-04</td>
-<td align="right">4.3e-05</td>
+<td align="right">+0.12</td>
+<td align="left">chr10:100,986,687-100,986,748 (-)</td>
 </tr>
 <tr class="odd">
 <td align="left">YWHAE</td>
 <td align="right">0.81</td>
-<td align="right">–</td>
-<td align="right">–</td>
-<td align="right">0.81</td>
 <td align="left">rs9393</td>
-<td align="right">-0.061</td>
-<td align="right">4.3e-02</td>
-<td align="right">6.0e-05</td>
-<td align="right">5.6e-06</td>
+<td align="right">-0.06</td>
+<td align="left">chr17:1,354,211-1,354,347 (-)</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>combined_pip:</strong> over all of the gene’s exonic parts
-and timepoints; <strong>0hr_pip, 1hr_pip, 6hr_pip:</strong> from that
-timepoint’s traits only (“–”: none in a fine-mapped region).</li>
-<li><strong>QTL SNP, ΔPSI, permutation p:</strong> the gene’s trait with
-the largest PIP. LY6H’s two top parts tie (same SNP); the example figure
-below shows the one with the larger effect (+0.25). <strong>SCZ GWAS
-p:</strong> of that SNP; <strong>best within 250 kb:</strong>
-genome-wide significance is p &lt; 5e-8.</li>
+<li><strong>PIP:</strong> cTWAS <code>combined_pip</code>, over all of
+the gene’s exonic parts and timepoints.</li>
+<li><strong>SNP, ΔPSI, Affected exon:</strong> of the gene’s trait with
+the largest PIP. Parts whose weights use the same SNP get the same PIP;
+among such ties we take the smallest permutation p, then the largest
+|ΔPSI|, as in the example figures below (ties here: LY6H 2 parts, SF3B1
+5, NDRG4 6).
+<ul>
+<li><strong>SNP:</strong> the trait’s QTL SNP.</li>
+<li><strong>ΔPSI:</strong> isoLASER’s allelic difference in the part’s
+inclusion, at the trait’s timepoint (6 hr; SF3B1 0 hr); positive = the
+ALT allele includes the part more.</li>
+<li><strong>Affected exon:</strong> the exonic part isoLASER tested
+(GRCh38, 1-based, strand in brackets). isoLASER cuts exons at every exon
+boundary of the gene’s annotated transcripts, so a part can be a piece
+of an exon (LY6H: 12 bp of a 124-bp exon). MYT1L’s part is exonic only
+in a retained-intron transcript (MYT1L-255); in the coding transcripts
+it lies inside an intron.</li>
+</ul></li>
 <li>NDRG4, SF3B1 and MYT1L sit at genome-wide significant SCZ loci, and
-LY6H has the strongest splicing effect. CNPPD1, PIGF, GOPC, MRPL43 and
-YWHAE have no genome-wide significant SNP within 250 kb. Details: <a
+LY6H has the strongest splicing association (permutation p ≤ 1e-6, the
+test’s floor). CNPPD1, PIGF, GOPC, MRPL43 and YWHAE have no genome-wide
+significant SNP within 250 kb. Details: <a
 href="isolaser_ctwas_scz_filter.html">cTWAS with isoLASER + filter
 QTLs</a>.</li>
 </ul>
@@ -1066,7 +1058,7 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+Running under: Red Hat Enterprise Linux 8.10 (Ootpa)
 
 Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el8-x86_64/lib/libopenblas_skylakexp-r0.3.13.so
